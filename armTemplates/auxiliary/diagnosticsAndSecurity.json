@@ -34,7 +34,7 @@
                 "description": "If 'Yes' is selected when also adding a subscription for the Platform Landing Zone, ARM will assign two policies to enable auditing in your environment, into the Log Analytics workspace for platform monitoring. If 'No', it will be ignored."
             }
         },
-        "lzSubscriptionId": {
+        "appLzSubscriptionId": {
             "type": "string",
             "maxLength": 36,
             "defaultValue": ""
@@ -279,7 +279,7 @@
             }
         },
         {
-            "condition": "[and(not(empty(parameters('lzSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[variables('lzActivityResourceDeploymentName')]",
@@ -287,7 +287,7 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureActivityLog)]"
             ],
-            "subscriptionId": "[parameters('lzSubscriptionId')]",
+            "subscriptionId": "[parameters('appLzSubscriptionId')]",
             "properties": {
                 "mode": "incremental",
                 "template": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(variables('policyDefinitions').deployAzureActivityLog, '2018-05-01').policyRule.then.details.deployment.properties.template, variables('blankTemplateEscaped'))]",
@@ -295,7 +295,7 @@
             }
         },
         {
-            "condition": "[and(not(empty(parameters('lzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free')))]",
+            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free')))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[variables('lzAscResourceDeploymentName')]",
@@ -303,7 +303,7 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureSecurity)]"
             ],
-            "subscriptionId": "[parameters('lzSubscriptionId')]",
+            "subscriptionId": "[parameters('appLzSubscriptionId')]",
             "properties": {
                 "mode": "incremental",
                 "template": "[if(and(not(empty(parameters('platformLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))), reference(variables('policyDefinitions').deployAzureSecurity, '2018-05-01').policyRule.then.details.deployment.properties.template, 'na')]",
