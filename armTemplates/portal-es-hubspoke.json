@@ -8,12 +8,12 @@
         "steps": [
             {
                 "name": "lzSettings",
-                "label": "Enterprise-Scale Company prefix",
+                "label": "Company Prefix",
                 "subLabel": {
                     "preValidation": "Provide a company prefix for the management group structure that will be created.",
                     "postValidation": "Done"
                 },
-                "bladeTitle": "Company prefix",
+                "bladeTitle": "Company Prefix",
                 "elements": [
                     {
                         "name": "infoBox1",
@@ -21,14 +21,14 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "Enterprise-Scale ARM deployment requires access at the tenant root (/) scope. Visit this link to ensure you have the appropriate RBAC permission to complete the deployment",
+                            "text": "Tenant level ARM deployment requires access at the tenant root (/) scope. Visit this link to ensure you have the appropriate RBAC permission to complete the deployment",
                             "uri": "https://docs.microsoft.com/azure/role-based-access-control/elevate-access-global-admin"
                         }
                     },
                     {
                         "name": "esMgmtGroup",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Management Group prefix",
+                        "label": "Management Group Prefix",
                         "toolTip": "Provide a prefix for management group structure, 1-5 characters.",
                         "defaultValue": "",
                         "constraints": {
@@ -41,7 +41,7 @@
             },
             {
                 "name": "esGoalState",
-                "label": "Platform management, security, and governance",
+                "label": "Platform Landing Zone",
                 "subLabel": {
                     "preValidation": "Select 'Yes' if goal state should be enforced during deployment. Select 'No' if you want to do it post deployment using Azure Policy.",
                     "postValidation": "Done"
@@ -54,7 +54,7 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "To enable platform monitoring, you must allocate a management Subscription. Please note, this Subscription will be moved to the platform Management Group, and ARM will deploy a Log Analytics workspace and requisite settings. We recommend using a new Subscription with no existing resources.    ",
+                            "text": "To enable the Platform Landing Zone, you must allocate a Subscription. Please note, this Subscription will be moved to the Platform Management Group, and ARM will deploy Platform Landing Zone resources. We recommend using a new Subscription with no existing resources.    ",
                             "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
                         }
                     },
@@ -129,9 +129,9 @@
                     {
                         "name": "esHub",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy virtual hub",
+                        "label": "Deploy Platform Landing Zone Virtual Network",
                         "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy virtual network for hub",
+                        "toolTip": "If 'Yes' is selected when adding the Platform Landing Zone Subscription, ARM will deploy the Virtual Network",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -157,7 +157,7 @@
                     {
                         "name": "esAddressHub",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Address space (required for virtual network hub)",
+                        "label": "Platform Landing Zone CIDR Range",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/16)",
                         "defaultValue": "10.100.0.0/16",
                         "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
@@ -169,10 +169,10 @@
                     {
                         "name": "esRegions",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Region for first virtual network hub",
+                        "label": "Azure Region for Platform Landing Zone",
                         "defaultValue": "",
                         "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
-                        "toolTip": "Select the target region for you connectivity deployment (requires you to provide a subscriptionId for connectivity)",
+                        "toolTip": "Select the target Azure region for the deployment.",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -370,7 +370,7 @@
                     {
                         "name": "esAddressVpnOrEr",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Subnet for VPN/Express route",
+                        "label": "Subnet for VPN & ExpressRoute Gateways",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.1.0/24)",
                         "defaultValue": "10.100.1.0/24",
                         "visible": "[or(equals(steps('esGoalState').esErGw, 'Yes'), equals(steps('esGoalState').esVpnGw, 'Yes'))]",
