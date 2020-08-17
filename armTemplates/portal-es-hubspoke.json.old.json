@@ -125,7 +125,18 @@
                             ]
                         },
                         "visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]"
-                    },
+                    }
+                ]
+            },
+            {
+                "name": "esConnectivityGoalState",
+                "label": "Connectivity (Hub & Spoke)",
+                "subLabel": {
+                    "preValidation": "Select 'Yes' if goal state should be enforced during deployment. Select 'No' if you want to do it post deployment using Azure Policy.",
+                    "postValidation": "Done"
+                },
+                "bladeTitle": "lzGs",
+                "elements": [
                     {
                         "name": "esHub",
                         "type": "Microsoft.Common.OptionsGroup",
@@ -449,7 +460,6 @@
                     }
                 ]
             },
-
             {
                 "name": "lzGoalState",
                 "label": "Landing zone configuration",

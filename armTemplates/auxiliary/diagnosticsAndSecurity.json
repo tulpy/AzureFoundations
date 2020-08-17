@@ -13,31 +13,26 @@
         },
         "enableLogAnalytics": {
             "type": "string",
-            "defaultValue": "No",
+            "defaultValue": "Yes",
             "allowedValues": [
                 "Yes",
                 "No"
             ],
             "metadata": {
-                "description": "If 'Yes' is selected when also adding a subscription for management, ARM will assign two policies to enable auditing in your environment, into the Log Analytics workspace for platform monitoring. If 'No', it will be ignored."
+                "description": "If 'Yes' is selected when also adding a subscription for the Platform Landing Zone, ARM will assign two policies to enable auditing in your environment, into the Log Analytics workspace for platform monitoring. If 'No', it will be ignored."
             }
         },
         "enableAsc": {
             "type": "string",
-            "defaultValue": "No",
+            "defaultValue": "Standard",
             "allowedValues": [
                 "Standard",
                 "Free",
                 "No"
             ],
             "metadata": {
-                "description": "If 'Yes' is selected when also adding a subscription for management, ARM will assign two policies to enable auditing in your environment, into the Log Analytics workspace for platform monitoring. If 'No', it will be ignored."
+                "description": "If 'Yes' is selected when also adding a subscription for the Platform Landing Zone, ARM will assign two policies to enable auditing in your environment, into the Log Analytics workspace for platform monitoring. If 'No', it will be ignored."
             }
-        },
-        "connectivitySubscriptionId": {
-            "type": "string",
-            "maxLength": 36,
-            "defaultValue": ""
         },
         "lzSubscriptionId": {
             "type": "string",
@@ -181,7 +176,7 @@
                 "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbacOwner'))]",
                 "principalId": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').resourceDiagnostics), '2018-05-01', 'Full' ).identity.principalId), 'na')]"
             }
-        },        
+        },
         {
             "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free')))]",
             "type": "Microsoft.Authorization/policyAssignments",
@@ -250,7 +245,7 @@
                 "policyDefinitionId": "[variables('policyDefinitions').ascMonitoring]",
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]"
             }
-        },         
+        },
         {
             "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
@@ -316,7 +311,7 @@
             }
         },
         {
-            "condition": "[and(not(empty(parameters('connectivitySubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[variables('connectivityActivityResourceDeploymentName')]",
@@ -324,7 +319,7 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureActivityLog)]"
             ],
-            "subscriptionId": "[parameters('connectivitySubscriptionId')]",
+            "subscriptionId": "[parameters('platformLzSubscriptionId')]",
             "properties": {
                 "mode": "incremental",
                 "template": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(variables('policyDefinitions').deployAzureActivityLog, '2018-05-01').policyRule.then.details.deployment.properties.template, variables('blankTemplateEscaped'))]",
@@ -332,7 +327,7 @@
             }
         },
         {
-            "condition": "[and(not(empty(parameters('connectivitySubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free')))]",
+            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free')))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[variables('connectivityAscResourceDeploymentName')]",
@@ -340,13 +335,13 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureSecurity)]"
             ],
-            "subscriptionId": "[parameters('connectivitySubscriptionId')]",
+            "subscriptionId": "[parameters('platformLzSubscriptionId')]",
             "properties": {
                 "mode": "incremental",
                 "template": "[if(and(not(empty(parameters('platformLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))), reference(variables('policyDefinitions').deployAzureSecurity, '2018-05-01').policyRule.then.details.deployment.properties.template, 'na')]",
                 "parameters": "[if(and(not(empty(parameters('platformLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))),reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').azureSecurity), '2018-05-01').parameters, json('null'))]"
             }
-        }                
+        }
     ],
     "outputs": {}
 }
