@@ -155,28 +155,12 @@
                         }
                     },
                     {
-                        "name": "esConnectivitySub",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Connectivity subscription (required)",
-                        "toolTip": "",
-                        "multiselect": false,
-                        "selectAll": true,
-                        "filter": true,
-                        "filterPlaceholder": "Filter items ...",
-                        "multiLine": true,
-                        "visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
-                        "constraints": {
-                            "allowedValues": "[map(steps('esConnectivityGoalState').nwSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
-                            "required": true
-                        }
-                    },
-                    {
                         "name": "esAddressHub",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Address space (required for virtual network hub)",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/16)",
                         "defaultValue": "10.100.0.0/16",
-                        "visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
                         "constraints": {
                             "required": true,
                             "validationMessage": "The virtual hubs network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
@@ -187,7 +171,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Region for first virtual network hub",
                         "defaultValue": "",
-                        "visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
                         "toolTip": "Select the target region for you connectivity deployment (requires you to provide a subscriptionId for connectivity)",
                         "constraints": {
                             "allowedValues": [
@@ -348,7 +332,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy VPN Gateway",
                         "defaultValue": "No",
-                        "visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy VPN gateway",
                         "constraints": {
                             "allowedValues": [
@@ -368,7 +352,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Select VPN type",
                         "defaultValue": "Route Based",
-                        "visible": "[equals(steps('esConnectivityGoalState').esVpnGw, 'Yes')]",
+                        "visible": "[equals(steps('esGoalState').esVpnGw, 'Yes')]",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy VPN gateway. Select whether it should be policy or route based.",
                         "constraints": {
                             "allowedValues": [
@@ -389,7 +373,7 @@
                         "label": "Subnet for VPN/Express route",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.1.0/24)",
                         "defaultValue": "10.100.1.0/24",
-                        "visible": "[or(equals(steps('esConnectivityGoalState').esErGw, 'Yes'), equals(steps('esConnectivityGoalState').esVpnGw, 'Yes'))]",
+                        "visible": "[or(equals(steps('esGoalState').esErGw, 'Yes'), equals(steps('esGoalState').esVpnGw, 'Yes'))]",
                         "constraints": {
                             "required": true,
                             "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
@@ -400,7 +384,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy ExpressRoute Gateway",
                         "defaultValue": "No",
-                        "visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy Express Route gateway",
                         "constraints": {
                             "allowedValues": [
@@ -420,7 +404,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure Firewall",
                         "defaultValue": "No",
-                        "visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy Azure Firewall",
                         "constraints": {
                             "allowedValues": [
@@ -441,7 +425,7 @@
                         "label": "Subnet for Azure Firewall",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
                         "defaultValue": "10.100.0.0/24",
-                        "visible": "[equals(steps('esConnectivityGoalState').esAzFw, 'Yes')]",
+                        "visible": "[equals(steps('esGoalState').esAzFw, 'Yes')]",
                         "constraints": {
                             "required": true,
                             "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
@@ -637,16 +621,16 @@
             }
         ],
         "outputs": {
-            "vpnGwType": "[steps('esConnectivityGoalState').esVpnGwType]",
-            "subnetMaskForGw": "[steps('esConnectivityGoalState').esAddressVpnOrEr]",
-            "subnetMaskForAzFw": "[steps('esConnectivityGoalState').esAddressFw]",
-            "enableErGw": "[steps('esConnectivityGoalState').esErGw]",
-            "enableVpnGw": "[steps('esConnectivityGoalState').esVpnGw]",
-            "enableHub": "[steps('esConnectivityGoalState').esHub]",
-            "connectivitySubscriptionId": "[steps('esConnectivityGoalState').esConnectivitySub]",
-            "enableAzFw": "[steps('esConnectivityGoalState').esAzFw]",
-            "addressPrefix": "[steps('esConnectivityGoalState').esAddressHub]",
-            "location": "[steps('esConnectivityGoalState').esRegions]",
+            "vpnGwType": "[steps('esGoalState').esVpnGwType]",
+            "subnetMaskForGw": "[steps('esGoalState').esAddressVpnOrEr]",
+            "subnetMaskForAzFw": "[steps('esGoalState').esAddressFw]",
+            "enableErGw": "[steps('esGoalState').esErGw]",
+            "enableVpnGw": "[steps('esGoalState').esVpnGw]",
+            "enableHub": "[steps('esGoalState').esHub]",
+            "connectivitySubscriptionId": "[steps('esGoalState').esConnectivitySub]",
+            "enableAzFw": "[steps('esGoalState').esAzFw]",
+            "addressPrefix": "[steps('esGoalState').esAddressHub]",
+            "location": "[steps('esGoalState').esRegions]",
             "managementSubscriptionId": "[steps('esGoalState').esMgmtSub]",
             "lzSubscriptionId": "[steps('lzGoalState').esLzSub]",
             "enableLogAnalytics": "[steps('esGoalState').esLogAnalytics]",
