@@ -173,7 +173,7 @@
         "landingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/lz.json')]",
         "moveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-Platform', '/', parameters('platformLzSubscriptionId'))]",
         "noSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-Platform', '/', 'na')]",
-        "lzMoveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-AppLandingZones', '/', parameters('ApplzSubscriptionId'))]",
+        "lzMoveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-AppLandingZones', '/', parameters('appLzSubscriptionId'))]",
         "noLzSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-AppLandingZones', '/', 'nalz')]",
         "policyDeploymentName": "[take(concat('EntScale-Policy', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
         "monitoringDeploymentName": "[take(concat('EntScale-Monitoring', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
@@ -399,7 +399,7 @@
                     "enableLogAnalytics": {
                         "value": "[parameters('enableLogAnalytics')]"
                     },
-                    "managementSubscriptionId": {
+                    "platformLzSubscriptionId": {
                         "value": "[parameters('platformLzSubscriptionId')]"
                     }
                 }

@@ -87,7 +87,7 @@
                         }
                     },
                     {
-                        "name": "esMgmtSub",
+                        "name": "esPlatformLZSub",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Management subscription (required)",
                         "toolTip": "",
@@ -630,7 +630,7 @@
             "enableAzFw": "[steps('esGoalState').esAzFw]",
             "addressPrefix": "[steps('esGoalState').esAddressHub]",
             "location": "[steps('esGoalState').esRegions]",
-            "managementSubscriptionId": "[steps('esGoalState').esMgmtSub]",
+            "platformLzSubscriptionId": "[steps('esGoalState').esPlatformLZSub]",
             "lzSubscriptionId": "[steps('lzGoalState').esLzSub]",
             "enableLogAnalytics": "[steps('esGoalState').esLogAnalytics]",
             "enableAsc": "[steps('esGoalState').esAsc]",
