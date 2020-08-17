@@ -631,7 +631,7 @@
             "addressPrefix": "[steps('esGoalState').esAddressHub]",
             "location": "[steps('esGoalState').esRegions]",
             "platformLzSubscriptionId": "[steps('esGoalState').esPlatformLZSub]",
-            "lzSubscriptionId": "[steps('lzGoalState').esLzSub]",
+            "appLzSubscriptionId": "[steps('lzGoalState').esLzSub]",
             "enableLogAnalytics": "[steps('esGoalState').esLogAnalytics]",
             "enableAsc": "[steps('esGoalState').esAsc]",
             "enterpriseScaleCompanyPrefix": "[steps('lzSettings').esMgmtGroup]",
