@@ -627,7 +627,6 @@
             "enableErGw": "[steps('esGoalState').esErGw]",
             "enableVpnGw": "[steps('esGoalState').esVpnGw]",
             "enableHub": "[steps('esGoalState').esHub]",
-            "connectivitySubscriptionId": "[steps('esGoalState').esConnectivitySub]",
             "enableAzFw": "[steps('esGoalState').esAzFw]",
             "addressPrefix": "[steps('esGoalState').esAddressHub]",
             "location": "[steps('esGoalState').esRegions]",
