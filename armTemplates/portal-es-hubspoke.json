@@ -436,7 +436,7 @@
 
             {
                 "name": "lzGoalState",
-                "label": "Landing zone configuration",
+                "label": "Application Landing Zone Configuration",
                 "subLabel": {
                     "preValidation": "Select 'Yes' if goal state should be enforced during deployment. Select 'No' if you want to do it post deployment using Azure Policy.",
                     "postValidation": "Done"
