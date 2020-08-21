@@ -33,7 +33,7 @@
         "roleAssignmentNames": {
             "deployLogAnalytics": "[guid(concat(parameters('topLevelManagementGroupPrefix'), variables('policyAssignmentNames').logAnalytics))]"
         },
-        "resourceDeploymentName": "[take(concat('platformLZ', deployment().location, deployment().name), 64)]"
+        "resourceDeploymentName": "[take(concat('platformLZ-la', deployment().location, deployment().name), 64)]"
     },
     "resources": [
         {
@@ -52,10 +52,10 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-Platform')]",
                 "parameters": {
                     "workspaceName": {
-                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-la-', parameters('platformLzSubscriptionId'))]"
+                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-cor-syd-oms-001')]"
                     },
                     "automationAccountName": {
-                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-a-', parameters('platformLzSubscriptionId'))]"
+                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-cor-syd-aaa-001')]"
                     },
                     "workspaceRegion": {
                         "value": "[deployment().location]"
@@ -64,7 +64,7 @@
                         "value": "[deployment().location]"
                     },
                     "rgName": {
-                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-mgmt')]"
+                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-cor-arg-network')]"
                     }
                 }
             }
