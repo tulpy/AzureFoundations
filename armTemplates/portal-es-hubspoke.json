@@ -13,7 +13,7 @@
                     "preValidation": "Provide a company prefix for the management group structure that will be created.",
                     "postValidation": "Done"
                 },
-                "bladeTitle": "Company Prefix",
+                "bladeTitle": "Naming Prefixes",
                 "elements": [
                     {
                         "name": "infoBox1",
@@ -28,13 +28,25 @@
                     {
                         "name": "esMgmtGroup",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Management Group Prefix",
-                        "toolTip": "Provide a prefix for management group structure, 1-5 characters.",
+                        "label": "Comapny Identifier Prefix",
+                        "toolTip": "Provide a naming prefix for the company identifier, 1-5 characters.",
                         "defaultValue": "",
                         "constraints": {
                             "required": true,
                             "regex": "^[a-z0-9A-Z-]{1,5}$",
                             "validationMessage": "The prefix must be 1-5 characters."
+                        }
+                    },
+                    {
+                        "name": "esEnvIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Environment Identifier Prefix",
+                        "toolTip": "Provide a naming prefix for the environment identifier, 3 characters eg 'cor'.",
+                        "defaultValue": "",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
                         }
                     }
                 ]
@@ -635,6 +647,7 @@
             "enableLogAnalytics": "[steps('esGoalState').esLogAnalytics]",
             "enableAsc": "[steps('esGoalState').esAsc]",
             "enterpriseScaleCompanyPrefix": "[steps('lzSettings').esMgmtGroup]",
+            "environmentIdentifier": "[steps('lzSettings').esEnvIdentifier]",
             "enableSqlAudit": "[steps('lzGoalState').esSqlAudit]",
             "enableSqlEncryption": "[steps('lzGoalState').esSqlEncryption]",
             "enableVmBackup": "[steps('lzGoalState').esAzBackup]",
