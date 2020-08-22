@@ -6,6 +6,7 @@
             "type": "string",
             "maxLength": 5
         },
+
         "platformLzSubscriptionId": {
             "type": "string",
             "maxLength": 36
@@ -33,6 +34,7 @@
         "roleAssignmentNames": {
             "deployLogAnalytics": "[guid(concat(parameters('topLevelManagementGroupPrefix'), variables('policyAssignmentNames').logAnalytics))]"
         },
+
         "resourceDeploymentName": "[take(concat('platformLZ-la', deployment().location, deployment().name), 64)]"
     },
     "resources": [
