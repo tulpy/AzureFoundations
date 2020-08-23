@@ -349,6 +349,9 @@
                     "topLevelManagementGroupPrefix": {
                         "value": "[parameters('enterpriseScaleCompanyPrefix')]"
                     },
+                    "environmentIdentifier": {
+                        "value": "[parameters('enterpriseScaleCompanyPrefix')]"
+                    },
                     "enableHub": {
                         "value": "[parameters('enableHub')]"
                     },
@@ -401,6 +404,9 @@
                 },
                 "parameters": {
                     "topLevelManagementGroupPrefix": {
+                        "value": "[parameters('enterpriseScaleCompanyPrefix')]"
+                    },
+                    "environmentIdentifier": {
                         "value": "[parameters('enterpriseScaleCompanyPrefix')]"
                     },
                     "enableLogAnalytics": {
@@ -475,6 +481,9 @@
                 },
                 "parameters": {
                     "topLevelManagementGroupPrefix": {
+                        "value": "[parameters('enterpriseScaleCompanyPrefix')]"
+                    },
+                    "environmentIdentifier": {
                         "value": "[parameters('enterpriseScaleCompanyPrefix')]"
                     },
                     "enableLogAnalytics": {
