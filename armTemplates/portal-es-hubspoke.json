@@ -28,7 +28,7 @@
                     {
                         "name": "esMgmtGroup",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Comapny Identifier Prefix",
+                        "label": "Company Identifier Prefix",
                         "toolTip": "Provide a naming prefix for the company identifier, 1-5 characters.",
                         "defaultValue": "",
                         "constraints": {
@@ -142,7 +142,7 @@
                         "name": "esHub",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Platform Landing Zone Virtual Network",
-                        "defaultValue": "Yes",
+                        "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected when adding the Platform Landing Zone Subscription, ARM will deploy the Virtual Network",
                         "constraints": {
                             "allowedValues": [
@@ -159,14 +159,6 @@
                         "visible": true
                     },
                     {
-                        "name": "nwSubsApi",
-                        "type": "Microsoft.Solutions.ArmApiControl",
-                        "request": {
-                            "method": "GET",
-                            "path": "subscriptions?api-version=2020-01-01"
-                        }
-                    },
-                    {
                         "name": "esAddressHub",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Platform Landing Zone CIDR Range",
@@ -175,7 +167,7 @@
                         "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
                         "constraints": {
                             "required": true,
-                            "validationMessage": "The virtual hubs network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
+                            "validationMessage": "The Platform Landing Zone network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
                         }
                     },
                     {
@@ -345,7 +337,7 @@
                         "label": "Deploy VPN Gateway",
                         "defaultValue": "No",
                         "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy VPN gateway",
+                        "toolTip": "If 'Yes' is selected, ARM will deploy VPN gateway",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -365,7 +357,7 @@
                         "label": "Select VPN type",
                         "defaultValue": "Route Based",
                         "visible": "[equals(steps('esGoalState').esVpnGw, 'Yes')]",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy VPN gateway. Select whether it should be policy or route based.",
+                        "toolTip": "If 'Yes' is selected, ARM will deploy VPN gateway. Select whether it should be policy or route based.",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -397,7 +389,7 @@
                         "label": "Deploy ExpressRoute Gateway",
                         "defaultValue": "No",
                         "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy Express Route gateway",
+                        "toolTip": "If 'Yes' is selected, ARM will deploy an ExpressRoute gateway",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -417,7 +409,7 @@
                         "label": "Deploy Azure Firewall",
                         "defaultValue": "No",
                         "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy Azure Firewall",
+                        "toolTip": "If 'Yes' is selected, ARM will deploy Azure Firewall",
                         "constraints": {
                             "allowedValues": [
                                 {
