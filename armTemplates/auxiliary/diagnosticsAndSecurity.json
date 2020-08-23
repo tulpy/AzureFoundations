@@ -37,11 +37,6 @@
             "metadata": {
                 "description": "If 'Yes' is selected when also adding a subscription for the Platform Landing Zone, ARM will assign two policies to enable auditing in your environment, into the Log Analytics workspace for platform monitoring. If 'No', it will be ignored."
             }
-        },
-        "appLzSubscriptionId": {
-            "type": "string",
-            "maxLength": 36,
-            "defaultValue": ""
         }
     },
     "variables": {
@@ -70,8 +65,6 @@
         "blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}",
         "platfromLzAscResourceDeploymentName": "[take(concat('asc-platform-lz', deployment().location, deployment().name), 64)]",
         "platfromLzActivityResourceDeploymentName": "[take(concat('activity-platform-lz', deployment().location, deployment().name), 64)]",
-        "appLzAscResourceDeploymentName": "[take(concat('asc-app-lz', deployment().location, deployment().name), 64)]",
-        "appLzActivityResourceDeploymentName": "[take(concat('activity-app-lz', deployment().location, deployment().name), 64)]",
         "mgmtGrpAscResourceDeploymentName": "[take(concat('asc-mgmt-grp', deployment().location, deployment().name), 64)]",
         "mgmtGrpActivityResourceDeploymentName": "[take(concat('activity-mgmt-grp', deployment().location, deployment().name), 64)]"
     },
@@ -92,7 +85,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-mgmt', '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-la-', parameters('platformLzSubscriptionId')))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-mgmt', '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-oms'))]"
                     }
                 }
             }
@@ -276,38 +269,6 @@
                 "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureSecurity)]"
             ],
             "subscriptionId": "[parameters('platformLzSubscriptionId')]",
-            "properties": {
-                "mode": "incremental",
-                "template": "[if(and(not(empty(parameters('platformLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))), reference(variables('policyDefinitions').deployAzureSecurity, '2018-05-01').policyRule.then.details.deployment.properties.template, 'na')]",
-                "parameters": "[if(and(not(empty(parameters('platformLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))),reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').azureSecurity), '2018-05-01').parameters, json('null'))]"
-            }
-        },
-        {
-            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "name": "[variables('appLzActivityResourceDeploymentName')]",
-            "location": "[deployment().location]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureActivityLog)]"
-            ],
-            "subscriptionId": "[parameters('appLzSubscriptionId')]",
-            "properties": {
-                "mode": "incremental",
-                "template": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(variables('policyDefinitions').deployAzureActivityLog, '2018-05-01').policyRule.then.details.deployment.properties.template, variables('blankTemplateEscaped'))]",
-                "parameters": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').azureActivityLog), '2018-05-01').parameters, json('null'))]"
-            }
-        },
-        {
-            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free')))]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "name": "[variables('appLzAscResourceDeploymentName')]",
-            "location": "[deployment().location]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureSecurity)]"
-            ],
-            "subscriptionId": "[parameters('appLzSubscriptionId')]",
             "properties": {
                 "mode": "incremental",
                 "template": "[if(and(not(empty(parameters('platformLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))), reference(variables('policyDefinitions').deployAzureSecurity, '2018-05-01').policyRule.then.details.deployment.properties.template, 'na')]",
