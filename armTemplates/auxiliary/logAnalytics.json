@@ -69,7 +69,7 @@
                         "value": "[deployment().location]"
                     },
                     "rgName": {
-                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-cor-arg-network')]"
+                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-cor-arg-monitoring')]"
                     }
                 }
             }

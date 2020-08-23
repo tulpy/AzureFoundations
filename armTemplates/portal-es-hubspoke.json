@@ -8,9 +8,9 @@
         "steps": [
             {
                 "name": "lzSettings",
-                "label": "Company Prefix",
+                "label": "Naming Prefixes",
                 "subLabel": {
-                    "preValidation": "Provide a company prefix for the management group structure that will be created.",
+                    "preValidation": "Provide naming prefixes for all Azure resources that will be created.",
                     "postValidation": "Done"
                 },
                 "bladeTitle": "Naming Prefixes",
