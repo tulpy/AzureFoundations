@@ -66,7 +66,7 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "To enable the Platform Landing Zone, you must allocate a Subscription. Please note, this Subscription will be moved to the Platform Management Group, and ARM will deploy Platform Landing Zone resources. We recommend using a new Subscription with no existing resources.    ",
+                            "text": "To enable the Platform Landing Zone, you must allocate a Subscription. Please note, this Subscription will be moved to the Platform Management Group, and ARM will deploy Platform Landing Zone resources. Insight recommend using a new Subscription with no existing resources.    ",
                             "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
                         }
                     },

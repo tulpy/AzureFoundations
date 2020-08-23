@@ -119,8 +119,8 @@
                 "policyDefinitionId": "[variables('policyDefinitions').vmMonitoring]",
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
-                    "logAnalytics_1": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-mgmt', '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-la-', parameters('platformLzSubscriptionId')))]"
+                    "logAnalytics": {
+                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-mgmt', '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-oms-tulpy'))]"
                     }
                 }
             }
@@ -155,7 +155,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-mgmt', '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-la-', parameters('platformLzSubscriptionId')))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-mgmt', '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-oms-tulpy'))]"
                     }
                 }
             }

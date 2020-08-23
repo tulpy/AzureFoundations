@@ -22,7 +22,7 @@
                 "No"
             ],
             "metadata": {
-                "description": "If 'Yes' is selected when also adding a subscription for the Platform Landing Zone, ARM will assign two policies to enable auditing in your environment, into the Log Analytics workspace for platform monitoring. If 'No', it will be ignored."
+                "description": "If 'Yes' is selected, ARM will assign two policies to enable auditing in the environment, into the Log Analytics workspace for platform monitoring. If 'No', it will be ignored."
             }
         }
     },
@@ -60,7 +60,7 @@
                         "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-oms-tulpy')]"
                     },
                     "automationAccountName": {
-                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-cor-syd-aaa-001')]"
+                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-syd-aaa-001')]"
                     },
                     "workspaceRegion": {
                         "value": "[deployment().location]"
@@ -69,7 +69,7 @@
                         "value": "[deployment().location]"
                     },
                     "rgName": {
-                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-cor-arg-monitoring')]"
+                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-arg-monitoring')]"
                     }
                 }
             }
