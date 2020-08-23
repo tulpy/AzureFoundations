@@ -48,6 +48,18 @@
                             "regex": "^[a-z0-9A-Z-]{3}$",
                             "validationMessage": "The prefix must be 3 characters."
                         }
+                    },
+                    {
+                        "name": "esLocIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Location Identifier Prefix",
+                        "toolTip": "Provide a naming prefix for the location identifier, 3 characters (Australia East - SYD) or (Australia SouthEast - MEL)",
+                        "defaultValue": "",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
                     }
                 ]
             },
@@ -452,7 +464,8 @@
             "enableLogAnalytics": "[steps('esGoalState').esLogAnalytics]",
             "enableAsc": "[steps('esGoalState').esAsc]",
             "enterpriseScaleCompanyPrefix": "[steps('lzSettings').esMgmtGroup]",
-            "environmentIdentifier": "[steps('lzSettings').esEnvIdentifier]"
+            "environmentIdentifier": "[steps('lzSettings').esEnvIdentifier]",
+            "locationIdentifier": "[steps('lzSettings').esLocIdentifier]"
         }
     }
 }
