@@ -350,7 +350,7 @@
                         "value": "[parameters('enterpriseScaleCompanyPrefix')]"
                     },
                     "environmentIdentifier": {
-                        "value": "[parameters('enterpriseScaleCompanyPrefix')]"
+                        "value": "[parameters('environmentIdentifier')]"
                     },
                     "enableHub": {
                         "value": "[parameters('enableHub')]"
@@ -407,7 +407,7 @@
                         "value": "[parameters('enterpriseScaleCompanyPrefix')]"
                     },
                     "environmentIdentifier": {
-                        "value": "[parameters('enterpriseScaleCompanyPrefix')]"
+                        "value": "[parameters('environmentIdentifier')]"
                     },
                     "enableLogAnalytics": {
                         "value": "[parameters('enableLogAnalytics')]"
@@ -484,7 +484,7 @@
                         "value": "[parameters('enterpriseScaleCompanyPrefix')]"
                     },
                     "environmentIdentifier": {
-                        "value": "[parameters('enterpriseScaleCompanyPrefix')]"
+                        "value": "[parameters('environmentIdentifier')]"
                     },
                     "enableLogAnalytics": {
                         "value": "[parameters('enableLogAnalytics')]"
