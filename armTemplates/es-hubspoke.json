@@ -16,6 +16,13 @@
                 "description": "Provide the environment identifier prefix (3 characters)"
             }
         },
+        "locationIdentifier": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the location identifier prefix (3 characters)"
+            }
+        },
         "platformLzSubscriptionId": {
             "type": "string",
             "defaultValue": "",
@@ -115,10 +122,10 @@
         "connectivity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/hubspoke-connectivity.json')]",
         "moveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-Platform', '/', parameters('platformLzSubscriptionId'))]",
         "noSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-Platform', '/', 'na')]",
-        "policyDeploymentName": "[take(concat('EntScale-Policy', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-        "monitoringDeploymentName": "[take(concat('EntScale-Monitoring', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-        "diagAndSecDeploymentName": "[take(concat('EntScale-DiagSec', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-        "connectivityDeploymentName": "[take(concat('EntScale-conn', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
+        "policyDeploymentName": "[take(concat('Policy', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+        "monitoringDeploymentName": "[take(concat('Monitoring', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+        "diagAndSecDeploymentName": "[take(concat('DiagSec', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+        "connectivityDeploymentName": "[take(concat('Networking', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
     },
     "resources": [
         {
@@ -274,6 +281,9 @@
                     "environmentIdentifier": {
                         "value": "[parameters('environmentIdentifier')]"
                     },
+                    "locationIdentifier": {
+                        "value": "[parameters('locationIdentifier')]"
+                    },
                     "enableHub": {
                         "value": "[parameters('enableHub')]"
                     },
@@ -331,6 +341,9 @@
                     "environmentIdentifier": {
                         "value": "[parameters('environmentIdentifier')]"
                     },
+                    "locationIdentifier": {
+                        "value": "[parameters('locationIdentifier')]"
+                    },
                     "enableLogAnalytics": {
                         "value": "[parameters('enableLogAnalytics')]"
                     },
@@ -362,6 +375,9 @@
                     },
                     "environmentIdentifier": {
                         "value": "[parameters('environmentIdentifier')]"
+                    },
+                    "locationIdentifier": {
+                        "value": "[parameters('locationIdentifier')]"
                     },
                     "enableLogAnalytics": {
                         "value": "[parameters('enableLogAnalytics')]"
