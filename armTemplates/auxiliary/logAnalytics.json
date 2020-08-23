@@ -57,10 +57,10 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-Platform')]",
                 "parameters": {
                     "workspaceName": {
-                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-oms-tulpy')]"
+                        "value": "[toLower(concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-oms-tulpy'))]"
                     },
                     "automationAccountName": {
-                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-syd-aaa-001')]"
+                        "value": "[tolower(concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-syd-aaa-001'))]"
                     },
                     "workspaceRegion": {
                         "value": "[deployment().location]"
