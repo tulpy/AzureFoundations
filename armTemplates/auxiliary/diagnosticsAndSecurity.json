@@ -85,7 +85,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-Platform', '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-oms-tulpy'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-cor-arg-monitoring', '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-oms-tulpy'))]"
                     }
                 }
             }
@@ -120,7 +120,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-Platform', '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-oms-tulpy'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-cor-arg-monitoring', '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-oms-tulpy'))]"
                     }
                 }
             }
@@ -155,7 +155,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-Platform', '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-oms-tulpy'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-cor-arg-monitoring', '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-oms-tulpy'))]"
                     }
                 }
             }
