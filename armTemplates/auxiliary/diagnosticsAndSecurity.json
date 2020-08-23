@@ -63,10 +63,10 @@
             "deployResourceRiagnostics": "[guid(concat(parameters('topLevelManagementGroupPrefix'), variables('policyAssignmentNames').resourceDiagnostics))]"
         },
         "blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}",
-        "platfromLzAscResourceDeploymentName": "[take(concat('asc-platform-lz', deployment().location, deployment().name), 64)]",
-        "platfromLzActivityResourceDeploymentName": "[take(concat('activity-platform-lz', deployment().location, deployment().name), 64)]",
-        "mgmtGrpAscResourceDeploymentName": "[take(concat('asc-mgmt-grp', deployment().location, deployment().name), 64)]",
-        "mgmtGrpActivityResourceDeploymentName": "[take(concat('activity-mgmt-grp', deployment().location, deployment().name), 64)]"
+        "platfromLzAscResourceDeploymentName": "[take(concat('asc-platform-lz-', deployment().location, deployment().name), 64)]",
+        "platformLzActivityResourceDeploymentName": "[take(concat('activity-platform-lz-', deployment().location, deployment().name), 64)]",
+        "mgmtGrpAscResourceDeploymentName": "[take(concat('asc-mgmt-grp-', deployment().location, deployment().name), 64)]",
+        "mgmtGrpActivityResourceDeploymentName": "[take(concat('activity-mgmt-grp-', deployment().location, deployment().name), 64)]"
     },
     "resources": [
         {
@@ -279,7 +279,7 @@
             "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "[variables('platfromLzActivityResourceDeploymentName')]",
+            "name": "[variables('platformLzActivityResourceDeploymentName')]",
             "location": "[deployment().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureActivityLog)]"
