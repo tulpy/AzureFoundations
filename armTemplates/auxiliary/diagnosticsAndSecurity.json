@@ -6,6 +6,10 @@
             "type": "string",
             "maxLength": 5
         },
+        "environmentIdentifier": {
+            "type": "string",
+            "maxLength": 3
+        },
         "platformLzSubscriptionId": {
             "type": "string",
             "maxLength": 36,
