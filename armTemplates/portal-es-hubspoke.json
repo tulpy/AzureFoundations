@@ -142,7 +142,7 @@
                         "name": "esHub",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Platform Landing Zone Virtual Network",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected when adding the Platform Landing Zone Subscription, ARM will deploy the Virtual Network",
                         "constraints": {
                             "allowedValues": [
@@ -182,7 +182,7 @@
                         "name": "esRegions",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Azure Region for Platform Landing Zone",
-                        "defaultValue": "",
+                        "defaultValue": "australiaeast",
                         "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
                         "toolTip": "Select the target Azure region for the deployment.",
                         "constraints": {

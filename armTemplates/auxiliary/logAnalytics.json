@@ -6,7 +6,10 @@
             "type": "string",
             "maxLength": 5
         },
-
+        "environmentIdentifier": {
+            "type": "string",
+            "maxLength": 3
+        },
         "platformLzSubscriptionId": {
             "type": "string",
             "maxLength": 36
@@ -54,7 +57,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-Platform')]",
                 "parameters": {
                     "workspaceName": {
-                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-cor-syd-oms-001')]"
+                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-oms')]"
                     },
                     "automationAccountName": {
                         "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-cor-syd-aaa-001')]"
