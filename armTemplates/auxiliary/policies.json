@@ -8680,6 +8680,7 @@
                                       "sku": {
                                         "name": "pernode"
                                       },
+                                      "retentionInDays": 180,
                                       "enableLogAccessUsingOnlyResourcePermissions": true
                                     },
                                     "resources": [
