@@ -464,8 +464,7 @@
             "enableLogAnalytics": "[steps('esGoalState').esLogAnalytics]",
             "enableAsc": "[steps('esGoalState').esAsc]",
             "enterpriseScaleCompanyPrefix": "[steps('lzSettings').esMgmtGroup]",
-            "environmentIdentifier": "[steps('lzSettings').esEnvIdentifier]",
-            "locationIdentifier": "[steps('lzSettings').esLocIdentifier]"
+            "environmentIdentifier": "[steps('lzSettings').esEnvIdentifier]"
         }
     }
 }
