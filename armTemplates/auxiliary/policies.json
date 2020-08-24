@@ -48,34 +48,6 @@
           }
         },
         {
-          "Name": "Append-CreatedDate-Tag",
-          "Properties": {
-            "Description": "This policy appends the CreatedDate tag to to all Azure resources",
-            "DisplayName": "Append-CreatedDate-Tag",
-            "Mode": "All",
-            "Parameters": {},
-            "policyRule": {
-              "if": {
-                "allOf": [
-                  {
-                    "field": "tags['CreatedDate']",
-                    "exists": "false"
-                  }
-                ]
-              },
-              "then": {
-                "effect": "modify",
-                "details": [
-                  {
-                    "field": "tags['CreatedDate']",
-                    "value": "[utcNow()]"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        {
           "Name": "Deny-AppGW-Without-WAF",
           "Properties": {
             "Description": null,
