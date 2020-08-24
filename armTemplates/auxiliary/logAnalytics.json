@@ -43,7 +43,9 @@
         },
 
         "resourceDeploymentName": "[take(concat('platformLZ-la', deployment().location, deployment().name), 64)]",
-        "monitoringResourceGroupName": "arg-monitoring"
+        "monitoringResourceGroupName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-arg-monitoring')]",
+        "logAnalyticsName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'), '-oms-001')]",  
+        "azAutomationName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'), '-aaa-001')]" 
     },
     "resources": [
         {
@@ -62,10 +64,10 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-Platform')]",
                 "parameters": {
                     "workspaceName": {
-                        "value": "[toLower(concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'),'-oms-001'))]"
+                        "value": "[variables('logAnalyticsName')]"
                     },
                     "automationAccountName": {
-                        "value": "[tolower(concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'),'-aaa-001'))]"
+                        "value": "[variables('azAutomationName')]"
                     },
                     "workspaceRegion": {
                         "value": "[deployment().location]"
@@ -74,7 +76,7 @@
                         "value": "[deployment().location]"
                     },
                     "rgName": {
-                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', variables('monitoringResourceGroupName'))]"  
+                        "value": "[variables('monitoringResourceGroupName')]"
                     }
                 }
             }

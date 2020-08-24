@@ -67,11 +67,12 @@
             "deployResourceRiagnostics": "[guid(concat(parameters('topLevelManagementGroupPrefix'), variables('policyAssignmentNames').resourceDiagnostics))]"
         },
         "blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}",
-        "monitoringResourceGroupName": "arg-monitoring",
+        "monitoringResourceGroupName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-arg-monitoring')]",
+        "logAnalyticsName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'), '-oms-001')]",
         "platfromLzAscResourceDeploymentName": "[take(concat('asc-platform-lz-', deployment().location, deployment().name), 64)]",
-        "platformLzActivityResourceDeploymentName": "[take(concat('activity-platform-lz-', deployment().location, deployment().name), 64)]",
+        "platformLzActivityResourceDeploymentName": "[take(concat('activity-logs-platform-lz-', deployment().location, deployment().name), 64)]",
         "mgmtGrpAscResourceDeploymentName": "[take(concat('asc-mgmt-grp-', deployment().location, deployment().name), 64)]",
-        "mgmtGrpActivityResourceDeploymentName": "[take(concat('activity-mgmt-grp-', deployment().location, deployment().name), 64)]"
+        "mgmtGrpActivityResourceDeploymentName": "[take(concat('activity-logs-mgmt-grp-', deployment().location, deployment().name), 64)]"
     },
     "resources": [
         {
@@ -90,7 +91,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', variables('monitoringResourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'),'-oms-001'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('monitoringResourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', variables('logAnalyticsName')))]"
                     }
                 }
             }
@@ -125,7 +126,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', variables('monitoringResourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'),'-oms-001'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('monitoringResourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', variables('logAnalyticsName')))]"
                     }
                 }
             }
@@ -160,7 +161,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', variables('monitoringResourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'),'-oms-001'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('monitoringResourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', variables('logAnalyticsName')))]"
                     }
                 }
             }
