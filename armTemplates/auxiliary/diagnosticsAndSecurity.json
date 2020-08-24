@@ -10,6 +10,10 @@
             "type": "string",
             "maxLength": 3
         },
+        "locationIdentifier": {
+            "type": "string",
+            "maxLength": 3
+        },
         "platformLzSubscriptionId": {
             "type": "string",
             "maxLength": 36,
@@ -63,6 +67,7 @@
             "deployResourceRiagnostics": "[guid(concat(parameters('topLevelManagementGroupPrefix'), variables('policyAssignmentNames').resourceDiagnostics))]"
         },
         "blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}",
+        "monitoringResourceGroupName": "arg-monitoring",
         "platfromLzAscResourceDeploymentName": "[take(concat('asc-platform-lz-', deployment().location, deployment().name), 64)]",
         "platformLzActivityResourceDeploymentName": "[take(concat('activity-platform-lz-', deployment().location, deployment().name), 64)]",
         "mgmtGrpAscResourceDeploymentName": "[take(concat('asc-mgmt-grp-', deployment().location, deployment().name), 64)]",
@@ -85,7 +90,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-cor-arg-monitoring', '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-oms-tulpy'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', variables('monitoringResourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'),'-oms-001'))]"
                     }
                 }
             }
@@ -120,7 +125,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-cor-arg-monitoring', '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-oms-tulpy'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', variables('monitoringResourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'),'-oms-001'))]"
                     }
                 }
             }
@@ -155,7 +160,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-cor-arg-monitoring', '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-oms-tulpy'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', variables('monitoringResourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'),'-oms-001'))]"
                     }
                 }
             }

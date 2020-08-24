@@ -10,6 +10,10 @@
             "type": "string",
             "maxLength": 3
         },
+        "locationIdentifier": {
+            "type": "string",
+            "maxLength": 3
+        },
         "platformLzSubscriptionId": {
             "type": "string",
             "maxLength": 36
@@ -38,7 +42,8 @@
             "deployLogAnalytics": "[guid(concat(parameters('topLevelManagementGroupPrefix'), variables('policyAssignmentNames').logAnalytics))]"
         },
 
-        "resourceDeploymentName": "[take(concat('platformLZ-la', deployment().location, deployment().name), 64)]"
+        "resourceDeploymentName": "[take(concat('platformLZ-la', deployment().location, deployment().name), 64)]",
+        "monitoringResourceGroupName": "arg-monitoring"
     },
     "resources": [
         {
@@ -57,10 +62,10 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-Platform')]",
                 "parameters": {
                     "workspaceName": {
-                        "value": "[toLower(concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-oms-tulpy'))]"
+                        "value": "[toLower(concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'),'-oms-001'))]"
                     },
                     "automationAccountName": {
-                        "value": "[tolower(concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-syd-aaa-001'))]"
+                        "value": "[tolower(concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'),'-aaa-001'))]"
                     },
                     "workspaceRegion": {
                         "value": "[deployment().location]"
@@ -69,7 +74,7 @@
                         "value": "[deployment().location]"
                     },
                     "rgName": {
-                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-arg-monitoring')]"
+                        "value": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', variables('monitoringResourceGroupName'))]"  
                     }
                 }
             }
