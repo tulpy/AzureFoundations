@@ -175,7 +175,7 @@
                         "type": "Microsoft.Common.TextBox",
                         "label": "Platform Landing Zone CIDR Range",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/16)",
-                        "defaultValue": "10.100.0.0/16",
+                        "defaultValue": "10.49.0.0/18",
                         "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
                         "constraints": {
                             "required": true,
@@ -388,7 +388,7 @@
                         "type": "Microsoft.Common.TextBox",
                         "label": "Subnet for VPN & ExpressRoute Gateways",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.1.0/24)",
-                        "defaultValue": "10.100.1.0/24",
+                        "defaultValue": "10.49.63.0/27",
                         "visible": "[or(equals(steps('esGoalState').esErGw, 'Yes'), equals(steps('esGoalState').esVpnGw, 'Yes'))]",
                         "constraints": {
                             "required": true,
@@ -440,8 +440,40 @@
                         "type": "Microsoft.Common.TextBox",
                         "label": "Subnet for Azure Firewall",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
-                        "defaultValue": "10.100.0.0/24",
+                        "defaultValue": "10.49.5.0/24",
                         "visible": "[equals(steps('esGoalState').esAzFw, 'Yes')]",
+                        "constraints": {
+                            "required": true,
+                            "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
+                        }
+                    },
+                    {
+                        "name": "esAppGw",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure App Gateway Subnet",
+                        "defaultValue": "No",
+                        "visible": "[equals(steps('esGoalState').esHub, 'Yes')]",
+                        "toolTip": "If 'Yes' is selected, ARM will deploy a subnet for App Gateway",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAddressAppGw",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Subnet for Azure App Gateway",
+                        "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
+                        "defaultValue": "10.49.6.0/24",
+                        "visible": "[equals(steps('esGoalState').esAppGw, 'Yes')]",
                         "constraints": {
                             "required": true,
                             "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
@@ -454,10 +486,12 @@
             "vpnGwType": "[steps('esGoalState').esVpnGwType]",
             "subnetMaskForGw": "[steps('esGoalState').esAddressVpnOrEr]",
             "subnetMaskForAzFw": "[steps('esGoalState').esAddressFw]",
+            "subnetMaskForAppGw": "[steps('esGoalState').esAddressAppgw]",
             "enableErGw": "[steps('esGoalState').esErGw]",
             "enableVpnGw": "[steps('esGoalState').esVpnGw]",
             "enableHub": "[steps('esGoalState').esHub]",
             "enableAzFw": "[steps('esGoalState').esAzFw]",
+            "enableAppGw": "[steps('esGoalState').esAppGw]",
             "addressPrefix": "[steps('esGoalState').esAddressHub]",
             "location": "[steps('esGoalState').esRegions]",
             "platformLzSubscriptionId": "[steps('esGoalState').esPlatformLZSub]",

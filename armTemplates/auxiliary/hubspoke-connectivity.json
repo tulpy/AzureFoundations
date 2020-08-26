@@ -61,6 +61,14 @@
             ],
             "defaultValue": "No"
         },
+        "enableAppGw": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "No"
+        },
         "platformLzSubscriptionId": {
             "type": "string",
             "defaultValue": "",
@@ -75,6 +83,10 @@
             "defaultValue": "RouteBased"
         },
         "subnetMaskForAzFw": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "subnetMaskForAppGw": {
             "type": "string",
             "defaultValue": ""
         },
@@ -160,6 +172,18 @@
                                             ],
                                             "properties": {
                                                 "addressPrefix": "[parameters('subnetMaskForAzFw')]"
+                                            }
+                                        },
+                                                                                {
+                                            "condition": "[and(equals(parameters('enableAppGw'), 'Yes'), not(empty(parameters('subnetMaskForAppGw'))))]",
+                                            "type": "Microsoft.Network/virtualNetworks/subnets",
+                                            "apiVersion": "2020-04-01",
+                                            "name": "[concat(variables('hubName'), '/', 'AppGateway')]",
+                                            "dependsOn": [
+                                                "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
+                                            ],
+                                            "properties": {
+                                                "addressPrefix": "[parameters('subnetMaskForAppGw')]"
                                             }
                                         },
                                         {
