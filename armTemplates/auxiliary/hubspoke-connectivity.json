@@ -171,8 +171,8 @@
                                                         "[variables('hubName')]"
                                                     ],
                                                     "properties": {
-                                                "addressPrefix": "[parameters('subnetMaskForAppGw')]"
-                                            }
+                                                        "addressPrefix": "[parameters('subnetMaskForGw')]"
+                                                    }
                                                 }
                                             ]
                                         },
