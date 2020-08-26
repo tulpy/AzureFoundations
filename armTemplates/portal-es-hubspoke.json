@@ -486,7 +486,7 @@
             "vpnGwType": "[steps('esGoalState').esVpnGwType]",
             "subnetMaskForGw": "[steps('esGoalState').esAddressVpnOrEr]",
             "subnetMaskForAzFw": "[steps('esGoalState').esAddressFw]",
-            "subnetMaskForAppGw": "[steps('esGoalState').esAddressAppgw]",
+            "subnetMaskForAppGw": "[steps('esGoalState').esAddressAppGw]",
             "enableErGw": "[steps('esGoalState').esErGw]",
             "enableVpnGw": "[steps('esGoalState').esVpnGw]",
             "enableHub": "[steps('esGoalState').esHub]",

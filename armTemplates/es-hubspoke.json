@@ -276,7 +276,6 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-Platform')]",
             "name": "[variables('connectivityDeploymentName')]",
             "dependsOn": [
-                "[variables('monitoringDeploymentName')]",
                 "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('enterpriseScaleCompanyPrefix'), '-Platform'), parameters('platformLzSubscriptionId'))]"
             ],
             "location": "[deployment().location]",
