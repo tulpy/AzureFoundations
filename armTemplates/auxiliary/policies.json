@@ -9557,7 +9557,7 @@
                       },
                       {
                         "field": "name",
-                        "like": "[[concat(subscription().displayName, '-network')]"
+                        "like": "[[concat(subscription().displayName, '-networks')]"
                       }
                     ]
                   },
