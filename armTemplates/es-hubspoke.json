@@ -78,6 +78,14 @@
             ],
             "defaultValue": "No"
         },
+        "enableAppGw": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "No"
+        },
         "enableErGw": {
             "type": "string",
             "allowedValues": [
@@ -99,6 +107,10 @@
             "defaultValue": ""
         },
         "subnetMaskForGw": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "subnetMaskForAppGw": {
             "type": "string",
             "defaultValue": ""
         },
@@ -299,6 +311,9 @@
                     "enableErGw": {
                         "value": "[parameters('enableErGw')]"
                     },
+                    "enableAppGw": {
+                        "value": "[parameters('enableAppGw')]"
+                    },
                     "location": {
                         "value": "[parameters('location')]"
                     },
@@ -313,6 +328,9 @@
                     },
                     "subnetMaskForGw": {
                         "value": "[parameters('subnetMaskForGw')]"
+                    },
+                    "subnetMaskForAppGw": {
+                        "value": "[parameters('subnetMaskForAppGw')]"
                     }
                 }
             }
