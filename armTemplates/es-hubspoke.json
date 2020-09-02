@@ -204,6 +204,12 @@
                 "parameters": {
                     "topLevelManagementGroupPrefix": {
                         "value": "[parameters('enterpriseScaleCompanyPrefix')]"
+                    },
+                     "enableKvSoftDelete": {
+                        "value": "[parameters('enableKvSoftDelete')]"
+                    },
+                     "enableStorageHttps": {
+                        "value": "[parameters('enableStorageHttps')]"
                     }
                 }
             }
