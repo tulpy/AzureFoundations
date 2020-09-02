@@ -60,6 +60,44 @@
                             "regex": "^[a-z0-9A-Z-]{3}$",
                             "validationMessage": "The prefix must be 3 characters."
                         }
+                    },
+                    {
+                        "name": "esHttpsStorage",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy storage polciies",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected, policies will be deployed",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esKvSoftDelete",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy KV polciies",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected, policies will be deployed",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        }
                     }
                 ]
             },
@@ -499,7 +537,9 @@
             "enableAsc": "[steps('esGoalState').esAsc]",
             "enterpriseScaleCompanyPrefix": "[steps('lzSettings').esMgmtGroup]",
             "environmentIdentifier": "[steps('lzSettings').esEnvIdentifier]",
-            "locationIdentifier": "[steps('lzSettings').esLocIdentifier]"
+            "locationIdentifier": "[steps('lzSettings').esLocIdentifier]",
+            "enableStorageHttps": "[steps('lzSettings').esHttpsStorage]",
+            "enableKvSoftDelete": "[steps('lzSettings').esKvSoftDelete]"
         }
     }
 }
