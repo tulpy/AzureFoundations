@@ -537,7 +537,7 @@
             "enableAsc": "[steps('esGoalState').esAsc]",
             "enterpriseScaleCompanyPrefix": "[steps('lzSettings').esMgmtGroup]",
             "environmentIdentifier": "[steps('lzSettings').esEnvIdentifier]",
-            "locationIdentifier": "[steps('lzSettings').esLocIdentifier]",
+            "locationIdentifier": "[steps('lzSettings').esLocIdentifier]"
            // "enableStorageHttps": "[steps('lzSettings').esHttpsStorage]",
            // "enableKvSoftDelete": "[steps('lzSettings').esKvSoftDelete]"
         }
