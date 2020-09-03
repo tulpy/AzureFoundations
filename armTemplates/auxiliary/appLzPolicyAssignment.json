@@ -22,7 +22,7 @@
                 "No"
             ]
         },
-       "denyPublicendpoints": {
+        "denyPublicendpoints": {
             "type": "string",
             "defaultValue": "No",
             "allowedValues": [
@@ -36,12 +36,12 @@
         "policyDefinitions": {
             "appendKvSoftDelete": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Append-KV-SoftDelete')]",
             "storageHttps": "/providers/Microsoft.Authorization/policyDefinitions/404c3081-a854-4457-ae30-26a93ef643f9",
-            "denyPublicendpoints": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policySetDefinitions/Deny-Public-Endpoints-for-PaaS-Services')]"
+            "denyPublicEndpoints": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policySetDefinitions/Deny-PublicEndpoints')]"
         },
         "policyAssignmentNames": {
             "appendKvSoftDelete": "Append-KV-SoftDelete",
             "storageHttps": "Deny-Storage-http",
-            "denyPublicendpoints": "Deny-Public-Endpoints"
+            "denyPublicEndpoints": "Deny-Public-Endpoints"
 
         }
     },
@@ -76,12 +76,12 @@
             "condition": "[equals(parameters('denyPublicendpoints'), 'Yes')]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "2018-05-01",
-            "name": "[variables('policyAssignmentNames').denyPublicendpoints]",
+            "name": "[variables('policyAssignmentNames').denyPublicEndpoints]",
             "location": "[deployment().location]",
             "properties": {
                 "description": "Deny-Public-Endpoints-for-PaaS-Services",
                 "displayName": "Deny-Public-Endpoints",
-                "policyDefinitionId": "[variables('policyDefinitions').denyPublicendpoints]",
+                "policyDefinitionId": "[variables('policyDefinitions').denyPublicEndpoints]",
                 "scope": "[variables('scope')]"
             }
         }
