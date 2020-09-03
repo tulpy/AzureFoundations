@@ -416,7 +416,7 @@
                 }
             }
         },
-                {
+            /*    {
             "condition": "[or(equals(parameters('enableKvSoftDelete'), 'Yes'), equals(parameters('enableStorageHttps'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
@@ -444,7 +444,7 @@
                     }
                 }
             }
-        },
+        },*/
         {
             "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))), or(equals(parameters('enableLogAnalytics'), 'Yes'), and(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))))]",
             "type": "Microsoft.Resources/deployments",

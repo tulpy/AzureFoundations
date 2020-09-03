@@ -538,8 +538,6 @@
             "enterpriseScaleCompanyPrefix": "[steps('lzSettings').esMgmtGroup]",
             "environmentIdentifier": "[steps('lzSettings').esEnvIdentifier]",
             "locationIdentifier": "[steps('lzSettings').esLocIdentifier]"
-           // "enableStorageHttps": "[steps('lzSettings').esHttpsStorage]",
-           // "enableKvSoftDelete": "[steps('lzSettings').esKvSoftDelete]"
         }
     }
 }
