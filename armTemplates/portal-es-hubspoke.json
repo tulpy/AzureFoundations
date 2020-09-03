@@ -108,7 +108,7 @@
                     "preValidation": "Select 'Yes' if goal state should be enforced during deployment. Select 'No' if you want to do it post deployment using Azure Policy.",
                     "postValidation": "Done"
                 },
-                "bladeTitle": "lzGs",
+                "bladeTitle": "PlatformLZ",
                 "elements": [
                     {
                         "name": "infoBox1",
@@ -518,6 +518,87 @@
                         }
                     }
                 ]
+            },
+            {
+                "name": "esAppLZ",
+                "label": "Application Landing Zones",
+                "subLabel": {
+                    "preValidation": "Select 'Yes' if goal state should be enforced during deployment. Select 'No' if you want to do it post deployment using Azure Policy.",
+                    "postValidation": "Done"
+                },
+                "bladeTitle": "AppLZ",
+                "elements": [
+                    {
+                        "name": "infoBox1",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": true,
+                        "options": {
+                            "icon": "Info",
+                            "text": "Enable policies for App LZ.",
+                            "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
+                        }
+                    },
+                    {
+                        "name": "esHttpsStorage",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "HTTP Storage",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "esKvSoftDelete",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "HTTP Storage",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "esPublicendpoints",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "HTTP Storage",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    }
+                ]
             }
         ],
         "outputs": {
@@ -537,7 +618,10 @@
             "enableAsc": "[steps('esGoalState').esAsc]",
             "enterpriseScaleCompanyPrefix": "[steps('lzSettings').esMgmtGroup]",
             "environmentIdentifier": "[steps('lzSettings').esEnvIdentifier]",
-            "locationIdentifier": "[steps('lzSettings').esLocIdentifier]"
+            "locationIdentifier": "[steps('lzSettings').esLocIdentifier]",
+            "enableStorageHttps": "[steps('esAppLZ').esHttpsStorage]",
+            "enableKvSoftDelete": "[steps('esAppLZ').esKvSoftDelete]",
+            "denyPublicendpoints": "[steps('esAppLZ').esPublicendpoints]"
         }
     }
 }

@@ -141,6 +141,14 @@
                 "Yes",
                 "No"
             ]
+        },
+        "denyPublicendpoints": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
         }
     },
     "variables": {
@@ -148,14 +156,14 @@
         "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
         "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
         "connectivity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/hubspoke-connectivity.json')]",
-        "mgPolicyAssignment": "[uri(deployment().properties.templateLink.uri, 'auxiliary/rootPolicies.json')]",
+        "appLandingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/appLzPolicyAssignment.json')]",
         "moveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-Platform', '/', parameters('platformLzSubscriptionId'))]",
         "noSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-Platform', '/', 'na')]",
         "policyDeploymentName": "[take(concat('Policy', '-', deployment().location, '-', guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
         "monitoringDeploymentName": "[take(concat('Monitoring', '-', deployment().location, '-', guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
         "diagAndSecDeploymentName": "[take(concat('DiagSec', '-', deployment().location, '-', guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-        "connectivityDeploymentName": "[take(concat('Networking', '-', deployment().location, '-', guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
-        //"mgPolicyAssignmentDeploymentName": "[take(concat('PolicyAssignment', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
+        "connectivityDeploymentName": "[take(concat('Networking', '-', deployment().location, '-', guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+        "appLzDeploymentName": "[take(concat('AppLZ', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
     },
     "resources": [
         {
@@ -186,7 +194,7 @@
                 }
             }
         },
-   /* {
+        /* {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[variables('mgPolicyAssignmentDeploymentName')]",
@@ -214,7 +222,7 @@
                 }
             }
         },
-        */    
+        */
         {
             "type": "Microsoft.Management/managementGroups",
             "apiVersion": "2020-05-01",
@@ -305,7 +313,7 @@
                 }
             }
         },
-                {
+        {
             "type": "Microsoft.Management/managementGroups",
             "apiVersion": "2020-05-01",
             "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-Test')]",
@@ -431,12 +439,12 @@
                 }
             }
         },
-            /*    {
-            "condition": "[or(equals(parameters('enableKvSoftDelete'), 'Yes'), equals(parameters('enableStorageHttps'), 'Yes'))]",
+        {
+            "condition": "[or(or(equals(parameters('enableKvSoftDelete'), 'Yes'), equals(parameters('enableStorageHttps'), 'Yes')), equals(parameters('denyPublicendpoints'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
-            "name": "[variables('mgPolicyAssignmentDeploymentName')]",
+            "name": "[variables('appLZDeploymentName')]",
             "dependsOn": [
                 "[variables('policyDeploymentName')]"
             ],
@@ -445,7 +453,7 @@
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('mgPolicyAssignment')]"
+                    "uri": "[variables('appLandingZone')]"
                 },
                 "parameters": {
                     "topLevelManagementGroupPrefix": {
@@ -456,10 +464,13 @@
                     },
                     "enableKvSoftDelete": {
                         "value": "[parameters('enableKvSoftDelete')]"
+                    },
+                    "denyPublicendpoints": {
+                        "value": "[parameters('enableKvSoftDelete')]"
                     }
                 }
             }
-        },*/
+        },
         {
             "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))), or(equals(parameters('enableLogAnalytics'), 'Yes'), and(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))))]",
             "type": "Microsoft.Resources/deployments",
