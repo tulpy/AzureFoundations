@@ -559,6 +559,46 @@
                             ]
                         },
                         "visible": true
+                    },
+                    {
+                        "name": "esPublicIP",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Azure Policy: Deny Public IP Addresses",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "esSubnetNSG",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Azure Policy: Deny Subnets without NSGs",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
                     }
                 ]
             }
@@ -583,7 +623,9 @@
             "locationIdentifier": "[steps('lzSettings').esLocIdentifier]",
             "enableStorageHttps": "[steps('esAppLZ').esHttpsStorage]",
             "enableKvSoftDelete": "[steps('esAppLZ').esKvSoftDelete]",
-            "denyPublicendpoints": "[steps('esAppLZ').esPublicendpoints]"
+            "denyPublicendpoints": "[steps('esAppLZ').esPublicendpoints]",
+            "denyPublicIP": "[steps('esAppLZ').esPublicIP]",
+            "denySubnetNSG": "[steps('esAppLZ').esSubnetNSG]"
         }
     }
 }
