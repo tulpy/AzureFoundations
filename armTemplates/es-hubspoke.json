@@ -293,7 +293,22 @@
         {
             "type": "Microsoft.Management/managementGroups",
             "apiVersion": "2020-05-01",
-            "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-NonProduction')]",
+            "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-Development')]",
+            "dependsOn": [
+                "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('enterpriseScaleCompanyPrefix'), '-AppLandingZones'))]"
+            ],
+            "properties": {
+                "details": {
+                    "parent": {
+                        "id": "[tenantResourceId('Microsoft.Management/managementGroups/', concat(parameters('enterpriseScaleCompanyPrefix'), '-AppLandingZones'))]"
+                    }
+                }
+            }
+        },
+                {
+            "type": "Microsoft.Management/managementGroups",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-Test')]",
             "dependsOn": [
                 "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('enterpriseScaleCompanyPrefix'), '-AppLandingZones'))]"
             ],
