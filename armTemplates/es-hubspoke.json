@@ -158,7 +158,7 @@
                 "No"
             ]
         },
-        "denySubnetNSG": {
+        "denySubnetWithoutNsg": {
             "type": "string",
             "defaultValue": "No",
             "allowedValues": [
@@ -464,7 +464,7 @@
                 }
             },
             {
-                "condition": "[or(or(equals(parameters('enableKvSoftDelete'), 'Yes'), equals(parameters('enableStorageHttps'), 'Yes')), equals(parameters('denyPublicendpoints'), 'Yes'), equals(parameters('denyPublicIP'), 'Yes'),equals(parameters('denySubnetNSG'), 'Yes'))]",
+                "condition": "[or(or(equals(parameters('enableKvSoftDelete'), 'Yes'), equals(parameters('enableStorageHttps'), 'Yes')), equals(parameters('denyPublicendpoints'), 'Yes'), equals(parameters('denyPublicIP'), 'Yes'), equals(parameters('denySubnetWithoutNsg'), 'Yes'), equals(parameters('denyIpForwarding'), 'Yes'))]",
                 "type": "Microsoft.Resources/deployments",
                 "apiVersion": "2019-05-01",
                 "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-AppLandingZones')]",
@@ -495,8 +495,8 @@
                         "denyPublicIP": {
                             "value": "[parameters('denyPublicIP')]"
                         },
-                        "denySubnetNSG": {
-                            "value": "[parameters('denySubnetNSG')]"
+                        "denySubnetWithoutNsg": {
+                            "value": "[parameters('denySubnetWithoutNsg')]"
                         },
                         "denyIPforwarding": {
                             "value": "[parameters('denyIpForwarding')]"

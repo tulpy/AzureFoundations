@@ -645,7 +645,7 @@
             "enableKvSoftDelete": "[steps('esAppLZ').esKvSoftDelete]",
             "denyPublicendpoints": "[steps('esAppLZ').esPublicendpoints]",
             "denyPublicIP": "[steps('esAppLZ').esPublicIP]",
-            "denySubnetNSG": "[steps('esAppLZ').esSubnetNSG]",
+            "denySubnetWithoutNsg": "[steps('esAppLZ').esSubnetNSG]",
             "denyIpForwarding": "[steps('esAppLZ').esIpForwarding]"
         }
     }
