@@ -443,7 +443,7 @@
             "condition": "[or(or(equals(parameters('enableKvSoftDelete'), 'Yes'), equals(parameters('enableStorageHttps'), 'Yes')), equals(parameters('denyPublicendpoints'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
-            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-AppLandingZones')]", 
             "name": "[variables('appLZDeploymentName')]",
             "dependsOn": [
                 "[variables('policyDeploymentName')]"

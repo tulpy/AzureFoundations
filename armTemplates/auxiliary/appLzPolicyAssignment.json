@@ -41,7 +41,7 @@
         "policyAssignmentNames": {
             "appendKvSoftDelete": "Append-KV-SoftDelete",
             "storageHttps": "Deny-Storage-http",
-            "denyPublicendpoints": "Deny-Public-Endpoints-for-PaaS-Services"
+            "denyPublicendpoints": "Deny-Public-Endpoints"
 
         }
     },
@@ -80,7 +80,7 @@
             "location": "[deployment().location]",
             "properties": {
                 "description": "Deny-Public-Endpoints-for-PaaS-Services",
-                "displayName": "Deny-Public-Endpoints-for-PaaS-Services",
+                "displayName": "Deny-Public-Endpoints",
                 "policyDefinitionId": "[variables('policyDefinitions').denyPublicendpoints]",
                 "scope": "[variables('scope')]"
             }
