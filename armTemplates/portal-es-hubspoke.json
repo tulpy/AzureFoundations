@@ -599,6 +599,26 @@
                             ]
                         },
                         "visible": true
+                    },
+                    {
+                        "name": "esIpForwarding",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Azure Policy: Deny IP Forwarding",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
                     }
                 ]
             }
@@ -625,7 +645,8 @@
             "enableKvSoftDelete": "[steps('esAppLZ').esKvSoftDelete]",
             "denyPublicendpoints": "[steps('esAppLZ').esPublicendpoints]",
             "denyPublicIP": "[steps('esAppLZ').esPublicIP]",
-            "denySubnetNSG": "[steps('esAppLZ').esSubnetNSG]"
+            "denySubnetNSG": "[steps('esAppLZ').esSubnetNSG]",
+            "denyIpForwarding": "[steps('esAppLZ').esIpForwarding]"
         }
     }
 }
