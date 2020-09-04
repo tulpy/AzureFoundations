@@ -506,7 +506,7 @@
                             "value": "[parameters('enableKvSoftDelete')]"
                         },
                         "denyPublicendpoints": {
-                            "value": "[parameters('enableKvSoftDelete')]"
+                            "value": "[parameters('denyPublicendpoints')]"
                         },
                         "denyPublicIP": {
                             "value": "[parameters('denyPublicIP')]"
