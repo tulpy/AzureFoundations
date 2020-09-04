@@ -504,7 +504,7 @@
                         "name": "esHttpsStorage",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Azure Policy: Enforce HTTPS Storage",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
                         "constraints": {
                             "allowedValues": [
@@ -524,7 +524,7 @@
                         "name": "esKvSoftDelete",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Azure Policy: Enable Soft Delete for Azure Key Vault",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
                         "constraints": {
                             "allowedValues": [
@@ -544,7 +544,7 @@
                         "name": "esPublicendpoints",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Azure Policy: Deny Public Endpoints on PaaS",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
                         "constraints": {
                             "allowedValues": [
@@ -564,7 +564,7 @@
                         "name": "esPublicIP",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Azure Policy: Deny Public IP Addresses",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
                         "constraints": {
                             "allowedValues": [
@@ -584,12 +584,12 @@
                         "name": "esSubnetNSG",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Azure Policy: Deny Subnets without NSGs",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
                         "constraints": {
                             "allowedValues": [
                                 {
-                                    "label": "Yes (recommended)",
+                                    "label": "Yes",
                                     "value": "Yes"
                                 },
                                 {
@@ -624,7 +624,7 @@
                         "name": "esRdpInternet",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Azure Policy: Deny RDP Internet",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
                         "constraints": {
                             "allowedValues": [
@@ -644,7 +644,7 @@
                         "name": "esSshInternet",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Azure Policy: Deny SSH Internet",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
                         "constraints": {
                             "allowedValues": [
