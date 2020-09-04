@@ -604,7 +604,7 @@
                         "name": "esIpForwarding",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Azure Policy: Deny IP Forwarding",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
                         "constraints": {
                             "allowedValues": [
