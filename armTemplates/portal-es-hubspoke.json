@@ -26,7 +26,7 @@
                         }
                     },
                     {
-                        "name": "esMgmtGroup",
+                        "name": "esCompIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Company Identifier Prefix",
                         "toolTip": "Provide a naming prefix for the company identifier, 1-5 characters.",
@@ -619,6 +619,46 @@
                             ]
                         },
                         "visible": true
+                    },
+                    {
+                        "name": "esRdpInternet",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Azure Policy: Deny RDP Internet",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "esSshInternet",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Azure Policy: Deny SSH Internet",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
                     }
                 ]
             }
@@ -638,7 +678,7 @@
             "platformLzSubscriptionId": "[steps('esPlatformLZ').esPlatformLZSub]",
             "enableLogAnalytics": "[steps('esPlatformLZ').esLogAnalytics]",
             "enableAsc": "[steps('esPlatformLZ').esAsc]",
-            "enterpriseScaleCompanyPrefix": "[steps('lzNaming').esMgmtGroup]",
+            "enterpriseScaleCompanyPrefix": "[steps('lzNaming').esCompIdentifier]",
             "environmentIdentifier": "[steps('lzNaming').esEnvIdentifier]",
             "locationIdentifier": "[steps('lzNaming').esLocIdentifier]",
             "enableStorageHttps": "[steps('esAppLZ').esHttpsStorage]",
@@ -646,7 +686,9 @@
             "denyPublicendpoints": "[steps('esAppLZ').esPublicendpoints]",
             "denyPublicIP": "[steps('esAppLZ').esPublicIP]",
             "denySubnetWithoutNsg": "[steps('esAppLZ').esSubnetNSG]",
-            "denyIpForwarding": "[steps('esAppLZ').esIpForwarding]"
+            "denyIpForwarding": "[steps('esAppLZ').esIpForwarding]",
+            "denyRdpInternet": "[steps('esAppLZ').esRdpInternet]",
+            "denySshInternet": "[steps('esAppLZ').esSshInternet]"
         }
     }
 }

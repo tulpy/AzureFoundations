@@ -173,6 +173,22 @@
                 "Yes",
                 "No"
             ]
+        },
+        "denyRdpInternet": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
+        "denySshInternet": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
         }
     },
         "variables": {
@@ -180,7 +196,7 @@
             "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
             "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
             "connectivity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/hubspoke-connectivity.json')]",
-            "appLandingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/appLzPolicyAssignment.json')]",
+            "appLandingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/appLz.json')]",
             "moveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-Platform', '/', parameters('platformLzSubscriptionId'))]",
             "noSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-Platform', '/', 'na')]",
             "policyDeploymentName": "[take(concat('Policy', '-', deployment().location, '-', guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
@@ -464,7 +480,7 @@
                 }
             },
             {
-                "condition": "[or(or(equals(parameters('enableKvSoftDelete'), 'Yes'), equals(parameters('enableStorageHttps'), 'Yes')), equals(parameters('denyPublicendpoints'), 'Yes'), equals(parameters('denyPublicIP'), 'Yes'), equals(parameters('denySubnetWithoutNsg'), 'Yes'), equals(parameters('denyIpForwarding'), 'Yes'))]",
+                "condition": "[or(or(equals(parameters('enableKvSoftDelete'), 'Yes'), equals(parameters('enableStorageHttps'), 'Yes')), equals(parameters('denyPublicendpoints'), 'Yes'), equals(parameters('denyPublicIP'), 'Yes'), equals(parameters('denySubnetWithoutNsg'), 'Yes'), equals(parameters('denyIpForwarding'), 'Yes'), equals(parameters('denyRdpInternet'), 'Yes'), equals(parameters('denySshInternet'), 'Yes'))]", 
                 "type": "Microsoft.Resources/deployments",
                 "apiVersion": "2019-05-01",
                 "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-AppLandingZones')]",
@@ -500,6 +516,12 @@
                         },
                         "denyIPforwarding": {
                             "value": "[parameters('denyIpForwarding')]"
+                        },
+                        "denyRdpInternet": {
+                            "value": "[parameters('denyRdpInternet')]"
+                        },
+                        "denySshInternet": {
+                            "value": "[parameters('denySshInternet')]"
                         }
                     }
                 }

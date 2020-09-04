@@ -1,3 +1,29 @@
+App
+Custom subscription owner roles should not exist
+RDP access from the Internet should be blocked
+SSH access from the Internet should be blocked
+Virtual networks should use specified virtual network gateway
+[Preview]: All Internet traffic should be routed via your deployed Azure Firewall
+
+
+Platform
+
+Gateway subnets should not be configured with a network security group
+An activity log alert should exist for specific Security operations
+Append a tag and its value to resources (Platfrom LZ)
+Azure Monitor should collect activity logs from all regions
+Azure subscriptions should have a log profile for Activity Log
+An activity log alert should exist for specific Administrative operations
+
+
+Root
+Allowed locations
+Allowed locations for resource groups
+
+
+
+
+
 | Enterprise-Scale Design Principles | ARM Template | Scale without refactoring |
 |:-------------|:--------------|:--------------|
 |![Best Practice Check](https://azurequickstartsservice.blob.core.windows.net/badges/subscription-deployments/create-rg-lock-role-assignment/BestPracticeResult.svg)| [![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2Fmaster%2FarmTemplates%2Fes-hubspoke.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2Fmaster%2FarmTemplates%2Fportal-es-hubspoke.json)  | Yes |

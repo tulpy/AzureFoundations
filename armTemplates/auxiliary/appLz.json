@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-         "topLevelManagementGroupPrefix": {
+        "topLevelManagementGroupPrefix": {
             "type": "string",
             "maxLength": 5
         },
@@ -30,7 +30,7 @@
                 "No"
             ]
         },
-          "denyPublicIp": {
+        "denyPublicIp": {
             "type": "string",
             "defaultValue": "No",
             "allowedValues": [
@@ -38,7 +38,7 @@
                 "No"
             ]
         },
-          "denySubnetWithoutNsg": {
+        "denySubnetWithoutNsg": {
             "type": "string",
             "defaultValue": "No",
             "allowedValues": [
@@ -46,7 +46,23 @@
                 "No"
             ]
         },
-           "denyIpForwarding": {
+        "denyIpForwarding": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
+        "denyRdpInternet": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
+        "denySshInternet": {
             "type": "string",
             "defaultValue": "No",
             "allowedValues": [
@@ -56,14 +72,16 @@
         }
     },
     "variables": {
-        "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-AppLandingZones')]", 
+        "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-AppLandingZones')]",
         "policyDefinitions": {
             "appendKvSoftDelete": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Append-KV-SoftDelete')]",
             "storageHttps": "/providers/Microsoft.Authorization/policyDefinitions/404c3081-a854-4457-ae30-26a93ef643f9",
             "denyPublicEndpoints": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policySetDefinitions/Deny-PublicEndpoints')]",
             "denyPublicIp": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIp')]",
             "denySubnetWithoutNsg": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Nsg')]",
-            "denyIpForwarding": "[concat('/providers/Microsoft.Authorization/policyDefinitions/bd352bd5-2853-4985-bf0d-73806b4a5744')]"
+            "denyIpForwarding": "[concat('/providers/Microsoft.Authorization/policyDefinitions/bd352bd5-2853-4985-bf0d-73806b4a5744')]",
+            "denyRdpInternet": "[concat('/providers/Microsoft.Authorization/policyDefinitions/e372f825-a257-4fb8-9175-797a8a8627d6')]",
+            "denySshInternet": "[concat('/providers/Microsoft.Authorization/policyDefinitions/2c89a2e5-7285-40fe-afe0-ae8654b92fab')]"
         },
         "policyAssignmentNames": {
             "appendKvSoftDelete": "Append-KV-SoftDelete",
@@ -71,7 +89,9 @@
             "denyPublicEndpoints": "Deny-Public-Endpoints",
             "denyPublicIp": "Deny-PublicIp",
             "denySubnetWithoutNsg": "Deny-Subnet-Without-Nsg",
-            "denyIpForwarding": "Deny-IpForwarding"
+            "denyIpForwarding": "Deny-IpForwarding",
+            "denyRdpInternet": "Deny-RDP-Internet",
+            "denySshInternet": "Deny-SSH-Internet"
 
         }
     },
@@ -102,7 +122,7 @@
                 "scope": "[variables('scope')]"
             }
         },
-                {
+        {
             "condition": "[equals(parameters('denyPublicendpoints'), 'Yes')]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "2018-05-01",
@@ -151,6 +171,32 @@
                 "description": "Deny-Subnet-Without-Nsg",
                 "displayName": "Deny-Subnet-Without-Nsg",
                 "policyDefinitionId": "[variables('policyDefinitions').denySubnetWithoutNsg]",
+                "scope": "[variables('scope')]"
+            }
+        },
+                {
+            "condition": "[equals(parameters('denyRdpInternet'), 'Yes')]",
+            "type": "Microsoft.Authorization/policyAssignments",
+            "apiVersion": "2018-05-01",
+            "name": "[variables('policyAssignmentNames').denyRdpInternet]",
+            "location": "[deployment().location]",
+            "properties": {
+                "description": "Deny-RDP-Internet",
+                "displayName": "Deny-RDP-Internet",
+                "policyDefinitionId": "[variables('policyDefinitions').denyRdpInternet]",
+                "scope": "[variables('scope')]"
+            }
+        },
+                {
+            "condition": "[equals(parameters('denySshInternet'), 'Yes')]",
+            "type": "Microsoft.Authorization/policyAssignments",
+            "apiVersion": "2018-05-01",
+            "name": "[variables('policyAssignmentNames').denySshInternet]",
+            "location": "[deployment().location]",
+            "properties": {
+                "description": "Deny-SSH-Internet",
+                "displayName": "Deny-SSH-Internet",
+                "policyDefinitionId": "[variables('policyDefinitions').denySshInternet]",
                 "scope": "[variables('scope')]"
             }
         }
