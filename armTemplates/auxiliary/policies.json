@@ -10,6 +10,7 @@
   "variables": {
     "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
     "policies": {
+      "allowedRegions": "[concat('/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c')]",
       "policyDefinitions": [
         {
           "Name": "Append-KV-SoftDelete",
@@ -10756,6 +10757,9 @@
           }
         }
       ]
+    },
+    "policyAssignmentNames": {
+      "allowedRegions": "Allowed-Azure-regions"
     }
   },
   "resources": [
@@ -10792,6 +10796,18 @@
         "description": "[variables('initiatives').policySetDefinitions[copyIndex()].properties.description]",
         "parameters": "[variables('initiatives').policySetDefinitions[copyIndex()].properties.parameters]",
         "policyDefinitions": "[variables('initiatives').policySetDefinitions[copyIndex()].properties.policyDefinitions]"
+      }
+    },
+    {
+      "type": "Microsoft.Authorization/policyAssignments",
+      "apiVersion": "2018-05-01",
+      "name": "[variables('policyAssignmentNames').allowedRegions]",
+      "location": "[deployment().location]",
+      "properties": {
+        "description": "Allowed-Azure-regions",
+        "displayName": "Allowed-Azure-regions",
+        "policyDefinitionId": "[variables('policies').allowedRegions]",
+        "scope": "[variables('scope')]"
       }
     }
   ]

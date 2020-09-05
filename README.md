@@ -1,7 +1,6 @@
 App
 Custom subscription owner roles should not exist
-RDP access from the Internet should be blocked
-SSH access from the Internet should be blocked
+
 Virtual networks should use specified virtual network gateway
 [Preview]: All Internet traffic should be routed via your deployed Azure Firewall
 
