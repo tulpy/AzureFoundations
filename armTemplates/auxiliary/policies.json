@@ -10807,11 +10807,13 @@
         "description": "Allowed-Azure-regions",
         "displayName": "Allowed-Azure-regions",
         "policyDefinitionId": "[variables('policies').allowedRegions]",
-        "listOfAllowedLocations": {
-          "value": [
-            "australiaeast",
-            "australiasoutheast"
-          ]
+        "parameters": {
+          "listOfAllowedLocations": {
+            "value": [
+              "australiaeast",
+              "australiasoutheast"
+            ]
+          }
         },
         "scope": "[variables('scope')]"
       }
