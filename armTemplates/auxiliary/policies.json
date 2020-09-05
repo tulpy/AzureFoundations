@@ -11,7 +11,37 @@
     "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
     "policies": {
       "allowedRegions": "[concat('/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c')]",
+      "allowedRegionsRg": "[concat('/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988')]",
+
       "policyDefinitions": [
+        {
+          "Name": "Append-CreatedDate-Tag",
+          "properties": {
+            "description": "This policy appends the CreatedDate tag to to all Azure resources",
+            "displayName": "Append-CreatedDate-Tag",
+            "mode": "All",
+            "parameters": {},
+            "policyRule": {
+              "if": {
+                "allOf": [
+                  {
+                    "field": "tags['CreatedDate']",
+                    "exists": "false"
+                  }
+                ]
+              },
+              "then": {
+                "effect": "append",
+                "details": [
+                  {
+                    "field": "tags['CreatedDate']",
+                    "value": "[utcNow()]"
+                  }
+                ]
+              }
+            }
+          }
+        },
         {
           "Name": "Append-KV-SoftDelete",
           "Properties": {
@@ -10759,7 +10789,9 @@
       ]
     },
     "policyAssignmentNames": {
-      "allowedRegions": "Allowed-Azure-regions"
+      "allowedRegions": "Allowed-AzureRegions",
+      "allowedRegionsRg": "Allowed-AzureRegions-Rg",
+      "appendCreatedDate": "Append-CreatedDate"
     }
   },
   "resources": [
@@ -10804,8 +10836,8 @@
       "name": "[variables('policyAssignmentNames').allowedRegions]",
       "location": "[deployment().location]",
       "properties": {
-        "description": "Allowed-Azure-regions",
-        "displayName": "Allowed-Azure-regions",
+        "description": "Allowed-AzureRegions",
+        "displayName": "Allowed-AzureRegions",
         "policyDefinitionId": "[variables('policies').allowedRegions]",
         "parameters": {
           "listOfAllowedLocations": {
@@ -10815,6 +10847,39 @@
             ]
           }
         },
+        "scope": "[variables('scope')]"
+      }
+    },
+    {
+      "type": "Microsoft.Authorization/policyAssignments",
+      "apiVersion": "2018-05-01",
+      "name": "[variables('policyAssignmentNames').allowedRegionsRg]",
+      "location": "[deployment().location]",
+      "properties": {
+        "description": "Allowed-AzureRegions-Rg",
+        "displayName": "Allowed-AzureRegions-Rg",
+        "policyDefinitionId": "[variables('policies').allowedRegionsRg]",
+        "parameters": {
+          "listOfAllowedLocations": {
+            "value": [
+              "australiaeast",
+              "australiasoutheast"
+            ]
+          }
+        },
+        "scope": "[variables('scope')]"
+      }
+    },
+    {
+      "type": "Microsoft.Authorization/policyAssignments",
+      "apiVersion": "2018-05-01",
+      "name": "[variables('policyAssignmentNames').appendCreatedDate]",
+      "location": "[deployment().location]",
+      "properties": {
+        "description": "Append-CreatedDate",
+        "displayName": "Append-CreatedDate",
+        "policyDefinitionId": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Append-CreatedDate-Tag')]",
+        "parameters": {},
         "scope": "[variables('scope')]"
       }
     }

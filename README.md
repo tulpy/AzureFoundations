@@ -16,8 +16,7 @@ An activity log alert should exist for specific Administrative operations
 
 
 Root
-Allowed locations
-Allowed locations for resource groups
+
 
 
 
