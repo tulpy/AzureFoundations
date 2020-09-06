@@ -8,20 +8,25 @@
     }
   },
   "variables": {
-    "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
+    "scope": {
+      "rootScope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
+      "platformScope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-Platform')]"
+    },
     "policyDefinitions": {
       "allowedRegions": "[concat('/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c')]",
       "allowedRegionsRg": "[concat('/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988')]",
       "denyAppGwyWaf": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-AppGW-Without-WAF')]",
       "appendKvSoftDelete": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Append-KV-SoftDelete')]",
-      "storageHttps": "/providers/Microsoft.Authorization/policyDefinitions/404c3081-a854-4457-ae30-26a93ef643f9"
+      "storageHttps": "/providers/Microsoft.Authorization/policyDefinitions/404c3081-a854-4457-ae30-26a93ef643f9",
+      "appendEnvironmentTag": "/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498"
     },
     "policyAssignmentNames": {
       "allowedRegions": "Allowed-AzureRegions",
       "allowedRegionsRg": "Allowed-AzureRegions-RG",
       "denyAppGwyWaf": "Deny-AppGW-Without-WAF",
       "appendKvSoftDelete": "Append-KV-SoftDelete",
-      "storageHttps": "Deny-Storage-http"
+      "storageHttps": "Deny-Storage-http",
+      "appendEnvironmentTag": "Append-Environment-Tag"
     }
   },
   "resources": [
@@ -42,7 +47,7 @@
             ]
           }
         },
-        "scope": "[variables('scope')]"
+        "scope": "[variables('scope').rootScope]"
       }
     },
     {
@@ -62,7 +67,7 @@
             ]
           }
         },
-        "scope": "[variables('scope')]"
+        "scope": "[variables('scope').rootScope]"
       }
     },
     {
@@ -75,7 +80,7 @@
         "displayName": "Deny-AppGW-Without-WAF",
         "policyDefinitionId": "[variables('policyDefinitions').denyAppGwyWaf]",
         "parameters": {},
-        "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]"
+        "scope": "[variables('scope').rootScope]"
       }
     },
     {
@@ -87,7 +92,7 @@
         "description": "Enforce-Secure-Storage",
         "displayName": "Enforce-Secure-Storage",
         "policyDefinitionId": "[variables('policyDefinitions').storageHttps]",
-        "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]"
+        "scope": "[variables('scope').rootScope]"
       }
     },
     {
@@ -99,7 +104,23 @@
         "description": "Append-KV-SoftDelete",
         "displayName": "Append-KV-SoftDelete",
         "policyDefinitionId": "[variables('policyDefinitions').appendKvSoftDelete]",
-        "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]"
+        "scope": "[variables('scope').rootScope]"
+      }
+    },
+    {
+      "type": "Microsoft.Authorization/policyAssignments",
+      "apiVersion": "2018-05-01",
+      "name": "[variables('policyAssignmentNames').appendEnvironmentTag]",
+      "location": "[deployment().location]",
+      "properties": {
+        "description": "Append-Environment-Tag",
+        "displayName": "Append-Environment-Tag",
+        "policyDefinitionId": "[variables('policyDefinitions').appendEnvironmentTag]",
+        "parameters": {
+          "tagName": "Environment",
+          "tagValue": "PlatformLZ"
+        },
+        "scope": "[variables('scope').platformScope]"
       }
     }
   ]
