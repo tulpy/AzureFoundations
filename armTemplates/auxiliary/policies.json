@@ -20,7 +20,10 @@
             "description": "This policy appends the CreatedDate tag to to all Azure resources",
             "displayName": "Append-CreatedDate-Tag",
             "mode": "All",
-            "parameters": {},
+            "parameters": {
+          
+              }
+            },
             "policyRule": {
               "if": {
                 "allOf": [
@@ -35,7 +38,7 @@
                 "details": [
                   {
                     "field": "tags['CreatedDate']",
-                    "value": "[utcNow()]"
+                    "value": "[utcNow('d')]"
                   }
                 ]
               }
