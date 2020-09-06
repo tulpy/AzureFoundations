@@ -189,6 +189,22 @@
                 "Yes",
                 "No"
             ]
+        },
+        "denyErPeering": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
+        "denyPrivateDnsZones": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
         }
     },
     "variables": {
@@ -451,7 +467,7 @@
             }
         },
         {
-            "condition": "[or(or(equals(parameters('enableKvSoftDelete'), 'Yes'), equals(parameters('enableStorageHttps'), 'Yes')), equals(parameters('denyPublicendpoints'), 'Yes'), equals(parameters('denyPublicIP'), 'Yes'), equals(parameters('denySubnetWithoutNsg'), 'Yes'), equals(parameters('denyIpForwarding'), 'Yes'), equals(parameters('denyRdpInternet'), 'Yes'), equals(parameters('denySshInternet'), 'Yes'))]",
+            "condition": "[or(or(equals(parameters('enableKvSoftDelete'), 'Yes'), equals(parameters('enableStorageHttps'), 'Yes')), equals(parameters('denyPublicendpoints'), 'Yes'), equals(parameters('denyPublicIP'), 'Yes'), equals(parameters('denySubnetWithoutNsg'), 'Yes'), equals(parameters('denyIpForwarding'), 'Yes'), equals(parameters('denyRdpInternet'), 'Yes'), equals(parameters('denySshInternet'), 'Yes'), equals(parameters('denyErPeering'), 'Yes'), equals(parameters('denyPrivateDnsZones'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-AppLandingZones')]",
@@ -493,6 +509,12 @@
                     },
                     "denySshInternet": {
                         "value": "[parameters('denySshInternet')]"
+                    },
+                    "denyErPeering": {
+                        "value": "[parameters('denyErPeering')]"
+                    },
+                    "denyPrivateDnsZones": {
+                        "value": "[parameters('denyPrivateDnsZones')]"
                     }
                 }
             }

@@ -69,6 +69,22 @@
                 "Yes",
                 "No"
             ]
+        },
+        "denyErPeering": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
+        "denyPrivateDnsZones": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
         }
     },
     "variables": {
@@ -81,7 +97,9 @@
             "denySubnetWithoutNsg": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Nsg')]",
             "denyIpForwarding": "[concat('/providers/Microsoft.Authorization/policyDefinitions/bd352bd5-2853-4985-bf0d-73806b4a5744')]",
             "denyRdpInternet": "[concat('/providers/Microsoft.Authorization/policyDefinitions/e372f825-a257-4fb8-9175-797a8a8627d6')]",
-            "denySshInternet": "[concat('/providers/Microsoft.Authorization/policyDefinitions/2c89a2e5-7285-40fe-afe0-ae8654b92fab')]"
+            "denySshInternet": "[concat('/providers/Microsoft.Authorization/policyDefinitions/2c89a2e5-7285-40fe-afe0-ae8654b92fab')]",
+            "denyErPeering": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-ERPeering')]",
+            "denyPrivateDnsZones": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-Private-DNS-Zones')]"
         },
         "policyAssignmentNames": {
             "appendKvSoftDelete": "Append-KV-SoftDelete",
@@ -91,7 +109,9 @@
             "denySubnetWithoutNsg": "Deny-Subnet-Without-Nsg",
             "denyIpForwarding": "Deny-IpForwarding",
             "denyRdpInternet": "Deny-RDP-Internet",
-            "denySshInternet": "Deny-SSH-Internet"
+            "denySshInternet": "Deny-SSH-Internet",
+            "denyErPeering": "Deny-ERPeering",
+            "denyPrivateDnsZones": "Deny-Private-DNS-Zones"
 
         }
     },
@@ -174,7 +194,7 @@
                 "scope": "[variables('scope')]"
             }
         },
-                {
+        {
             "condition": "[equals(parameters('denyRdpInternet'), 'Yes')]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "2018-05-01",
@@ -187,7 +207,7 @@
                 "scope": "[variables('scope')]"
             }
         },
-                {
+        {
             "condition": "[equals(parameters('denySshInternet'), 'Yes')]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "2018-05-01",
@@ -197,6 +217,32 @@
                 "description": "Deny-SSH-Internet",
                 "displayName": "Deny-SSH-Internet",
                 "policyDefinitionId": "[variables('policyDefinitions').denySshInternet]",
+                "scope": "[variables('scope')]"
+            }
+        },
+        {
+            "condition": "[equals(parameters('denyErPeering'), 'Yes')]",
+            "type": "Microsoft.Authorization/policyAssignments",
+            "apiVersion": "2018-05-01",
+            "name": "[variables('policyAssignmentNames').denyErPeering]",
+            "location": "[deployment().location]",
+            "properties": {
+                "description": "Deny-ERPeering",
+                "displayName": "Deny-ERPeering",
+                "policyDefinitionId": "[variables('policyDefinitions').denyErPeering]",
+                "scope": "[variables('scope')]"
+            }
+        },
+        {
+            "condition": "[equals(parameters('denyPrivateDnsZones'), 'Yes')]",
+            "type": "Microsoft.Authorization/policyAssignments",
+            "apiVersion": "2018-05-01",
+            "name": "[variables('policyAssignmentNames').denyPrivateDnsZones]",
+            "location": "[deployment().location]",
+            "properties": {
+                "description": "Deny-Private-DNS-Zones",
+                "displayName": "Deny-Private-DNS-Zones",
+                "policyDefinitionId": "[variables('policyDefinitions').denyPrivateDnsZones]",
                 "scope": "[variables('scope')]"
             }
         }

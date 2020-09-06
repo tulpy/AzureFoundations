@@ -659,6 +659,46 @@
                             ]
                         },
                         "visible": true
+                    },
+                    {
+                        "name": "esErPeering",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Azure Policy: Deny ER Peering",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "esPrivateDnsZones",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Azure Policy: Deny Private DNS Zones",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
                     }
                 ]
             }
@@ -688,7 +728,9 @@
             "denySubnetWithoutNsg": "[steps('esAppLZ').esSubnetNSG]",
             "denyIpForwarding": "[steps('esAppLZ').esIpForwarding]",
             "denyRdpInternet": "[steps('esAppLZ').esRdpInternet]",
-            "denySshInternet": "[steps('esAppLZ').esSshInternet]"
+            "denySshInternet": "[steps('esAppLZ').esSshInternet]",
+            "denyErPeering": "[steps('esAppLZ').esErPeering]",
+            "denyPrivateDnsZones": "[steps('esAppLZ').esPrivateDnsZones]"
         }
     }
 }
