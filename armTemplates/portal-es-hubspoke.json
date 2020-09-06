@@ -110,7 +110,7 @@
                         "name": "esLogAnalytics",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Log Analytics workspace and enable monitoring for your platform and resources",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, ARM will deploy resources and enable them for continious compliance.",
                         "constraints": {
                             "allowedValues": [
@@ -154,7 +154,7 @@
                         "name": "esHub",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Platform Landing Zone Virtual Network",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected when adding the Platform Landing Zone Subscription, ARM will deploy the Virtual Network",
                         "constraints": {
                             "allowedValues": [

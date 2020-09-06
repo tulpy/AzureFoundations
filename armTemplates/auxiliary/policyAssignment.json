@@ -117,8 +117,12 @@
         "displayName": "Append-Environment-Tag",
         "policyDefinitionId": "[variables('policyDefinitions').appendEnvironmentTag]",
         "parameters": {
-          "tagName": "Environment",
-          "tagValue": "PlatformLZ"
+          "tagName": {
+            "value": "Environment"
+          },
+          "tagvalue": {
+            "value": "Platform"
+          }
         },
         "scope": "[variables('scope').platformScope]"
       }
