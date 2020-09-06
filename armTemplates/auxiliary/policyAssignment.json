@@ -1,0 +1,63 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "topLevelManagementGroupPrefix": {
+      "type": "string",
+      "maxLength": 5
+    }
+  },
+  "variables": {
+    "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
+    "policyDefinitions": {
+      "allowedRegions": "[concat('/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c')]",
+      "allowedRegionsRg": "[concat('/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988')]"
+    },
+    "policyAssignmentNames": {
+      "allowedRegions": "Allowed-AzureRegions",
+      "allowedRegionsRg": "Allowed-AzureRegions-RG"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Authorization/policyAssignments",
+      "apiVersion": "2018-05-01",
+      "name": "[variables('policyAssignmentNames').allowedRegions]",
+      "location": "[deployment().location]",
+      "properties": {
+        "description": "Allowed-AzureRegions",
+        "displayName": "Allowed-AzureRegions",
+        "policyDefinitionId": "[variables('policyDefinitions').allowedRegions]",
+        "parameters": {
+          "listOfAllowedLocations": {
+            "value": [
+              "australiaeast",
+              "australiasoutheast"
+            ]
+          }
+        },
+        "scope": "[variables('scope')]"
+      }
+    },
+    {
+      "type": "Microsoft.Authorization/policyAssignments",
+      "apiVersion": "2018-05-01",
+      "name": "[variables('policyAssignmentNames').allowedRegionsRg]",
+      "location": "[deployment().location]",
+      "properties": {
+        "description": "Allowed-AzureRegions-RG",
+        "displayName": "Allowed-AzureRegions-RG",
+        "policyDefinitionId": "[variables('policyDefinitions').allowedRegionsRg]",
+        "parameters": {
+          "listOfAllowedLocations": {
+            "value": [
+              "australiaeast",
+              "australiasoutheast"
+            ]
+          }
+        },
+        "scope": "[variables('scope')]"
+      }
+    }
+  ]
+}

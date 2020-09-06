@@ -7,7 +7,7 @@
         ],
         "steps": [
             {
-                "name": "lzNaming",
+                "name": "esNaming",
                 "label": "Naming Prefixes",
                 "subLabel": {
                     "preValidation": "Provide naming prefixes for all Azure resources that will be created.",
@@ -704,6 +704,10 @@
             }
         ],
         "outputs": {
+            "enterpriseScaleCompanyPrefix": "[steps('esNaming').esCompIdentifier]",
+            "environmentIdentifier": "[steps('esNaming').esEnvIdentifier]",
+            "locationIdentifier": "[steps('esNaming').esLocIdentifier]",
+           
             "vpnGwType": "[steps('esPlatformLZ').esVpnGwType]",
             "subnetMaskForGw": "[steps('esPlatformLZ').esAddressVpnOrEr]",
             "subnetMaskForAzFw": "[steps('esPlatformLZ').esAddressFw]",
@@ -718,9 +722,7 @@
             "platformLzSubscriptionId": "[steps('esPlatformLZ').esPlatformLZSub]",
             "enableLogAnalytics": "[steps('esPlatformLZ').esLogAnalytics]",
             "enableAsc": "[steps('esPlatformLZ').esAsc]",
-            "enterpriseScaleCompanyPrefix": "[steps('lzNaming').esCompIdentifier]",
-            "environmentIdentifier": "[steps('lzNaming').esEnvIdentifier]",
-            "locationIdentifier": "[steps('lzNaming').esLocIdentifier]",
+            //
             "enableStorageHttps": "[steps('esAppLZ').esHttpsStorage]",
             "enableKvSoftDelete": "[steps('esAppLZ').esKvSoftDelete]",
             "denyPublicendpoints": "[steps('esAppLZ').esPublicendpoints]",
