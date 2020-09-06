@@ -8,17 +8,14 @@
     }
   },
   "variables": {
-    "scope": {
-      "rootScope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
-      "platformScope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-Platform')]"
-    },
+    "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
     "policyDefinitions": {
       "allowedRegions": "[concat('/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c')]",
       "allowedRegionsRg": "[concat('/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988')]",
       "denyAppGwyWaf": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-AppGW-Without-WAF')]",
       "appendKvSoftDelete": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Append-KV-SoftDelete')]",
       "storageHttps": "/providers/Microsoft.Authorization/policyDefinitions/404c3081-a854-4457-ae30-26a93ef643f9",
-      "appendEnvironmentTag": "/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498"
+      "appendAzureHub": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Append-Azure-HUB')]"
     },
     "policyAssignmentNames": {
       "allowedRegions": "Allowed-AzureRegions",
@@ -26,7 +23,7 @@
       "denyAppGwyWaf": "Deny-AppGW-Without-WAF",
       "appendKvSoftDelete": "Append-KV-SoftDelete",
       "storageHttps": "Deny-Storage-http",
-      "appendEnvironmentTag": "Append-Environment-Tag"
+      "appendAzureHub": "Append-Azure-HUB"
     }
   },
   "resources": [
@@ -47,7 +44,7 @@
             ]
           }
         },
-        "scope": "[variables('scope').rootScope]"
+        "scope": "[variables('scope')]"
       }
     },
     {
@@ -67,7 +64,7 @@
             ]
           }
         },
-        "scope": "[variables('scope').rootScope]"
+        "scope": "[variables('scope')]"
       }
     },
     {
@@ -80,7 +77,7 @@
         "displayName": "Deny-AppGW-Without-WAF",
         "policyDefinitionId": "[variables('policyDefinitions').denyAppGwyWaf]",
         "parameters": {},
-        "scope": "[variables('scope').rootScope]"
+        "scope": "[variables('scope')]"
       }
     },
     {
@@ -92,7 +89,7 @@
         "description": "Enforce-Secure-Storage",
         "displayName": "Enforce-Secure-Storage",
         "policyDefinitionId": "[variables('policyDefinitions').storageHttps]",
-        "scope": "[variables('scope').rootScope]"
+        "scope": "[variables('scope')]"
       }
     },
     {
@@ -104,27 +101,19 @@
         "description": "Append-KV-SoftDelete",
         "displayName": "Append-KV-SoftDelete",
         "policyDefinitionId": "[variables('policyDefinitions').appendKvSoftDelete]",
-        "scope": "[variables('scope').rootScope]"
+        "scope": "[variables('scope')]"
       }
     },
     {
       "type": "Microsoft.Authorization/policyAssignments",
       "apiVersion": "2018-05-01",
-      "name": "[variables('policyAssignmentNames').appendEnvironmentTag]",
+      "name": "[variables('policyAssignmentNames').appendAzureHub]",
       "location": "[deployment().location]",
       "properties": {
-        "description": "Append-Environment-Tag",
-        "displayName": "Append-Environment-Tag",
-        "policyDefinitionId": "[variables('policyDefinitions').appendEnvironmentTag]",
-        "parameters": {
-          "tagName": {
-            "value": "Environment"
-          },
-          "tagvalue": {
-            "value": "Platform"
-          }
-        },
-        "scope": "[variables('scope').rootScope]"
+        "description": "Append-Azure-HUB",
+        "displayName": "Append-Azure-HUB",
+        "policyDefinitionId": "[variables('policyDefinitions').appendAzureHub]",
+        "scope": "[variables('scope')]"
       }
     }
   ]

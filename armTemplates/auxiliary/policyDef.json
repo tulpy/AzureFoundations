@@ -12,6 +12,67 @@
     "policies": {
       "policyDefinitions": [
         {
+          "Name": "Append-Azure-HUB",
+          "Properties": {
+            "Description": "Append Azure Hybrid Use Benefits licensing to all Windows VMs",
+            "DisplayName": "Append-Azure-HUB",
+            "Mode": "All",
+            "Parameters": {},
+            "policyRule": {
+              "if": {
+                "allOf": [
+                  {
+                    "field": "type",
+                    "in": [
+                      "Microsoft.Compute/virtualMachines",
+                      "Microsoft.Compute/VirtualMachineScaleSets"
+                    ]
+                  },
+                  {
+                    "field": "Microsoft.Compute/imagePublisher",
+                    "equals": "MicrosoftWindowsServer"
+                  },
+                  {
+                    "field": "Microsoft.Compute/imageOffer",
+                    "equals": "WindowsServer"
+                  },
+                  {
+                    "field": "Microsoft.Compute/imageSKU",
+                    "in": [
+                      "2008-R2-SP1",
+                      "2008-R2-SP1-smalldisk",
+                      "2012-Datacenter",
+                      "2012-Datacenter-smalldisk",
+                      "2012-R2-Datacenter",
+                      "2012-R2-Datacenter-smalldisk",
+                      "2016-Datacenter",
+                      "2016-Datacenter-Server-Core",
+                      "2016-Datacenter-Server-Core-smalldisk",
+                      "2016-Datacenter-smalldisk",
+                      "2016-Datacenter-with-Containers",
+                      "2016-Datacenter-with-RDSH",
+                      "2019-Datacenter"
+                    ]
+                  },
+                  {
+                    "field": "Microsoft.Compute/licenseType",
+                    "notEquals": "Windows_Server"
+                  }
+                ]
+              },
+              "then": {
+                "effect": "append",
+                "details": [
+                  {
+                    "field": "Microsoft.Compute/licenseType",
+                    "value": "Windows_Server"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
           "Name": "Append-KV-SoftDelete",
           "Properties": {
             "Description": "When a Key Vault is created without soft delete enabled, then this will add it.",
