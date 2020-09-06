@@ -11,11 +11,13 @@
     "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
     "policyDefinitions": {
       "allowedRegions": "[concat('/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c')]",
-      "allowedRegionsRg": "[concat('/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988')]"
+      "allowedRegionsRg": "[concat('/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988')]",
+      "denyAppGwyWaf": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-AppGW-Without-WAF')]"
     },
     "policyAssignmentNames": {
       "allowedRegions": "Allowed-AzureRegions",
-      "allowedRegionsRg": "Allowed-AzureRegions-RG"
+      "allowedRegionsRg": "Allowed-AzureRegions-RG",
+      "denyAppGwyWaf": "Deny-AppGW-Without-WAF"
     }
   },
   "resources": [
@@ -58,6 +60,19 @@
         },
         "scope": "[variables('scope')]"
       }
-    }
+    },
+            {
+            "type": "Microsoft.Authorization/policyAssignments",
+            "apiVersion": "2018-05-01",
+            "name": "[variables('policyAssignmentNames').denyAppGwyWaf]",
+            "location": "[deployment().location]",
+            "properties": {
+                "description": "Deny-AppGW-Without-WAF",
+                "displayName": "Deny-AppGW-Without-WAF",
+                "policyDefinitionId": "[variables('policyDefinitions').denyAppGwyWaf]",
+                "parameters": {},
+                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]"
+            }
+        }
   ]
 }
