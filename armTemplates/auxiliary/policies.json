@@ -14,7 +14,7 @@
       "allowedRegionsRg": "[concat('/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988')]",
 
       "policyDefinitions": [
-        {
+  /*      {
           "Name": "Append-CreatedDate-Tag",
           "properties": {
             "description": "This policy appends the CreatedDate tag to to all Azure resources",
@@ -45,6 +45,7 @@
             }
           }
         },
+        */
         {
           "Name": "Append-KV-SoftDelete",
           "Properties": {
