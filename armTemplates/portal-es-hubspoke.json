@@ -501,46 +501,6 @@
                         }
                     },
                     {
-                        "name": "esHttpsStorage",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Azure Policy: Enforce HTTPS Storage",
-                        "defaultValue": "Yes",
-                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "Yes",
-                                    "value": "Yes"
-                                },
-                                {
-                                    "label": "No",
-                                    "value": "No"
-                                }
-                            ]
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "esKvSoftDelete",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Azure Policy: Enable Soft Delete for Azure Key Vault",
-                        "defaultValue": "Yes",
-                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "Yes",
-                                    "value": "Yes"
-                                },
-                                {
-                                    "label": "No",
-                                    "value": "No"
-                                }
-                            ]
-                        },
-                        "visible": true
-                    },
-                    {
                         "name": "esPublicendpoints",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Azure Policy: Deny Public Endpoints on PaaS",
