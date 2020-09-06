@@ -10873,7 +10873,8 @@
         },
         "scope": "[variables('scope')]"
       }
-    },
+    }
+    /*
     {
       "type": "Microsoft.Authorization/policyAssignments",
       "apiVersion": "2018-05-01",
@@ -10886,6 +10887,6 @@
         "parameters": {},
         "scope": "[variables('scope')]"
       }
-    }
+    }*/
   ]
 }
