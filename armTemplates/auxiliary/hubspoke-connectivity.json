@@ -176,13 +176,6 @@
                                                 }
                                             ]
                                         },
-
-
-
-
-
-
-
                                         {
                                             "condition": "[and(equals(parameters('enableAzFw'), 'Yes'), not(empty(parameters('subnetMaskForAzFw'))))]",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
