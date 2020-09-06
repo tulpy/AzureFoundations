@@ -124,7 +124,7 @@
             "value": "Platform"
           }
         },
-        "scope": "[variables('scope').platformScope]"
+        "scope": "[variables('scope').rootScope]"
       }
     }
   ]
