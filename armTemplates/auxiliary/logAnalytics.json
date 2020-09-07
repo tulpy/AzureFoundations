@@ -42,7 +42,7 @@
             "deployLogAnalytics": "[guid(concat(parameters('topLevelManagementGroupPrefix'), variables('policyAssignmentNames').logAnalytics))]"
         },
 
-        "resourceDeploymentName": "[take(concat('platformLZ-la', deployment().location, deployment().name), 64)]",
+        "resourceDeploymentName": "[take(concat('PlatformLZ-LogAnalytics', '-', deployment().location, '-', guid(parameters('topLevelManagementGroupPrefix'))), 64)]",
         "monitoringResourceGroupName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-arg-monitoring')]",
         "logAnalyticsName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'), '-oms-002')]",  
         "azAutomationName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'), '-aaa-001')]" 
