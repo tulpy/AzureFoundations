@@ -69,6 +69,14 @@
             ],
             "defaultValue": "No"
         },
+        "enableMgmt": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "No"
+        },
         "platformLzSubscriptionId": {
             "type": "string",
             "defaultValue": "",
@@ -93,13 +101,17 @@
         "subnetMaskForGw": {
             "type": "string",
             "defaultValue": ""
+        },
+        "subnetMaskForMgmt": {
+            "type": "string",
+            "defaultValue": ""
         }
     },
     "variables": {
         "vpngwname": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'),'-vng-vpn')]",
         "erGwName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'),'-vng-er')]",
-        "rgName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-arg-network')]",
-        "hubName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'),'-vnet')]",
+        "rgName": "HO-RG-Networking-Core",
+        "hubName": "HO-AUSYD-VNT-COR-01",
         "azVpnGwIpName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'),'-pip-001')]",
         "azVpnGwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/GatewaySubnet')]",
         "azFwName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'), '-afw-001')]",
@@ -193,6 +205,18 @@
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
                                             "apiVersion": "2020-04-01",
                                             "name": "[concat(variables('hubName'), '/', 'AppGateway')]",
+                                            "dependsOn": [
+                                                "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
+                                            ],
+                                            "properties": {
+                                                "addressPrefix": "[parameters('subnetMaskForAppGw')]"
+                                            }
+                                        },
+                                                                                {
+                                            "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
+                                            "type": "Microsoft.Network/virtualNetworks/subnets",
+                                            "apiVersion": "2020-04-01",
+                                            "name": "[concat(variables('hubName'), '/', 'Management')]",
                                             "dependsOn": [
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
                                             ],
@@ -337,8 +361,7 @@
                                                             }
                                                         }
                                                     }
-                                                ],
-                                                "firewallPolicy": ""
+                                                ]
                                             }
                                         }
                                     ]

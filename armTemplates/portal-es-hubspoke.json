@@ -386,7 +386,7 @@
                     {
                         "name": "esAddressVpnOrEr",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Subnet for VPN & ExpressRoute Gateways",
+                        "label": "CIDR range for GatewaySubnet",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.1.0/24)",
                         "defaultValue": "10.49.63.0/27",
                         "visible": "[or(equals(steps('esPlatformLZ').esErGw, 'Yes'), equals(steps('esPlatformLZ').esVpnGw, 'Yes'))]",
@@ -438,9 +438,9 @@
                     {
                         "name": "esAddressFw",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Subnet for Azure Firewall",
+                        "label": "CIDR range for Azure Firewall Subnet",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
-                        "defaultValue": "10.49.5.0/24",
+                        "defaultValue": "10.49.61.0/24",
                         "visible": "[equals(steps('esPlatformLZ').esAzFw, 'Yes')]",
                         "constraints": {
                             "required": true,
@@ -470,10 +470,42 @@
                     {
                         "name": "esAddressAppGw",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Subnet for Azure App Gateway",
+                        "label": "CIDR range for Azure App gateway Subnet",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
-                        "defaultValue": "10.49.6.0/24",
+                        "defaultValue": "10.49.62.0/24",
                         "visible": "[equals(steps('esPlatformLZ').esAppGw, 'Yes')]",
+                        "constraints": {
+                            "required": true,
+                            "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
+                        }
+                    },
+                    {
+                        "name": "esMgmt",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure Management Subnet",
+                        "defaultValue": "No",
+                        "visible": "[equals(steps('esPlatformLZ').esHub, 'Yes')]",
+                        "toolTip": "If 'Yes' is selected, ARM will deploy a subnet for Management Services",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAddressMgmt",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "CIDR range for Azure Management Subnet",
+                        "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
+                        "defaultValue": "10.49.0.0/24",
+                        "visible": "[equals(steps('esPlatformLZ').esMgmt, 'Yes')]",
                         "constraints": {
                             "required": true,
                             "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
@@ -672,16 +704,19 @@
             "subnetMaskForGw": "[steps('esPlatformLZ').esAddressVpnOrEr]",
             "subnetMaskForAzFw": "[steps('esPlatformLZ').esAddressFw]",
             "subnetMaskForAppGw": "[steps('esPlatformLZ').esAddressAppGw]",
+            "subnetMaskForMgmt": "[steps('esPlatformLZ').esAddressMgmt]",
             "enableErGw": "[steps('esPlatformLZ').esErGw]",
             "enableVpnGw": "[steps('esPlatformLZ').esVpnGw]",
             "enableHub": "[steps('esPlatformLZ').esHub]",
             "enableAzFw": "[steps('esPlatformLZ').esAzFw]",
             "enableAppGw": "[steps('esPlatformLZ').esAppGw]",
+            "enableMgmt": "[steps('esPlatformLZ').esMgmt]",
             "addressPrefix": "[steps('esPlatformLZ').esAddressHub]",
             "location": "[steps('esPlatformLZ').esRegions]",
             "platformLzSubscriptionId": "[steps('esPlatformLZ').esPlatformLZSub]",
             "enableLogAnalytics": "[steps('esPlatformLZ').esLogAnalytics]",
             "enableAsc": "[steps('esPlatformLZ').esAsc]",
+
             "enableStorageHttps": "[steps('esAppLZ').esHttpsStorage]",
             "enableKvSoftDelete": "[steps('esAppLZ').esKvSoftDelete]",
             "denyPublicendpoints": "[steps('esAppLZ').esPublicendpoints]",

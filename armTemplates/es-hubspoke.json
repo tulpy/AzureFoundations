@@ -94,6 +94,14 @@
             ],
             "defaultValue": "No"
         },
+        "enableMgmt": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "No"
+        },
         "vpnGwType": {
             "type": "string",
             "allowedValues": [
@@ -111,6 +119,10 @@
             "defaultValue": ""
         },
         "subnetMaskForAppGw": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "subnetMaskForMgmt": {
             "type": "string",
             "defaultValue": ""
         },
@@ -236,7 +248,7 @@
                 }
             }
         },
-                {
+        {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[variables('policyAssignmentDeploymentName')]",
@@ -418,6 +430,9 @@
                     "enableAppGw": {
                         "value": "[parameters('enableAppGw')]"
                     },
+                    "enableMgmt": {
+                        "value": "[parameters('enableMgmt')]"
+                    },
                     "location": {
                         "value": "[parameters('location')]"
                     },
@@ -435,6 +450,9 @@
                     },
                     "subnetMaskForAppGw": {
                         "value": "[parameters('subnetMaskForAppGw')]"
+                    },
+                    "subnetMaskForMgmt": {
+                        "value": "[parameters('subnetMaskForMgmt')]"
                     }
                 }
             }
