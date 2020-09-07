@@ -221,7 +221,7 @@
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
                                             ],
                                             "properties": {
-                                                "addressPrefix": "[parameters('subnetMaskForAppGw')]"
+                                                "addressPrefix": "[parameters('subnetMaskForMgmt')]"
                                             }
                                         },
                                         {
