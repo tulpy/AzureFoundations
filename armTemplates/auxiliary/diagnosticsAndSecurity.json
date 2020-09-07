@@ -70,7 +70,7 @@
         },
         "blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}",
         "monitoringResourceGroupName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-arg-monitoring')]",
-        "logAnalyticsName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'), '-oms-001')]",
+        "logAnalyticsName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'), '-oms-002')]",
         "platfromLzAscResourceDeploymentName": "[take(concat('asc-platform-lz-', deployment().location, deployment().name), 64)]",
         "platformLzActivityResourceDeploymentName": "[take(concat('activity-logs-platform-lz-', deployment().location, deployment().name), 64)]",
         "mgmtGrpAscResourceDeploymentName": "[take(concat('asc-mgmt-grp-', deployment().location, deployment().name), 64)]",
