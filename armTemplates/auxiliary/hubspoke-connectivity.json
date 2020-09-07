@@ -315,6 +315,9 @@
                                             "type": "Microsoft.Network/publicIpAddresses",
                                             "name": "[variables('azFwIpName')]",
                                             "location": "[parameters('location')]",
+                                            "dependsOn": [
+                                                "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'), '/subnets/AzureFirewallSubnet')]"
+                                            ],
                                             "sku": {
                                                 "name": "Standard"
                                             },
