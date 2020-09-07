@@ -205,17 +205,17 @@
     },
     "variables": {
         "policyDef": "[uri(deployment().properties.templateLink.uri, 'auxiliary/policyDef.json')]",
-        "policyAssignments": "[uri(deployment().properties.templateLink.uri, 'auxiliary/policyAssignment.json')]",
+        "policyAssignment": "[uri(deployment().properties.templateLink.uri, 'auxiliary/policyAssignment.json')]",
         "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
         "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
         "netConnectivity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/hubspoke-connectivity.json')]",
-        "appLandingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/appLz.json')]",
+        "appLz": "[uri(deployment().properties.templateLink.uri, 'auxiliary/appLz.json')]",
         "moveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-Platform', '/', parameters('platformLzSubscriptionId'))]",
         "noSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-Platform', '/', 'na')]",
         "policyDefDeploymentName": "[take(concat('PolicyDef', '-', deployment().location, '-', guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
         "policyAssignmentDeploymentName": "[take(concat('PolicyAssignment', '-', deployment().location, '-', guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
         "monitoringDeploymentName": "[take(concat('Monitoring', '-', deployment().location, '-', guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-        "diagAndSecDeploymentName": "[take(concat('DiagSec', '-', deployment().location, '-', guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+        "diagnosticsAndSecurityDeploymentName": "[take(concat('DiagnosticsAndSecurity', '-', deployment().location, '-', guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
         "netConnectivityDeploymentName": "[take(concat('Networking', '-', deployment().location, '-', guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
         "appLzDeploymentName": "[take(concat('AppLZ', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
     },
@@ -262,7 +262,7 @@
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('policyAssignments')]"
+                    "uri": "[variables('policyAssignment')]"
                 },
                 "parameters": {
                     "topLevelManagementGroupPrefix": {
@@ -507,7 +507,7 @@
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('appLandingZone')]"
+                    "uri": "[variables('appLz')]"
                 },
                 "parameters": {
                     "topLevelManagementGroupPrefix": {
@@ -545,7 +545,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'))]",
-            "name": "[variables('diagAndSecDeploymentName')]",
+            "name": "[variables('diagnosticsAndSecurityDeploymentName')]",
             "dependsOn": [
                 "[variables('monitoringDeploymentName')]"
             ],
