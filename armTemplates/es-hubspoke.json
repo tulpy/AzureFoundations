@@ -217,7 +217,7 @@
         "monitoringDeploymentName": "[take(concat('Monitoring', '-', deployment().location, '-', guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
         "diagnosticsAndSecurityDeploymentName": "[take(concat('DiagSecurity', '-', deployment().location, '-', guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
         "netConnectivityDeploymentName": "[take(concat('Networking', '-', deployment().location, '-', guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-        "appLzDeploymentName": "[take(concat('AppLZ', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
+        "appLzDeploymentName": "[take(concat('AppLZ', '-', deployment().location, '-', guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
     },
     "resources": [
         {
