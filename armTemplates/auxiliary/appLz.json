@@ -54,7 +54,7 @@
                 "No"
             ]
         },
-        "denyErPeering": {
+        "denyVnetPeering": {
             "type": "string",
             "defaultValue": "No",
             "allowedValues": [
@@ -80,7 +80,7 @@
             "denyIpForwarding": "[concat('/providers/Microsoft.Authorization/policyDefinitions/bd352bd5-2853-4985-bf0d-73806b4a5744')]",
             "denyRdpInternet": "[concat('/providers/Microsoft.Authorization/policyDefinitions/e372f825-a257-4fb8-9175-797a8a8627d6')]",
             "denySshInternet": "[concat('/providers/Microsoft.Authorization/policyDefinitions/2c89a2e5-7285-40fe-afe0-ae8654b92fab')]",
-            "denyErPeering": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-ERPeering')]",
+            "denyVnetPeering": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-VnetPeering')]",
             "denyPrivateDnsZones": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-Private-DNS-Zones')]"
         },
         "policyAssignmentNames": {
@@ -90,7 +90,7 @@
             "denyIpForwarding": "Deny-IpForwarding",
             "denyRdpInternet": "Deny-RDP-Internet",
             "denySshInternet": "Deny-SSH-Internet",
-            "denyErPeering": "Deny-ERPeering",
+            "denyVnetPeering": "Deny-VnetPeering",
             "denyPrivateDnsZones": "Deny-Private-DNS-Zones"
         }
     },
@@ -174,15 +174,15 @@
             }
         },
         {
-            "condition": "[equals(parameters('denyErPeering'), 'Yes')]",
+            "condition": "[equals(parameters('denyVnetPeering'), 'Yes')]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "2018-05-01",
-            "name": "[variables('policyAssignmentNames').denyErPeering]",
+            "name": "[variables('policyAssignmentNames').denyVnetPeering]",
             "location": "[deployment().location]",
             "properties": {
-                "description": "Deny-ERPeering",
-                "displayName": "Deny-ERPeering",
-                "policyDefinitionId": "[variables('policyDefinitions').denyErPeering]",
+                "description": "Deny-VnetPeering",
+                "displayName": "Deny-VnetPeering",
+                "policyDefinitionId": "[variables('policyDefinitions').denyVnetPeering]",
                 "scope": "[variables('scope')]"
             }
         },

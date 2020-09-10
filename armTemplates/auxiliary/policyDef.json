@@ -135,10 +135,10 @@
           }
         },
         {
-          "Name": "Deny-ERPeering",
+          "Name": "Deny-VnetPeering",
           "Properties": {
             "Description": "Denies creation of ER Peerings under the assigned scope.",
-            "DisplayName": "Deny-ERPeering",
+            "DisplayName": "Deny-VnetPeering",
             "Mode": "All",
             "Parameters": {},
             "PolicyRule": {

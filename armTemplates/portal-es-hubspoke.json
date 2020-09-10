@@ -653,7 +653,7 @@
                         "visible": true
                     },
                     {
-                        "name": "esErPeering",
+                        "name": "esVnetPeering",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Azure Policy: Deny ER Peering",
                         "defaultValue": "Yes",
@@ -725,7 +725,7 @@
             "denyIpForwarding": "[steps('esAppLZ').esIpForwarding]",
             "denyRdpInternet": "[steps('esAppLZ').esRdpInternet]",
             "denySshInternet": "[steps('esAppLZ').esSshInternet]",
-            "denyErPeering": "[steps('esAppLZ').esErPeering]",
+            "denyVnetPeering": "[steps('esAppLZ').esVnetPeering]",
             "denyPrivateDnsZones": "[steps('esAppLZ').esPrivateDnsZones]"
         }
     }
