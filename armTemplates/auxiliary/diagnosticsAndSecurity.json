@@ -69,7 +69,7 @@
         "blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}",
         "monitoringResourceGroupName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-arg-monitoring')]",
         "namingPrefix": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'))]",
-        "logAnalyticsName": "[concat(variables('namingPrefix'), '-oms-', guid(parameters('topLevelManagementGroupPrefix')), 8)]",  
+        "logAnalyticsName": "[take(concat(variables('namingPrefix'), '-oms-', guid(parameters('topLevelManagementGroupPrefix'))), 16)]",  
         "platfromLzAscResourceDeploymentName": "[take(concat('PlatformLZ-ASC', '-', deployment().location, '-', guid(parameters('topLevelManagementGroupPrefix'))), 64)]",
         "platformLzActivityResourceDeploymentName": "[take(concat('PlatformLZ-AzActivityLogs', '-', deployment().location, '-', guid(parameters('topLevelManagementGroupPrefix'))), 64)]",
         "mgmtGrpAscResourceDeploymentName": "[take(concat('MgmtGroup-ASC', '-', deployment().location, '-', guid(parameters('topLevelManagementGroupPrefix'))), 64)]",
