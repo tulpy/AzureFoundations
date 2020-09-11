@@ -394,7 +394,7 @@
             "name": "[variables('netConnectivityDeploymentName')]",
             "dependsOn": [
                 "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('enterpriseScaleCompanyPrefix'), '-Platform'), parameters('platformLzSubscriptionId'))]",
-                "[variables('monitoring')]"
+                "[variables('monitoringDeploymentName')]"
             ],
             "location": "[deployment().location]",
             "properties": {
