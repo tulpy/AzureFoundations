@@ -45,7 +45,7 @@
         "resourceDeploymentName": "[take(concat('PlatformLZ-LogAnalytics', '-', deployment().location, '-', guid(parameters('topLevelManagementGroupPrefix'))), 64)]",
         "monitoringResourceGroupName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-arg-monitoring')]",
         "namingPrefix": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'))]",
-        "logAnalyticsName": "[take(concat(variables('namingPrefix'), '-oms-', guid(parameters('topLevelManagementGroupPrefix'))), 16)]", 
+        "logAnalyticsName": "[take(concat(variables('namingPrefix'), '-oms-', guid(parameters('topLevelManagementGroupPrefix'))), 19)]", 
         "azAutomationName": "[concat(variables('namingPrefix'), '-aaa-001')]" 
     },
     "resources": [
