@@ -32,7 +32,7 @@
         },
         "enableAsc": {
             "type": "string",
-            "defaultValue": "Standard",
+            "defaultValue": "Free",
             "allowedValues": [
                 "Standard",
                 "Free",
