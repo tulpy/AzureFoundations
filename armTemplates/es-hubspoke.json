@@ -393,7 +393,8 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-Platform')]",
             "name": "[variables('netConnectivityDeploymentName')]",
             "dependsOn": [
-                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('enterpriseScaleCompanyPrefix'), '-Platform'), parameters('platformLzSubscriptionId'))]"
+                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('enterpriseScaleCompanyPrefix'), '-Platform'), parameters('platformLzSubscriptionId'))]",
+                "[variables('monitoring')]"
             ],
             "location": "[deployment().location]",
             "properties": {
