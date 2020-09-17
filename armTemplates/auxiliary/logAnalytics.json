@@ -2,15 +2,15 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "topLevelManagementGroupPrefix": {
+        "companyPrefix": {
             "type": "string",
             "maxLength": 5
         },
-        "environmentIdentifier": {
+        "environmentPrefix": {
             "type": "string",
             "maxLength": 3
         },
-        "locationIdentifier": {
+        "locationPrefix": {
             "type": "string",
             "maxLength": 3
         },
@@ -32,21 +32,21 @@
     },
     "variables": {
         "policyDefinitions": {
-            "deployLogAnalytics": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Log-Analytics')]"
+            "deployLogAnalytics": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Log-Analytics')]"
         },
         "policyAssignmentNames": {
             "logAnalytics": "Deploy-Log-Analytics"
         },
         "rbacOwner": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
         "roleAssignmentNames": {
-            "deployLogAnalytics": "[guid(concat(parameters('topLevelManagementGroupPrefix'), variables('policyAssignmentNames').logAnalytics))]"
+            "deployLogAnalytics": "[guid(concat(parameters('companyPrefix'), variables('policyAssignmentNames').logAnalytics))]"
         },
 
-        "resourceDeploymentName": "[take(concat('PlatformLZ-LogAnalytics', '-', deployment().location, '-', guid(parameters('topLevelManagementGroupPrefix'))), 64)]",
-        "monitoringResourceGroupName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-arg-monitoring')]",
-        "namingPrefix": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('locationIdentifier'), '-', parameters('environmentIdentifier'))]",
-        "logAnalyticsName": "[take(concat(variables('namingPrefix'), '-oms-', guid(parameters('topLevelManagementGroupPrefix'))), 24)]",
-        "azAutomationName": "[take(concat(variables('namingPrefix'), '-aaa-', guid(parameters('topLevelManagementGroupPrefix'))), 24)]"
+        "resourceDeploymentName": "[take(concat('PlatformLZ-LogAnalytics', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+        "monitoringResourceGroupName": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-arg-monitoring')]",
+        "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
+        "logAnalyticsName": "[take(concat(variables('namingPrefix'), '-oms-', guid(parameters('companyPrefix'))), 24)]",
+        "azAutomationName": "[take(concat(variables('namingPrefix'), '-aaa-', guid(parameters('companyPrefix'))), 24)]"
     },
     "resources": [
         {
@@ -62,7 +62,7 @@
                 "description": "Deploy-Log-Analytics",
                 "displayName": "Deploy-Log-Analytics",
                 "policyDefinitionId": "[variables('policyDefinitions').deployLogAnalytics]",
-                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-Platform')]",
+                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
                 "parameters": {
                     "workspaceName": {
                         "value": "[variables('logAnalyticsName')]"
@@ -109,7 +109,7 @@
             "properties": {
                 "mode": "incremental",
                 "template": "[reference(variables('policyDefinitions').deployLogAnalytics, '2018-05-01').policyRule.then.details.deployment.properties.template]",
-                "parameters": "[reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-Platform', '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').loganalytics), '2018-05-01').parameters]"
+                "parameters": "[reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform', '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').loganalytics), '2018-05-01').parameters]"
             }
         }
     ],

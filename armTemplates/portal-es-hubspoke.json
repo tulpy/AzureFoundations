@@ -696,9 +696,9 @@
             }
         ],
         "outputs": {
-            "enterpriseScaleCompanyPrefix": "[steps('esNaming').esCompIdentifier]",
-            "environmentIdentifier": "[steps('esNaming').esEnvIdentifier]",
-            "locationIdentifier": "[steps('esNaming').esLocIdentifier]",
+            "companyPrefix": "[steps('esNaming').esCompIdentifier]",
+            "environmentPrefix": "[steps('esNaming').esEnvIdentifier]",
+            "locationPrefix": "[steps('esNaming').esLocIdentifier]",
            
             "vpnGwType": "[steps('esPlatformLZ').esVpnGwType]",
             "subnetMaskForGw": "[steps('esPlatformLZ').esAddressVpnOrEr]",

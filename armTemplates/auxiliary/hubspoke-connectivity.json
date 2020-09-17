@@ -2,15 +2,15 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "topLevelManagementGroupPrefix": {
+        "companyPrefix": {
             "type": "string",
             "maxLength": 5
         },
-        "environmentIdentifier": {
+        "environmentPrefix": {
             "type": "string",
             "maxLength": 3
         },
-        "locationIdentifier": {
+        "locationPrefix": {
             "type": "string",
             "maxLength": 3
         },
@@ -108,10 +108,10 @@
         }
     },
     "variables": {
-        "namingPrefix": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-', parameters('locationIdentifier'))]",
+        "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('locationPrefix'))]",
         "vpngwname": "[concat(variables('namingPrefix'),'-vng-001')]",
         "erGwName": "[concat(variables('namingPrefix'),'-vng-002')]",
-        "rgName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-arg-network')]",
+        "rgName": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-arg-network')]",
         "hubName": "[concat(variables('namingPrefix'),'-vnet')]",
         "azVpnGwIpName": "[concat(variables('namingPrefix'),'-pip-001')]",
         "azVpnGwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/GatewaySubnet')]",
@@ -131,7 +131,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "location": "[deployment().location]",
-            "name": "[concat('EntScale', '-platformLzSub')]",
+            "name": "[concat('PlatformLzSub-Networking')]",
             "subscriptionId": "[parameters('platformLzSubscriptionId')]",
             "properties": {
                 "mode": "Incremental",

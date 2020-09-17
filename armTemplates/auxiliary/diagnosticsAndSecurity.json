@@ -2,15 +2,15 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "topLevelManagementGroupPrefix": {
+        "companyPrefix": {
             "type": "string",
             "maxLength": 5
         },
-        "environmentIdentifier": {
+        "environmentPrefix": {
             "type": "string",
             "maxLength": 3
         },
-        "locationIdentifier": {
+        "locationPrefix": {
             "type": "string",
             "maxLength": 3
         },
@@ -45,10 +45,10 @@
     },
     "variables": {
         "policyDefinitions": {
-            "deployAzureActivityLog": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ActivityLog')]",
-            "deployResourceDiagnostics": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Diag-LogAnalytics')]",
+            "deployAzureActivityLog": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ActivityLog')]",
+            "deployResourceDiagnostics": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Diag-LogAnalytics')]",
             "vmMonitoring": "/providers/Microsoft.Authorization/policyDefinitions/0868462e-646c-4fe3-9ced-a733534b6a2c",
-            "deployAzureSecurity": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Standard')]",
+            "deployAzureSecurity": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Standard')]",
             "ascMonitoring": "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8" 
         },
         "policyAssignmentNames": {
@@ -60,20 +60,20 @@
         },
         "rbacOwner": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
         "roleAssignmentNames": {
-            "deployAzureActivityLog": "[guid(concat(parameters('toplevelManagementGroupPrefix'),variables('policyAssignmentNames').azureActivityLog))]",
-            "deployVmMonitoring": "[guid(concat(parameters('toplevelManagementGroupPrefix'),variables('policyAssignmentNames').vmMonitoring))]",
-            "deployAzureSecurity": "[guid(concat(parameters('toplevelManagementGroupPrefix'),variables('policyAssignmentNames').azureSecurity))]",
-            "deployAscMonitoring": "[guid(concat(parameters('toplevelManagementGroupPrefix'), variables('policyAssignmentNames').ascMonitoring))]",
-            "deployResourceDiagnostics": "[guid(concat(parameters('topLevelManagementGroupPrefix'), variables('policyAssignmentNames').resourceDiagnostics))]"
+            "deployAzureActivityLog": "[guid(concat(parameters('companyPrefix'),variables('policyAssignmentNames').azureActivityLog))]",
+            "deployVmMonitoring": "[guid(concat(parameters('companyPrefix'),variables('policyAssignmentNames').vmMonitoring))]",
+            "deployAzureSecurity": "[guid(concat(parameters('companyPrefix'),variables('policyAssignmentNames').azureSecurity))]",
+            "deployAscMonitoring": "[guid(concat(parameters('companyPrefix'), variables('policyAssignmentNames').ascMonitoring))]",
+            "deployResourceDiagnostics": "[guid(concat(parameters('companyPrefix'), variables('policyAssignmentNames').resourceDiagnostics))]"
         },
         "blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}",
-        "monitoringResourceGroupName": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('environmentIdentifier'), '-arg-monitoring')]",
-        "namingPrefix": "[concat(parameters('topLevelManagementGroupPrefix'), '-', parameters('locationIdentifier'), '-', parameters('environmentIdentifier'))]",
-        "logAnalyticsName": "[take(concat(variables('namingPrefix'), '-oms-', guid(parameters('topLevelManagementGroupPrefix'))), 24)]",
-        "platfromLzAscResourceDeploymentName": "[take(concat('PlatformLZ-ASC', '-', deployment().location, '-', guid(parameters('topLevelManagementGroupPrefix'))), 64)]",
-        "platformLzActivityResourceDeploymentName": "[take(concat('PlatformLZ-AzActivityLogs', '-', deployment().location, '-', guid(parameters('topLevelManagementGroupPrefix'))), 64)]",
-        "mgmtGrpAscResourceDeploymentName": "[take(concat('MgmtGroup-ASC', '-', deployment().location, '-', guid(parameters('topLevelManagementGroupPrefix'))), 64)]",
-        "mgmtGrpActivityResourceDeploymentName": "[take(concat('MgmtGroup-AzActivityLogs', '-', deployment().location, '-', guid(parameters('topLevelManagementGroupPrefix'))), 64)]"
+        "monitoringResourceGroupName": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-arg-monitoring')]",
+        "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
+        "logAnalyticsName": "[take(concat(variables('namingPrefix'), '-oms-', guid(parameters('companyPrefix'))), 24)]",
+        "platfromLzAscResourceDeploymentName": "[take(concat('PlatformLZ-ASC', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+        "platformLzActivityResourceDeploymentName": "[take(concat('PlatformLZ-AzActivityLogs', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+        "mgmtGrpAscResourceDeploymentName": "[take(concat('MgmtGroup-ASC', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+        "mgmtGrpActivityResourceDeploymentName": "[take(concat('MgmtGroup-AzActivityLogs', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
     },
     "resources": [
         {
@@ -89,7 +89,7 @@
                 "description": "Deploy-AzActivity-Log",
                 "displayName": "Deploy-AzActivity-Log",
                 "policyDefinitionId": "[variables('policyDefinitions').deployAzureActivityLog]",
-                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
+                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
                         "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('monitoringResourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', variables('logAnalyticsName')))]"
@@ -124,7 +124,7 @@
                 "description": "Deploy-VM-Monitoring",
                 "displayName": "Deploy-VM-Monitoring",
                 "policyDefinitionId": "[variables('policyDefinitions').vmMonitoring]",
-                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
+                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
                         "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('monitoringResourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', variables('logAnalyticsName')))]"
@@ -159,7 +159,7 @@
                 "description": "Deploy-Resource-Diag",
                 "displayName": "Deploy-Resource-Diag",
                 "policyDefinitionId": "[variables('policyDefinitions').deployResourceDiagnostics]",
-                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
+                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
                         "value": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('monitoringResourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', variables('logAnalyticsName')))]"
@@ -194,7 +194,7 @@
                 "description": "Deploy-ASC",
                 "displayName": "Deploy-ASC",
                 "policyDefinitionId": "[variables('policyDefinitions').deployAzureSecurity]",
-                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
+                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
                 "parameters": {
                     "pricingTierVms": {
                         "value": "[parameters('enableAsc')]"
@@ -247,7 +247,7 @@
                 "description": "ASC-Monitoring",
                 "displayName": "ASC-Monitoring",
                 "policyDefinitionId": "[variables('policyDefinitions').ascMonitoring]",
-                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]"
+                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]"
             }
         },
         {
@@ -263,7 +263,7 @@
             "properties": {
                 "mode": "incremental",
                 "template": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(variables('policyDefinitions').deployAzureActivityLog, '2018-05-01').policyRule.then.details.deployment.properties.template, variables('blankTemplateEscaped'))]",
-                "parameters": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').azureActivityLog), '2018-05-01').parameters, json('null'))]"
+                "parameters": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').azureActivityLog), '2018-05-01').parameters, json('null'))]"
             }
         },
         {
@@ -279,7 +279,7 @@
             "properties": {
                 "mode": "incremental",
                 "template": "[if(and(not(empty(parameters('platformLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))), reference(variables('policyDefinitions').deployAzureSecurity, '2018-05-01').policyRule.then.details.deployment.properties.template, 'na')]",
-                "parameters": "[if(and(not(empty(parameters('platformLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))),reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').azureSecurity), '2018-05-01').parameters, json('null'))]"
+                "parameters": "[if(and(not(empty(parameters('platformLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))),reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').azureSecurity), '2018-05-01').parameters, json('null'))]"
             }
         },
         {
@@ -295,7 +295,7 @@
             "properties": {
                 "mode": "incremental",
                 "template": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(variables('policyDefinitions').deployAzureActivityLog, '2018-05-01').policyRule.then.details.deployment.properties.template, variables('blankTemplateEscaped'))]",
-                "parameters": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').azureActivityLog), '2018-05-01').parameters, json('null'))]"
+                "parameters": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').azureActivityLog), '2018-05-01').parameters, json('null'))]"
             }
         },
         {
@@ -311,7 +311,7 @@
             "properties": {
                 "mode": "incremental",
                 "template": "[if(and(not(empty(parameters('platformLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))), reference(variables('policyDefinitions').deployAzureSecurity, '2018-05-01').policyRule.then.details.deployment.properties.template, 'na')]",
-                "parameters": "[if(and(not(empty(parameters('platformLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))),reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').azureSecurity), '2018-05-01').parameters, json('null'))]"
+                "parameters": "[if(and(not(empty(parameters('platformLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))),reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').azureSecurity), '2018-05-01').parameters, json('null'))]"
             }
         }
 
