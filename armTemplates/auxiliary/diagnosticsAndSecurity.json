@@ -49,14 +49,16 @@
             "deployResourceDiagnostics": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Diag-LogAnalytics')]",
             "vmMonitoring": "/providers/Microsoft.Authorization/policyDefinitions/0868462e-646c-4fe3-9ced-a733534b6a2c",
             "deployAzureSecurity": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Standard')]",
-            "ascMonitoring": "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8" 
+            "ascMonitoring": "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8",
+            "deployStorageDiag": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Storage-Diagnostics')]"
         },
         "policyAssignmentNames": {
             "azureActivityLog": "Deploy-AzActivity-Log",
             "vmMonitoring": "Deploy-VM-Monitoring",
             "resourceDiagnostics": "Deploy-Resource-Diag",
             "azureSecurity": "Deploy-ASC-Security",
-            "ascMonitoring": "Deploy-ASC-Monitoring"
+            "ascMonitoring": "Deploy-ASC-Monitoring",
+            "StorageDiag": "Deploy-Storage-Diagnostics"
         },
         "rbacOwner": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
         "roleAssignmentNames": {
@@ -64,7 +66,9 @@
             "deployVmMonitoring": "[guid(concat(parameters('companyPrefix'),variables('policyAssignmentNames').vmMonitoring))]",
             "deployAzureSecurity": "[guid(concat(parameters('companyPrefix'),variables('policyAssignmentNames').azureSecurity))]",
             "deployAscMonitoring": "[guid(concat(parameters('companyPrefix'), variables('policyAssignmentNames').ascMonitoring))]",
-            "deployResourceDiagnostics": "[guid(concat(parameters('companyPrefix'), variables('policyAssignmentNames').resourceDiagnostics))]"
+            "deployResourceDiagnostics": "[guid(concat(parameters('companyPrefix'), variables('policyAssignmentNames').resourceDiagnostics))]",
+            "deployStorageDiag": "[guid(concat(parameters('companyPrefix'), variables('policyAssignmentNames').StorageDiag))]"
+
         },
         "blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}",
         "monitoringResourceGroupName": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-arg-monitoring')]",
@@ -76,6 +80,37 @@
         "mgmtGrpActivityResourceDeploymentName": "[take(concat('MgmtGroup-AzActivityLogs', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
     },
     "resources": [
+        {
+            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
+            "type": "Microsoft.Authorization/policyAssignments",
+            "apiVersion": "2018-05-01",
+            "name": "[variables('policyAssignmentNames').StorageDiag]",
+            "location": "[deployment().location]",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "description": "Deploy-Storage-Diagnostics",
+                "displayName": "Deploy-Storage-Diagnostics",
+                "policyDefinitionId": "[variables('policyDefinitions').deployStorageDiag]",
+                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
+                "parameters": {}
+            }
+        },
+                {
+            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2019-04-01-preview",
+            "name": "[variables('roleAssignmentNames').deployStorageDiag]",
+            "dependsOn": [
+                "[variables('policyAssignmentNames').StorageDiag]"
+            ],
+            "properties": {
+                "principalType": "ServicePrincipal",
+                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbacOwner'))]",
+                "principalId": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').StorageDiag), '2018-05-01', 'Full' ).identity.principalId), 'na')]"
+            }
+        },
         {
             "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
