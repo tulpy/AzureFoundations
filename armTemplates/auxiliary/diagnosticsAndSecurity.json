@@ -373,8 +373,8 @@
             "subscriptionId": "[parameters('platformLzSubscriptionId')]",
             "properties": {
                 "mode": "incremental",
-                "template": "[reference(variables('policyDefinitions').deployStorageDiag, '2018-05-01').policyRule.then.details.deployment.properties.template]",
-                "parameters": "[reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform', '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').StorageDiag), '2018-05-01').parameters]"
+                "template": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(variables('policyDefinitions').deployStorageDiag, '2018-05-01').policyRule.then.details.deployment.properties.template, variables('blankTemplateEscaped'))]",
+                "parameters": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').StorageDiag), '2018-05-01').parameters, json('null'))]"
             }
         }
     ],
