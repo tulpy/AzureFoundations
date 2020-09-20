@@ -101,6 +101,9 @@
                     },
                     "rgName": {
                         "value": "[variables('monitoringResourceGroupName')]"
+                    },
+                                        "storageAccountRegion": {
+                        "value": "[deployment().location]"
                     }
                 }
             }
