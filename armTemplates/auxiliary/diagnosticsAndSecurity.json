@@ -99,7 +99,7 @@
                     "storageAccountName": {
                         "value": "[variables('storageAccountName')]"
                     },
-                   "rgName": {
+                    "rgName": {
                         "value": "[variables('monitoringResourceGroupName')]"
                     }
                 }
