@@ -8889,7 +8889,7 @@
                                   "resources": [
                                     {
                                       "apiversion": "2019-04-01",
-                                      "location": "australiaeast",
+                                      "location": "[[parameters('storageAccountRegion')]",
                                       "name": "[[parameters('storageAccountName')]",
                                       "type": "Microsoft.Storage/storageAccounts",
                                       "sku": {
