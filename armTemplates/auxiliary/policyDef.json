@@ -8778,7 +8778,6 @@
             }
           }
         },
-
         {
           "Name": "Deploy-Storage-Diag",
           "Properties": {
@@ -8821,10 +8820,11 @@
                 "effect": "deployIfNotExists",
                 "details": {
                   "type": "Microsoft.Storage/storageAccounts",
-                  "deploymentScope": "Subscription",
-                  "existenceScope": "Subscription",
+                    "deploymentScope": "Subscription",
+                    "existenceScope": "ResourceGroup",
+                    "ResourceGroupName": "[[parameters('rgName')]",
                   "roleDefinitionIds": [
-                    "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24d"
+                    "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
                   ],
                   "existenceCondition": {
                     "allOf": [
