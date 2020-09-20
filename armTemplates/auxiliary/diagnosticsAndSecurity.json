@@ -78,7 +78,8 @@
         "platfromLzAscResourceDeploymentName": "[take(concat('PlatformLZ-ASC', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
         "platformLzActivityResourceDeploymentName": "[take(concat('PlatformLZ-AzActivityLogs', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
         "mgmtGrpAscResourceDeploymentName": "[take(concat('MgmtGroup-ASC', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "mgmtGrpActivityResourceDeploymentName": "[take(concat('MgmtGroup-AzActivityLogs', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
+        "mgmtGrpActivityResourceDeploymentName": "[take(concat('MgmtGroup-AzActivityLogs', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+        "storageAccountDeploymentName": "[take(concat('PlatformLZ-Storage', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
     },
     "resources": [
         {
@@ -359,8 +360,23 @@
                 "template": "[if(and(not(empty(parameters('platformLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))), reference(variables('policyDefinitions').deployAzureSecurity, '2018-05-01').policyRule.then.details.deployment.properties.template, 'na')]",
                 "parameters": "[if(and(not(empty(parameters('platformLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))),reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').azureSecurity), '2018-05-01').parameters, json('null'))]"
             }
+        },
+        {
+            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "[variables('storageAccountDeploymentName')]",
+            "location": "[deployment().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployStorageDiag)]"
+            ],
+            "subscriptionId": "[parameters('platformLzSubscriptionId')]",
+            "properties": {
+                "mode": "incremental",
+                "template": "[reference(variables('policyDefinitions').deployStorageDiag, '2018-05-01').policyRule.then.details.deployment.properties.template]",
+                "parameters": "[reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform', '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').StorageDiag), '2018-05-01').parameters]"
+            }
         }
-
     ],
     "outputs": {}
 }
