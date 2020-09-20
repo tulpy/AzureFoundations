@@ -92,8 +92,8 @@
                 "type": "SystemAssigned"
             },
             "properties": {
-                "description": "Deploy-Storage-Diagnostics",
-                "displayName": "Deploy-Storage-Diagnostics",
+                "description": "Deploy-Storage-Diag",
+                "displayName": "Deploy-Storage-Diag",
                 "policyDefinitionId": "[variables('policyDefinitions').deployStorageDiag]",
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
                 "parameters": {
