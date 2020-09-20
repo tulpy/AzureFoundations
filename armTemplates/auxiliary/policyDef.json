@@ -8859,6 +8859,9 @@
                           "storageAccountName": {
                             "type": "string"
                           },
+                                                    "storageAccountRegion": {
+                            "type": "string"
+                          },
                           "variables": {},
                           "resources": [
                             {
