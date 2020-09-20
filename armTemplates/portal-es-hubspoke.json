@@ -8,12 +8,12 @@
         "steps": [
             {
                 "name": "esNaming",
-                "label": "Naming Prefixes",
+                "label": "Naming Convention Prefixes",
                 "subLabel": {
                     "preValidation": "Provide naming prefixes for all Azure resources that will be created.",
                     "postValidation": "Done"
                 },
-                "bladeTitle": "Naming Prefixes",
+                "bladeTitle": "Naming Convention Prefixes",
                 "elements": [
                     {
                         "name": "infoBox1",
@@ -38,10 +38,10 @@
                         }
                     },
                     {
-                        "name": "esEnvIdentifier",
+                        "name": "esLocIdentifier",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Environment Identifier Prefix",
-                        "toolTip": "Provide a naming prefix for the environment identifier, 3 characters eg 'cor'.",
+                        "label": "Location Identifier Prefix",
+                        "toolTip": "Provide a naming prefix for the location identifier, 3 characters (Australia East - SYD) or (Australia SouthEast - MEL)",
                         "defaultValue": "",
                         "constraints": {
                             "required": true,
@@ -50,10 +50,10 @@
                         }
                     },
                     {
-                        "name": "esLocIdentifier",
+                        "name": "esEnvIdentifier",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Location Identifier Prefix",
-                        "toolTip": "Provide a naming prefix for the location identifier, 3 characters (Australia East - SYD) or (Australia SouthEast - MEL)",
+                        "label": "Environment Identifier Prefix",
+                        "toolTip": "Provide a naming prefix for the environment identifier, 3 characters eg 'cor'.",
                         "defaultValue": "",
                         "constraints": {
                             "required": true,
@@ -699,7 +699,6 @@
             "companyPrefix": "[steps('esNaming').esCompIdentifier]",
             "environmentPrefix": "[steps('esNaming').esEnvIdentifier]",
             "locationPrefix": "[steps('esNaming').esLocIdentifier]",
-           
             "vpnGwType": "[steps('esPlatformLZ').esVpnGwType]",
             "subnetMaskForGw": "[steps('esPlatformLZ').esAddressVpnOrEr]",
             "subnetMaskForAzFw": "[steps('esPlatformLZ').esAddressFw]",
@@ -716,7 +715,6 @@
             "platformLzSubscriptionId": "[steps('esPlatformLZ').esPlatformLZSub]",
             "enableLogAnalytics": "[steps('esPlatformLZ').esLogAnalytics]",
             "enableAsc": "[steps('esPlatformLZ').esAsc]",
-
             "enableStorageHttps": "[steps('esAppLZ').esHttpsStorage]",
             "enableKvSoftDelete": "[steps('esAppLZ').esKvSoftDelete]",
             "denyPublicendpoints": "[steps('esAppLZ').esPublicendpoints]",
