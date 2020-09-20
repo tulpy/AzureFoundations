@@ -3529,7 +3529,7 @@
                                   "category": "AzureFirewallNetworkRule",
                                   "enabled": true
                                 },
-                                                                {
+                                {
                                   "category": "AzureFirewallDnsProxy",
                                   "enabled": true
                                 }
@@ -8780,10 +8780,10 @@
         },
 
         {
-          "Name": "Deploy-Storage-Diagnostics",
+          "Name": "Deploy-Storage-Diag",
           "Properties": {
             "Description": null,
-            "DisplayName": "Deploy-Storage-Diagnostics",
+            "DisplayName": "Deploy-Storage-Diag",
             "Mode": "All",
             "Parameters": {
               "storageAccountName": {
