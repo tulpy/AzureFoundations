@@ -174,7 +174,7 @@
                         "name": "esHub",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Platform Landing Zone Virtual Network",
-                        "defaultValue": "Yes",
+                        "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected when adding the Platform Landing Zone Subscription, ARM will deploy the Virtual Network",
                         "constraints": {
                             "allowedValues": [
@@ -556,7 +556,7 @@
                         "name": "esPublicendpoints",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Azure Policy: Deny Public Endpoints on PaaS",
-                        "defaultValue": "Yes",
+                        "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
                         "constraints": {
                             "allowedValues": [
@@ -576,7 +576,7 @@
                         "name": "esPublicIP",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Azure Policy: Deny Public IP Addresses",
-                        "defaultValue": "Yes",
+                        "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
                         "constraints": {
                             "allowedValues": [
@@ -596,7 +596,7 @@
                         "name": "esSubnetNSG",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Azure Policy: Deny Subnets without NSGs",
-                        "defaultValue": "Yes",
+                        "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
                         "constraints": {
                             "allowedValues": [
@@ -616,7 +616,7 @@
                         "name": "esIpForwarding",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Azure Policy: Deny IP Forwarding",
-                        "defaultValue": "Yes",
+                        "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
                         "constraints": {
                             "allowedValues": [
@@ -636,7 +636,7 @@
                         "name": "esRdpInternet",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Azure Policy: Deny RDP Internet",
-                        "defaultValue": "Yes",
+                        "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
                         "constraints": {
                             "allowedValues": [
@@ -656,7 +656,7 @@
                         "name": "esSshInternet",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Azure Policy: Deny SSH Internet",
-                        "defaultValue": "Yes",
+                        "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
                         "constraints": {
                             "allowedValues": [
@@ -676,7 +676,7 @@
                         "name": "esVnetPeering",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Azure Policy: Deny ER Peering",
-                        "defaultValue": "Yes",
+                        "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
                         "constraints": {
                             "allowedValues": [
@@ -696,7 +696,7 @@
                         "name": "esPrivateDnsZones",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Azure Policy: Deny Private DNS Zones",
-                        "defaultValue": "Yes",
+                        "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
                         "constraints": {
                             "allowedValues": [
