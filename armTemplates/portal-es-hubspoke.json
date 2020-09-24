@@ -30,7 +30,7 @@
                         "type": "Microsoft.Common.TextBox",
                         "label": "Company Identifier Prefix",
                         "toolTip": "Provide a naming prefix for the company identifier, 1-5 characters.",
-                        "defaultValue": "",
+                        "defaultValue": "soc",
                         "constraints": {
                             "required": true,
                             "regex": "^[a-z0-9A-Z-]{1,5}$",
@@ -42,7 +42,7 @@
                         "type": "Microsoft.Common.TextBox",
                         "label": "Location Identifier Prefix",
                         "toolTip": "Provide a naming prefix for the location identifier, 3 characters (Australia East - SYD) or (Australia SouthEast - MEL)",
-                        "defaultValue": "",
+                        "defaultValue": "syd",
                         "constraints": {
                             "required": true,
                             "regex": "^[a-z0-9A-Z-]{3}$",
@@ -54,7 +54,7 @@
                         "type": "Microsoft.Common.TextBox",
                         "label": "Environment Identifier Prefix",
                         "toolTip": "Provide a naming prefix for the environment identifier, 3 characters eg 'cor'.",
-                        "defaultValue": "",
+                        "defaultValue": "cor",
                         "constraints": {
                             "required": true,
                             "regex": "^[a-z0-9A-Z-]{3}$",
