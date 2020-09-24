@@ -68,7 +68,6 @@
                             "name": "[variables('resourceDeploymentName')]",
                             "resourceGroup": "[variables('monitoringResourceGroupName')]",
                             "dependsOn": [
-                                "[concat('Microsoft.Resources/resourceGroups/', variables('monitoringResourceGroupName'))]"
                             ],
                             "properties": {
                                 "mode": "Incremental",
