@@ -1,0 +1,76 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "companyPrefix": {
+            "type": "string",
+            "maxLength": 5
+        },
+        "locationPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "environmentPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "platformLzSubscriptionId": {
+            "type": "string",
+            "maxLength": 36
+        },
+        "enableStorageAccount": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "metadata": {
+                "description": "If 'Yes' is selected when also adding a subscription for management, a storage account will be created for diagnostics. If 'No', it will be ignored."
+            }
+        }
+    },
+    "variables": {
+        "resourceDeploymentName": "[take(concat('Storage', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+        "monitoringResourceGroupName": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-arg-monitoring')]",
+        "namingPrefix": "[concat(parameters('companyPrefix'), parameters('locationPrefix'), parameters('environmentPrefix'))]",
+        "storageAccountName": "[concat(variables('namingPrefix'), 'sta111')]",
+        "storageAccountType": "Standard_LRS"
+
+    },
+    "resources": [
+        {
+            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableStorageAccount'), 'Yes'))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "[variables('resourceDeploymentName')]",
+            "resourceGroup": "[variables('monitoringResourceGroupName')]",
+            "subscriptionId": "[parameters('platformLzSubscriptionId')]",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [
+                        {
+                            "type": "Microsoft.Storage/storageAccounts",
+                            "apiVersion": "2019-06-01",
+                            "name": "[variables('storageAccountName')]",
+                            "location": "[deployment().location]",
+                            "sku": {
+                                "name": "[variables('storageAccountType')]"
+                            },
+                            "kind": "StorageV2",
+                            "properties": {
+                            }
+                        }
+                    ]
+                },
+                "parameters": {}
+            }
+        }
+    ],
+    "outputs": {}
+}

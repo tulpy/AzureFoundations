@@ -151,6 +151,26 @@
                         "visible": "[equals(steps('esPlatformLZ').esLogAnalytics, 'Yes')]"
                     },
                     {
+                        "name": "esStor",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure Storage Account for diagnostics",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, an Azure Storage account will be created for diagnostics",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes, (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformLZ').esLogAnalytics, 'Yes')]"
+                    },
+                    {
                         "name": "esHub",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Platform Landing Zone Virtual Network",
@@ -715,6 +735,7 @@
             "platformLzSubscriptionId": "[steps('esPlatformLZ').esPlatformLZSub]",
             "enableLogAnalytics": "[steps('esPlatformLZ').esLogAnalytics]",
             "enableAsc": "[steps('esPlatformLZ').esAsc]",
+            "enableStorageAccount": "[steps('esPlatformLZ').esStor]",
             "enableStorageHttps": "[steps('esAppLZ').esHttpsStorage]",
             "enableKvSoftDelete": "[steps('esAppLZ').esKvSoftDelete]",
             "denyPublicendpoints": "[steps('esAppLZ').esPublicendpoints]",
