@@ -135,7 +135,7 @@
                         "constraints": {
                             "allowedValues": [
                                 {
-                                    "label": "Yes, Standard Tier (recommended)",
+                                    "label": "Yes, Standard Tier",
                                     "value": "Standard"
                                 },
                                 {
@@ -159,7 +159,7 @@
                         "constraints": {
                             "allowedValues": [
                                 {
-                                    "label": "Yes, (recommended)",
+                                    "label": "Yes",
                                     "value": "Yes"
                                 },
                                 {
