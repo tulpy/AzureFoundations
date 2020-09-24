@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "companyPrefix": {
@@ -43,11 +43,10 @@
     "resources": [
         {
             "condition": "[and(equals(parameters('enableStorageAccount'), 'Yes'), not(empty(parameters('platformLzSubscriptionId'))))]",
-            "type": "Microsoft.Resources/deployments",
+            "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2019-10-01",
-            "name": "[variables('resourceDeploymentName')]",
             "location": "[deployment().location]",
-            "subscriptionId": "[parameters('platformLzSubscriptionId')]",
+            "name": "[variables('monitoringResourceGroupName')]",
             "properties": {
                 "mode": "Incremental",
                 "template": {
@@ -55,13 +54,6 @@
                     "contentVersion": "1.0.0.0",
                     "parameters": {},
                     "resources": [
-                        {
-                            "type": "Microsoft.Resources/resourceGroups",
-                            "apiVersion": "2019-10-01",
-                            "location": "[deployment().location]",
-                            "name": "[variables('monitoringResourceGroupName')]",
-                            "properties": {}
-                        },
                         {
                             "type": "Microsoft.Resources/deployments",
                             "apiVersion": "2019-10-01",
