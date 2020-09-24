@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "companyPrefix": {
@@ -35,39 +35,70 @@
         "monitoringResourceGroupName": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-arg-monitoring')]",
         "namingPrefix": "[concat(parameters('companyPrefix'), parameters('locationPrefix'), parameters('environmentPrefix'))]",
         "storageAccountName": "[concat(variables('namingPrefix'), 'sta111')]",
-        "storageAccountType": "Standard_LRS"
+        "storageAccountType": "Standard_LRS",
+        "storageType": "Diagnostics",
+        "httpsOnly": true
 
     },
     "resources": [
         {
-            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableStorageAccount'), 'Yes'))]",
+            "condition": "[and(equals(parameters('enableStorageAccount'), 'Yes'), not(empty(parameters('platformLzSubscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[variables('resourceDeploymentName')]",
+            "location": "[deployment().location]",
             "subscriptionId": "[parameters('platformLzSubscriptionId')]",
             "properties": {
                 "mode": "Incremental",
                 "template": {
-                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
                     "contentVersion": "1.0.0.0",
                     "parameters": {},
-                    "variables": {},
                     "resources": [
                         {
-                            "type": "Microsoft.Storage/storageAccounts",
-                            "apiVersion": "2019-06-01",
-                            "name": "[variables('storageAccountName')]",
+                            "type": "Microsoft.Resources/resourceGroups",
+                            "apiVersion": "2019-10-01",
                             "location": "[deployment().location]",
-                            "sku": {
-                                "name": "[variables('storageAccountType')]"
-                            },
-                            "kind": "StorageV2",
+                            "name": "[variables('monitoringResourceGroupName')]",
+                            "properties": {}
+                        },
+                        {
+                            "type": "Microsoft.Resources/deployments",
+                            "apiVersion": "2019-10-01",
+                            "name": "[variables('resourceDeploymentName')]",
+                            "resourceGroup": "[variables('monitoringResourceGroupName')]",
+                            "dependsOn": [
+                                "[concat('Microsoft.Resources/resourceGroups/', variables('monitoringResourceGroupName'))]"
+                            ],
                             "properties": {
+                                "mode": "Incremental",
+                                "template": {
+                                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                                    "contentVersion": "1.0.0.0",
+                                    "parameters": {},
+                                    "resources": [
+                                        {
+                                            "type": "Microsoft.Storage/storageAccounts",
+                                            "apiVersion": "2019-06-01",
+                                            "name": "[variables('storageAccountName')]",
+                                            "location": "[deployment().location]",
+                                            "tags": {
+                                                "storageType": "[variables('storageType')]"
+                                            },
+                                            "sku": {
+                                                "name": "[variables('storageAccountName')]"
+                                            },
+                                            "kind": "[variables('storageAccountType')]",
+                                            "properties": {
+                                                "supportsHttpsTrafficOnly": "[variables('httpsOnly')]"
+                                            }
+                                        }
+                                    ]
+                                }
                             }
                         }
                     ]
-                },
-                "parameters": {}
+                }
             }
         }
     ],

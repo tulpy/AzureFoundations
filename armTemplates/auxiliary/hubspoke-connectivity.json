@@ -130,8 +130,8 @@
             "condition": "[and(equals(parameters('enableHub'), 'Yes'), not(empty(parameters('platformLzSubscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "location": "[deployment().location]",
             "name": "[concat('PlatformLzSub-Networking')]",
+            "location": "[deployment().location]",
             "subscriptionId": "[parameters('platformLzSubscriptionId')]",
             "properties": {
                 "mode": "Incremental",
