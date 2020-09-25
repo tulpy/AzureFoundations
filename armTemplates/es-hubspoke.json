@@ -514,6 +514,7 @@
             "scope": "[concat('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('companyPrefix'), '-Platform'), parameters('platformLzSubscriptionId'))]",
             "name": "[variables('storageDeploymentName')]",
             "dependsOn": [
+                 "[variables('monitoringDeploymentName')]",
                 "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('companyPrefix'), '-Platform'), parameters('platformLzSubscriptionId'))]"
             ],
             "location": "[deployment().location]",
