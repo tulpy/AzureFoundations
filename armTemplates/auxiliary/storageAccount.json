@@ -34,7 +34,7 @@
         "resourceDeploymentName": "[take(concat('Storage', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
         "monitoringResourceGroupName": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-arg-monitoring')]",
         "namingPrefix": "[concat(parameters('companyPrefix'), parameters('locationPrefix'), parameters('environmentPrefix'))]",
-        "storageAccountName": "[concat(variables('namingPrefix'), 'sta111')]",
+        "storageAccountName": "[concat(variables('namingPrefix'), 'sta1113566')]",
         "storageAccountType": "Standard_LRS",
         "storageType": "Diagnostics",
         "httpsOnly": true
