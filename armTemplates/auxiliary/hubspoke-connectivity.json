@@ -123,7 +123,9 @@
         "azErGwPipId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azErGwIpName'))]",
         "azFwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/AzureFirewallSubnet')]",
         "azFwPipId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azFwIpName'))]",
-        "resourceDeploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]"
+        "resourceDeploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
+                "storageAccountName": "[concat(variables('namingPrefix'), 'sta111')]",
+        "storageAccountType": "Standard_LRS"
     },
     "resources": [
         {
@@ -176,6 +178,17 @@
                                             },
                                             "resources": [
                                             ]
+                                        },
+                                                                                {
+                                            "type": "Microsoft.Storage/storageAccounts",
+                                            "apiVersion": "2019-06-01",
+                                            "name": "[variables('storageAccountName')]",
+                                            "location": "[deployment().location]",
+                                            "sku": {
+                                                "name": "[variables('storageAccountType')]"
+                                            },
+                                            "kind": "StorageV2",
+                                            "properties": {}
                                         },
                                         {
                                             "condition": "[and(equals(parameters('enableAzFw'), 'Yes'), not(empty(parameters('subnetMaskForAzFw'))))]",
