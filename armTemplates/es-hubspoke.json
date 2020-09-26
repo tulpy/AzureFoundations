@@ -478,9 +478,6 @@
                     "resourceGroupPrefix": {
                         "value": "[parameters('resourceGroupPrefix')]"
                     },
-                    "logAnalyticsPrefix": {
-                        "value": "[parameters('logAnalyticsPrefix')]"
-                    },
                     "vngPrefix": {
                         "value": "[parameters('vngPrefix')]"
                     },
@@ -610,7 +607,6 @@
                     "environmentPrefix": {
                         "value": "[parameters('environmentPrefix')]"
                     },
-
                     "enableStorageAccount": {
                         "value": "[parameters('enableStorageAccount')]"
                     },
@@ -693,7 +689,9 @@
                     "environmentPrefix": {
                         "value": "[parameters('environmentPrefix')]"
                     },
-
+                    "resourceGroupPrefix": {
+                        "value": "[parameters('resourceGroupPrefix')]"
+                    },
                     "logAnalyticsPrefix": {
                         "value": "[parameters('logAnalyticsPrefix')]"
                     },
