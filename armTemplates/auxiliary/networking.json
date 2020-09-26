@@ -195,21 +195,6 @@
                                     "parameters": {},
                                     "resources": [
                                         {
-                                            "name": "[variables('hubName')]",
-                                            "type": "Microsoft.Network/virtualNetworks",
-                                            "apiVersion": "2020-04-01",
-                                            "location": "[deployment().location]",
-                                            "properties": {
-                                                "addressSpace": {
-                                                    "addressPrefixes": [
-                                                        "[parameters('addressPrefix')]"
-                                                    ]
-                                                }
-                                            },
-                                            "resources": [
-                                            ]
-                                        },
-                                        {
                                             "type": "Microsoft.Storage/storageAccounts",
                                             "apiVersion": "2019-06-01",
                                             "name": "[variables('storage').name]",
@@ -225,6 +210,21 @@
                                             "properties": {
                                                 "supportsHttpsTrafficOnly": "[variables('storage').httpsOnly]"
                                             }
+                                        },
+                                        {
+                                            "name": "[variables('hubName')]",
+                                            "type": "Microsoft.Network/virtualNetworks",
+                                            "apiVersion": "2020-04-01",
+                                            "location": "[deployment().location]",
+                                            "properties": {
+                                                "addressSpace": {
+                                                    "addressPrefixes": [
+                                                        "[parameters('addressPrefix')]"
+                                                    ]
+                                                }
+                                            },
+                                            "resources": [
+                                            ]
                                         },
                                         {
                                             "condition": "[and(equals(parameters('enableAzFw'), 'Yes'), not(empty(parameters('subnetMaskForAzFw'))))]",
