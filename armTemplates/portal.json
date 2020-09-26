@@ -144,6 +144,18 @@
                             "regex": "^[a-z0-9A-Z-]{3}$",
                             "validationMessage": "The prefix must be 3 characters."
                         }
+                    },
+                    {
+                        "name": "esStaIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Azure Storage Identifier",
+                        "toolTip": "Provide a naming prefix for the Azure Storage identifier,",
+                        "defaultValue": "sta",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
                     }
                 ]
             },
@@ -808,8 +820,9 @@
             "vngPrefix": "[steps('esNaming').esVngIdentifier]",
             "vnetPrefix": "[steps('esNaming').esVntIdentifier]",
             "publicIpPrefix": "[steps('esNaming').esPipIdentifier]",
-            "AzureFwPrefix": "[steps('esNaming').esAfwIdentifier]",
-            "AutomationPrefix": "[steps('esNaming').esAaaIdentifier]",
+            "azureFwPrefix": "[steps('esNaming').esAfwIdentifier]",
+            "automationPrefix": "[steps('esNaming').esAaaIdentifier]",
+            "storagePrefix": "[steps('esNaming').esStaIdentifier]",
             "vpnGwType": "[steps('esPlatformLZ').esVpnGwType]",
             "subnetMaskForGw": "[steps('esPlatformLZ').esAddressVpnOrEr]",
             "subnetMaskForAzFw": "[steps('esPlatformLZ').esAddressFw]",

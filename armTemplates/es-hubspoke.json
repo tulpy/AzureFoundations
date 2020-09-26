@@ -58,7 +58,7 @@
                 "description": "Provide the public IP identifier prefix"
             }
         },
-        "AzureFwPrefix": {
+        "azureFwPrefix": {
             "type": "string",
             "maxLength": 3,
             "metadata": {
@@ -70,6 +70,13 @@
             "maxLength": 3,
             "metadata": {
                 "description": "Provide the Azure Automation identifier prefix"
+            }
+        },
+        "storagePrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the Azure Storage identifier prefix"
             }
         },
         "platformLzSubscriptionId": {
@@ -489,6 +496,9 @@
                     },
                     "azureFwPrefix": {
                         "value": "[parameters('AzureFwPrefix')]"
+                    },
+                    "storagePrefix": {
+                        "value": "[parameters('storagePrefix')]"
                     },
                     "enableHub": {
                         "value": "[parameters('enableHub')]"
