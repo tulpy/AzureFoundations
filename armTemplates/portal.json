@@ -76,7 +76,7 @@
                     {
                         "name": "esOmsIdentifier",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Resource Group Identifier Prefix",
+                        "label": "Resource Group Identifier",
                         "toolTip": "Provide a naming prefix for the Log Analytics identifier,",
                         "defaultValue": "oms",
                         "constraints": {
@@ -88,7 +88,7 @@
                     {
                         "name": "esVngIdentifier",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Virtual Network Gateway Identifier Prefix",
+                        "label": "Virtual Network Gateway Identifier",
                         "toolTip": "Provide a naming prefix for the Virtual Network Gateway identifier,",
                         "defaultValue": "vng",
                         "constraints": {
@@ -100,7 +100,7 @@
                     {
                         "name": "esVntIdentifier",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Virtual Network Identifier Prefix",
+                        "label": "Virtual Network Identifier",
                         "toolTip": "Provide a naming prefix for the Virtual Network identifier,",
                         "defaultValue": "vnt",
                         "constraints": {
@@ -112,7 +112,7 @@
                     {
                         "name": "esPipIdentifier",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Public IP Identifier Prefix",
+                        "label": "Public IP Identifier",
                         "toolTip": "Provide a naming prefix for the Public IP identifier,",
                         "defaultValue": "pip",
                         "constraints": {
@@ -124,7 +124,7 @@
                     {
                         "name": "esAfwIdentifier",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Azure Firewall Identifier Prefix",
+                        "label": "Azure Firewall Identifier",
                         "toolTip": "Provide a naming prefix for the Azure Firewall identifier,",
                         "defaultValue": "afw",
                         "constraints": {
@@ -136,7 +136,7 @@
                     {
                         "name": "esAaaIdentifier",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Azure Automation Identifier Prefix",
+                        "label": "Azure Automation Identifier",
                         "toolTip": "Provide a naming prefix for the Azure Automation identifier,",
                         "defaultValue": "aaa",
                         "constraints": {
