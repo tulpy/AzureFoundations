@@ -168,7 +168,7 @@
                                             "name": "[variables('hubName')]",
                                             "type": "Microsoft.Network/virtualNetworks",
                                             "apiVersion": "2020-04-01",
-                                            "location": "[parameters('location')]",
+                                            "location": "[deployment().location]",
                                             "properties": {
                                                 "addressSpace": {
                                                     "addressPrefixes": [
