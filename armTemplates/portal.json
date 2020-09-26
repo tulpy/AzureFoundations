@@ -76,7 +76,7 @@
                     {
                         "name": "esOmsIdentifier",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Resource Group Identifier",
+                        "label": "Log Analytics Identifier",
                         "toolTip": "Provide a naming prefix for the Log Analytics identifier,",
                         "defaultValue": "oms",
                         "constraints": {
@@ -803,6 +803,13 @@
             "companyPrefix": "[steps('esNaming').esCompIdentifier]",
             "environmentPrefix": "[steps('esNaming').esEnvIdentifier]",
             "locationPrefix": "[steps('esNaming').esLocIdentifier]",
+            "resourceGroupPrefix": "[steps('esNaming').esArgIdentifier]",
+            "logAnalyticsPrefix": "[steps('esNaming').esOmsIdentifier]",
+            "vngPrefix": "[steps('esNaming').esVngIdentifier]",
+            "vnetPrefix": "[steps('esNaming').esVntIdentifier]",
+            "publicIpPrefix": "[steps('esNaming').esPipIdentifier]",
+            "AzureFwPrefix": "[steps('esNaming').esAfwIdentifier]",
+            "AutomationPrefix": "[steps('esNaming').esAaaIdentifier]",
             "vpnGwType": "[steps('esPlatformLZ').esVpnGwType]",
             "subnetMaskForGw": "[steps('esPlatformLZ').esAddressVpnOrEr]",
             "subnetMaskForAzFw": "[steps('esPlatformLZ').esAddressFw]",

@@ -6,11 +6,31 @@
             "type": "string",
             "maxLength": 5
         },
+        "locationPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
         "environmentPrefix": {
             "type": "string",
             "maxLength": 3
         },
-        "locationPrefix": {
+        "resourceGroupPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "vngPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "vnetPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "publicIpPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "azureFwPrefix": {
             "type": "string",
             "maxLength": 3
         },
@@ -109,22 +129,22 @@
     },
     "variables": {
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
-        "vpngwname": "[concat(variables('namingPrefix'),'-vng-001')]",
-        "erGwName": "[concat(variables('namingPrefix'),'-vng-002')]",
-        "rgName": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-arg-network')]",
-        "hubName": "[concat(variables('namingPrefix'),'-vnt')]",
-        "azVpnGwIpName": "[concat(variables('namingPrefix'),'-pip-001')]",
-        "azVpnGwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/GatewaySubnet')]",
-        "azFwName": "[concat(variables('namingPrefix'), '-afw-001')]",
-        "azErGwIpName": "[concat(variables('namingPrefix'),'-pip-002')]",
-        "azVpnGwPipId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azVpnGwIpName'))]",
-        "azFwIpName": "[concat(variables('namingPrefix'),'-pip-003')]",
-        "azErGwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/GatewaySubnet')]",
-        "azErGwPipId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azErGwIpName'))]",
-        "azFwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/AzureFirewallSubnet')]",
-        "azFwPipId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azFwIpName'))]",
+        "vpngwname": "[concat(variables('namingPrefix'), '-', parameters('vngPrefix'), '-vpn')]",
+        "erGwName": "[concat(variables('namingPrefix'), '-', parameters('vngPrefix'), '-er')]",
+        "resourceGroupName": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('resourceGroupPrefix'), '-monitoring')]",
+        "hubName": "[concat(variables('namingPrefix'), '-', parameters('vnetPrefix'), '-001')]",
+        "azVpnGwIpName": "[concat(variables('namingPrefix'), '-', parameters('publicIpPrefix'), '-001')]",
+        "azVpnGwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/GatewaySubnet')]",
+        "azFwName": "[concat(variables('namingPrefix'), '-', parameters('AzureFwPrefix'), '-001')]",
+        "azErGwIpName": "[concat(variables('namingPrefix'), '-', parameters('publicIpPrefix'), '-002')]",
+        "azVpnGwPipId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azVpnGwIpName'))]",
+        "azFwIpName": "[concat(variables('namingPrefix'), '-', parameters('publicIpPrefix'), '-003')]",
+        "azErGwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/GatewaySubnet')]",
+        "azErGwPipId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azErGwIpName'))]",
+        "azFwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/AzureFirewallSubnet')]",
+        "azFwPipId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azFwIpName'))]",
         "resourceDeploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
-                "storageAccountName": "docsydcorsta111231",
+        "storageAccountName": "[tolower(concat(parameters('companyPrefix'), parameters('locationPrefix'), parameters('environmentPrefix'), uniqueString(subscription().id, resourceGroup().id)))]",
         "storageAccountType": "Standard_LRS"
     },
     "resources": [
@@ -146,16 +166,16 @@
                             "type": "Microsoft.Resources/resourceGroups",
                             "apiVersion": "2019-10-01",
                             "location": "[deployment().location]",
-                            "name": "[variables('rgName')]",
+                            "name": "[variables('resourceGroupName')]",
                             "properties": {}
                         },
                         {
                             "type": "Microsoft.Resources/deployments",
                             "apiVersion": "2019-10-01",
                             "name": "[variables('resourceDeploymentName')]",
-                            "resourceGroup": "[variables('rgName')]",
+                            "resourceGroup": "[variables('resourceGroupName')]",
                             "dependsOn": [
-                                "[concat('Microsoft.Resources/resourceGroups/', variables('rgName'))]"
+                                "[concat('Microsoft.Resources/resourceGroups/', variables('resourceGroupName'))]"
                             ],
                             "properties": {
                                 "mode": "Incremental",

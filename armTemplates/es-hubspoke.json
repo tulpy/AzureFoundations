@@ -9,6 +9,13 @@
                 "description": "Provide the company identifier prefix (max 5 characters)"
             }
         },
+        "locationPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the location identifier prefix (3 characters)"
+            }
+        },
         "environmentPrefix": {
             "type": "string",
             "maxLength": 3,
@@ -16,11 +23,53 @@
                 "description": "Provide the environment identifier prefix (3 characters)"
             }
         },
-        "locationPrefix": {
+        "resourceGroupPrefix": {
             "type": "string",
             "maxLength": 3,
             "metadata": {
-                "description": "Provide the location identifier prefix (3 characters)"
+                "description": "Provide the resource group identifier"
+            }
+        },
+        "logAnalyticsPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the log analytics identifier prefix"
+            }
+        },
+        "vngPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the virtual network gateway identifier prefix"
+            }
+        },
+        "vnetPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the virtual network identifier prefix"
+            }
+        },
+        "publicIpPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the public IP identifier prefix"
+            }
+        },
+        "AzureFwPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the Azure Firewall identifier prefix"
+            }
+        },
+        "AutomationPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the Azure Automation identifier prefix"
             }
         },
         "platformLzSubscriptionId": {
@@ -420,11 +469,29 @@
                     "companyPrefix": {
                         "value": "[parameters('companyPrefix')]"
                     },
+                    "locationPrefix": {
+                        "value": "[parameters('locationPrefix')]"
+                    },
                     "environmentPrefix": {
                         "value": "[parameters('environmentPrefix')]"
                     },
-                    "locationPrefix": {
-                        "value": "[parameters('locationPrefix')]"
+                    "resourceGroupPrefix": {
+                        "value": "[parameters('resourceGroupPrefix')]"
+                    },
+                    "logAnalyticsPrefix": {
+                        "value": "[parameters('logAnalyticsPrefix')]"
+                    },
+                    "vngPrefix": {
+                        "value": "[parameters('vngPrefix')]"
+                    },
+                    "vnetPrefix": {
+                        "value": "[parameters('vnetPrefix')]"
+                    },
+                    "publicIpPrefix": {
+                        "value": "[parameters('publicIpPrefix')]"
+                    },
+                    "azureFwPrefix": {
+                        "value": "[parameters('AzureFwPrefix')]"
                     },
                     "enableHub": {
                         "value": "[parameters('enableHub')]"
@@ -492,11 +559,20 @@
                     "companyPrefix": {
                         "value": "[parameters('companyPrefix')]"
                     },
+                    "locationPrefix": {
+                        "value": "[parameters('locationPrefix')]"
+                    },
                     "environmentPrefix": {
                         "value": "[parameters('environmentPrefix')]"
                     },
-                    "locationPrefix": {
-                        "value": "[parameters('locationPrefix')]"
+                    "resourceGroupPrefix": {
+                        "value": "[parameters('resourceGroupPrefix')]"
+                    },
+                    "logAnalyticsPrefix": {
+                        "value": "[parameters('logAnalyticsPrefix')]"
+                    },
+                    "AutomationPrefix": {
+                        "value": "[parameters('AutomationPrefix')]"
                     },
                     "enableLogAnalytics": {
                         "value": "[parameters('enableLogAnalytics')]"
@@ -507,14 +583,14 @@
                 }
             }
         },
-                {
+        {
             "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableStorageAccount'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('companyPrefix'), '-Platform'))]",
             "name": "[variables('storageDeploymentName')]",
             "dependsOn": [
-                 "[variables('monitoringDeploymentName')]",
+                "[variables('monitoringDeploymentName')]",
                 "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('companyPrefix'), '-Platform'), parameters('platformLzSubscriptionId'))]"
             ],
             "location": "[deployment().location]",
@@ -528,12 +604,13 @@
                     "companyPrefix": {
                         "value": "[parameters('companyPrefix')]"
                     },
-                    "environmentPrefix": {
-                        "value": "[parameters('environmentPrefix')]"
-                    },
                     "locationPrefix": {
                         "value": "[parameters('locationPrefix')]"
                     },
+                    "environmentPrefix": {
+                        "value": "[parameters('environmentPrefix')]"
+                    },
+
                     "enableStorageAccount": {
                         "value": "[parameters('enableStorageAccount')]"
                     },
@@ -610,11 +687,15 @@
                     "companyPrefix": {
                         "value": "[parameters('companyPrefix')]"
                     },
+                    "locationPrefix": {
+                        "value": "[parameters('locationPrefix')]"
+                    },
                     "environmentPrefix": {
                         "value": "[parameters('environmentPrefix')]"
                     },
-                    "locationPrefix": {
-                        "value": "[parameters('locationPrefix')]"
+
+                    "logAnalyticsPrefix": {
+                        "value": "[parameters('logAnalyticsPrefix')]"
                     },
                     "enableLogAnalytics": {
                         "value": "[parameters('enableLogAnalytics')]"

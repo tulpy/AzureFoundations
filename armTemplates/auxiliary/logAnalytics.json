@@ -6,11 +6,23 @@
             "type": "string",
             "maxLength": 5
         },
+        "locationPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
         "environmentPrefix": {
             "type": "string",
             "maxLength": 3
         },
-        "locationPrefix": {
+        "resourceGroupPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "logAnalyticsPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "AutomationPrefix": {
             "type": "string",
             "maxLength": 3
         },
@@ -41,12 +53,11 @@
         "roleAssignmentNames": {
             "deployLogAnalytics": "[guid(concat(parameters('companyPrefix'), variables('policyAssignmentNames').logAnalytics))]"
         },
-
-        "resourceDeploymentName": "[take(concat('PlatformLZ-LogAnalytics', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "monitoringResourceGroupName": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-arg-monitoring')]",
+        "resourceDeploymentName": "[take(concat('logAnalytics', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+        "resourceGroupName": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('resourceGroupPrefix'), '-monitoring')]",
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
-        "logAnalyticsName": "[take(concat(variables('namingPrefix'), '-oms-', guid(parameters('companyPrefix'))), 24)]",
-        "azAutomationName": "[take(concat(variables('namingPrefix'), '-aaa-', guid(parameters('companyPrefix'))), 24)]"
+        "logAnalyticsName": "[take(concat(variables('namingPrefix'), '-', parameters('logAnalyticsPrefix'), guid(parameters('companyPrefix'))), 24)]",
+        "azAutomationName": "[take(concat(variables('namingPrefix'), '-', parameters('AutomationPrefix'), guid(parameters('companyPrefix'))), 24)]",
     },
     "resources": [
         {
@@ -77,7 +88,7 @@
                         "value": "[deployment().location]"
                     },
                     "rgName": {
-                        "value": "[variables('monitoringResourceGroupName')]"
+                        "value": "[variables('resourceGroupName')]"
                     }
                 }
             }
