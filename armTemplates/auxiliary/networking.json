@@ -214,6 +214,9 @@
                                             "apiVersion": "2019-06-01",
                                             "name": "[variables('storage').name]",
                                             "location": "[deployment().location]",
+                                            "dependsOn": [
+                                                "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
+                                            ],
                                             "sku": {
                                                 "name": "[variables('storage').sku]"
                                             },
