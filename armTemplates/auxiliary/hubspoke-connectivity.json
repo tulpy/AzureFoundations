@@ -136,7 +136,7 @@
         "storageNamingPrefix": "[concat(parameters('companyPrefix'), parameters('locationPrefix'), parameters('environmentPrefix'))]",
         "vpngwname": "[concat(variables('namingPrefix'), '-', parameters('vngPrefix'), '-vpn')]",
         "erGwName": "[concat(variables('namingPrefix'), '-', parameters('vngPrefix'), '-er')]",
-        "resourceGroupName": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('resourceGroupPrefix'), '-monitoring')]",
+        "resourceGroupName": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('resourceGroupPrefix'), '-network')]",
         "hubName": "[concat(variables('namingPrefix'), '-', parameters('vnetPrefix'), '-001')]",
         "azVpnGwIpName": "[concat(variables('namingPrefix'), '-', parameters('publicIpPrefix'), '-001')]",
         "azVpnGwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/GatewaySubnet')]",
