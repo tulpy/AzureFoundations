@@ -552,7 +552,7 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
             "name": "[variables('monitoringDeploymentName')]",
             "dependsOn": [
-                "[variables('policyDefDeploymentName')]",
+                "[variables('policyDefinitionDeploymentName')]",
                 "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('companyPrefix'), '-Platform'), parameters('platformLzSubscriptionId'))]"
             ],
             "location": "[deployment().location]",
