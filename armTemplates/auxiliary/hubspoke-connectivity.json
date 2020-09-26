@@ -179,7 +179,7 @@
                                             "resources": [
                                             ]
                                         },
-                                                                                {
+                                        {
                                             "type": "Microsoft.Storage/storageAccounts",
                                             "apiVersion": "2019-06-01",
                                             "name": "[variables('storageAccountName')]",
@@ -214,7 +214,7 @@
                                                 "addressPrefix": "[parameters('subnetMaskForAppGw')]"
                                             }
                                         },
-                                                                                {
+                                        {
                                             "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
                                             "apiVersion": "2020-04-01",
