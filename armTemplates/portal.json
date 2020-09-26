@@ -30,7 +30,7 @@
                         "type": "Microsoft.Common.TextBox",
                         "label": "Company Identifier Prefix",
                         "toolTip": "Provide a naming prefix for the company identifier, 1-5 characters.",
-                        "defaultValue": "soc",
+                        "defaultValue": "doc",
                         "constraints": {
                             "required": true,
                             "regex": "^[a-z0-9A-Z-]{1,5}$",
@@ -55,6 +55,90 @@
                         "label": "Environment Identifier Prefix",
                         "toolTip": "Provide a naming prefix for the environment identifier, 3 characters eg 'cor'.",
                         "defaultValue": "cor",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esArgIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Resource Group Identifier Prefix",
+                        "toolTip": "Provide a naming prefix for the Resource Group identifier,",
+                        "defaultValue": "arg",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esOmsIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Resource Group Identifier Prefix",
+                        "toolTip": "Provide a naming prefix for the Log Analytics identifier,",
+                        "defaultValue": "oms",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esVngIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Virtual Network Gateway Identifier Prefix",
+                        "toolTip": "Provide a naming prefix for the Virtual Network Gateway identifier,",
+                        "defaultValue": "vng",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esVntIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Virtual Network Identifier Prefix",
+                        "toolTip": "Provide a naming prefix for the Virtual Network identifier,",
+                        "defaultValue": "vnt",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esPipIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Public IP Identifier Prefix",
+                        "toolTip": "Provide a naming prefix for the Public IP identifier,",
+                        "defaultValue": "pip",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esAfwIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Azure Firewall Identifier Prefix",
+                        "toolTip": "Provide a naming prefix for the Azure Firewall identifier,",
+                        "defaultValue": "afw",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esAaaIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Azure Automation Identifier Prefix",
+                        "toolTip": "Provide a naming prefix for the Azure Automation identifier,",
+                        "defaultValue": "aaa",
                         "constraints": {
                             "required": true,
                             "regex": "^[a-z0-9A-Z-]{3}$",

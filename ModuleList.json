@@ -1,0 +1,42 @@
+
+"variables": {
+    "storageAccountName": "[tolower(concat('sawithsse', substring(parameters('storageAccountType'), 0, 2), uniqueString(subscription().id, resourceGroup().id)))]"
+},
+
+{
+    "1": {
+        "Name": "Az.Subscription",
+        "Details": "For creating Azure subscriptions",
+        "AllowPreRelease": "Yes",
+        "State": "Allowed",
+        "MinimumVersion": ""
+    },
+    "2": {
+        "Name": "Az.ManagementPartner",
+        "Details": "For creating Azure subscriptions",
+        "AllowPreRelease": "No",
+        "State": "Allowed",
+        "MinimumVersion": ""
+    },
+    "3": {
+        "Name": "Az",
+        "Details": "For managing Azure resources",
+        "AllowPreRelease": "No",
+        "State": "Allowed",
+        "MinimumVersion": ""
+    },
+    "4": {
+        "Name": "AzureRM",
+        "Details": "Legacy module for managing Azure resources",
+        "AllowPreRelease": "No",
+        "State": "Denied",
+        "MinimumVersion": ""
+    },
+    "5": {
+        "Name": "Pester",
+        "Details": "Used for creating test scripts in PowerShell",
+        "AllowPreRelease": "No",
+        "State": "Allowed",
+        "MinimumVersion": "4.10"
+    }
+}
