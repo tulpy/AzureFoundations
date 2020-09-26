@@ -108,7 +108,7 @@
         }
     },
     "variables": {
-        "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('locationPrefix'))]",
+        "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
         "vpngwname": "[concat(variables('namingPrefix'),'-vng-001')]",
         "erGwName": "[concat(variables('namingPrefix'),'-vng-002')]",
         "rgName": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-arg-network')]",
@@ -124,7 +124,7 @@
         "azFwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/AzureFirewallSubnet')]",
         "azFwPipId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azFwIpName'))]",
         "resourceDeploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
-                "storageAccountName": "[concat(variables('namingPrefix'), 'sta111')]",
+                "storageAccountName": "docsydcorsta111",
         "storageAccountType": "Standard_LRS"
     },
     "resources": [
