@@ -149,7 +149,7 @@
         "azFwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/AzureFirewallSubnet')]",
         "azFwPipId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azFwIpName'))]",
         "resourceDeploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
-        "storageAccountName": "[take(toLower(concat(variables('storageNamingPrefix'), '-', parameters('storagePrefix'), guid(parameters('companyPrefix')))), 24)]",                     
+        "storageAccountName": "[take(toLower(concat(variables('storageNamingPrefix'), parameters('storagePrefix'), guid(parameters('companyPrefix')))), 20)]",                     
         "storageAccountType": "Standard_LRS"
     },
     "resources": [

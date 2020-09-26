@@ -54,10 +54,10 @@
             "deployLogAnalytics": "[guid(concat(parameters('companyPrefix'), variables('policyAssignmentNames').logAnalytics))]"
         },
         "resourceDeploymentName": "[take(concat('logAnalytics', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "resourceGroupName": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('resourceGroupPrefix'), '-monitoring')]",
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
-        "logAnalyticsName": "[take(concat(variables('namingPrefix'), '-', parameters('logAnalyticsPrefix'), guid(parameters('companyPrefix'))), 24)]",
-        "azAutomationName": "[take(concat(variables('namingPrefix'), '-', parameters('automationPrefix'), guid(parameters('companyPrefix'))), 24)]"
+        "resourceGroupName": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('resourceGroupPrefix'), '-monitoring')]",
+        "logAnalyticsName": "[take(concat(variables('namingPrefix'), '-', parameters('logAnalyticsPrefix'), '-', guid(parameters('companyPrefix'))), 24)]",
+        "azAutomationName": "[take(concat(variables('namingPrefix'), '-', parameters('automationPrefix'), '-', guid(parameters('companyPrefix'))), 24)]"
     },
     "resources": [
         {
