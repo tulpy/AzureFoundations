@@ -271,12 +271,12 @@
         }
     },
     "variables": {
-        "policyDef": "[uri(deployment().properties.templateLink.uri, 'auxiliary/policyDef.json')]",
-        "policyAssignment": "[uri(deployment().properties.templateLink.uri, 'auxiliary/policyAssignment.json')]",
+        "policyDefinitions": "[uri(deployment().properties.templateLink.uri, 'auxiliary/policyDefinitions.json')]",
+        "policyAssignments": "[uri(deployment().properties.templateLink.uri, 'auxiliary/policyAssignments.json')]",
         "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
-        "storage": "[uri(deployment().properties.templateLink.uri, 'auxiliary/storageAccount.json')]",
+        "storage": "[uri(deployment().properties.templateLink.uri, 'auxiliary/storage.json')]",
         "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
-        "netConnectivity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/hubspoke-connectivity.json')]",
+        "networking": "[uri(deployment().properties.templateLink.uri, 'auxiliary/networking.json')]",
         "appLz": "[uri(deployment().properties.templateLink.uri, 'auxiliary/appLz.json')]",
         "moveSubscription": "[concat(parameters('companyPrefix'), '-Platform', '/', parameters('platformLzSubscriptionId'))]",
         "noSubscription": "[concat(parameters('companyPrefix'), '-Platform', '/', 'na')]",
@@ -285,7 +285,7 @@
         "monitoringDeploymentName": "[take(concat('Monitoring', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
         "storageDeploymentName": "[take(concat('Storage', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
         "diagnosticsAndSecurityDeploymentName": "[take(concat('DiagSecurity', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "netConnectivityDeploymentName": "[take(concat('Networking', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+        "networkingDeploymentName": "[take(concat('Networking', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
         "appLzDeploymentName": "[take(concat('AppLZ', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
     },
     "resources": [
@@ -308,7 +308,7 @@
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('policyDef')]"
+                    "uri": "[variables('policyDefinitions')]"
                 },
                 "parameters": {
                     "companyPrefix": {
@@ -331,7 +331,7 @@
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('policyAssignment')]"
+                    "uri": "[variables('policyAssignments')]"
                 },
                 "parameters": {
                     "companyPrefix": {
@@ -460,7 +460,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
-            "name": "[variables('netConnectivityDeploymentName')]",
+            "name": "[variables('networkingDeploymentName')]",
             "dependsOn": [
                 "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('companyPrefix'), '-Platform'), parameters('platformLzSubscriptionId'))]",
                 "[variables('monitoringDeploymentName')]"
@@ -470,7 +470,7 @@
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('netConnectivity')]"
+                    "uri": "[variables('networking')]"
                 },
                 "parameters": {
                     "companyPrefix": {
