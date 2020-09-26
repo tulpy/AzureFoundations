@@ -22,7 +22,7 @@
             "type": "string",
             "maxLength": 3
         },
-        "AutomationPrefix": {
+        "automationPrefix": {
             "type": "string",
             "maxLength": 3
         },
@@ -57,7 +57,7 @@
         "resourceGroupName": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('resourceGroupPrefix'), '-monitoring')]",
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
         "logAnalyticsName": "[take(concat(variables('namingPrefix'), '-', parameters('logAnalyticsPrefix'), guid(parameters('companyPrefix'))), 24)]",
-        "azAutomationName": "[take(concat(variables('namingPrefix'), '-', parameters('AutomationPrefix'), guid(parameters('companyPrefix'))), 24)]",
+        "azAutomationName": "[take(concat(variables('namingPrefix'), '-', parameters('automationPrefix'), guid(parameters('companyPrefix'))), 24)]"
     },
     "resources": [
         {
