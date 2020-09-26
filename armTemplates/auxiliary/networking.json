@@ -150,7 +150,7 @@
         "deploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
         "storage": {
             "namingPrefix": "[concat(parameters('companyPrefix'), parameters('locationPrefix'), parameters('environmentPrefix'))]",
-            "name": "[take(toLower(concat(variables('namingPrefix'), parameters('storagePrefix'), guid(parameters('companyPrefix')))), 20)]",
+            "name": "[take(toLower(concat(variables('storage').namingPrefix, parameters('storagePrefix'), guid(parameters('companyPrefix')))), 20)]",
             "sku": "Standard_LRS",
             "kind": "StorageV2",
             "use": "Diagnostics",
