@@ -18,7 +18,7 @@ An activity log alert should exist for specific Administrative operations
 Root
 
 
-
+https://azure.microsoft.com/en-us/blog/preparing-for-whats-next-building-landing-zones-for-successful-cloud-migrations/?_lrsc=ea4b5c91-07b1-4b39-8622-f9ed7c6dfd62
 
 
 
