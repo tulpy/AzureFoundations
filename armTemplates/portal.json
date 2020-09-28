@@ -848,7 +848,7 @@
             "automationPrefix": "[steps('esNaming').esAaaIdentifier]",
             "storagePrefix": "[steps('esNaming').esStaIdentifier]",
             "udrPrefix": "[steps('esNaming').esUdrIdentifier]",
-            "nsgPrefix": "[steps('esNaming').esNSGIdentifier]",
+            "nsgPrefix": "[steps('esNaming').esNsgIdentifier]",
             "environmentTag": "[steps('esNaming').esEnvironmentTag]",
             "ownerTag": "[steps('esNaming').esOwnerTag]",
             "vpnGwType": "[steps('esPlatformLZ').esVpnGwType]",
