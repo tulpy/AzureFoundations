@@ -268,12 +268,12 @@
         "appLz": "[uri(deployment().properties.templateLink.uri, 'auxiliary/appLz.json')]",
         "moveSubscription": "[concat(parameters('companyPrefix'), '-Platform', '/', parameters('platformLzSubscriptionId'))]",
         "noSubscription": "[concat(parameters('companyPrefix'), '-Platform', '/', 'na')]",
-        "policyDefinitionDeploymentName": "[take(concat('PolicyDefinition', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "policyAssignmentDeploymentName": "[take(concat('PolicyAssignment', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "monitoringDeploymentName": "[take(concat('Monitoring', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "diagnosticsAndSecurityDeploymentName": "[take(concat('DiagSecurity', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "networkingDeploymentName": "[take(concat('Networking', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "appLzDeploymentName": "[take(concat('AppLZ', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
+        "policyDefDeploymentName": "[take(concat('policyDef', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+        "policyAssDeploymentName": "[take(concat('policyAss', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+        "monitoringDeploymentName": "[take(concat('monitoring', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+        "diagSecurityDeploymentName": "[take(concat('diagSecurity', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+        "networkingDeploymentName": "[take(concat('networking', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+        "appLzDeploymentName": "[take(concat('appLz', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
     },
     "resources": [
         {
@@ -285,7 +285,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "[variables('policyDefinitionDeploymentName')]",
+            "name": "[variables('policyDefDeploymentName')]",
             "location": "[deployment().location]",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
             "dependsOn": [
@@ -307,11 +307,11 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "[variables('policyAssignmentDeploymentName')]",
+            "name": "[variables('policyAssDeploymentName')]",
             "location": "[deployment().location]",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
             "dependsOn": [
-                "[variables('policyDefinitionDeploymentName')]",
+                "[variables('policyDefDeploymentName')]",
                 "[tenantResourceId('Microsoft.Management/managementGroups', parameters('companyPrefix'))]"
             ],
             "properties": {
@@ -539,7 +539,7 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
             "name": "[variables('monitoringDeploymentName')]",
             "dependsOn": [
-                "[variables('policyDefinitionDeploymentName')]",
+                "[variables('policyDefDeploymentName')]",
                 "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('companyPrefix'), '-Platform'), parameters('platformLzSubscriptionId'))]"
             ],
             "location": "[deployment().location]",
@@ -584,7 +584,7 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-AppLandingZones')]",
             "name": "[variables('appLZDeploymentName')]",
             "dependsOn": [
-                "[variables('policyDefinitionDeploymentName')]"
+                "[variables('policyDefDeploymentName')]"
             ],
             "location": "[deployment().location]",
             "properties": {
@@ -629,7 +629,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
-            "name": "[variables('diagnosticsAndSecurityDeploymentName')]",
+            "name": "[variables('diagSecurityDeploymentName')]",
             "dependsOn": [
                 "[variables('monitoringDeploymentName')]"
             ],
