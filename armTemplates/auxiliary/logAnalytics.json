@@ -26,6 +26,12 @@
             "type": "string",
             "maxLength": 3
         },
+        "environmentTag": {
+            "type": "string"
+        },
+        "ownerTag": {
+            "type": "string"
+        },
         "platformLzSubscriptionId": {
             "type": "string",
             "maxLength": 36
@@ -52,6 +58,10 @@
         "rbacOwner": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
         "roleAssignmentNames": {
             "deployLogAnalytics": "[guid(concat(parameters('companyPrefix'), variables('policyAssignmentNames').logAnalytics))]"
+        },
+        "tags": {
+            "environment": "[parameters('environmentTag')]",
+            "owner": "[parameters('ownerTag')]"
         },
         "resourceDeploymentName": "[take(concat('logAnalytics', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",

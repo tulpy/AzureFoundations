@@ -65,7 +65,7 @@
                         "name": "esArgIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Resource Group Identifier Prefix",
-                        "toolTip": "Provide a naming prefix for the Resource Group identifier,",
+                        "toolTip": "Provide a naming prefix for the Resource Group identifier",
                         "defaultValue": "arg",
                         "constraints": {
                             "required": true,
@@ -77,7 +77,7 @@
                         "name": "esOmsIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Log Analytics Identifier",
-                        "toolTip": "Provide a naming prefix for the Log Analytics identifier,",
+                        "toolTip": "Provide a naming prefix for the Log Analytics identifier",
                         "defaultValue": "oms",
                         "constraints": {
                             "required": true,
@@ -89,7 +89,7 @@
                         "name": "esVngIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Virtual Network Gateway Identifier",
-                        "toolTip": "Provide a naming prefix for the Virtual Network Gateway identifier,",
+                        "toolTip": "Provide a naming prefix for the Virtual Network Gateway identifier",
                         "defaultValue": "vng",
                         "constraints": {
                             "required": true,
@@ -101,7 +101,7 @@
                         "name": "esVntIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Virtual Network Identifier",
-                        "toolTip": "Provide a naming prefix for the Virtual Network identifier,",
+                        "toolTip": "Provide a naming prefix for the Virtual Network identifier",
                         "defaultValue": "vnt",
                         "constraints": {
                             "required": true,
@@ -113,7 +113,7 @@
                         "name": "esPipIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Public IP Identifier",
-                        "toolTip": "Provide a naming prefix for the Public IP identifier,",
+                        "toolTip": "Provide a naming prefix for the Public IP identifier",
                         "defaultValue": "pip",
                         "constraints": {
                             "required": true,
@@ -125,7 +125,7 @@
                         "name": "esAfwIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Azure Firewall Identifier",
-                        "toolTip": "Provide a naming prefix for the Azure Firewall identifier,",
+                        "toolTip": "Provide a naming prefix for the Azure Firewall identifier",
                         "defaultValue": "afw",
                         "constraints": {
                             "required": true,
@@ -137,7 +137,7 @@
                         "name": "esAaaIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Azure Automation Identifier",
-                        "toolTip": "Provide a naming prefix for the Azure Automation identifier,",
+                        "toolTip": "Provide a naming prefix for the Azure Automation identifier",
                         "defaultValue": "aaa",
                         "constraints": {
                             "required": true,
@@ -149,12 +149,44 @@
                         "name": "esStaIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Azure Storage Identifier",
-                        "toolTip": "Provide a naming prefix for the Azure Storage identifier,",
+                        "toolTip": "Provide a naming prefix for the Azure Storage identifier",
                         "defaultValue": "sta",
                         "constraints": {
                             "required": true,
                             "regex": "^[a-z0-9A-Z-]{3}$",
                             "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esUdrIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Route Table Identifier",
+                        "toolTip": "Provide a naming prefix for the Route Table identifier",
+                        "defaultValue": "udr",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esEnvironmentTag",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Environment Tag",
+                        "toolTip": "Provide a value for the environment tag",
+                        "defaultValue": "Platform LZ",
+                        "constraints": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "esOwnerTag",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Owner Tag",
+                        "toolTip": "Provide a value for the owner tag",
+                        "defaultValue": "tulpy",
+                        "constraints": {
+                            "required": false
                         }
                     }
                 ]
@@ -803,6 +835,9 @@
             "azFwPrefix": "[steps('esNaming').esAfwIdentifier]",
             "automationPrefix": "[steps('esNaming').esAaaIdentifier]",
             "storagePrefix": "[steps('esNaming').esStaIdentifier]",
+            "udrPrefix": "[steps('esNaming').esUdrIdentifier]",
+            "environmentTag": "[steps('esNaming').esEnvironmentTag]",
+            "ownerTag": "[steps('esNaming').esOwnerTag]",
             "vpnGwType": "[steps('esPlatformLZ').esVpnGwType]",
             "subnetMaskForGw": "[steps('esPlatformLZ').esAddressVpnOrEr]",
             "subnetMaskForAzFw": "[steps('esPlatformLZ').esAddressFw]",

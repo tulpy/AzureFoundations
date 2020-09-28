@@ -38,6 +38,16 @@
             "type": "string",
             "maxLength": 3
         },
+        "udrPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "environmentTag": {
+            "type": "string"
+        },
+        "ownerTag": {
+            "type": "string"
+        },
         "addressPrefix": {
             "type": "string",
             "metadata": {
@@ -139,7 +149,7 @@
         "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('resourceGroupPrefix'), '-network'))]",
         "hubNameCidr": "[substring(parameters('addressPrefix'),0,sub(length(parameters('addressPrefix')), 3))]",
         "hubName": "[toLower(concat(variables('namingPrefix'), '-', parameters('vnetPrefix'), '-', variables('hubNameCidr')))]",
-        "routeTableName": "[toLower(concat(variables('namingPrefix'), '-udr-001'))]",
+        "routeTableName": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-001'))]",
         "routeName": "[toLower(concat('subnet-to-', variables('azFwName')))]",
         "routeTableId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('routeTableName'))]",
         "azVpnGwIpName": "[toLower(concat(variables('namingPrefix'), '-', parameters('publicIpPrefix'), '-001'))]",
@@ -153,6 +163,10 @@
         "azFwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/AzureFirewallSubnet')]",
         "azFwPipId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azFwIpName'))]",
         "deploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
+        "tags": {
+            "environment": "[parameters('environmentTag')]",
+            "owner": "[parameters('ownerTag')]"
+        },
         "storage": {
             "name": "[take(toLower(concat(variables('storageNamingPrefix'), parameters('storagePrefix'), guid(parameters('companyPrefix')))), 20)]",
             "sku": "Standard_LRS",
@@ -182,8 +196,8 @@
                             "location": "[deployment().location]",
                             "name": "[variables('resourceGroupName')]",
                             "tags": {
-                                "environment": "Platform LZ",
-                                "owner": "tulpy"
+                                "environment": "[variables('tags').environment]",
+                                "owner": "[variables('tags').owner]"
                             },
                             "properties": {}
                         },
@@ -202,6 +216,15 @@
                                     "contentVersion": "1.0.0.0",
                                     "parameters": {},
                                     "resources": [
+                                        {
+                                            "type": "Microsoft.Authorization/locks",
+                                            "apiVersion": "2017-04-01",
+                                            "name": "ResourceGroup-DontDelete",
+                                            "properties": {
+                                                "level": "CanNotDelete",
+                                                "notes": "Prevent deletion of the resourceGroup"
+                                            }
+                                        },
                                         {
                                             "type": "Microsoft.Storage/storageAccounts",
                                             "apiVersion": "2019-06-01",

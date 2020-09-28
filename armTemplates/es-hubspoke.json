@@ -79,6 +79,25 @@
                 "description": "Provide the Azure Storage identifier prefix"
             }
         },
+        "udrPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the Route Table identifier prefix"
+            }
+        },
+        "environmentTag": {
+            "type": "string",
+            "metadata": {
+                "description": "Provide the value for the environment tag"
+            }
+        },
+        "ownerTag": {
+            "type": "string",
+            "metadata": {
+                "description": "Provide the value for the owner tag"
+            }
+        },
         "platformLzSubscriptionId": {
             "type": "string",
             "defaultValue": "",
@@ -487,6 +506,15 @@
                     "storagePrefix": {
                         "value": "[parameters('storagePrefix')]"
                     },
+                    "udrPrefix": {
+                        "value": "[parameters('udrPrefix')]"
+                    },
+                    "environmentTag": {
+                        "value": "[parameters('environmentTag')]"
+                    },
+                    "ownerTag": {
+                        "value": "[parameters('ownerTag')]"
+                    },
                     "enableHub": {
                         "value": "[parameters('enableHub')]"
                     },
@@ -561,6 +589,12 @@
                     },
                     "resourceGroupPrefix": {
                         "value": "[parameters('resourceGroupPrefix')]"
+                    },
+                    "environmentTag": {
+                        "value": "[parameters('environmentTag')]"
+                    },
+                    "ownerTag": {
+                        "value": "[parameters('ownerTag')]"
                     },
                     "logAnalyticsPrefix": {
                         "value": "[parameters('logAnalyticsPrefix')]"
