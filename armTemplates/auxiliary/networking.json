@@ -140,7 +140,7 @@
         "hubNameCidr": "[substring(parameters('addressPrefix'),0,sub(length(parameters('addressPrefix')), 3))]",
         "hubName": "[toLower(concat(variables('namingPrefix'), '-', parameters('vnetPrefix'), '-', variables('hubNameCidr')))]",
         "routeTableName": "[toLower(concat(variables('namingPrefix'), '-udr-001'))]",
-        "routeName": "Subnet-to-0.0.0.0",
+        "routeName": "[toLower(concat('-subnet-to-', variables('azFwName')))]",
         "routeTableId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('routeTableName'))]",
         "azVpnGwIpName": "[toLower(concat(variables('namingPrefix'), '-', parameters('publicIpPrefix'), '-001'))]",
         "azVpnGwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/GatewaySubnet')]",
@@ -165,7 +165,7 @@
         {
             "condition": "[and(equals(parameters('enableHub'), 'Yes'), not(empty(parameters('platformLzSubscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
+            "apiVersion": "2020-06-01",
             "name": "networking",
             "location": "[deployment().location]",
             "subscriptionId": "[parameters('platformLzSubscriptionId')]",
@@ -178,9 +178,13 @@
                     "resources": [
                         {
                             "type": "Microsoft.Resources/resourceGroups",
-                            "apiVersion": "2019-10-01",
+                            "apiVersion": "2020-06-01",
                             "location": "[deployment().location]",
                             "name": "[variables('resourceGroupName')]",
+                            "tags": {
+                                "environment": "Platform LZ",
+                                "owner": "tulpy"
+                            },
                             "properties": {}
                         },
                         {
