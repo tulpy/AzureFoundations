@@ -58,7 +58,7 @@
                 "description": "Provide the public IP identifier prefix"
             }
         },
-        "azureFwPrefix": {
+        "azFwPrefix": {
             "type": "string",
             "maxLength": 3,
             "metadata": {
@@ -481,8 +481,8 @@
                     "publicIpPrefix": {
                         "value": "[parameters('publicIpPrefix')]"
                     },
-                    "azureFwPrefix": {
-                        "value": "[parameters('AzureFwPrefix')]"
+                    "azFwPrefix": {
+                        "value": "[parameters('azFwPrefix')]"
                     },
                     "storagePrefix": {
                         "value": "[parameters('storagePrefix')]"

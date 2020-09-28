@@ -800,7 +800,7 @@
             "vngPrefix": "[steps('esNaming').esVngIdentifier]",
             "vnetPrefix": "[steps('esNaming').esVntIdentifier]",
             "publicIpPrefix": "[steps('esNaming').esPipIdentifier]",
-            "azureFwPrefix": "[steps('esNaming').esAfwIdentifier]",
+            "azFwPrefix": "[steps('esNaming').esAfwIdentifier]",
             "automationPrefix": "[steps('esNaming').esAaaIdentifier]",
             "storagePrefix": "[steps('esNaming').esStaIdentifier]",
             "vpnGwType": "[steps('esPlatformLZ').esVpnGwType]",
