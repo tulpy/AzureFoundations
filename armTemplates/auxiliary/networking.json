@@ -140,7 +140,7 @@
         "hubNameCidr": "[substring(parameters('addressPrefix'),0,sub(length(parameters('addressPrefix')), 3))]",
         "hubName": "[toLower(concat(variables('namingPrefix'), '-', parameters('vnetPrefix'), '-', variables('hubNameCidr')))]",
         "routeTableName": "[toLower(concat(variables('namingPrefix'), '-udr-001'))]",
-        "routeName": "[toLower(concat('-subnet-to-', variables('azFwName')))]",
+        "routeName": "[toLower(concat('subnet-to-', variables('azFwName')))]",
         "routeTableId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('routeTableName'))]",
         "azVpnGwIpName": "[toLower(concat(variables('namingPrefix'), '-', parameters('publicIpPrefix'), '-001'))]",
         "azVpnGwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/GatewaySubnet')]",
