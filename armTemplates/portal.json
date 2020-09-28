@@ -170,6 +170,18 @@
                         }
                     },
                     {
+                        "name": "esNsgIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Network Security Group Identifier",
+                        "toolTip": "Provide a naming prefix for the Network Security Group identifier",
+                        "defaultValue": "nsg",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
                         "name": "esEnvironmentTag",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Environment Tag",
@@ -836,6 +848,7 @@
             "automationPrefix": "[steps('esNaming').esAaaIdentifier]",
             "storagePrefix": "[steps('esNaming').esStaIdentifier]",
             "udrPrefix": "[steps('esNaming').esUdrIdentifier]",
+            "nsgPrefix": "[steps('esNaming').esNSGIdentifier]",
             "environmentTag": "[steps('esNaming').esEnvironmentTag]",
             "ownerTag": "[steps('esNaming').esOwnerTag]",
             "vpnGwType": "[steps('esPlatformLZ').esVpnGwType]",

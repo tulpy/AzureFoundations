@@ -86,6 +86,13 @@
                 "description": "Provide the Route Table identifier prefix"
             }
         },
+        "nsgPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the Network Security Group identifier prefix"
+            }
+        },
         "environmentTag": {
             "type": "string",
             "metadata": {
@@ -284,7 +291,7 @@
         "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
         "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
         "networking": "[uri(deployment().properties.templateLink.uri, 'auxiliary/networking.json')]",
-        "appLz": "[uri(deployment().properties.templateLink.uri, 'auxiliary/appLz.json')]",
+        "applicationLandingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/appLz.json')]",
         "moveSubscription": "[concat(parameters('companyPrefix'), '-Platform', '/', parameters('platformLzSubscriptionId'))]",
         "noSubscription": "[concat(parameters('companyPrefix'), '-Platform', '/', 'na')]",
         "policyDefDeploymentName": "[take(concat('policyDef', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
@@ -509,6 +516,9 @@
                     "udrPrefix": {
                         "value": "[parameters('udrPrefix')]"
                     },
+                    "nsgPrefix": {
+                        "value": "[parameters('nsgPrefix')]"
+                    },
                     "environmentTag": {
                         "value": "[parameters('environmentTag')]"
                     },
@@ -625,7 +635,7 @@
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('appLz')]"
+                    "uri": "[variables('applicationLandingZone')]"
                 },
                 "parameters": {
                     "companyPrefix": {

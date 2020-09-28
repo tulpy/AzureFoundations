@@ -42,6 +42,10 @@
             "type": "string",
             "maxLength": 3
         },
+        "nsgPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
         "environmentTag": {
             "type": "string"
         },
@@ -152,6 +156,8 @@
         "routeTableName": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-001'))]",
         "routeName": "[toLower(concat('subnet-to-', variables('azFwName')))]",
         "routeTableId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('routeTableName'))]",
+        "nsgName": "[toLower(concat(variables('namingPrefix'), '-', parameters('nsgPrefix'), '-001'))]",
+        "nsgId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('nsgName'))]",
         "azVpnGwIpName": "[toLower(concat(variables('namingPrefix'), '-', parameters('publicIpPrefix'), '-001'))]",
         "azVpnGwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/GatewaySubnet')]",
         "azFwName": "[toLower(concat(variables('namingPrefix'), '-', parameters('azFwPrefix'), '-001'))]",
@@ -248,7 +254,8 @@
                                             "apiVersion": "2020-05-01",
                                             "location": "[deployment().location]",
                                             "dependsOn": [
-                                                "[concat('Microsoft.Network/routeTables/', variables('routeTableName'))]"
+                                                "[concat('Microsoft.Network/routeTables/', variables('routeTableName'))]",
+                                                "[concat('Microsoft.Network/networkSecurityGroups/', variables('nsgName'))]"
                                             ],
                                             "properties": {
                                                 "addressSpace": {
@@ -259,6 +266,50 @@
                                             },
                                             "resources": [
                                             ]
+                                        },
+                                        {
+                                            "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
+                                            "type": "Microsoft.Network/networkSecurityGroups",
+                                            "apiVersion": "2020-05-01",
+                                            "name": "[variables('nsgName')]",
+                                            "location": "[parameters('location')]",
+                                            "properties": {
+                                                "securityRules": [
+                                                    {
+                                                        "name": "rdp_rule",
+                                                        "properties": {
+                                                            "description": "Allow RDP",
+                                                            "protocol": "Tcp",
+                                                            "sourcePortRange": "*",
+                                                            "destinationPortRange": "3389",
+                                                            "sourceAddressPrefix": "Internet",
+                                                            "destinationAddressPrefix": "*",
+                                                            "access": "Allow",
+                                                            "priority": 100,
+                                                            "direction": "Inbound"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
+                                            "type": "Microsoft.Network/routeTables",
+                                            "apiVersion": "2020-05-01",
+                                            "name": "[variables('routeTableName')]",
+                                            "location": "[parameters('location')]",
+                                            "properties": {
+                                                "routes": [
+                                                    {
+                                                        "name": "[variables('routeName')]",
+                                                        "properties": {
+                                                            "addressPrefix": "0.0.0.0/0",
+                                                            "nextHopType": "VirtualAppliance",
+                                                            "nextHopIpAddress": "192.168.0.1"
+                                                        }
+                                                    }
+                                                ]
+                                            }
                                         },
                                         {
                                             "condition": "[and(equals(parameters('enableAzFw'), 'Yes'), not(empty(parameters('subnetMaskForAzFw'))))]",
@@ -286,25 +337,6 @@
                                         },
                                         {
                                             "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
-                                            "type": "Microsoft.Network/routeTables",
-                                            "name": "[variables('routeTableName')]",
-                                            "apiVersion": "2020-05-01",
-                                            "location": "[parameters('location')]",
-                                            "properties": {
-                                                "routes": [
-                                                    {
-                                                        "name": "[variables('routeName')]",
-                                                        "properties": {
-                                                            "addressPrefix": "0.0.0.0/0",
-                                                            "nextHopType": "VirtualAppliance",
-                                                            "nextHopIpAddress": "192.168.0.1"
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
                                             "apiVersion": "2020-05-01",
                                             "name": "[concat(variables('hubName'), '/', 'Management')]",
@@ -315,6 +347,9 @@
                                                 "addressPrefix": "[parameters('subnetMaskForMgmt')]",
                                                 "routeTable": {
                                                     "id": "[variables('routeTableId')]"
+                                                },
+                                                "networkSecurityGroup": {
+                                                    "id": "[variables('nsgId')]"
                                                 }
                                             }
                                         },
