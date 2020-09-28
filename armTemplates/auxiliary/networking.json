@@ -267,9 +267,9 @@
                                                     {
                                                         "name": "[variables('routeName')]",
                                                         "properties": {
-                                                            "addressPrefix": "[parameters('subnetMaskForMgmt')]",
+                                                            "addressPrefix": "0.0.0.0/0",
                                                             "nextHopType": "VirtualAppliance",
-                                                            "nextHopIpAddress": "0.0.0.0/0"
+                                                            "nextHopIpAddress": "192.168.0.1"
                                                         }
                                                     }
                                                 ]
