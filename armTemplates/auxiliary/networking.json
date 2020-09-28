@@ -139,6 +139,8 @@
         "resourceGroupName": "[concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('resourceGroupPrefix'), '-network')]",
         "hubNameCidr": "[substring(parameters('addressPrefix'),0,sub(length(parameters('addressPrefix')), 3))]",
         "hubName": "[concat(variables('namingPrefix'), '-', parameters('vnetPrefix'), '-', variables('hubNameCidr'))]",
+        "routeTableName": "[concat(variables('namingPrefix'), '-UDR-001')]",
+        "routeName": "Subnet-to-0.0.0.0",
         "azVpnGwIpName": "[concat(variables('namingPrefix'), '-', parameters('publicIpPrefix'), '-001')]",
         "azVpnGwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/GatewaySubnet')]",
         "azFwName": "[concat(variables('namingPrefix'), '-', parameters('AzureFwPrefix'), '-001')]",
@@ -215,8 +217,11 @@
                                         {
                                             "name": "[variables('hubName')]",
                                             "type": "Microsoft.Network/virtualNetworks",
-                                            "apiVersion": "2020-04-01",
+                                            "apiVersion": "2020-05-01",
                                             "location": "[deployment().location]",
+                                            "dependsOn": [
+                                                "[concat('Microsoft.Network/routeTables/', variables('routeTableName'))]"
+                                            ],
                                             "properties": {
                                                 "addressSpace": {
                                                     "addressPrefixes": [
@@ -230,10 +235,10 @@
                                         {
                                             "condition": "[and(equals(parameters('enableAzFw'), 'Yes'), not(empty(parameters('subnetMaskForAzFw'))))]",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
-                                            "apiVersion": "2020-04-01",
+                                            "apiVersion": "2020-05-01",
                                             "name": "[concat(variables('hubName'), '/', 'AzureFirewallSubnet')]",
                                             "dependsOn": [
-                                                "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
+                                                "[concat('Microsoft.Network/virtualNetworks/', variables('routeTableName'))]"
                                             ],
                                             "properties": {
                                                 "addressPrefix": "[parameters('subnetMaskForAzFw')]"
@@ -242,7 +247,7 @@
                                         {
                                             "condition": "[and(equals(parameters('enableAppGw'), 'Yes'), not(empty(parameters('subnetMaskForAppGw'))))]",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
-                                            "apiVersion": "2020-04-01",
+                                            "apiVersion": "2020-05-01",
                                             "name": "[concat(variables('hubName'), '/', 'AppGateway')]",
                                             "dependsOn": [
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
@@ -253,20 +258,42 @@
                                         },
                                         {
                                             "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
+                                            "type": "Microsoft.Network/routeTables",
+                                            "name": "[variables('routeTableName')]",
+                                            "apiVersion": "2020-05-01",
+                                            "location": "[parameters('location')]",
+                                            "properties": {
+                                                "routes": [
+                                                    {
+                                                        "name": "[variables('routeName')]",
+                                                        "properties": {
+                                                            "addressPrefix": "[parameters('subnetMaskForMgmt')]",
+                                                            "nextHopType": "VirtualAppliance",
+                                                            "nextHopIpAddress": "0.0.0.0/0"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
-                                            "apiVersion": "2020-04-01",
+                                            "apiVersion": "2020-05-01",
                                             "name": "[concat(variables('hubName'), '/', 'Management')]",
                                             "dependsOn": [
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
                                             ],
                                             "properties": {
-                                                "addressPrefix": "[parameters('subnetMaskForMgmt')]"
+                                                "addressPrefix": "[parameters('subnetMaskForMgmt')]",
+                                                "routeTable": {
+                                                    "id": "[resourceId('Microsoft.Network/routeTables', variables('routeTableName'))]"
+                                                }
                                             }
                                         },
                                         {
                                             "condition": "[and(or(equals(parameters('enableVpnGw'), 'Yes'), equals(parameters('enableErGw'), 'Yes')), not(empty(parameters('subnetMaskForGw'))))]",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
-                                            "apiVersion": "2020-04-01",
+                                            "apiVersion": "2020-05-01",
                                             "name": "[concat(variables('hubName'), '/', 'GatewaySubnet')]",
                                             "dependsOn": [
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
