@@ -152,12 +152,11 @@
         "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('resourceGroupPrefix'), '-network'))]",
         "Cidr": "[substring(parameters('addressPrefix'),0,sub(length(parameters('addressPrefix')), 3))]",
         "azVnet": {
-       
             "azVnetName": "[toLower(concat(variables('namingPrefix'), '-', parameters('vnetPrefix'), '-', variables('Cidr')))]"
         },
-        "azRouteTable": {
-            "azRouteTableName": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-001'))]",
-            "azRouteTableId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('azRouteTable').azRouteTableName)]",
+        "azUdr": {
+            "azUdrName": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-001'))]",
+            "azUdrId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('azUdr').azUdrName)]",
             "azRouteName": "[toLower(concat('subnet-to-', variables('azFw').azFwName))]"
         },
         "azNsg": {
@@ -244,57 +243,14 @@
                                                 "notes": "Prevent deletion of the resourceGroup"
                                             }
                                         },
-                                        {
-                                            "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
-                                            "type": "Microsoft.Network/networkSecurityGroups",
-                                            "apiVersion": "2020-05-01",
-                                            "name": "variables('azNsg').azNsgName)]",
-                                            "location": "[parameters('location')]",
-                                            "properties": {
-                                                "securityRules": [
-                                                    {
-                                                        "name": "rdp_rule",
-                                                        "properties": {
-                                                            "description": "Allow RDP",
-                                                            "protocol": "Tcp",
-                                                            "sourcePortRange": "*",
-                                                            "destinationPortRange": "3389",
-                                                            "sourceAddressPrefix": "Internet",
-                                                            "destinationAddressPrefix": "*",
-                                                            "access": "Allow",
-                                                            "priority": 100,
-                                                            "direction": "Inbound"
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
-                                            "type": "Microsoft.Network/routeTables",
-                                            "apiVersion": "2020-05-01",
-                                            "name": "[variables('azRouteTable').azRouteTableName]",
-                                            "location": "[parameters('location')]",
-                                            "properties": {
-                                                "routes": [
-                                                    {
-                                                        "name": "[variables('azRouteTable').azRouteName]",
-                                                        "properties": {
-                                                            "addressPrefix": "0.0.0.0/0",
-                                                            "nextHopType": "VirtualAppliance",
-                                                            "nextHopIpAddress": "192.168.0.1"
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        },
+
                                         {
                                             "name": "[variables('azVnet').azVnetName]",
                                             "type": "Microsoft.Network/virtualNetworks",
                                             "apiVersion": "2020-05-01",
                                             "location": "[deployment().location]",
                                             "dependsOn": [
-                                                "[concat('Microsoft.Network/routeTables/', variables('azRouteTable').azRouteTableName)]",
+                                                "[concat('Microsoft.Network/routeTables/', variables('azUdr').azUdrName)]",
                                                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsg').azNsgName)]"
                                             ],
                                             "properties": {
@@ -324,8 +280,50 @@
                                                 "supportsHttpsTrafficOnly": "[variables('storage').httpsOnly]"
                                             }
                                         },
-
-
+                                        {
+                                            "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
+                                            "type": "Microsoft.Network/networkSecurityGroups",
+                                            "apiVersion": "2020-05-01",
+                                            "name": "variables('azNsg').azNsgName)]",
+                                            "location": "[parameters('location')]",
+                                            "properties": {
+                                                "securityRules": [
+                                                    {
+                                                        "name": "rdp_rule",
+                                                        "properties": {
+                                                            "description": "Allow RDP",
+                                                            "protocol": "Tcp",
+                                                            "sourcePortRange": "*",
+                                                            "destinationPortRange": "3389",
+                                                            "sourceAddressPrefix": "Internet",
+                                                            "destinationAddressPrefix": "*",
+                                                            "access": "Allow",
+                                                            "priority": 100,
+                                                            "direction": "Inbound"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
+                                            "type": "Microsoft.Network/routeTables",
+                                            "apiVersion": "2020-05-01",
+                                            "name": "[variables('azUdr').azUdrName]",
+                                            "location": "[parameters('location')]",
+                                            "properties": {
+                                                "routes": [
+                                                    {
+                                                        "name": "[variables('azUdr').azRouteName]",
+                                                        "properties": {
+                                                            "addressPrefix": "0.0.0.0/0",
+                                                            "nextHopType": "VirtualAppliance",
+                                                            "nextHopIpAddress": "192.168.0.1"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
                                         {
                                             "condition": "[and(equals(parameters('enableAzFw'), 'Yes'), not(empty(parameters('subnetMaskForAzFw'))))]",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
@@ -361,7 +359,7 @@
                                             "properties": {
                                                 "addressPrefix": "[parameters('subnetMaskForMgmt')]",
                                                 "routeTable": {
-                                                    "id": "[variables('azRouteTable').azRouteTableId]"
+                                                    "id": "[variables('azUdr').azUdrId]"
                                                 },
                                                 "networkSecurityGroup": {
                                                     "id": "[variables('azNsg').azNsgId]"
