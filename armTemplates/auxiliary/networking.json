@@ -354,7 +354,9 @@
                                             "apiVersion": "2020-05-01",
                                             "name": "[concat(variables('azVnet').azVnetName, '/', 'Management')]",
                                             "dependsOn": [
-                                                "[concat('Microsoft.Network/virtualNetworks/', variables('azVnet').azVnetName)]"
+                                                "[concat('Microsoft.Network/virtualNetworks/', variables('azVnet').azVnetName)]",
+                                                 "[concat('Microsoft.Network/routeTables/', variables('azUdr').azUdrName)]",
+                                                "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsg').azNsgName)]"
                                             ],
                                             "properties": {
                                                 "addressPrefix": "[parameters('subnetMaskForMgmt')]",
