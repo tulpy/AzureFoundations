@@ -184,6 +184,24 @@
                     {
                         "name": "esEnvironmentTag",
                         "type": "Microsoft.Common.TextBox",
+                        "label": "Azure Platform Tags",
+                        "toolTip": "Provide a value for the environment tag",
+                        "defaultValue": "Platform LZ",
+                        "constraints": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "text1",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": true,
+                        "options": {
+                          "text": "Please provide values for Azure Platform Tags.",
+                        }
+                    },
+                    {
+                        "name": "esEnvironmentTag",
+                        "type": "Microsoft.Common.TextBox",
                         "label": "Environment Tag",
                         "toolTip": "Provide a value for the environment tag",
                         "defaultValue": "Platform LZ",
