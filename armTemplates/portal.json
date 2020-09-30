@@ -196,7 +196,7 @@
                         "type": "Microsoft.Common.TextBlock",
                         "visible": true,
                         "options": {
-                          "text": "Please provide values for Azure Platform Tags.",
+                          "text": "Please provide values for Azure Platform Tags."
                         }
                     },
                     {
