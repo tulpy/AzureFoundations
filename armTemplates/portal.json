@@ -182,15 +182,6 @@
                         }
                     },
                     {
-                        "name": "tags",
-                        "type": "Microsoft.Common.InfoBox",
-                        "visible": true,
-                        "options": {
-                            "icon": "Info",
-                            "text": "Please define the required tags for the Azure Platform"
-                        }
-                    },
-                    {
                         "name": "esEnvironmentTag",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Environment Tag",
