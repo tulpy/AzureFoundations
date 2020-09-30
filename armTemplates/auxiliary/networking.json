@@ -156,7 +156,8 @@
         },
         "azUdr": {
             "azUdrName": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-001'))]",
-            "azUdrId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('azUdr').azUdrName)]"
+            "azUdrId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('azUdr').azUdrName)]",
+            "azRouteName": "[toLower(concat('subnet-to-', variables('azFw').azFwName))]"      
         },
         "azNsg": {
             "azNsgName": "[toLower(concat(variables('namingPrefix'), '-', parameters('nsgPrefix'), '-001'))]",
@@ -179,7 +180,7 @@
             "azFwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/virtualNetworks/', variables('azVnet').azVnetName, '/subnets/AzureFirewallSubnet')]",
             "azFwIpName": "[toLower(concat(variables('namingPrefix'), '-', parameters('publicIpPrefix'), '-003'))]",
             "azFwPipId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azFw').azFwIpName)]",
-            "azRouteName": "[toLower(concat('subnet-to-', variables('azFw').azFwName))]"
+            "azFwIp": "[substring(parameters('subnetMaskForAzFw'),0,sub(length(parameters('subnetMaskForAzFw')), 4))]"
         },
         "tags": {
             "environment": "[parameters('environmentTag')]",
@@ -252,7 +253,7 @@
                                             "properties": {
                                                 "routes": [
                                                     {
-                                                        "name": "[variables('azFw').azRouteName]",
+                                                        "name": "[variables('azUdr').azRouteName]",
                                                         "properties": {
                                                             "addressPrefix": "0.0.0.0/0",
                                                             "nextHopType": "VirtualAppliance",
@@ -353,9 +354,7 @@
                                             "apiVersion": "2020-05-01",
                                             "name": "[concat(variables('azVnet').azVnetName, '/', 'Management')]",
                                             "dependsOn": [
-                                                "[concat('Microsoft.Network/virtualNetworks/', variables('azVnet').azVnetName)]",
-                                                "[concat('Microsoft.Network/routeTables/', variables('azUdr').azUdrName)]",
-                                                "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsg').azNsgName)]"
+                                                "[concat('Microsoft.Network/virtualNetworks/', variables('azVnet').azVnetName)]"
                                             ],
                                             "properties": {
                                                 "addressPrefix": "[parameters('subnetMaskForMgmt')]",
