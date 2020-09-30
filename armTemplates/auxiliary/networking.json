@@ -156,7 +156,7 @@
         },
         "azUdr": {
             "azUdrName": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-001'))]",
-            "azUdrId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('azUdr').azUdrName)]",
+            "azUdrId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('azUdr').azUdrName)]"
             
         },
         "azNsg": {
@@ -315,7 +315,7 @@
                                             "properties": {
                                                 "routes": [
                                                     {
-                                                        "name": "[variables('azUdr').azRouteName]",
+                                                        "name": "[variables('azFw').azRouteName]",
                                                         "properties": {
                                                             "addressPrefix": "0.0.0.0/0",
                                                             "nextHopType": "VirtualAppliance",
