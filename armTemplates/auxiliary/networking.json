@@ -154,11 +154,7 @@
         "azVnet": {
             "azVnetName": "[toLower(concat(variables('namingPrefix'), '-', parameters('vnetPrefix'), '-', variables('Cidr')))]"
         },
-        "azUdr": {
-            "azUdrName": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-001'))]",
-            "azUdrId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('azUdr').azUdrName)]",
-            "azRouteName": "[toLower(concat('subnet-to-', variables('azFw').azFwName))]"      
-        },
+
         "azNsg": {
             "azNsgName": "[toLower(concat(variables('namingPrefix'), '-', parameters('nsgPrefix'), '-001'))]",
             "azNsgId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('azNsg').azNsgName)]"
@@ -192,6 +188,11 @@
             "kind": "StorageV2",
             "use": "Diagnostics",
             "httpsOnly": true
+        },
+                "azUdr": {
+            "azUdrName": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-001'))]",
+            "azUdrId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('azUdr').azUdrName)]",
+            "azRouteName": "test"   
         }
     },
     "resources": [
