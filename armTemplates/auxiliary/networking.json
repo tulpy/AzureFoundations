@@ -189,11 +189,11 @@
             "use": "Diagnostics",
             "httpsOnly": true
         },
-                "azUdr": {
+       
             "azUdrName": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-001'))]",
             "azUdrId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('azUdr').azUdrName)]",
             "azRouteName": "test"   
-        }
+        
     },
     "resources": [
         {
