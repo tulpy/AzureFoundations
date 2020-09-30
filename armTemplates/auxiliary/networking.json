@@ -369,6 +369,9 @@
                                             "apiVersion": "2020-05-01",
                                             "name": "[variables('azUdrName001')]",
                                             "location": "[parameters('location')]",
+                                            "tags": {
+                                                "appliedSubnet": "[concat(variables('azVnetName'), '/', 'ManagementSubnet')]"
+                                            },
                                             "properties": {
                                                 "routes": [
                                                     {
@@ -419,6 +422,9 @@
                                             "apiVersion": "2020-05-01",
                                             "name": "[variables('azUdrName003')]",
                                             "location": "[parameters('location')]",
+                                            "tags": {
+                                                "appliedSubnet": "[concat(variables('azVnetName'), '/', 'ManagementSubnet')]"
+                                            },
                                             "properties": {
                                                 "routes": [
                                                     {
