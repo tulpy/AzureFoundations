@@ -243,43 +243,6 @@
                                                 "notes": "Prevent deletion of the resourceGroup"
                                             }
                                         },
-                                                                                {
-                                            "name": "[variables('azVnet').azVnetName]",
-                                            "type": "Microsoft.Network/virtualNetworks",
-                                            "apiVersion": "2020-05-01",
-                                            "location": "[deployment().location]",
-                                            "dependsOn": [
-                                                "[concat('Microsoft.Network/routeTables/', variables('azRouteTable').azRouteTableName)]",
-                                                "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsg').azNsgName)]"
-                                            ],
-                                            "properties": {
-                                                "addressSpace": {
-                                                    "addressPrefixes": [
-                                                        "[parameters('addressPrefix')]"
-                                                    ]
-                                                }
-                                            },
-                                            "resources": [
-                                            ]
-                                        },
-                                        {
-                                            "type": "Microsoft.Storage/storageAccounts",
-                                            "apiVersion": "2019-06-01",
-                                            "name": "[variables('storage').name]",
-                                            "location": "[deployment().location]",
-                                            "sku": {
-                                                "name": "[variables('storage').sku]"
-                                            },
-                                            "tags": {
-                                                "storageSKU": "[variables('storage').sku]",
-                                                "storageUse": "[variables('storage').use]"
-                                            },
-                                            "kind": "[variables('storage').kind]",
-                                            "properties": {
-                                                "supportsHttpsTrafficOnly": "[variables('storage').httpsOnly]"
-                                            }
-                                        },
-
                                         {
                                             "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
                                             "type": "Microsoft.Network/networkSecurityGroups",
@@ -324,6 +287,44 @@
                                                 ]
                                             }
                                         },
+                                        {
+                                            "name": "[variables('azVnet').azVnetName]",
+                                            "type": "Microsoft.Network/virtualNetworks",
+                                            "apiVersion": "2020-05-01",
+                                            "location": "[deployment().location]",
+                                            "dependsOn": [
+                                                "[concat('Microsoft.Network/routeTables/', variables('azRouteTable').azRouteTableName)]",
+                                                "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsg').azNsgName)]"
+                                            ],
+                                            "properties": {
+                                                "addressSpace": {
+                                                    "addressPrefixes": [
+                                                        "[parameters('addressPrefix')]"
+                                                    ]
+                                                }
+                                            },
+                                            "resources": [
+                                            ]
+                                        },
+                                        {
+                                            "type": "Microsoft.Storage/storageAccounts",
+                                            "apiVersion": "2019-06-01",
+                                            "name": "[variables('storage').name]",
+                                            "location": "[deployment().location]",
+                                            "sku": {
+                                                "name": "[variables('storage').sku]"
+                                            },
+                                            "tags": {
+                                                "storageSKU": "[variables('storage').sku]",
+                                                "storageUse": "[variables('storage').use]"
+                                            },
+                                            "kind": "[variables('storage').kind]",
+                                            "properties": {
+                                                "supportsHttpsTrafficOnly": "[variables('storage').httpsOnly]"
+                                            }
+                                        },
+
+
                                         {
                                             "condition": "[and(equals(parameters('enableAzFw'), 'Yes'), not(empty(parameters('subnetMaskForAzFw'))))]",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
