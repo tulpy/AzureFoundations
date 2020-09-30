@@ -166,9 +166,11 @@
         "azFwPipId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azFwIpName'))]",
         "azUdrName": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-001'))]",
         "azUdrId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('azUdrName'))]",
-        "azRouteName": "test",
-        "azNsgName": "[toLower(concat(variables('namingPrefix'), '-', parameters('nsgPrefix'), '-001'))]",
-        "azNsgId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('azNsgName'))]",
+        "azRouteName": "[toLower(concat('Subnet-to-', variables('azFwName')))]",
+        "azNsgName001": "[toLower(concat(variables('namingPrefix'), '-', parameters('nsgPrefix'), '-001'))]",
+        "azNsgName002": "[toLower(concat(variables('namingPrefix'), '-', parameters('nsgPrefix'), '-002'))]",
+        "azNsgId001": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('azNsgName001'))]",
+        "azNsgId002": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('azNsgName002'))]",
         "tags": {
             "environment": "[parameters('environmentTag')]",
             "owner": "[parameters('ownerTag')]"
@@ -233,31 +235,6 @@
                                         },
                                         {
                                             "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
-                                            "type": "Microsoft.Network/networkSecurityGroups",
-                                            "apiVersion": "2020-05-01",
-                                            "name": "[variables('azNsgName')]",
-                                            "location": "[parameters('location')]",
-                                            "properties": {
-                                                "securityRules": [
-                                                    {
-                                                        "name": "rdp_rule",
-                                                        "properties": {
-                                                            "description": "Allow RDP",
-                                                            "protocol": "Tcp",
-                                                            "sourcePortRange": "*",
-                                                            "destinationPortRange": "3389",
-                                                            "sourceAddressPrefix": "Internet",
-                                                            "destinationAddressPrefix": "*",
-                                                            "access": "Allow",
-                                                            "priority": 100,
-                                                            "direction": "Inbound"
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
                                             "type": "Microsoft.Network/routeTables",
                                             "apiVersion": "2020-05-01",
                                             "name": "[variables('azUdrName')]",
@@ -281,7 +258,8 @@
                                             "apiVersion": "2020-05-01",
                                             "location": "[deployment().location]",
                                             "dependsOn": [
-                                                "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsgName'))]",
+                                                "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsgName001'))]",
+                                                "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsgName002'))]",
                                                 "[concat('Microsoft.Network/routeTables/', variables('azUdrName'))]"
                                             ],
                                             "properties": {
@@ -332,7 +310,23 @@
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]"
                                             ],
                                             "properties": {
-                                                "addressPrefix": "[parameters('subnetMaskForAppGw')]"
+                                                "addressPrefix": "[parameters('subnetMaskForAppGw')]",
+                                                "networkSecurityGroup": {
+                                                    "id": "[variables('azNsgId002')]"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "condition": "[and(equals(parameters('enableAppGw'), 'Yes'), not(empty(parameters('subnetMaskForAppGw'))))]",
+                                            "type": "Microsoft.Network/networkSecurityGroups",
+                                            "apiVersion": "2020-05-01",
+                                            "name": "[variables('azNsgName002')]",
+                                            "location": "[parameters('location')]",
+                                            "tags": {
+                                                "appliedSubnet": "[parameters('subnetMaskForAppGw')]"
+                                            },
+                                            "properties": {
+                                                "securityRules": []
                                             }
                                         },
                                         {
@@ -349,8 +343,21 @@
                                                     "id": "[variables('azUdrId')]"
                                                 },
                                                 "networkSecurityGroup": {
-                                                    "id": "[variables('azNsgId')]"
+                                                    "id": "[variables('azNsgId001')]"
                                                 }
+                                            }
+                                        },
+                                        {
+                                            "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
+                                            "type": "Microsoft.Network/networkSecurityGroups",
+                                            "apiVersion": "2020-05-01",
+                                            "name": "[variables('azNsgName001')]",
+                                            "location": "[parameters('location')]",
+                                            "tags": {
+                                                "appliedSubnet": "[parameters('subnetMaskForMgmt')]"
+                                            },
+                                            "properties": {
+                                                "securityRules": []
                                             }
                                         },
                                         {
