@@ -164,7 +164,6 @@
         "azFwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/virtualNetworks/', variables('azVnetName'), '/subnets/AzureFirewallSubnet')]",
         "azFwIpName": "[toLower(concat(variables('namingPrefix'), '-', parameters('publicIpPrefix'), '-003'))]",
         "azFwPipId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azFwIpName'))]",
-        "azFwIp": "[substring(parameters('subnetMaskForAzFw'),0,sub(length(parameters('subnetMaskForAzFw')), 3))]",
         "azUdrName": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-001'))]",
         "azUdrId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('azUdrName'))]",
         "azRouteName": "[toLower(concat('Subnet-to-', variables('azFwName')))]",
