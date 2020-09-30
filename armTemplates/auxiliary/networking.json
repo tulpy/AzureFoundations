@@ -358,9 +358,7 @@
                                             ],
                                             "properties": {
                                                 "addressPrefix": "[parameters('subnetMaskForMgmt')]",
-                                                "routeTable": {
-                                                    "id": "[variables('azUdr').azUdrId]"
-                                                },
+
                                                 "networkSecurityGroup": {
                                                     "id": "[variables('azNsg').azNsgId]"
                                                 }
