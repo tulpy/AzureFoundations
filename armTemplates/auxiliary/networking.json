@@ -150,9 +150,10 @@
         "deploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
         "storageNamingPrefix": "[concat(parameters('companyPrefix'), parameters('locationPrefix'), parameters('environmentPrefix'))]",
         "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('resourceGroupPrefix'), '-network'))]",
+        "Cidr": "[substring(parameters('addressPrefix'),0,sub(length(parameters('addressPrefix')), 3))]",
         "azVnet": {
-            "azVnetCidr": "[substring(parameters('addressPrefix'),0,sub(length(parameters('addressPrefix')), 3))]",
-            "azVnetName": "[toLower(concat(variables('namingPrefix'), '-', parameters('vnetPrefix'), '-', variables('azVnet').azVnetCidr))]"
+       
+            "azVnetName": "[toLower(concat(variables('namingPrefix'), '-', parameters('vnetPrefix'), '-', variables('Cidr')))]"
         },
         "azRouteTable": {
             "azRouteTableName": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-001'))]",
