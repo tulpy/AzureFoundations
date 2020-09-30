@@ -186,7 +186,7 @@
                         "type": "Microsoft.Common.InfoBox",
                         "visible": true,
                         "options": {
-                            "icon": "Tags",
+                            "icon": "Info",
                             "text": "Please define the required tags for the Azure Platform"
                         }
                     },
