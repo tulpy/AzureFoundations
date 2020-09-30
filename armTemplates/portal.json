@@ -182,7 +182,7 @@
                         }
                     },
                     {
-                        "name": "infoBox1",
+                        "name": "tags",
                         "type": "Microsoft.Common.InfoBox",
                         "visible": true,
                         "options": {
