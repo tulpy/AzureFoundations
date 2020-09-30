@@ -323,10 +323,25 @@
                                             "name": "[variables('azNsgName002')]",
                                             "location": "[parameters('location')]",
                                             "tags": {
-                                                "appliedSubnet": "[parameters('subnetMaskForAppGw')]"
+                                                "appliedSubnet": "[concat(variables('azVnetName'), '/', 'AppGateway')]"
                                             },
                                             "properties": {
-                                                "securityRules": []
+                                                "securityRules": [
+                                                    {
+                                                        "name": "allowAzureBackendCommunication",
+                                                        "properties": {
+                                                            "description": "This is required for Azure infrastructure communication. These ports are protected & locked down by Azure certificates.",
+                                                            "protocol": "Tcp",
+                                                            "sourcePortRange": "*",
+                                                            "destinationPortRange": "65200-65535",
+                                                            "sourceAddressPrefix": "GatewayManager",
+                                                            "destinationAddressPrefix": "*",
+                                                            "access": "Allow",
+                                                            "priority": 100,
+                                                            "direction": "Inbound"
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         },
                                         {
@@ -354,7 +369,7 @@
                                             "name": "[variables('azNsgName001')]",
                                             "location": "[parameters('location')]",
                                             "tags": {
-                                                "appliedSubnet": "[parameters('subnetMaskForMgmt')]"
+                                                "appliedSubnet": "[concat(variables('azVnetName'), '/', 'Management')]"
                                             },
                                             "properties": {
                                                 "securityRules": []
