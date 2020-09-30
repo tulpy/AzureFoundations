@@ -157,7 +157,6 @@
         "azUdr": {
             "azUdrName": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-001'))]",
             "azUdrId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('azUdr').azUdrName)]"
-            
         },
         "azNsg": {
             "azNsgName": "[toLower(concat(variables('namingPrefix'), '-', parameters('nsgPrefix'), '-001'))]",
@@ -267,7 +266,7 @@
                                             "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
                                             "type": "Microsoft.Network/networkSecurityGroups",
                                             "apiVersion": "2020-05-01",
-                                            "name": "variables('azNsg').azNsgName)]",
+                                            "name": "[variables('azNsg').azNsgName]",
                                             "location": "[parameters('location')]",
                                             "properties": {
                                                 "securityRules": [
