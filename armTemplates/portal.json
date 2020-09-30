@@ -650,6 +650,38 @@
                             "required": true,
                             "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
                         }
+                    },
+                    {
+                        "name": "esIdentity",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure Identity Subnet",
+                        "defaultValue": "No",
+                        "visible": "[equals(steps('esPlatformLZ').esHub, 'Yes')]",
+                        "toolTip": "If 'Yes' is selected, ARM will deploy a subnet for Active Directory Domain Services",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAddressIdentity",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "CIDR range for Azure Identity Subnet",
+                        "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
+                        "defaultValue": "10.49.1.0/24",
+                        "visible": "[equals(steps('esPlatformLZ').esMgmt, 'Yes')]",
+                        "constraints": {
+                            "required": true,
+                            "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
+                        }
                     }
                 ]
             },
@@ -856,12 +888,14 @@
             "subnetMaskForAzFw": "[steps('esPlatformLZ').esAddressFw]",
             "subnetMaskForAppGw": "[steps('esPlatformLZ').esAddressAppGw]",
             "subnetMaskForMgmt": "[steps('esPlatformLZ').esAddressMgmt]",
+            "subnetMaskForIdentity": "[steps('esPlatformLZ').esAddressIdentity]",
             "enableErGw": "[steps('esPlatformLZ').esErGw]",
             "enableVpnGw": "[steps('esPlatformLZ').esVpnGw]",
             "enableHub": "[steps('esPlatformLZ').esHub]",
             "enableAzFw": "[steps('esPlatformLZ').esAzFw]",
             "enableAppGw": "[steps('esPlatformLZ').esAppGw]",
             "enableMgmt": "[steps('esPlatformLZ').esMgmt]",
+            "enableIdentity": "[steps('esPlatformLZ').esIdentity]",
             "addressPrefix": "[steps('esPlatformLZ').esAddressHub]",
             "location": "[steps('esPlatformLZ').esRegions]",
             "platformLzSubscriptionId": "[steps('esPlatformLZ').esPlatformLZSub]",

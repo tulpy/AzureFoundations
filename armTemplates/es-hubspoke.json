@@ -184,6 +184,14 @@
             ],
             "defaultValue": "No"
         },
+        "enableIdentity": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "No"
+        },
         "vpnGwType": {
             "type": "string",
             "allowedValues": [
@@ -205,6 +213,10 @@
             "defaultValue": ""
         },
         "subnetMaskForMgmt": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "subnetMaskForIdentity": {
             "type": "string",
             "defaultValue": ""
         },
@@ -546,6 +558,9 @@
                     "enableMgmt": {
                         "value": "[parameters('enableMgmt')]"
                     },
+                    "enableIdentity": {
+                        "value": "[parameters('enableIdentity')]"
+                    },
                     "location": {
                         "value": "[parameters('location')]"
                     },
@@ -566,6 +581,9 @@
                     },
                     "subnetMaskForMgmt": {
                         "value": "[parameters('subnetMaskForMgmt')]"
+                    },
+                    "subnetMaskForIdentity": {
+                        "value": "[parameters('subnetMaskForIdentity')]"
                     }
                 }
             }

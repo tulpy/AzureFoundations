@@ -115,6 +115,14 @@
             ],
             "defaultValue": "No"
         },
+        "enableIdentity": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "No"
+        },
         "platformLzSubscriptionId": {
             "type": "string",
             "defaultValue": "",
@@ -143,6 +151,10 @@
         "subnetMaskForMgmt": {
             "type": "string",
             "defaultValue": ""
+        },
+        "subnetMaskForIdentity": {
+            "type": "string",
+            "defaultValue": ""
         }
     },
     "variables": {
@@ -164,13 +176,19 @@
         "azFwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/virtualNetworks/', variables('azVnetName'), '/subnets/AzureFirewallSubnet')]",
         "azFwIpName": "[toLower(concat(variables('namingPrefix'), '-', parameters('publicIpPrefix'), '-003'))]",
         "azFwPipId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azFwIpName'))]",
-        "azUdrName": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-001'))]",
-        "azUdrId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('azUdrName'))]",
+        "azUdrName001": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-001'))]",
+        "azUdrName002": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-002'))]",
+        "azUdrName003": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-003'))]",
+        "azUdrId001": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('azUdrName001'))]",
+        "azUdrId002": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('azUdrName002'))]",
+        "azUdrId003": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('azUdrName003'))]",
         "azRouteName": "[toLower(concat('Subnet-to-', variables('azFwName')))]",
         "azNsgName001": "[toLower(concat(variables('namingPrefix'), '-', parameters('nsgPrefix'), '-001'))]",
         "azNsgName002": "[toLower(concat(variables('namingPrefix'), '-', parameters('nsgPrefix'), '-002'))]",
+        "azNsgName003": "[toLower(concat(variables('namingPrefix'), '-', parameters('nsgPrefix'), '-003'))]",
         "azNsgId001": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('azNsgName001'))]",
         "azNsgId002": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('azNsgName002'))]",
+        "azNsgId003": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('azNsgName003'))]",
         "tags": {
             "environment": "[parameters('environmentTag')]",
             "owner": "[parameters('ownerTag')]"
@@ -234,25 +252,6 @@
                                             }
                                         },
                                         {
-                                            "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
-                                            "type": "Microsoft.Network/routeTables",
-                                            "apiVersion": "2020-05-01",
-                                            "name": "[variables('azUdrName')]",
-                                            "location": "[parameters('location')]",
-                                            "properties": {
-                                                "routes": [
-                                                    {
-                                                        "name": "[variables('azRouteName')]",
-                                                        "properties": {
-                                                            "addressPrefix": "0.0.0.0/0",
-                                                            "nextHopType": "VirtualAppliance",
-                                                            "nextHopIpAddress": "[variables('azVnetCidr')]"
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
                                             "name": "[variables('azVnetName')]",
                                             "type": "Microsoft.Network/virtualNetworks",
                                             "apiVersion": "2020-05-01",
@@ -260,7 +259,9 @@
                                             "dependsOn": [
                                                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsgName001'))]",
                                                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsgName002'))]",
-                                                "[concat('Microsoft.Network/routeTables/', variables('azUdrName'))]"
+                                                "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsgName003'))]",
+                                                "[concat('Microsoft.Network/routeTables/', variables('azUdrName001'))]",
+                                                "[concat('Microsoft.Network/routeTables/', variables('azUdrName003'))]"
                                             ],
                                             "properties": {
                                                 "addressSpace": {
@@ -305,7 +306,7 @@
                                             "condition": "[and(equals(parameters('enableAppGw'), 'Yes'), not(empty(parameters('subnetMaskForAppGw'))))]",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
                                             "apiVersion": "2020-05-01",
-                                            "name": "[concat(variables('azVnetName'), '/', 'AppGateway')]",
+                                            "name": "[concat(variables('azVnetName'), '/', 'AppGatewaySubnet')]",
                                             "dependsOn": [
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]"
                                             ],
@@ -323,7 +324,7 @@
                                             "name": "[variables('azNsgName002')]",
                                             "location": "[parameters('location')]",
                                             "tags": {
-                                                "appliedSubnet": "[concat(variables('azVnetName'), '/', 'AppGateway')]"
+                                                "appliedSubnet": "[concat(variables('azVnetName'), '/', 'AppGatewaySubnet')]"
                                             },
                                             "properties": {
                                                 "securityRules": [
@@ -348,18 +349,37 @@
                                             "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
                                             "apiVersion": "2020-05-01",
-                                            "name": "[concat(variables('azVnetName'), '/', 'Management')]",
+                                            "name": "[concat(variables('azVnetName'), '/', 'ManagementSubnet')]",
                                             "dependsOn": [
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]"
                                             ],
                                             "properties": {
                                                 "addressPrefix": "[parameters('subnetMaskForMgmt')]",
                                                 "routeTable": {
-                                                    "id": "[variables('azUdrId')]"
+                                                    "id": "[variables('azUdrId001')]"
                                                 },
                                                 "networkSecurityGroup": {
                                                     "id": "[variables('azNsgId001')]"
                                                 }
+                                            }
+                                        },
+                                        {
+                                            "condition": "[and(equals(parameters('enableMgmt'), 'Yes'), not(empty(parameters('subnetMaskForMgmt'))))]",
+                                            "type": "Microsoft.Network/routeTables",
+                                            "apiVersion": "2020-05-01",
+                                            "name": "[variables('azUdrName001')]",
+                                            "location": "[parameters('location')]",
+                                            "properties": {
+                                                "routes": [
+                                                    {
+                                                        "name": "[variables('azRouteName')]",
+                                                        "properties": {
+                                                            "addressPrefix": "0.0.0.0/0",
+                                                            "nextHopType": "VirtualAppliance",
+                                                            "nextHopIpAddress": "[variables('azVnetCidr')]"
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         },
                                         {
@@ -369,7 +389,57 @@
                                             "name": "[variables('azNsgName001')]",
                                             "location": "[parameters('location')]",
                                             "tags": {
-                                                "appliedSubnet": "[concat(variables('azVnetName'), '/', 'Management')]"
+                                                "appliedSubnet": "[concat(variables('azVnetName'), '/', 'ManagementSubnet')]"
+                                            },
+                                            "properties": {
+                                                "securityRules": []
+                                            }
+                                        },
+                                        {
+                                            "condition": "[and(equals(parameters('enableIdentity'), 'Yes'), not(empty(parameters('subnetMaskForIdentity'))))]",
+                                            "type": "Microsoft.Network/virtualNetworks/subnets",
+                                            "apiVersion": "2020-05-01",
+                                            "name": "[concat(variables('azVnetName'), '/', 'IdentitySubnet')]",
+                                            "dependsOn": [
+                                                "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]"
+                                            ],
+                                            "properties": {
+                                                "addressPrefix": "[parameters('subnetMaskForIdentity')]",
+                                                "routeTable": {
+                                                    "id": "[variables('azUdrId003')]"
+                                                },
+                                                "networkSecurityGroup": {
+                                                    "id": "[variables('azNsgId003')]"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "condition": "[and(equals(parameters('enableIdentity'), 'Yes'), not(empty(parameters('subnetMaskForIdentity'))))]",
+                                            "type": "Microsoft.Network/routeTables",
+                                            "apiVersion": "2020-05-01",
+                                            "name": "[variables('azUdrName003')]",
+                                            "location": "[parameters('location')]",
+                                            "properties": {
+                                                "routes": [
+                                                    {
+                                                        "name": "[variables('azRouteName')]",
+                                                        "properties": {
+                                                            "addressPrefix": "0.0.0.0/0",
+                                                            "nextHopType": "VirtualAppliance",
+                                                            "nextHopIpAddress": "[variables('azVnetCidr')]"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "condition": "[and(equals(parameters('enableIdentity'), 'Yes'), not(empty(parameters('subnetMaskForIdentity'))))]",
+                                            "type": "Microsoft.Network/networkSecurityGroups",
+                                            "apiVersion": "2020-05-01",
+                                            "name": "[variables('azNsgName003')]",
+                                            "location": "[parameters('location')]",
+                                            "tags": {
+                                                "appliedSubnet": "[concat(variables('azVnetName'), '/', 'IdentitySubnet')]"
                                             },
                                             "properties": {
                                                 "securityRules": []
