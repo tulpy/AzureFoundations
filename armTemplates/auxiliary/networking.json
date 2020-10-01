@@ -261,6 +261,7 @@
                                                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsgName002'))]",
                                                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsgName003'))]",
                                                 "[concat('Microsoft.Network/routeTables/', variables('azUdrName001'))]",
+                                                "[concat('Microsoft.Network/routeTables/', variables('azUdrName002'))]",
                                                 "[concat('Microsoft.Network/routeTables/', variables('azUdrName003'))]"
                                             ],
                                             "properties": {
@@ -299,7 +300,32 @@
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]"
                                             ],
                                             "properties": {
-                                                "addressPrefix": "[parameters('subnetMaskForAzFw')]"
+                                                "addressPrefix": "[parameters('subnetMaskForAzFw')]",
+                                                 "routeTable": {
+                                                    "id": "[variables('azUdrId002')]"
+                                                }
+                                            }
+                                        },
+                                                                                {
+                                            "condition": "[and(equals(parameters('enableAzFw'), 'Yes'), not(empty(parameters('subnetMaskForAzFw'))))]",
+                                            "type": "Microsoft.Network/routeTables",
+                                            "apiVersion": "2020-05-01",
+                                            "name": "[variables('azUdrName002')]",
+                                            "location": "[parameters('location')]",
+                                            "tags": {
+                                                "appliedSubnet": "[concat(variables('azVnetName'), '/', 'AzureFirewallSubnet')]"
+                                            },
+                                            "properties": {
+                                                "routes": [
+                                                    {
+                                                        "name": "[variables('azRouteName')]",
+                                                        "properties": {
+                                                            "addressPrefix": "0.0.0.0/0",
+                                                            "nextHopType": "VirtualAppliance",
+                                                            "nextHopIpAddress": "[variables('azVnetCidr')]"
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         },
                                         {
