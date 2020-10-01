@@ -626,7 +626,7 @@
                         "multiLine": true,
                         "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]",
                         "constraints": {
-                            "allowedValues": "[map(steps('esAppLz').lzSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
+                            "allowedValues": "[map(steps('esApplicationLz').lzSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
                             "required": false
                         }
                     },
