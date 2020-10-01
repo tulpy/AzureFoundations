@@ -228,7 +228,7 @@
                 ]
             },
             {
-                "name": "esPlatformLZ",
+                "name": "esPlatformLz",
                 "label": "Platform Landing Zone",
                 "subLabel": {
                     "preValidation": "Select 'Yes' if goal state should be enforced during deployment. Select 'No' if you want to do it post deployment using Azure Policy.",
@@ -255,7 +255,7 @@
                         }
                     },
                     {
-                        "name": "esPlatformLZSub",
+                        "name": "esPlatformLzSub",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Platform Landing Zone Subscription (required)",
                         "toolTip": "",
@@ -266,7 +266,7 @@
                         "multiLine": true,
                         "visible": true,
                         "constraints": {
-                            "allowedValues": "[map(steps('esPlatformLZ').mgmtSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
+                            "allowedValues": "[map(steps('esPlatformLz').mgmtSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
                             "required": true
                         }
                     },
@@ -312,7 +312,7 @@
                                 }
                             ]
                         },
-                        "visible": "[equals(steps('esPlatformLZ').esLogAnalytics, 'Yes')]"
+                        "visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
                     },
                     {
                         "name": "esHub",
@@ -340,7 +340,7 @@
                         "label": "Platform Landing Zone CIDR Range",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/16)",
                         "defaultValue": "10.49.0.0/18",
-                        "visible": "[equals(steps('esPlatformLZ').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
                         "constraints": {
                             "required": true,
                             "validationMessage": "The Platform Landing Zone network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
@@ -358,10 +358,10 @@
                         "name": "esNwLocation",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Region for the first virtual network hub",
-                        "visible": "[equals(steps('esPlatformLZ').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
                         "toolTip": "Select the target Azure region for the deployment.",
                         "constraints": {
-                            "allowedValues": "[map(steps('esPlatformLZ').esLocationsApi.value, (item) => parse(concat('{\"label\":\"', item.displayName, '\",\"value\":\"', item.name, '\"}')))]",
+                            "allowedValues": "[map(steps('esPlatformLz').esLocationsApi.value, (item) => parse(concat('{\"label\":\"', item.displayName, '\",\"value\":\"', item.name, '\"}')))]",
                             "required": true
                         }
                     },
@@ -370,7 +370,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy VPN Gateway",
                         "defaultValue": "No",
-                        "visible": "[equals(steps('esPlatformLZ').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected, ARM will deploy VPN gateway",
                         "constraints": {
                             "allowedValues": [
@@ -390,7 +390,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Select VPN type",
                         "defaultValue": "Route Based",
-                        "visible": "[equals(steps('esPlatformLZ').esVpnGw, 'Yes')]",
+                        "visible": "[equals(steps('esPlatformLz').esVpnGw, 'Yes')]",
                         "toolTip": "If 'Yes' is selected, ARM will deploy VPN gateway. Select whether it should be policy or route based.",
                         "constraints": {
                             "allowedValues": [
@@ -411,7 +411,7 @@
                         "label": "CIDR range for GatewaySubnet",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.1.0/24)",
                         "defaultValue": "10.49.63.0/27",
-                        "visible": "[or(equals(steps('esPlatformLZ').esErGw, 'Yes'), equals(steps('esPlatformLZ').esVpnGw, 'Yes'))]",
+                        "visible": "[or(equals(steps('esPlatformLz').esErGw, 'Yes'), equals(steps('esPlatformLz').esVpnGw, 'Yes'))]",
                         "constraints": {
                             "required": true,
                             "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
@@ -422,7 +422,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy ExpressRoute Gateway",
                         "defaultValue": "No",
-                        "visible": "[equals(steps('esPlatformLZ').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected, ARM will deploy an ExpressRoute gateway",
                         "constraints": {
                             "allowedValues": [
@@ -442,7 +442,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure Firewall",
                         "defaultValue": "No",
-                        "visible": "[equals(steps('esPlatformLZ').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected, ARM will deploy Azure Firewall",
                         "constraints": {
                             "allowedValues": [
@@ -463,7 +463,7 @@
                         "label": "CIDR range for Azure Firewall Subnet",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
                         "defaultValue": "10.49.61.0/24",
-                        "visible": "[equals(steps('esPlatformLZ').esAzFw, 'Yes')]",
+                        "visible": "[equals(steps('esPlatformLz').esAzFw, 'Yes')]",
                         "constraints": {
                             "required": true,
                             "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
@@ -474,7 +474,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure App Gateway Subnet",
                         "defaultValue": "No",
-                        "visible": "[equals(steps('esPlatformLZ').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected, ARM will deploy a subnet for App Gateway",
                         "constraints": {
                             "allowedValues": [
@@ -495,7 +495,7 @@
                         "label": "CIDR range for Azure App gateway Subnet",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
                         "defaultValue": "10.49.62.0/24",
-                        "visible": "[equals(steps('esPlatformLZ').esAppGw, 'Yes')]",
+                        "visible": "[equals(steps('esPlatformLz').esAppGw, 'Yes')]",
                         "constraints": {
                             "required": true,
                             "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
@@ -506,7 +506,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure Management Subnet",
                         "defaultValue": "No",
-                        "visible": "[equals(steps('esPlatformLZ').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected, ARM will deploy a subnet for Management Services",
                         "constraints": {
                             "allowedValues": [
@@ -527,7 +527,7 @@
                         "label": "CIDR range for Azure Management Subnet",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
                         "defaultValue": "10.49.0.0/24",
-                        "visible": "[equals(steps('esPlatformLZ').esMgmt, 'Yes')]",
+                        "visible": "[equals(steps('esPlatformLz').esMgmt, 'Yes')]",
                         "constraints": {
                             "required": true,
                             "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
@@ -538,7 +538,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure Identity Subnet",
                         "defaultValue": "No",
-                        "visible": "[equals(steps('esPlatformLZ').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected, ARM will deploy a subnet for Active Directory Domain Services",
                         "constraints": {
                             "allowedValues": [
@@ -559,7 +559,7 @@
                         "label": "CIDR range for Azure Identity Subnet",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
                         "defaultValue": "10.49.1.0/24",
-                        "visible": "[equals(steps('esPlatformLZ').esIdentity, 'Yes')]",
+                        "visible": "[equals(steps('esPlatformLz').esIdentity, 'Yes')]",
                         "constraints": {
                             "required": true,
                             "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
@@ -568,7 +568,7 @@
                 ]
             },
             {
-                "name": "esAppLz",
+                "name": "esApplicationLz",
                 "label": "Application Landing Zones",
                 "subLabel": {
                     "preValidation": "Select 'Yes' if goal state should be enforced during deployment. Select 'No' if you want to do it post deployment using Azure Policy.",
@@ -595,6 +595,26 @@
                         }
                     },
                     {
+                        "name": "esAppLz",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Application Landing Zone",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected, an Application Landing Zone will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
                         "name": "esAppLzSub",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Landing zone subscription (optional)",
@@ -604,7 +624,7 @@
                         "filter": true,
                         "filterPlaceholder": "Filter items ...",
                         "multiLine": true,
-                        "visible": true,
+                        "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]",
                         "constraints": {
                             "allowedValues": "[map(steps('esAppLz').lzSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
                             "required": false
@@ -628,7 +648,7 @@
                                 }
                             ]
                         },
-                        "visible": true
+                        "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]"
                     },
                     {
                         "name": "esPublicIP",
@@ -648,7 +668,7 @@
                                 }
                             ]
                         },
-                        "visible": true
+                        "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]"
                     },
                     {
                         "name": "esSubnetNSG",
@@ -668,7 +688,7 @@
                                 }
                             ]
                         },
-                        "visible": true
+                        "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]"
                     },
                     {
                         "name": "esIpForwarding",
@@ -688,7 +708,7 @@
                                 }
                             ]
                         },
-                        "visible": true
+                        "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]"
                     },
                     {
                         "name": "esRdpInternet",
@@ -708,7 +728,7 @@
                                 }
                             ]
                         },
-                        "visible": true
+                        "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]"
                     },
                     {
                         "name": "esSshInternet",
@@ -728,7 +748,7 @@
                                 }
                             ]
                         },
-                        "visible": true
+                        "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]"
                     },
                     {
                         "name": "esVnetPeering",
@@ -748,7 +768,7 @@
                                 }
                             ]
                         },
-                        "visible": true
+                        "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]"
                     },
                     {
                         "name": "esPrivateDnsZones",
@@ -768,7 +788,7 @@
                                 }
                             ]
                         },
-                        "visible": true
+                        "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]"
                     }
                 ]
             }
@@ -789,24 +809,24 @@
             "nsgPrefix": "[steps('esNaming').esNsgIdentifier]",
             "environmentTag": "[steps('esNaming').esEnvironmentTag]",
             "ownerTag": "[steps('esNaming').esOwnerTag]",
-            "vpnGwType": "[steps('esPlatformLZ').esVpnGwType]",
-            "subnetMaskForGw": "[steps('esPlatformLZ').esAddressVpnOrEr]",
-            "subnetMaskForAzFw": "[steps('esPlatformLZ').esAddressFw]",
-            "subnetMaskForAppGw": "[steps('esPlatformLZ').esAddressAppGw]",
-            "subnetMaskForMgmt": "[steps('esPlatformLZ').esAddressMgmt]",
-            "subnetMaskForIdentity": "[steps('esPlatformLZ').esAddressIdentity]",
-            "enableErGw": "[steps('esPlatformLZ').esErGw]",
-            "enableVpnGw": "[steps('esPlatformLZ').esVpnGw]",
-            "enableHub": "[steps('esPlatformLZ').esHub]",
-            "enableAzFw": "[steps('esPlatformLZ').esAzFw]",
-            "enableAppGw": "[steps('esPlatformLZ').esAppGw]",
-            "enableMgmt": "[steps('esPlatformLZ').esMgmt]",
-            "enableIdentity": "[steps('esPlatformLZ').esIdentity]",
-            "addressPrefix": "[steps('esPlatformLZ').esAddressHub]",
-            "location": "[steps('esPlatformLZ').esNwLocation]",
-            "platformLzSubscriptionId": "[steps('esPlatformLZ').esPlatformLZSub]",
-            "enableLogAnalytics": "[steps('esPlatformLZ').esLogAnalytics]",
-            "enableAsc": "[steps('esPlatformLZ').esAsc]",
+            "vpnGwType": "[steps('esPlatformLz').esVpnGwType]",
+            "subnetMaskForGw": "[steps('esPlatformLz').esAddressVpnOrEr]",
+            "subnetMaskForAzFw": "[steps('esPlatformLz').esAddressFw]",
+            "subnetMaskForAppGw": "[steps('esPlatformLz').esAddressAppGw]",
+            "subnetMaskForMgmt": "[steps('esPlatformLz').esAddressMgmt]",
+            "subnetMaskForIdentity": "[steps('esPlatformLz').esAddressIdentity]",
+            "enableErGw": "[steps('esPlatformLz').esErGw]",
+            "enableVpnGw": "[steps('esPlatformLz').esVpnGw]",
+            "enableHub": "[steps('esPlatformLz').esHub]",
+            "enableAzFw": "[steps('esPlatformLz').esAzFw]",
+            "enableAppGw": "[steps('esPlatformLz').esAppGw]",
+            "enableMgmt": "[steps('esPlatformLz').esMgmt]",
+            "enableIdentity": "[steps('esPlatformLz').esIdentity]",
+            "addressPrefix": "[steps('esPlatformLz').esAddressHub]",
+            "location": "[steps('esPlatformLz').esNwLocation]",
+            "platformLzSubscriptionId": "[steps('esPlatformLz').esPlatformLzSub]",
+            "enableLogAnalytics": "[steps('esPlatformLz').esLogAnalytics]",
+            "enableAsc": "[steps('esPlatformLz').esAsc]",
             "enableStorageHttps": "[steps('esAppLZ').esHttpsStorage]",
             "enableKvSoftDelete": "[steps('esAppLZ').esKvSoftDelete]",
             "denyPublicendpoints": "[steps('esAppLZ').esPublicendpoints]",
