@@ -344,7 +344,7 @@
                         "label": "Region for the first virtual network hub",
                         "toolTip": "Select the target Azure region for the deployment.",
                         "constraints": {
-                            "allowedValues": "[map(steps('esConnectivityGoalState').esLocationsApi.value, (item) => parse(concat('{\"label\":\"', item.displayName, '\",\"value\":\"', item.name, '\"}')))]",
+                            "allowedValues": "[map(steps('esPlatformLZ').esLocationsApi.value, (item) => parse(concat('{\"label\":\"', item.displayName, '\",\"value\":\"', item.name, '\"}')))]",
                             "required": true
                         }
                     },
