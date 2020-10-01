@@ -358,6 +358,7 @@
                         "name": "esNwLocation",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Region for the first virtual network hub",
+                        "visible": "[equals(steps('esPlatformLZ').esHub, 'Yes')]",
                         "toolTip": "Select the target Azure region for the deployment.",
                         "constraints": {
                             "allowedValues": "[map(steps('esPlatformLZ').esLocationsApi.value, (item) => parse(concat('{\"label\":\"', item.displayName, '\",\"value\":\"', item.name, '\"}')))]",
