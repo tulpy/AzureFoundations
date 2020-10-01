@@ -26,6 +26,14 @@
                         }
                     },
                     {
+                        "name": "text1",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": true,
+                        "options": {
+                            "text": "Please provide naming prefixes for Company, Location and Environment identifier"
+                        }
+                    },
+                    {
                         "name": "esCompIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Company Identifier Prefix",
@@ -59,6 +67,14 @@
                             "required": true,
                             "regex": "^[a-z0-9A-Z-]{3}$",
                             "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "text2",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": true,
+                        "options": {
+                            "text": "Please provide values for the naming segment for Azure resources:"
                         }
                     },
                     {
@@ -182,7 +198,7 @@
                         }
                     },
                     {
-                        "name": "text1",
+                        "name": "text3",
                         "type": "Microsoft.Common.TextBlock",
                         "visible": true,
                         "options": {
