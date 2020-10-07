@@ -99,6 +99,12 @@
                     },
                     "rgName": {
                         "value": "[variables('resourceGroupName')]"
+                    },
+                    "environmentTag": {
+                        "value": "[variables('tags').environment]"
+                    },
+                    "ownerTag": {
+                        "value": "[variables('tags').owner]"
                     }
                 }
             }
