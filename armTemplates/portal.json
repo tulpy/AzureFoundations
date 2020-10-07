@@ -274,7 +274,7 @@
                         "name": "esLogAnalytics",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Log Analytics workspace and enable monitoring for your platform and resources",
-                        "defaultValue": "Yes",
+                        "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected, ARM will deploy resources and enable them for continious compliance.",
                         "constraints": {
                             "allowedValues": [
@@ -294,7 +294,7 @@
                         "name": "esAsc",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure Security Center and enable security monitoring for your platform and resources",
-                        "defaultValue": "Free",
+                        "defaultValue": "Standard",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
                         "constraints": {
                             "allowedValues": [
