@@ -93,7 +93,7 @@
                                         {
                                             "type": "Microsoft.KeyVault/vaults",
                                             "apiVersion": "2019-09-01",
-                                            "name": "test",
+                                            "name": "tulpytest333",
                                             "location": "[deployment().location]",
                                             "properties": {
                                                 "enabledForDeployment": true,
