@@ -616,6 +616,12 @@
                     "resourceGroupPrefix": {
                         "value": "[parameters('resourceGroupPrefix')]"
                     },
+                    "environmentTag": {
+                        "value": "[parameters('environmentTag')]"
+                    },
+                    "ownerTag": {
+                        "value": "[parameters('ownerTag')]"
+                    },
                     "platformLzSubscriptionId": {
                         "value": "[parameters('platformLzSubscriptionId')]"
                     }
