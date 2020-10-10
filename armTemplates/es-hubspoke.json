@@ -487,8 +487,7 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
             "name": "[variables('networkingDeploymentName')]",
             "dependsOn": [
-                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('companyPrefix'), '-Platform'), parameters('platformLzSubscriptionId'))]",
-                "[variables('monitoringDeploymentName')]"
+                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('companyPrefix'), '-Platform'), parameters('platformLzSubscriptionId'))]"
             ],
             "location": "[deployment().location]",
             "properties": {
@@ -617,12 +616,6 @@
                     },
                     "resourceGroupPrefix": {
                         "value": "[parameters('resourceGroupPrefix')]"
-                    },
-                    "environmentTag": {
-                        "value": "[parameters('environmentTag')]"
-                    },
-                    "ownerTag": {
-                        "value": "[parameters('ownerTag')]"
                     },
                     "logAnalyticsPrefix": {
                         "value": "[parameters('logAnalyticsPrefix')]"
