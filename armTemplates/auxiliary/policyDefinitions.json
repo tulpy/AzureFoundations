@@ -8630,20 +8630,6 @@
                   "displayName": "rgName",
                   "description": "Provide name for resource group."
                 }
-              },
-              "environmentTag": {
-                "type": "String",
-                "metadata": {
-                  "displayName": "environmentTag",
-                  "description": "Provide name for environment tag."
-                }
-              },
-              "ownerTag": {
-                "type": "String",
-                "metadata": {
-                  "displayName": "ownerTag",
-                  "description": "Provide name for owner tag."
-                }
               }
             },
             "PolicyRule": {
@@ -8691,12 +8677,6 @@
                         },
                         "automationRegion": {
                           "value": "[[parameters('automationRegion')]"
-                        },
-                        "environmentTag": {
-                          "value": "[[parameters('environmentTag')]"
-                        },
-                        "ownerTag": {
-                          "value": "[[parameters('ownerTag')]"
                         }
                       },
                       "template": {
@@ -8717,12 +8697,6 @@
                           },
                           "automationRegion": {
                             "type": "string"
-                          },
-                          "environmentTag": {
-                           "type": "string"
-                          },
-                          "ownerTag": {
-                           "type": "string"
                           }
                         },
                         "variables": {},
@@ -8732,10 +8706,6 @@
                             "apiVersion": "2018-05-01",
                             "name": "[[parameters('rgName')]",
                             "location": "[[deployment().location]",
-                            "tags": {
-                                "environment": "[[parameters('environmentTag')]",
-                                "owner": "[[parameters('ownerTag')]"
-                            },
                             "properties": {}
                           },
                           {
