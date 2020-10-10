@@ -596,7 +596,6 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
             "name": "[variables('keyVaultDeploymentName')]",
             "dependsOn": [
-                "[variables('policyDefDeploymentName')]",
                 "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('companyPrefix'), '-Platform'), parameters('platformLzSubscriptionId'))]"
             ],
             "location": "[deployment().location]",
