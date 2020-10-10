@@ -1,0 +1,145 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "companyPrefix": {
+            "type": "string",
+            "maxLength": 5
+        },
+        "environmentPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "resourceGroupPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "environmentTag": {
+            "type": "string"
+        },
+        "ownerTag": {
+            "type": "string"
+        },
+        "platformLzSubscriptionId": {
+            "type": "string",
+            "defaultValue": "",
+            "maxLength": 36
+        }
+    },
+    "variables": {
+        "deploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
+        "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('resourceGroupPrefix'), '-security'))]",
+        "tags": {
+            "environment": "[parameters('environmentTag')]",
+            "owner": "[parameters('ownerTag')]"
+        },
+        "storage": {
+            "name": "tulpytest333",
+            "sku": "Standard_LRS",
+            "kind": "StorageV2",
+            "use": "Diagnostics",
+            "httpsOnly": true
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-06-01",
+            "name": "keyVault",
+            "location": "[deployment().location]",
+            "subscriptionId": "[parameters('platformLzSubscriptionId')]",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "resources": [
+                        {
+                            "type": "Microsoft.Resources/resourceGroups",
+                            "apiVersion": "2020-06-01",
+                            "location": "[deployment().location]",
+                            "name": "[variables('resourceGroupName')]",
+                            "tags": {
+                                "environment": "[variables('tags').environment]",
+                                "owner": "[variables('tags').owner]"
+                            },
+                            "properties": {}
+                        },
+                        {
+                            "type": "Microsoft.Resources/deployments",
+                            "apiVersion": "2019-10-01",
+                            "name": "[variables('deploymentName')]",
+                            "resourceGroup": "[variables('resourceGroupName')]",
+                            "dependsOn": [
+                                "[concat('Microsoft.Resources/resourceGroups/', variables('resourceGroupName'))]"
+                            ],
+                            "properties": {
+                                "mode": "Incremental",
+                                "template": {
+                                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                                    "contentVersion": "1.0.0.0",
+                                    "parameters": {},
+                                    "resources": [
+                                        {
+                                            "type": "Microsoft.Authorization/locks",
+                                            "apiVersion": "2017-04-01",
+                                            "name": "ResourceGroup-DontDelete",
+                                            "properties": {
+                                                "level": "CanNotDelete",
+                                                "notes": "Prevent deletion of the resourceGroup"
+                                            }
+                                        },
+                                        {
+                                            "type": "Microsoft.KeyVault/vaults",
+                                            "apiVersion": "2019-09-01",
+                                            "name": "test",
+                                            "location": "[deployment().location]",
+                                            "properties": {
+                                                "enabledForDeployment": true,
+                                                "enabledForDiskEncryption": true,
+                                                "enabledForTemplateDeployment": true,
+                                                "tenantId": "5ac45a75-47a9-4d20-aaad-c13a830ac5af",
+                                                "accessPolicies": [
+                                                    {
+                                                        "objectId": "67a1d7fa-f0fd-4ade-8c65-07b124e22efd",
+                                                        "tenantId": "5ac45a75-47a9-4d20-aaad-c13a830ac5af"
+                                                    }
+                                                ],
+                                                "sku": {
+                                                    "name": "Standard",
+                                                    "family": "A"
+                                                },
+                                                "networkAcls": {
+                                                    "defaultAction": "Allow",
+                                                    "bypass": "AzureServices"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "type": "Microsoft.Storage/storageAccounts",
+                                            "apiVersion": "2019-06-01",
+                                            "name": "[variables('storage').name]",
+                                            "location": "[deployment().location]",
+                                            "sku": {
+                                                "name": "[variables('storage').sku]"
+                                            },
+                                            "tags": {
+                                                "storageSKU": "[variables('storage').sku]",
+                                                "storageUse": "[variables('storage').use]"
+                                            },
+                                            "kind": "[variables('storage').kind]",
+                                            "properties": {
+                                                "supportsHttpsTrafficOnly": "[variables('storage').httpsOnly]"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
