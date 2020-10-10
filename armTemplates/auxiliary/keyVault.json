@@ -10,6 +10,10 @@
             "type": "string",
             "maxLength": 3
         },
+                "locationPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
         "resourceGroupPrefix": {
             "type": "string",
             "maxLength": 3
