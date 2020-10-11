@@ -124,7 +124,7 @@
                                                 "tenantId": "[variables('keyVault').tenantId]",
                                                 "accessPolicies": [
                                                     {
-                                                        "objectId": "[subscription().tenantId]",
+                                                        "objectId": "[variables('keyVault').objectId]",
                                                         "tenantId": "[variables('keyVault').tenantId]",
                                                         "permissions": {
                                                             "keys": [
