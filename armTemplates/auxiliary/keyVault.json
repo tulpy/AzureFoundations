@@ -6,11 +6,23 @@
             "type": "string",
             "maxLength": 5
         },
+        "locationPrefix": {
+            "type": "string",
+            "maxLength": 5
+        },
         "environmentPrefix": {
             "type": "string",
             "maxLength": 3
         },
         "resourceGroupPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "storagePrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "akvPrefix": {
             "type": "string",
             "maxLength": 3
         },
@@ -21,11 +33,7 @@
             "type": "string"
         },
         "tenantId": {
-            "type": "string",
-            "defaultValue": "[subscription().tenantId]",
-            "metadata": {
-                "description": "Specifies the Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. Get it by using Get-AzSubscription cmdlet."
-            }
+            "type": "string"
         },
         "platformLzSubscriptionId": {
             "type": "string",
@@ -35,13 +43,23 @@
     },
     "variables": {
         "deploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
+        "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
+        "storageNamingPrefix": "[concat(parameters('companyPrefix'), parameters('locationPrefix'), parameters('environmentPrefix'))]",
         "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('resourceGroupPrefix'), '-security'))]",
         "tags": {
             "environment": "[parameters('environmentTag')]",
             "owner": "[parameters('ownerTag')]"
         },
+        "keyVault": {
+            "name":  "[toLower(take(concat(variables('namingPrefix'), '-', parameters('akvPrefix'), '-', guid(parameters('companyPrefix'))), 24))]",
+            "enabledForDeployment": true,
+            "enabledForDiskEncryption": true,
+            "enabledForTemplateDeployment": true,
+            "tenantId": "[subscription().tenantId]",
+            "objectId": "67a1d7fa-f0fd-4ade-8c65-07b124e22efd"
+        },
         "storage": {
-            "name": "tulpytest333",
+            "name": "[take(toLower(concat(variables('storageNamingPrefix'), parameters('storagePrefix'), guid(parameters('companyPrefix')))), 20)]",
             "sku": "Standard_LRS",
             "kind": "StorageV2",
             "use": "Diagnostics",
@@ -98,19 +116,19 @@
                                             }
                                         },
                                         {
+                                            "name": "[variables('keyVault').name]",
                                             "type": "Microsoft.KeyVault/vaults",
                                             "apiVersion": "2019-09-01",
-                                            "name": "tulpytest333",
                                             "location": "[deployment().location]",
                                             "properties": {
-                                                "enabledForDeployment": true,
-                                                "enabledForDiskEncryption": true,
-                                                "enabledForTemplateDeployment": true,
-                                                "tenantId": "[parameters('tenantId')]",
+                                                "enabledForDeployment": "[variables('keyVault').enabledForDeployment]",
+                                                "enabledForDiskEncryption": "[variables('keyVault').enabledForDiskEncryption]",
+                                                "enabledForTemplateDeployment": "[variables('keyVault').enabledForTemplateDeployment]",
+                                                "tenantId": "[variables('keyVault').tenantId]",
                                                 "accessPolicies": [
                                                     {
-                                                        "objectId": "67a1d7fa-f0fd-4ade-8c65-07b124e22efd",
-                                                        "tenantId": "5ac45a75-47a9-4d20-aaad-c13a830ac5af",
+                                                        "objectId": "[variables('keyVault').objectId]",
+                                                        "tenantId": "[variables('keyVault').tenantId]",
                                                         "permissions": {
                                                             "keys": [
                                                                 "Get",

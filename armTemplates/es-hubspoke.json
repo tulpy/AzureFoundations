@@ -93,6 +93,13 @@
                 "description": "Provide the Network Security Group identifier prefix"
             }
         },
+        "akvPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the Azure key Vault prefix"
+            }
+        },
         "environmentTag": {
             "type": "string",
             "metadata": {
@@ -614,6 +621,12 @@
                     },
                     "resourceGroupPrefix": {
                         "value": "[parameters('resourceGroupPrefix')]"
+                    },
+                    "storagePrefix": {
+                        "value": "[parameters('storagePrefix')]"
+                    },
+                    "akvPrefix": {
+                        "value": "[parameters('akvPrefix')]"
                     },
                     "environmentTag": {
                         "value": "[parameters('environmentTag')]"

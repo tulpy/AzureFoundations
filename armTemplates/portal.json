@@ -198,6 +198,18 @@
                         }
                     },
                     {
+                        "name": "esAkvIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Azure Key Vault Identifier",
+                        "toolTip": "Provide a naming prefix for the Azure Key Vault Identifier",
+                        "defaultValue": "akv",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
                         "name": "text3",
                         "type": "Microsoft.Common.TextBlock",
                         "visible": true,
@@ -807,6 +819,7 @@
             "storagePrefix": "[steps('esNaming').esStaIdentifier]",
             "udrPrefix": "[steps('esNaming').esUdrIdentifier]",
             "nsgPrefix": "[steps('esNaming').esNsgIdentifier]",
+            "akvPrefix": "[steps('esNaming').esAkvIdentifier]",
             "environmentTag": "[steps('esNaming').esEnvironmentTag]",
             "ownerTag": "[steps('esNaming').esOwnerTag]",
             "vpnGwType": "[steps('esPlatformLz').esVpnGwType]",
