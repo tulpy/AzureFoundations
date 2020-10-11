@@ -32,9 +32,6 @@
         "ownerTag": {
             "type": "string"
         },
-        "tenantId": {
-            "type": "string"
-        },
         "platformLzSubscriptionId": {
             "type": "string",
             "defaultValue": "",
@@ -127,7 +124,7 @@
                                                 "tenantId": "[variables('keyVault').tenantId]",
                                                 "accessPolicies": [
                                                     {
-                                                        "objectId": "[variables('keyVault').objectId]",
+                                                        "objectId": "[subscription().tenantId]",
                                                         "tenantId": "[variables('keyVault').tenantId]",
                                                         "permissions": {
                                                             "keys": [
