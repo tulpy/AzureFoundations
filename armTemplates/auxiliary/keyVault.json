@@ -20,6 +20,13 @@
         "ownerTag": {
             "type": "string"
         },
+        "tenantId": {
+            "type": "string",
+            "defaultValue": "[subscription().tenantId]",
+            "metadata": {
+                "description": "Specifies the Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. Get it by using Get-AzSubscription cmdlet."
+            }
+        },
         "platformLzSubscriptionId": {
             "type": "string",
             "defaultValue": "",
@@ -99,50 +106,50 @@
                                                 "enabledForDeployment": true,
                                                 "enabledForDiskEncryption": true,
                                                 "enabledForTemplateDeployment": true,
-                                                "tenantId": "[subscription().tenantId]",
+                                                "tenantId": "[parameters('tenantId')]",
                                                 "accessPolicies": [
                                                     {
                                                         "objectId": "67a1d7fa-f0fd-4ade-8c65-07b124e22efd",
                                                         "tenantId": "5ac45a75-47a9-4d20-aaad-c13a830ac5af",
-     "permissions": {
-          "keys": [
-            "Get",
-            "List",
-            "Update",
-            "Create",
-            "Import",
-            "Delete",
-            "Recover",
-            "Backup",
-            "Restore"
-          ],
-          "secrets": [
-            "Get",
-            "List",
-            "Set",
-            "Delete",
-            "Recover",
-            "Backup",
-            "Restore"
-          ],
-          "certificates": [
-            "Get",
-            "List",
-            "Update",
-            "Create",
-            "Import",
-            "Delete",
-            "Recover",
-            "Backup",
-            "Restore",
-            "ManageContacts",
-            "ManageIssuers",
-            "GetIssuers",
-            "ListIssuers",
-            "SetIssuers",
-            "DeleteIssuers"
-          ]
-        }
+                                                        "permissions": {
+                                                            "keys": [
+                                                                "Get",
+                                                                "List",
+                                                                "Update",
+                                                                "Create",
+                                                                "Import",
+                                                                "Delete",
+                                                                "Recover",
+                                                                "Backup",
+                                                                "Restore"
+                                                            ],
+                                                            "secrets": [
+                                                                "Get",
+                                                                "List",
+                                                                "Set",
+                                                                "Delete",
+                                                                "Recover",
+                                                                "Backup",
+                                                                "Restore"
+                                                            ],
+                                                            "certificates": [
+                                                                "Get",
+                                                                "List",
+                                                                "Update",
+                                                                "Create",
+                                                                "Import",
+                                                                "Delete",
+                                                                "Recover",
+                                                                "Backup",
+                                                                "Restore",
+                                                                "ManageContacts",
+                                                                "ManageIssuers",
+                                                                "GetIssuers",
+                                                                "ListIssuers",
+                                                                "SetIssuers",
+                                                                "DeleteIssuers"
+                                                            ]
+                                                        }
                                                     }
                                                 ],
                                                 "sku": {
