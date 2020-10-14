@@ -327,6 +327,46 @@
                         "visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
                     },
                     {
+                        "name": "esAkv",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure Key Vault for the Platform Landing Zone",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected, an Azure Key Vault will be deployed",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "esStorage",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure Storage account for diagnostics for the Platform Landing Zone",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected, an Azure Storage Account will be deployed",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
                         "name": "esHub",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Platform Landing Zone Virtual Network",
@@ -840,6 +880,8 @@
             "platformLzSubscriptionId": "[steps('esPlatformLz').esPlatformLzSub]",
             "enableLogAnalytics": "[steps('esPlatformLz').esLogAnalytics]",
             "enableAsc": "[steps('esPlatformLz').esAsc]",
+            "enableAkv": "[steps('esPlatformLz').esAkv]",
+            "enableStorage": "[steps('esPlatformLz').esStorage]",
             "enableStorageHttps": "[steps('esAppLZ').esHttpsStorage]",
             "enableKvSoftDelete": "[steps('esAppLZ').esKvSoftDelete]",
             "denyPublicendpoints": "[steps('esAppLZ').esPublicendpoints]",

@@ -143,6 +143,28 @@
                 "description": "If 'Yes' is selected when also adding a subscription for management, ARM will assign two policies to enable auditing in your environment, into the Log Analytics workspace for platform monitoring. If 'No', it will be ignored."
             }
         },
+        "enableAkv": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "metadata": {
+                "description": "If 'Yes' is selected then an Azure Key Vault will be deployed."
+            }
+        },
+        "enableStorage": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "metadata": {
+                "description": "If 'Yes' is selected then an Azure Storage Account will be deployed."
+            }
+        },
         "enableHub": {
             "type": "string",
             "allowedValues": [
@@ -530,9 +552,6 @@
                     "azFwPrefix": {
                         "value": "[parameters('azFwPrefix')]"
                     },
-                    "storagePrefix": {
-                        "value": "[parameters('storagePrefix')]"
-                    },
                     "udrPrefix": {
                         "value": "[parameters('udrPrefix')]"
                     },
@@ -597,7 +616,7 @@
             }
         },
         {
-            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
+            "condition": "[or(equals(parameters('enableAkv'), 'Yes'), equals(parameters('enableStorage'), 'Yes'), not(empty(parameters('platformLzSubscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
@@ -636,6 +655,12 @@
                     },
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
+                    },
+                    "enableAkv": {
+                        "value": "[parameters('enableAkv')]"
+                    },
+                    "enableStorage": {
+                        "value": "[parameters('enableStorage')]"
                     },
                     "platformLzSubscriptionId": {
                         "value": "[parameters('platformLzSubscriptionId')]"

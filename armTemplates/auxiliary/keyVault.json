@@ -26,6 +26,22 @@
             "type": "string",
             "maxLength": 3
         },
+        "enableAkv": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "enableStorage": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
         "environmentTag": {
             "type": "string"
         },
@@ -48,10 +64,11 @@
             "owner": "[parameters('ownerTag')]"
         },
         "keyVault": {
-            "name":  "[toLower(take(concat(variables('namingPrefix'), '-', parameters('akvPrefix'), '-', guid(parameters('companyPrefix'))), 24))]",
+            "name": "[toLower(take(concat(variables('namingPrefix'), '-', parameters('akvPrefix'), '-', guid(parameters('companyPrefix'))), 24))]",
             "enabledForDeployment": true,
             "enabledForDiskEncryption": true,
             "enabledForTemplateDeployment": true,
+            "sku": "Standard",
             "tenantId": "5ac45a75-47a9-4d20-aaad-c13a830ac5af",
             "objectId": "67a1d7fa-f0fd-4ade-8c65-07b124e22efd"
         },
@@ -65,6 +82,7 @@
     },
     "resources": [
         {
+            "condition": "[or(equals(parameters('enableAkv'), 'Yes'), equals(parameters('enableStorage'), 'Yes'), not(empty(parameters('platformLzSubscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
             "name": "keyVault",
@@ -113,6 +131,7 @@
                                             }
                                         },
                                         {
+                                            "condition": "[equals(parameters('enableAkv'), 'Yes')]",
                                             "name": "[variables('keyVault').name]",
                                             "type": "Microsoft.KeyVault/vaults",
                                             "apiVersion": "2019-09-01",
@@ -168,7 +187,7 @@
                                                     }
                                                 ],
                                                 "sku": {
-                                                    "name": "Standard",
+                                                    "name": "[variables('keyVault').sku]",
                                                     "family": "A"
                                                 },
                                                 "networkAcls": {
@@ -178,6 +197,7 @@
                                             }
                                         },
                                         {
+                                            "condition": "[equals(parameters('enableStorage'), 'Yes')]",
                                             "type": "Microsoft.Storage/storageAccounts",
                                             "apiVersion": "2019-06-01",
                                             "name": "[variables('storage').name]",

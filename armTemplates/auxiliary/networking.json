@@ -34,10 +34,6 @@
             "type": "string",
             "maxLength": 3
         },
-        "storagePrefix": {
-            "type": "string",
-            "maxLength": 3
-        },
         "udrPrefix": {
             "type": "string",
             "maxLength": 3
@@ -160,7 +156,6 @@
     "variables": {
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
         "deploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
-        "storageNamingPrefix": "[concat(parameters('companyPrefix'), parameters('locationPrefix'), parameters('environmentPrefix'))]",
         "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('resourceGroupPrefix'), '-network'))]",
         "azVnetCidr": "[substring(parameters('addressPrefix'),0,sub(length(parameters('addressPrefix')), 3))]",
         "azVnetName": "[toLower(concat(variables('namingPrefix'), '-', parameters('vnetPrefix'), '-', variables('azVnetCidr')))]",
@@ -192,13 +187,6 @@
         "tags": {
             "environment": "[parameters('environmentTag')]",
             "owner": "[parameters('ownerTag')]"
-        },
-        "storage": {
-            "name": "[take(toLower(concat(variables('storageNamingPrefix'), parameters('storagePrefix'), guid(parameters('companyPrefix')))), 20)]",
-            "sku": "Standard_LRS",
-            "kind": "StorageV2",
-            "use": "Diagnostics",
-            "httpsOnly": true
         }
     },
     "resources": [
@@ -273,23 +261,6 @@
                                             },
                                             "resources": [
                                             ]
-                                        },
-                                        {
-                                            "type": "Microsoft.Storage/storageAccounts",
-                                            "apiVersion": "2019-06-01",
-                                            "name": "[variables('storage').name]",
-                                            "location": "[deployment().location]",
-                                            "sku": {
-                                                "name": "[variables('storage').sku]"
-                                            },
-                                            "tags": {
-                                                "storageSKU": "[variables('storage').sku]",
-                                                "storageUse": "[variables('storage').use]"
-                                            },
-                                            "kind": "[variables('storage').kind]",
-                                            "properties": {
-                                                "supportsHttpsTrafficOnly": "[variables('storage').httpsOnly]"
-                                            }
                                         },
                                         {
                                             "condition": "[and(equals(parameters('enableAzFw'), 'Yes'), not(empty(parameters('subnetMaskForAzFw'))))]",
