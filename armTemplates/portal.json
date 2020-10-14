@@ -330,7 +330,7 @@
                         "name": "esAkv",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure Key Vault for the Platform Landing Zone",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, an Azure Key Vault will be deployed",
                         "constraints": {
                             "allowedValues": [
@@ -350,7 +350,7 @@
                         "name": "esStorage",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure Storage account for diagnostics for the Platform Landing Zone",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, an Azure Storage Account will be deployed",
                         "constraints": {
                             "allowedValues": [

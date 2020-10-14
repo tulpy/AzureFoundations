@@ -268,36 +268,10 @@
                                             "apiVersion": "2020-05-01",
                                             "name": "[concat(variables('azVnetName'), '/', 'AzureFirewallSubnet')]",
                                             "dependsOn": [
-                                                "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]",
-                                                "[concat('Microsoft.Network/routeTables/', variables('azUdrName002'))]"
+                                                "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]"
                                             ],
                                             "properties": {
-                                                "addressPrefix": "[parameters('subnetMaskForAzFw')]",
-                                                "routeTable": {
-                                                    "id": "[variables('azUdrId002')]"
-                                                }
-                                            }
-                                        },
-                                        {
-                                            "condition": "[and(equals(parameters('enableAzFw'), 'Yes'), not(empty(parameters('subnetMaskForAzFw'))))]",
-                                            "type": "Microsoft.Network/routeTables",
-                                            "apiVersion": "2020-05-01",
-                                            "name": "[variables('azUdrName002')]",
-                                            "location": "[parameters('location')]",
-                                            "tags": {
-                                                "appliedSubnet": "[concat(variables('azVnetName'), '/', 'AzureFirewallSubnet')]"
-                                            },
-                                            "properties": {
-                                                "routes": [
-                                                    {
-                                                        "name": "[variables('azRouteName')]",
-                                                        "properties": {
-                                                            "addressPrefix": "0.0.0.0/0",
-                                                            "nextHopType": "VirtualAppliance",
-                                                            "nextHopIpAddress": "[variables('azVnetCidr')]"
-                                                        }
-                                                    }
-                                                ]
+                                                "addressPrefix": "[parameters('subnetMaskForAzFw')]"
                                             }
                                         },
                                         {
@@ -460,10 +434,36 @@
                                             "apiVersion": "2020-05-01",
                                             "name": "[concat(variables('azVnetName'), '/', 'GatewaySubnet')]",
                                             "dependsOn": [
-                                                "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]"
+                                                "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]",
+                                                "[concat('Microsoft.Network/routeTables/', variables('azUdrName002'))]"
                                             ],
                                             "properties": {
-                                                "addressPrefix": "[parameters('subnetMaskForGw')]"
+                                                "addressPrefix": "[parameters('subnetMaskForGw')]",
+                                                "routeTable": {
+                                                    "id": "[variables('azUdrId002')]"
+                                                }
+                                            }
+                                        },
+                                                                                {
+                                            "condition": "[and(equals(parameters('enableAzFw'), 'Yes'), not(empty(parameters('subnetMaskForAzFw'))))]",
+                                            "type": "Microsoft.Network/routeTables",
+                                            "apiVersion": "2020-05-01",
+                                            "name": "[variables('azUdrName002')]",
+                                            "location": "[parameters('location')]",
+                                            "tags": {
+                                                "appliedSubnet": "[concat(variables('azVnetName'), '/', 'GatewaySubnet')]"
+                                            },
+                                            "properties": {
+                                                "routes": [
+                                                    {
+                                                        "name": "[variables('azRouteName')]",
+                                                        "properties": {
+                                                            "addressPrefix": "0.0.0.0/0",
+                                                            "nextHopType": "VirtualAppliance",
+                                                            "nextHopIpAddress": "[variables('azVnetCidr')]"
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         },
                                         {
