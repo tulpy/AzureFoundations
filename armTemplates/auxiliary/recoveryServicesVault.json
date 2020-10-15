@@ -137,6 +137,9 @@
                                             "name": "[concat(variables('recoveryServicesVault').name, '/', variables('recoveryServicesVault').policyName)]",
                                             "type": "Microsoft.RecoveryServices/vaults/backupPolicies",
                                             "location": "[deployment().location]",
+                                            "dependsOn": [
+                                                "[concat('Microsoft.RecoveryServices/vaults/', variables('recoveryServicesVault').name)]"
+                                            ],
                                             "properties": {
                                                 "backupManagementType": "AzureIaasVM",
                                                 "schedulePolicy": {
@@ -204,6 +207,9 @@
                                             "apiVersion": "2018-01-10",
                                             "name": "[concat(variables('recoveryServicesVault').name, '/vaultstorageconfig')]",
                                             "type": "Microsoft.RecoveryServices/vaults/backupstorageconfig",
+                                            "dependsOn": [
+                                                "[concat('Microsoft.RecoveryServices/vaults/', variables('recoveryServicesVault').name)]"
+                                            ],
                                             "properties": {
                                                 "StorageModelType": "[variables('recoveryServicesVault').vaultStorageType]"
                                             }
