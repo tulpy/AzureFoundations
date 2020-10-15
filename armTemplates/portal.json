@@ -892,7 +892,7 @@
             "udrPrefix": "[steps('esNaming').esUdrIdentifier]",
             "nsgPrefix": "[steps('esNaming').esNsgIdentifier]",
             "akvPrefix": "[steps('esNaming').esAkvIdentifier]",
-            "RsvPrefix": "[steps('esNaming').esRsvIdentifier]",
+            "rsvPrefix": "[steps('esNaming').esRsvIdentifier]",
             "environmentTag": "[steps('esNaming').esEnvironmentTag]",
             "ownerTag": "[steps('esNaming').esOwnerTag]",
             "vpnGwType": "[steps('esPlatformLz').esVpnGwType]",
