@@ -210,6 +210,18 @@
                         }
                     },
                     {
+                        "name": "esRsvIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Recovery Services Vaults Identifier",
+                        "toolTip": "Provide a naming prefix for the Recovery Services Vaults Identifier",
+                        "defaultValue": "akv",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
                         "name": "text3",
                         "type": "Microsoft.Common.TextBlock",
                         "visible": true,
@@ -352,6 +364,26 @@
                         "label": "Deploy Azure Storage account for diagnostics for the Platform Landing Zone",
                         "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, an Azure Storage Account will be deployed",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "esRsv",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Recovery Services Vault for the Platform Landing Zone",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, a Recovery Services Vault will be deployed",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -860,6 +892,7 @@
             "udrPrefix": "[steps('esNaming').esUdrIdentifier]",
             "nsgPrefix": "[steps('esNaming').esNsgIdentifier]",
             "akvPrefix": "[steps('esNaming').esAkvIdentifier]",
+            "RsvPrefix": "[steps('esNaming').esRsvIdentifier]",
             "environmentTag": "[steps('esNaming').esEnvironmentTag]",
             "ownerTag": "[steps('esNaming').esOwnerTag]",
             "vpnGwType": "[steps('esPlatformLz').esVpnGwType]",
@@ -882,6 +915,7 @@
             "enableAsc": "[steps('esPlatformLz').esAsc]",
             "enableAkv": "[steps('esPlatformLz').esAkv]",
             "enableStorage": "[steps('esPlatformLz').esStorage]",
+            "enableRsv": "[steps('esPlatformLz').esRsv]",
             "enableStorageHttps": "[steps('esAppLZ').esHttpsStorage]",
             "enableKvSoftDelete": "[steps('esAppLZ').esKvSoftDelete]",
             "denyPublicendpoints": "[steps('esAppLZ').esPublicendpoints]",

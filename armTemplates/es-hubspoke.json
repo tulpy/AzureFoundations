@@ -100,6 +100,13 @@
                 "description": "Provide the Azure key Vault prefix"
             }
         },
+        "rsvPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the Recovery Services Vault prefix"
+            }
+        },
         "environmentTag": {
             "type": "string",
             "metadata": {
@@ -163,6 +170,17 @@
             ],
             "metadata": {
                 "description": "If 'Yes' is selected then an Azure Storage Account will be deployed."
+            }
+        },
+        "enableRsv": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "metadata": {
+                "description": "If 'Yes' is selected then a Recovery Services Vault will be deployed."
             }
         },
         "enableHub": {
@@ -331,6 +349,7 @@
         "policyAssignments": "[uri(deployment().properties.templateLink.uri, 'auxiliary/policyAssignments.json')]",
         "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
         "keyVault": "[uri(deployment().properties.templateLink.uri, 'auxiliary/keyVault.json')]",
+        "recoveryServicesVault": "[uri(deployment().properties.templateLink.uri, 'auxiliary/recoveryServicesVault.json')]",
         "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
         "networking": "[uri(deployment().properties.templateLink.uri, 'auxiliary/networking.json')]",
         "applicationLandingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/appLz.json')]",
@@ -340,6 +359,7 @@
         "policyAssDeploymentName": "[take(concat('policyAss', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
         "monitoringDeploymentName": "[take(concat('monitoring', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
         "keyVaultDeploymentName": "[take(concat('keyVault', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+        "recoveryServicesVaultDeploymentName": "[take(concat('rsv', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
         "diagSecurityDeploymentName": "[take(concat('diagSecurity', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
         "networkingDeploymentName": "[take(concat('networking', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
         "appLzDeploymentName": "[take(concat('appLz', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
@@ -611,6 +631,56 @@
                     },
                     "subnetMaskForIdentity": {
                         "value": "[parameters('subnetMaskForIdentity')]"
+                    }
+                }
+            }
+        },
+                {
+            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableRsv'), 'Yes'))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-05-01",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
+            "name": "[variables('recoveryServicesVaultDeploymentName')]",
+            "dependsOn": [
+                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('companyPrefix'), '-Platform'), parameters('platformLzSubscriptionId'))]"
+            ],
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('recoveryServicesVault')]"
+                },
+                "parameters": {
+                    "companyPrefix": {
+                        "value": "[parameters('companyPrefix')]"
+                    },
+                    "locationPrefix": {
+                        "value": "[parameters('locationPrefix')]"
+                    },
+                    "environmentPrefix": {
+                        "value": "[parameters('environmentPrefix')]"
+                    },
+                    "resourceGroupPrefix": {
+                        "value": "[parameters('resourceGroupPrefix')]"
+                    },
+                    "rsvPrefix": {
+                        "value": "[parameters('rsvPrefix')]"
+                    },
+                    "environmentTag": {
+                        "value": "[parameters('environmentTag')]"
+                    },
+                    "ownerTag": {
+                        "value": "[parameters('ownerTag')]"
+                    },
+                    "enableAkv": {
+                        "value": "[parameters('enableAkv')]"
+                    },
+                    "enableStorage": {
+                        "value": "[parameters('enableStorage')]"
+                    },
+                    "platformLzSubscriptionId": {
+                        "value": "[parameters('platformLzSubscriptionId')]"
                     }
                 }
             }
