@@ -214,7 +214,7 @@
                         "type": "Microsoft.Common.TextBox",
                         "label": "Recovery Services Vaults Identifier",
                         "toolTip": "Provide a naming prefix for the Recovery Services Vaults Identifier",
-                        "defaultValue": "akv",
+                        "defaultValue": "rsv",
                         "constraints": {
                             "required": true,
                             "regex": "^[a-z0-9A-Z-]{3}$",
