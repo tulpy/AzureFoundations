@@ -673,11 +673,8 @@
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
                     },
-                    "enableAkv": {
-                        "value": "[parameters('enableAkv')]"
-                    },
-                    "enableStorage": {
-                        "value": "[parameters('enableStorage')]"
+                    "enableRsv": {
+                        "value": "[parameters('enableRsv')]"
                     },
                     "platformLzSubscriptionId": {
                         "value": "[parameters('platformLzSubscriptionId')]"
