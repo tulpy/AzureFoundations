@@ -297,9 +297,9 @@
                     {
                         "name": "esLogAnalytics",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Log Analytics workspace and enable monitoring for your platform and resources",
+                        "label": "Deploy the Platform Landing Zone Log Analytics workspace.",
                         "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected, ARM will deploy resources and enable them for continious compliance.",
+                        "toolTip": "If 'Yes' is selected, the Platform Landing Zone Log Analytics workspace will be deployed.",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -317,9 +317,9 @@
                     {
                         "name": "esAsc",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Azure Security Center and enable security monitoring for your platform and resources",
+                        "label": "Deploy Azure Security Center.",
                         "defaultValue": "Standard",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription, Azure Security Center will be enabled.",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -341,7 +341,7 @@
                     {
                         "name": "esAkv",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Azure Key Vault for the Platform Landing Zone",
+                        "label": "Deploy the Platform Landing Zone Azure Key Vault.",
                         "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, an Azure Key Vault will be deployed",
                         "constraints": {
@@ -361,7 +361,7 @@
                     {
                         "name": "esStorage",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Azure Storage account for diagnostics for the Platform Landing Zone",
+                        "label": "Deploy the Platform Landing Zone Azure Storage account for diagnostics.",
                         "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, an Azure Storage Account will be deployed",
                         "constraints": {
@@ -381,7 +381,7 @@
                     {
                         "name": "esRsv",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Recovery Services Vault for the Platform Landing Zone",
+                        "label": "Deploy the Platform Landing Zone Recovery Services Vault.",
                         "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, a Recovery Services Vault will be deployed",
                         "constraints": {
@@ -401,9 +401,9 @@
                     {
                         "name": "esHub",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Platform Landing Zone Virtual Network",
+                        "label": "Deploy the Platform Landing Zone Virtual Network",
                         "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when adding the Platform Landing Zone Subscription, ARM will deploy the Virtual Network",
+                        "toolTip": "If 'Yes' is selected when adding the Platform Landing Zone Subscription, a Virtual Network will be deployed.",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -441,7 +441,7 @@
                     {
                         "name": "esNwLocation",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Region for the first virtual network hub",
+                        "label": "Azure Region for the Virtual Netowrk Hub.",
                         "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
                         "toolTip": "Select the target Azure region for the deployment.",
                         "constraints": {
@@ -527,7 +527,7 @@
                         "label": "Deploy Azure Firewall",
                         "defaultValue": "No",
                         "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
-                        "toolTip": "If 'Yes' is selected, ARM will deploy Azure Firewall",
+                        "toolTip": "If 'Yes' is selected, an Azure Firewall will be deployed.",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -559,7 +559,7 @@
                         "label": "Deploy Azure App Gateway Subnet",
                         "defaultValue": "No",
                         "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
-                        "toolTip": "If 'Yes' is selected, ARM will deploy a subnet for App Gateway",
+                        "toolTip": "If 'Yes' is selected, a subnet for App Gateways will be deployed.",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -591,7 +591,7 @@
                         "label": "Deploy Azure Management Subnet",
                         "defaultValue": "No",
                         "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
-                        "toolTip": "If 'Yes' is selected, ARM will deploy a subnet for Management Services",
+                        "toolTip": "If 'Yes' is selected, a subnet for Management Services will be deployed.",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -623,7 +623,7 @@
                         "label": "Deploy Azure Identity Subnet",
                         "defaultValue": "No",
                         "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
-                        "toolTip": "If 'Yes' is selected, ARM will deploy a subnet for Active Directory Domain Services",
+                        "toolTip": "If 'Yes' is selected, a subnet for Active Directory Domain Services will be deployed.",
                         "constraints": {
                             "allowedValues": [
                                 {
