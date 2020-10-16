@@ -283,8 +283,8 @@
                                             "dependsOn": [
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]",
                                                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsgName002'))]",
-                                                "[resourceId('Microsoft.Network/virtualNetworks/subnets', '/', 'ManagementSubnet')]",
-                                                "[resourceId('Microsoft.Network/virtualNetworks/subnets', '/', 'IdentitySubnet')]"
+                                                "[resourceId('Microsoft.Network/virtualNetworks/subnets',variables('azVnetName'),'ManagementSubnet')]",
+                                                "[resourceId('Microsoft.Network/virtualNetworks/subnets',variables('azVnetName'),'IdentitySubnet')]"
                                             ],
                                             "properties": {
                                                 "addressPrefix": "[parameters('subnetMaskForAppGw')]",
@@ -385,7 +385,7 @@
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]",
                                                 "[concat('Microsoft.Network/routeTables/', variables('azUdrName003'))]",
                                                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsgName003'))]",
-                                                "[resourceId('Microsoft.Network/virtualNetworks/subnets', '/', 'ManagementSubnet')]"
+                                                "[resourceId('Microsoft.Network/virtualNetworks/subnets',variables('azVnetName'),'ManagementSubnet')]"
                                             ],
                                             "properties": {
                                                 "addressPrefix": "[parameters('subnetMaskForIdentity')]",
