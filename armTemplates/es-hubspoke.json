@@ -23,14 +23,14 @@
                 "description": "Provide the environment identifier prefix (3 characters)"
             }
         },
-        "resourceGroupPrefix": {
+        "argPrefix": {
             "type": "string",
             "maxLength": 3,
             "metadata": {
                 "description": "Provide the resource group identifier"
             }
         },
-        "logAnalyticsPrefix": {
+        "omsPrefix": {
             "type": "string",
             "maxLength": 3,
             "metadata": {
@@ -44,14 +44,14 @@
                 "description": "Provide the virtual network gateway identifier prefix"
             }
         },
-        "vnetPrefix": {
+        "vntPrefix": {
             "type": "string",
             "maxLength": 3,
             "metadata": {
                 "description": "Provide the virtual network identifier prefix"
             }
         },
-        "publicIpPrefix": {
+        "pipPrefix": {
             "type": "string",
             "maxLength": 3,
             "metadata": {
@@ -65,14 +65,14 @@
                 "description": "Provide the Azure Firewall identifier prefix"
             }
         },
-        "automationPrefix": {
+        "aaaPrefix": {
             "type": "string",
             "maxLength": 3,
             "metadata": {
                 "description": "Provide the Azure Automation identifier prefix"
             }
         },
-        "storagePrefix": {
+        "staPrefix": {
             "type": "string",
             "maxLength": 3,
             "metadata": {
@@ -557,17 +557,17 @@
                     "environmentPrefix": {
                         "value": "[parameters('environmentPrefix')]"
                     },
-                    "resourceGroupPrefix": {
-                        "value": "[parameters('resourceGroupPrefix')]"
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
                     },
                     "vngPrefix": {
                         "value": "[parameters('vngPrefix')]"
                     },
-                    "vnetPrefix": {
-                        "value": "[parameters('vnetPrefix')]"
+                    "vntPrefix": {
+                        "value": "[parameters('vntPrefix')]"
                     },
-                    "publicIpPrefix": {
-                        "value": "[parameters('publicIpPrefix')]"
+                    "pipPrefix": {
+                        "value": "[parameters('pipPrefix')]"
                     },
                     "azFwPrefix": {
                         "value": "[parameters('azFwPrefix')]"
@@ -661,8 +661,8 @@
                     "environmentPrefix": {
                         "value": "[parameters('environmentPrefix')]"
                     },
-                    "resourceGroupPrefix": {
-                        "value": "[parameters('resourceGroupPrefix')]"
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
                     },
                     "rsvPrefix": {
                         "value": "[parameters('rsvPrefix')]"
@@ -708,11 +708,11 @@
                     "environmentPrefix": {
                         "value": "[parameters('environmentPrefix')]"
                     },
-                    "resourceGroupPrefix": {
-                        "value": "[parameters('resourceGroupPrefix')]"
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
                     },
-                    "storagePrefix": {
-                        "value": "[parameters('storagePrefix')]"
+                    "staPrefix": {
+                        "value": "[parameters('staPrefix')]"
                     },
                     "akvPrefix": {
                         "value": "[parameters('akvPrefix')]"
@@ -762,14 +762,14 @@
                     "environmentPrefix": {
                         "value": "[parameters('environmentPrefix')]"
                     },
-                    "resourceGroupPrefix": {
-                        "value": "[parameters('resourceGroupPrefix')]"
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
                     },
-                    "logAnalyticsPrefix": {
-                        "value": "[parameters('logAnalyticsPrefix')]"
+                    "omsPrefix": {
+                        "value": "[parameters('omsPrefix')]"
                     },
-                    "automationPrefix": {
-                        "value": "[parameters('automationPrefix')]"
+                    "aaaPrefix": {
+                        "value": "[parameters('aaaPrefix')]"
                     },
                     "enableLogAnalytics": {
                         "value": "[parameters('enableLogAnalytics')]"
@@ -853,11 +853,11 @@
                     "environmentPrefix": {
                         "value": "[parameters('environmentPrefix')]"
                     },
-                    "resourceGroupPrefix": {
-                        "value": "[parameters('resourceGroupPrefix')]"
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
                     },
-                    "logAnalyticsPrefix": {
-                        "value": "[parameters('logAnalyticsPrefix')]"
+                    "omsPrefix": {
+                        "value": "[parameters('omsPrefix')]"
                     },
                     "enableLogAnalytics": {
                         "value": "[parameters('enableLogAnalytics')]"

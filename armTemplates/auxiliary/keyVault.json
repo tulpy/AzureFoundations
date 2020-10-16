@@ -14,11 +14,11 @@
             "type": "string",
             "maxLength": 3
         },
-        "resourceGroupPrefix": {
+        "argPrefix": {
             "type": "string",
             "maxLength": 3
         },
-        "storagePrefix": {
+        "staPrefix": {
             "type": "string",
             "maxLength": 3
         },
@@ -58,7 +58,7 @@
         "deploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
         "storageNamingPrefix": "[concat(parameters('companyPrefix'), parameters('locationPrefix'), parameters('environmentPrefix'))]",
-        "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('resourceGroupPrefix'), '-security'))]",
+        "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-security'))]",
         "tags": {
             "environment": "[parameters('environmentTag')]",
             "owner": "[parameters('ownerTag')]"
@@ -73,7 +73,7 @@
             "objectId": "67a1d7fa-f0fd-4ade-8c65-07b124e22efd"
         },
         "storage": {
-            "name": "[take(toLower(concat(variables('storageNamingPrefix'), parameters('storagePrefix'), guid(parameters('companyPrefix')))), 20)]",
+            "name": "[take(toLower(concat(variables('storageNamingPrefix'), parameters('staPrefix'), guid(parameters('companyPrefix')))), 20)]",
             "sku": "Standard_LRS",
             "kind": "StorageV2",
             "use": "Diagnostics",

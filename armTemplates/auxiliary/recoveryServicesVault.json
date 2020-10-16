@@ -14,7 +14,7 @@
             "type": "string",
             "maxLength": 3
         },
-        "resourceGroupPrefix": {
+        "argPrefix": {
             "type": "string",
             "maxLength": 3
         },
@@ -45,7 +45,7 @@
     "variables": {
         "deploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
-        "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('resourceGroupPrefix'), '-backup'))]",
+        "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-backup'))]",
         "tags": {
             "environment": "[parameters('environmentTag')]",
             "owner": "[parameters('ownerTag')]"

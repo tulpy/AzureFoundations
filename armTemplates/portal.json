@@ -34,7 +34,7 @@
                         }
                     },
                     {
-                        "name": "esCompIdentifier",
+                        "name": "esComIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Company Identifier Prefix",
                         "toolTip": "Provide a naming prefix for the company identifier, 1-5 characters.",
@@ -878,17 +878,17 @@
             }
         ],
         "outputs": {
-            "companyPrefix": "[steps('esNaming').esCompIdentifier]",
+            "companyPrefix": "[steps('esNaming').esComIdentifier]",
             "environmentPrefix": "[steps('esNaming').esEnvIdentifier]",
             "locationPrefix": "[steps('esNaming').esLocIdentifier]",
-            "resourceGroupPrefix": "[steps('esNaming').esArgIdentifier]",
-            "logAnalyticsPrefix": "[steps('esNaming').esOmsIdentifier]",
+            "argPrefix": "[steps('esNaming').esArgIdentifier]",
+            "omsPrefix": "[steps('esNaming').esOmsIdentifier]",
             "vngPrefix": "[steps('esNaming').esVngIdentifier]",
-            "vnetPrefix": "[steps('esNaming').esVntIdentifier]",
-            "publicIpPrefix": "[steps('esNaming').esPipIdentifier]",
+            "vntPrefix": "[steps('esNaming').esVntIdentifier]",
+            "pipPrefix": "[steps('esNaming').esPipIdentifier]",
             "azFwPrefix": "[steps('esNaming').esAfwIdentifier]",
-            "automationPrefix": "[steps('esNaming').esAaaIdentifier]",
-            "storagePrefix": "[steps('esNaming').esStaIdentifier]",
+            "aaaPrefix": "[steps('esNaming').esAaaIdentifier]",
+            "staPrefix": "[steps('esNaming').esStaIdentifier]",
             "udrPrefix": "[steps('esNaming').esUdrIdentifier]",
             "nsgPrefix": "[steps('esNaming').esNsgIdentifier]",
             "akvPrefix": "[steps('esNaming').esAkvIdentifier]",
