@@ -446,28 +446,6 @@
                                             }
                                         },
                                         {
-                                            "condition": "[and(or(equals(parameters('enableVpnGw'), 'Yes'), equals(parameters('enableErGw'), 'Yes')), not(empty(parameters('subnetMaskForGw'))))]",
-                                            "type": "Microsoft.Network/routeTables",
-                                            "apiVersion": "2020-05-01",
-                                            "name": "[variables('azUdrName002')]",
-                                            "location": "[parameters('location')]",
-                                            "tags": {
-                                                "appliedSubnet": "[concat(variables('azVnetName'), '/', 'GatewaySubnet')]"
-                                            },
-                                            "properties": {
-                                                "routes": [
-                                                    {
-                                                        "name": "[variables('azRouteName')]",
-                                                        "properties": {
-                                                            "addressPrefix": "0.0.0.0/0",
-                                                            "nextHopType": "VirtualAppliance",
-                                                            "nextHopIpAddress": "[variables('azFwIp')]"
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
                                             "condition": "[and(equals(parameters('enableVpnGw'), 'Yes'), not(empty(parameters('subnetMaskForGw'))))]",
                                             "apiVersion": "2020-05-01",
                                             "type": "Microsoft.Network/publicIpAddresses",
