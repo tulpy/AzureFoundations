@@ -282,7 +282,9 @@
                                             "name": "[concat(variables('azVnetName'), '/', 'AppGatewaySubnet')]",
                                             "dependsOn": [
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]",
-                                                "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsgName002'))]"
+                                                "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsgName002'))]",
+                                                "[resourceId('Microsoft.Network/virtualNetworks/subnets', '/', 'ManagementSubnet')]",
+                                                "[resourceId('Microsoft.Network/virtualNetworks/subnets', '/', 'IdentitySubnet')]"
                                             ],
                                             "properties": {
                                                 "addressPrefix": "[parameters('subnetMaskForAppGw')]",
@@ -382,7 +384,8 @@
                                             "dependsOn": [
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]",
                                                 "[concat('Microsoft.Network/routeTables/', variables('azUdrName003'))]",
-                                                "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsgName003'))]"
+                                                "[concat('Microsoft.Network/networkSecurityGroups/', variables('azNsgName003'))]",
+                                                "[resourceId('Microsoft.Network/virtualNetworks/subnets', '/', 'ManagementSubnet')]"
                                             ],
                                             "properties": {
                                                 "addressPrefix": "[parameters('subnetMaskForIdentity')]",
@@ -442,7 +445,7 @@
                                                 "addressPrefix": "[parameters('subnetMaskForGw')]"
                                             }
                                         },
-                                                                                {
+                                        {
                                             "condition": "[and(or(equals(parameters('enableVpnGw'), 'Yes'), equals(parameters('enableErGw'), 'Yes')), not(empty(parameters('subnetMaskForGw'))))]",
                                             "type": "Microsoft.Network/routeTables",
                                             "apiVersion": "2020-05-01",
