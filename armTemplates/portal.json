@@ -502,7 +502,7 @@
 						"visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
                     },
                     {
-                        "name": "textBlock0",
+                        "name": "textBlockSecurity",
                         "type": "Microsoft.Common.TextBlock",
                         "visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]",
                         "options": {
