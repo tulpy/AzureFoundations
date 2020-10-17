@@ -342,7 +342,7 @@
                         "name": "esAzSentinel",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure Sentinel",
-                        "defaultValue": "Yes",
+                        "defaultValue": "Yes (recommended)",
                         "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
                         "constraints": {
                             "allowedValues": [
@@ -356,10 +356,8 @@
                                 }
                             ]
                         },
-						"visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
-                    }					
-                ]
-            },
+                        "visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
+                    },
                     {
                         "name": "esAkv",
                         "type": "Microsoft.Common.OptionsGroup",
