@@ -317,17 +317,17 @@
                     {
                         "name": "esAsc",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Azure Security Center.",
-                        "defaultValue": "Standard",
+                        "label": "Deploy Azure Security Center and enable security monitoring for your platform and resources.",
+                        "defaultValue": "Yes, Azure Defender On",
                         "toolTip": "If 'Yes' is selected when also adding a subscription, Azure Security Center will be enabled.",
                         "constraints": {
                             "allowedValues": [
                                 {
-                                    "label": "Yes, Standard Tier",
+                                    "label": "Yes, Azure Defender On",
                                     "value": "Standard"
                                 },
                                 {
-                                    "label": "Yes, Free Tier",
+                                    "label": "Yes, Azure Defender Off",
                                     "value": "Free"
                                 },
                                 {
@@ -338,6 +338,28 @@
                         },
                         "visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
                     },
+                    {
+                        "name": "esAzSentinel",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure Sentinel",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+						"visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
+                    }					
+                ]
+            },
                     {
                         "name": "esAkv",
                         "type": "Microsoft.Common.OptionsGroup",
@@ -357,6 +379,17 @@
                             ]
                         },
                         "visible": true
+                    },
+                    {
+                        "name": "esObjectId",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "ObjectID ",
+                        "toolTip": "Provide the ObjectID for the Azure Key Vault acceess policy.",
+                        "defaultValue": "67a1d7fa-f0fd-4ade-8c65-07b124e22efd",
+                        "visible": "[equals(steps('esPlatformLz').esAkv, 'Yes')]",
+                        "constraints": {
+                            "required": true
+                        }
                     },
                     {
                         "name": "esStorage",
