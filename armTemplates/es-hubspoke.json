@@ -826,6 +826,12 @@
                     "environmentPrefix": {
                         "value": "[parameters('environmentPrefix')]"
                     },
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
+                    },
+                    "omsPrefix": {
+                        "value": "[parameters('omsPrefix')]"
+                    },
                     "platformLzSubscriptionId": {
                         "value": "[parameters('platformLzSubscriptionId')]"
                     },
