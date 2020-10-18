@@ -461,7 +461,7 @@
                     "uri": "[variables('deploymentUris').managementGroups]"
                 },
                 "parameters": {
-                    "topLevelManagementGroupPrefix": {
+                    "companyPrefix": {
                         "value": "[parameters('companyPrefix')]"
                     }
                 }
