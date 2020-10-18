@@ -8674,7 +8674,7 @@
                           "value": "[[parameters('rgName')]"
                         },
                         "retentionInDays": {
-                              "value": "[[parameters('retentionInDays')]"
+                          "value": "[[parameters('retentionInDays')]"
                         },
                         "workspaceName": {
                           "value": "[[parameters('workspaceName')]"
@@ -8742,7 +8742,7 @@
                                     "location": "[[parameters('AutomationRegion')]",
                                     "name": "[[parameters('AutomationAccountName')]",
                                     "type": "Microsoft.Automation/automationAccounts",
-                                    "comments": "Automation account for ",
+                                    "comments": "Automation account",
                                     "properties": {
                                       "sku": {
                                         "name": "OMS"
@@ -8758,7 +8758,7 @@
                                       "sku": {
                                         "name": "pernode"
                                       },
-                                      "retentionInDays": "[[int(parameters('retentionInDays'))]",
+                                      "retentionInDays": "[[parameters('retentionInDays'))]",
                                       "enableLogAccessUsingOnlyResourcePermissions": true
                                     },
                                     "resources": [
