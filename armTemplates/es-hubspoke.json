@@ -820,6 +820,12 @@
                     "companyPrefix": {
                         "value": "[parameters('companyPrefix')]"
                     },
+                    "locationPrefix": {
+                        "value": "[parameters('locationPrefix')]"
+                    },
+                    "environmentPrefix": {
+                        "value": "[parameters('environmentPrefix')]"
+                    },
                     "platformLzSubscriptionId": {
                         "value": "[parameters('platformLzSubscriptionId')]"
                     },
