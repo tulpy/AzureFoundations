@@ -684,14 +684,14 @@
                     "rsvPrefix": {
                         "value": "[parameters('rsvPrefix')]"
                     },
+                    "enableRsv": {
+                        "value": "[parameters('enableRsv')]"
+                    },
                     "environmentTag": {
                         "value": "[parameters('environmentTag')]"
                     },
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
-                    },
-                    "enableRsv": {
-                        "value": "[parameters('enableRsv')]"
                     },
                     "platformLzSubscriptionId": {
                         "value": "[parameters('platformLzSubscriptionId')]"
@@ -734,17 +734,17 @@
                     "akvPrefix": {
                         "value": "[parameters('akvPrefix')]"
                     },
-                    "environmentTag": {
-                        "value": "[parameters('environmentTag')]"
-                    },
-                    "ownerTag": {
-                        "value": "[parameters('ownerTag')]"
-                    },
                     "enableAkv": {
                         "value": "[parameters('enableAkv')]"
                     },
                     "enableStorage": {
                         "value": "[parameters('enableStorage')]"
+                    },
+                    "environmentTag": {
+                        "value": "[parameters('environmentTag')]"
+                    },
+                    "ownerTag": {
+                        "value": "[parameters('ownerTag')]"
                     },
                     "platformLzSubscriptionId": {
                         "value": "[parameters('platformLzSubscriptionId')]"
@@ -788,14 +788,14 @@
                     "aaaPrefix": {
                         "value": "[parameters('aaaPrefix')]"
                     },
+                    "platformLzSubscriptionId": {
+                        "value": "[parameters('platformLzSubscriptionId')]"
+                    },
                     "enableLogAnalytics": {
                         "value": "[parameters('enableLogAnalytics')]"
                     },
                     "retentionInDays": {
                         "value": "[parameters('retentionInDays')]"
-                    },
-                    "platformLzSubscriptionId": {
-                        "value": "[parameters('platformLzSubscriptionId')]"
                     }
                 }
             }
