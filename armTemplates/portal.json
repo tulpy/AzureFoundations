@@ -502,7 +502,7 @@
 						"visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
                     },
                     {
-                        "name": "textBlockSecurity",
+                        "name": "textBlock2",
                         "type": "Microsoft.Common.TextBlock",
                         "options": {
                             "text": "Select which Azure Security solutions to enable.",
