@@ -504,7 +504,6 @@
                     {
                         "name": "textBlockSecurity",
                         "type": "Microsoft.Common.TextBlock",
-                        "visible": "[equals(steps('esGoalState').esLogAnalytics, 'Yes')]",
                         "options": {
                             "text": "Select which Azure Security solutions to enable.",
                             "link": {
@@ -1144,6 +1143,15 @@
             "enableLogAnalytics": "[steps('esPlatformLz').esLogAnalytics]",
             "enableAsc": "[steps('esPlatformLz').esAsc]",
             "enableAzSentinel": "[steps('esPlatformLz').esAzSentinel]",
+            "enableSecuritySolution": "[steps('esPlatformLz').esSecuritySolution]",
+            "enableAgentHealth": "[steps('esPlatformLz').esAgentSolution]",
+            "enableChangeTracking": "[steps('esPlatformLz').esChangeTracking]",
+            "enableUpdateMgmt": "[steps('esPlatformLz').esUpdateMgmt]",
+            "enableActivityLog": "[steps('esPlatformLz').esActivityLog]",
+            "enableVmInsights": "[steps('esPlatformLz').esVmInsights]",
+            "enableAntiMalware": "[steps('esPlatformLz').esAntiMalware]",
+            "enableServiceMap": "[steps('esPlatformLz').esServiceMap]",
+            "enableSqlAssessment": "[steps('esPlatformLz').esSqlAssessment]",
             "enableAkv": "[steps('esPlatformLz').esAkv]",
             "enableStorage": "[steps('esPlatformLz').esStorage]",
             "enableRsv": "[steps('esPlatformLz').esRsv]",
