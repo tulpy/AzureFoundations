@@ -807,7 +807,7 @@
             "subscriptionId": "[parameters('platformLzSubscriptionId')]",
             "name": "[variables('deploymentNames').monitoringSolutions]",
             "dependsOn": [
-                "[variables('deploymentNames').monitoringSolutions]"
+                "[variables('deploymentNames').monitoring]"
             ],
             "location": "[deployment().location]",
             "properties": {
