@@ -141,7 +141,7 @@
         "retentionInDays": {
             "type": "string",
             "defaultValue": ""
-        },   
+        },
         "enableAsc": {
             "type": "string",
             "defaultValue": "Free",
@@ -225,7 +225,7 @@
                 "No"
             ],
             "defaultValue": "Yes"
-        }, 
+        },
         "enableAkv": {
             "type": "string",
             "defaultValue": "Yes",
@@ -474,7 +474,7 @@
             "location": "[deployment().location]",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
             "dependsOn": [
-                "[tenantResourceId('Microsoft.Management/managementGroups', parameters('companyPrefix'))]"
+                "[variables('deploymentNames').managementGroups]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -522,8 +522,7 @@
             "location": "[deployment().location]",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
             "dependsOn": [
-                "[variables('deploymentNames').policyDefinitions]",
-                "[tenantResourceId('Microsoft.Management/managementGroups', parameters('companyPrefix'))]"
+                "[variables('deploymentNames').policyDefinitions]"
             ],
             "properties": {
                 "mode": "Incremental",
