@@ -8624,6 +8624,13 @@
                   "description": "Select Azure region for Automation account"
                 }
               },
+              "retentionInDays": {
+                    "type": "string",
+                    "metadata": {
+                      "displayName": "Data retention",
+                      "description": "Select data retention (days) for Log Analytics."
+                    }
+                  },
               "rgName": {
                 "type": "String",
                 "metadata": {
@@ -8666,6 +8673,9 @@
                         "rgName": {
                           "value": "[[parameters('rgName')]"
                         },
+                        "retentionInDays": {
+                              "value": "[[parameters('retentionInDays')]"
+                        },
                         "workspaceName": {
                           "value": "[[parameters('workspaceName')]"
                         },
@@ -8684,6 +8694,9 @@
                         "contentVersion": "1.0.0.0",
                         "parameters": {
                           "rgName": {
+                            "type": "string"
+                          },
+                          "retentionInDays": {
                             "type": "string"
                           },
                           "workspaceName": {
@@ -8745,7 +8758,7 @@
                                       "sku": {
                                         "name": "pernode"
                                       },
-                                      "retentionInDays": 180,
+                                      "retentionInDays": "[[int(parameters('retentionInDays'))]",
                                       "enableLogAccessUsingOnlyResourcePermissions": true
                                     },
                                     "resources": [

@@ -14,7 +14,7 @@
             "type": "string",
             "maxLength": 3
         },
-        "argPrefix": {
+        "resourceGroupPrefix": {
             "type": "string",
             "maxLength": 3
         },
@@ -76,12 +76,14 @@
         },
         "blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}",
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
-        "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-monitoring'))]",
+        "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('resourceGroupPrefix'), '-monitoring'))]",
         "logAnalyticsName": "[toLower(take(concat(variables('namingPrefix'), '-', parameters('omsPrefix'), '-', guid(parameters('companyPrefix'))), 24))]",
-        "platfromLzAscResourceDeploymentName": "[take(concat('PlatformLZ-ASC', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "platformLzActivityResourceDeploymentName": "[take(concat('PlatformLZ-AzActivityLogs', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "mgmtGrpAscResourceDeploymentName": "[take(concat('MgmtGroup-ASC', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "mgmtGrpActivityResourceDeploymentName": "[take(concat('MgmtGroup-AzActivityLogs', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
+        "deploymentNames": {
+            "platformLzAscResource": "[take(concat('PlatformLZ-ASC', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "platformLzActivityResource": "[take(concat('PlatformLZ-AzActivityLogs', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "mgmtGrpAscResource": "[take(concat('MgmtGroup-ASC', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "mgmtGrpActivityResource": "[take(concat('MgmtGroup-AzActivityLogs', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
+        }
     },
     "resources": [
         {
@@ -262,7 +264,7 @@
             "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "[variables('mgmtGrpAscResourceDeploymentName')]",
+            "name": "[variables('deploymentNames').mgmtGrpAscResource]",
             "location": "[deployment().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureActivityLog)]"
@@ -278,7 +280,7 @@
             "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free')))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "[variables('mgmtGrpActivityResourceDeploymentName')]",
+            "name": "[variables('deploymentNames').mgmtGrpActivityResource]",
             "location": "[deployment().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureSecurity)]"
@@ -294,7 +296,7 @@
             "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "[variables('platformLzActivityResourceDeploymentName')]",
+            "name": "[variables('deploymentNames').platformLzActivityResource]",
             "location": "[deployment().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureActivityLog)]"
@@ -310,7 +312,7 @@
             "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),or(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free')))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "[variables('platfromLzAscResourceDeploymentName')]",
+            "name": "[variables('deploymentNames').platformLzAscResource]",
             "location": "[deployment().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzureSecurity)]"

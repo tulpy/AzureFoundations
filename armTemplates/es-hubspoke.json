@@ -138,6 +138,10 @@
                 "description": "If 'Yes' is selected when also adding a subscription for management, ARM will assign two policies to enable auditing in your environment, into the Log Analytics workspace for platform monitoring. If 'No', it will be ignored."
             }
         },
+        "retentionInDays": {
+            "type": "string",
+            "defaultValue": ""
+        },   
         "enableAsc": {
             "type": "string",
             "defaultValue": "Free",
@@ -150,6 +154,78 @@
                 "description": "If 'Yes' is selected when also adding a subscription for management, ARM will assign two policies to enable auditing in your environment, into the Log Analytics workspace for platform monitoring. If 'No', it will be ignored."
             }
         },
+        "enableSecuritySolution": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
+        "enableAgentHealth": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
+        "enableChangeTracking": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
+        },
+        "enableUpdateMgmt": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "enableActivityLog": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "enableAntiMalware": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "enableVmInsights": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "enableServiceMap": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "enableSqlAssessment": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        }, 
         "enableAkv": {
             "type": "string",
             "defaultValue": "Yes",
@@ -345,36 +421,56 @@
         }
     },
     "variables": {
-        "policyDefinitions": "[uri(deployment().properties.templateLink.uri, 'auxiliary/policyDefinitions.json')]",
-        "policyAssignments": "[uri(deployment().properties.templateLink.uri, 'auxiliary/policyAssignments.json')]",
-        "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
-        "keyVault": "[uri(deployment().properties.templateLink.uri, 'auxiliary/keyVault.json')]",
-        "recoveryServicesVault": "[uri(deployment().properties.templateLink.uri, 'auxiliary/recoveryServicesVault.json')]",
-        "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
-        "networking": "[uri(deployment().properties.templateLink.uri, 'auxiliary/networking.json')]",
-        "applicationLandingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/appLz.json')]",
+        "deploymentUris": {
+            "managementGroups": "[uri(deployment().properties.templateLink.uri, 'auxiliary/mgmtGroups.json')]",
+            "policyDefinitions": "[uri(deployment().properties.templateLink.uri, 'auxiliary/policyDefinitions.json')]",
+            "policyAssignments": "[uri(deployment().properties.templateLink.uri, 'auxiliary/policyAssignments.json')]",
+            "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
+            "monitoringSolutions": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalyticsSolutions.json')]",
+            "keyVault": "[uri(deployment().properties.templateLink.uri, 'auxiliary/keyVault.json')]",
+            "recoveryServicesVault": "[uri(deployment().properties.templateLink.uri, 'auxiliary/recoveryServicesVault.json')]",
+            "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
+            "networking": "[uri(deployment().properties.templateLink.uri, 'auxiliary/networking.json')]",
+            "applicationLandingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/appLz.json')]"
+        },
         "moveSubscription": "[concat(parameters('companyPrefix'), '-Platform', '/', parameters('platformLzSubscriptionId'))]",
         "noSubscription": "[concat(parameters('companyPrefix'), '-Platform', '/', 'na')]",
-        "policyDefDeploymentName": "[take(concat('policyDef', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "policyAssDeploymentName": "[take(concat('policyAss', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "monitoringDeploymentName": "[take(concat('monitoring', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "keyVaultDeploymentName": "[take(concat('keyVault', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "recoveryServicesVaultDeploymentName": "[take(concat('rsv', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "diagSecurityDeploymentName": "[take(concat('diagSecurity', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "networkingDeploymentName": "[take(concat('networking', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-        "appLzDeploymentName": "[take(concat('appLz', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
+        "deploymentNames": {
+            "managementGroups": "[take(concat('mgmtGroups', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "policyDefinitions": "[take(concat('policyDef', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "policyAssignments": "[take(concat('policyAss', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "monitoring": "[take(concat('monitoring', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "monitoringSolutions": "[take(concat('monSolutions', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "keyVault": "[take(concat('keyVault', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "recoveryServicesVault": "[take(concat('rsv', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "diagnosticsAndSecurity": "[take(concat('diagSecurity', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "networking": "[take(concat('networking', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "applicationLandingZone": "[take(concat('appLz', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
+        }
     },
     "resources": [
         {
-            "type": "Microsoft.Management/managementGroups",
-            "apiVersion": "2020-05-01",
-            "name": "[parameters('companyPrefix')]",
-            "properties": {}
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "[variables('deploymentNames').managementGroups]",
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('deploymentUris').managementGroups]"
+                },
+                "parameters": {
+                    "topLevelManagementGroupPrefix": {
+                        "value": "[parameters('companyPrefix')]"
+                    }
+                }
+            }
         },
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "[variables('policyDefDeploymentName')]",
+            "name": "[variables('deploymentNames').policyDefinitions]",
             "location": "[deployment().location]",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
             "dependsOn": [
@@ -384,7 +480,7 @@
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('policyDefinitions')]"
+                    "uri": "[variables('deploymentUris').policyDefinitions]"
                 },
                 "parameters": {
                     "companyPrefix": {
@@ -396,127 +492,48 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "[variables('policyAssDeploymentName')]",
+            "name": "[concat('delayFor', copyIndex())]",
             "location": "[deployment().location]",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
             "dependsOn": [
-                "[variables('policyDefDeploymentName')]",
+                "[variables('deploymentNames').policyDefinitions]"
+            ],
+            "copy": {
+                "batchSize": 1,
+                "count": 20,
+                "mode": "Serial",
+                "name": "DeploymentDelay"
+            },
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "resources": [],
+                    "outputs": {}
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "[variables('deploymentNames').policyAssignments]",
+            "location": "[deployment().location]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
+            "dependsOn": [
+                "[variables('deploymentNames').policyDefinitions]",
                 "[tenantResourceId('Microsoft.Management/managementGroups', parameters('companyPrefix'))]"
             ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('policyAssignments')]"
+                    "uri": "[variables('deploymentUris').policyAssignments]"
                 },
                 "parameters": {
                     "companyPrefix": {
                         "value": "[parameters('companyPrefix')]"
-                    }
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Management/managementGroups",
-            "apiVersion": "2020-05-01",
-            "name": "[concat(parameters('companyPrefix'), '-Platform')]",
-            "dependsOn": [
-                "[tenantResourceId('Microsoft.Management/managementGroups', parameters('companyPrefix'))]"
-            ],
-            "properties": {
-                "details": {
-                    "parent": {
-                        "id": "[tenantResourceId('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]"
-                    }
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Management/managementGroups",
-            "apiVersion": "2020-05-01",
-            "name": "[concat(parameters('companyPrefix'), '-Decommissioned')]",
-            "dependsOn": [
-                "[tenantResourceId('Microsoft.Management/managementGroups', parameters('companyPrefix'))]"
-            ],
-            "properties": {
-                "details": {
-                    "parent": {
-                        "id": "[tenantResourceId('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]"
-                    }
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Management/managementGroups",
-            "apiVersion": "2020-05-01",
-            "name": "[concat(parameters('companyPrefix'), '-Sandbox')]",
-            "dependsOn": [
-                "[tenantResourceId('Microsoft.Management/managementGroups', parameters('companyPrefix'))]"
-            ],
-            "properties": {
-                "details": {
-                    "parent": {
-                        "id": "[tenantResourceId('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]"
-                    }
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Management/managementGroups",
-            "apiVersion": "2020-05-01",
-            "name": "[concat(parameters('companyPrefix'), '-AppLandingZones')]",
-            "dependsOn": [
-                "[tenantResourceId('Microsoft.Management/managementGroups', parameters('companyPrefix'))]"
-            ],
-            "properties": {
-                "details": {
-                    "parent": {
-                        "id": "[tenantResourceId('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]"
-                    }
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Management/managementGroups",
-            "apiVersion": "2020-05-01",
-            "name": "[concat(parameters('companyPrefix'), '-Production')]",
-            "dependsOn": [
-                "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('companyPrefix'), '-AppLandingZones'))]"
-            ],
-            "properties": {
-                "details": {
-                    "parent": {
-                        "id": "[tenantResourceId('Microsoft.Management/managementGroups/', concat(parameters('companyPrefix'), '-AppLandingZones'))]"
-                    }
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Management/managementGroups",
-            "apiVersion": "2020-05-01",
-            "name": "[concat(parameters('companyPrefix'), '-Development')]",
-            "dependsOn": [
-                "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('companyPrefix'), '-AppLandingZones'))]"
-            ],
-            "properties": {
-                "details": {
-                    "parent": {
-                        "id": "[tenantResourceId('Microsoft.Management/managementGroups/', concat(parameters('companyPrefix'), '-AppLandingZones'))]"
-                    }
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Management/managementGroups",
-            "apiVersion": "2020-05-01",
-            "name": "[concat(parameters('companyPrefix'), '-Test')]",
-            "dependsOn": [
-                "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('companyPrefix'), '-AppLandingZones'))]"
-            ],
-            "properties": {
-                "details": {
-                    "parent": {
-                        "id": "[tenantResourceId('Microsoft.Management/managementGroups/', concat(parameters('companyPrefix'), '-AppLandingZones'))]"
                     }
                 }
             }
@@ -527,7 +544,7 @@
             "apiVersion": "2020-05-01",
             "name": "[if(not(empty(parameters('platformLzSubscriptionId'))), variables('moveSubscription'), variables('noSubscription'))]",
             "dependsOn": [
-                "[tenantResourceId('Microsoft.Management/managementGroups', concat(parameters('companyPrefix'), '-Platform'))]"
+                "[variables('deploymentNames').managementGroups]"
             ],
             "properties": {}
         },
@@ -536,16 +553,17 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
-            "name": "[variables('networkingDeploymentName')]",
+            "name": "[variables('deploymentNames').networking]",
             "dependsOn": [
-                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('companyPrefix'), '-Platform'), parameters('platformLzSubscriptionId'))]"
+                "[variables('deploymentNames').diagnosticsAndSecurity]",
+                "DeploymentDelay"
             ],
             "location": "[deployment().location]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('networking')]"
+                    "uri": "[variables('deploymentUris').networking]"
                 },
                 "parameters": {
                     "companyPrefix": {
@@ -635,21 +653,21 @@
                 }
             }
         },
-                {
+        {
             "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableRsv'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
-            "name": "[variables('recoveryServicesVaultDeploymentName')]",
+            "name": "[variables('deploymentNames').recoveryServicesVault]",
             "dependsOn": [
-                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('companyPrefix'), '-Platform'), parameters('platformLzSubscriptionId'))]"
+                "DeploymentDelay"
             ],
             "location": "[deployment().location]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('recoveryServicesVault')]"
+                    "uri": "[variables('deploymentUris').recoveryServicesVault]"
                 },
                 "parameters": {
                     "companyPrefix": {
@@ -687,16 +705,16 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
-            "name": "[variables('keyVaultDeploymentName')]",
+            "name": "[variables('deploymentNames').keyVault]",
             "dependsOn": [
-                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('companyPrefix'), '-Platform'), parameters('platformLzSubscriptionId'))]"
+                "DeploymentDelay"
             ],
             "location": "[deployment().location]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('keyVault')]"
+                    "uri": "[variables('deploymentUris').keyVault]"
                 },
                 "parameters": {
                     "companyPrefix": {
@@ -740,17 +758,17 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
-            "name": "[variables('monitoringDeploymentName')]",
+            "name": "[variables('deploymentNames').monitoring]",
             "dependsOn": [
-                "[variables('policyDefDeploymentName')]",
-                "[tenantResourceId('Microsoft.Management/managementGroups/subscriptions/', concat(parameters('companyPrefix'), '-Platform'), parameters('platformLzSubscriptionId'))]"
+                "[variables('deploymentNames').policyDefinitions]",
+                "DeploymentDelay"
             ],
             "location": "[deployment().location]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('monitoring')]"
+                    "uri": "[variables('deploymentUris').monitoring]"
                 },
                 "parameters": {
                     "companyPrefix": {
@@ -774,8 +792,64 @@
                     "enableLogAnalytics": {
                         "value": "[parameters('enableLogAnalytics')]"
                     },
+                    "retentionInDays": {
+                        "value": "[parameters('retentionInDays')]"
+                    },
                     "platformLzSubscriptionId": {
                         "value": "[parameters('platformLzSubscriptionId')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))), or(or(or(or(or(equals(parameters('enableSecuritySolution'), 'Yes'), equals(parameters('enableAgentHealth'), 'Yes')), equals(parameters('enableChangeTracking'), 'Yes')), equals(parameters('enableUpdateMgmt'), 'Yes'), equals(parameters('enableActivityLog'), 'Yes')), equals(parameters('enableAntiMalware'), 'Yes'), equals(parameters('enableVmInsights'), 'Yes')), equals(parameters('enableServiceMap'), 'Yes'), equals(parameters('enableSqlAssessment'), 'Yes')))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-05-01",
+            "subscriptionId": "[parameters('platformLzSubscriptionId')]",
+            "name": "[variables('deploymentNames').monitoringSolutions]",
+            "dependsOn": [
+                "[variables('deploymentNames').monitoringSolutions]"
+            ],
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('deploymentUris').monitoringSolutions]"
+                },
+                "parameters": {
+                    "companyPrefix": {
+                        "value": "[parameters('companyPrefix')]"
+                    },
+                    "platformLzSubscriptionId": {
+                        "value": "[parameters('platformLzSubscriptionId')]"
+                    },
+                    "enableSecuritySolution": {
+                        "value": "[parameters('enableSecuritySolution')]"
+                    },
+                    "enableAgentHealth": {
+                        "value": "[parameters('enableAgentHealth')]"
+                    },
+                    "enableChangeTracking": {
+                        "value": "[parameters('enableChangeTracking')]"
+                    },
+                    "enableUpdateMgmt": {
+                        "value": "[parameters('enableUpdateMgmt')]"
+                    },
+                    "enableActivityLog": {
+                        "value": "[parameters('enableActivityLog')]"
+                    },
+                    "enableAntiMalware": {
+                        "value": "[parameters('enableAntiMalware')]"
+                    },
+                    "enableVmInsights": {
+                        "value": "[parameters('enableVmInsights')]"
+                    },
+                    "enableServiceMap": {
+                        "value": "[parameters('enableServiceMap')]"
+                    },
+                    "enableSqlAssessment": {
+                        "value": "[parameters('enableSqlAssessment')]"
                     }
                 }
             }
@@ -785,16 +859,17 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-AppLandingZones')]",
-            "name": "[variables('appLZDeploymentName')]",
+            "name": "[variables('deploymentNames').applicationLandingZone]",
             "dependsOn": [
-                "[variables('policyDefDeploymentName')]"
+                "[variables('deploymentNames').policyDefinitions]",
+                "DeploymentDelay"
             ],
             "location": "[deployment().location]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('applicationLandingZone')]"
+                    "uri": "[variables('deploymentUris').applicationLandingZone]"
                 },
                 "parameters": {
                     "companyPrefix": {
@@ -832,16 +907,17 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
-            "name": "[variables('diagSecurityDeploymentName')]",
+            "name": "[variables('deploymentNames').diagnosticsAndSecurity]",
             "dependsOn": [
-                "[variables('monitoringDeploymentName')]"
+                "[variables('deploymentNames').monitoring]",
+                "DeploymentDelay"
             ],
             "location": "[deployment().location]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('diagnosticsAndSecurity')]"
+                    "uri": "[variables('deploymentUris').diagnosticsAndSecurity]"
                 },
                 "parameters": {
                     "companyPrefix": {
