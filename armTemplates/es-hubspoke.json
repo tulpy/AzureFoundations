@@ -921,6 +921,7 @@
             "name": "[variables('deploymentNames').diagnosticsAndSecurity]",
             "dependsOn": [
                 "[variables('deploymentNames').monitoring]",
+                "[variables('deploymentNames').monitoringSolutions]",
                 "DeploymentDelay"
             ],
             "location": "[deployment().location]",
