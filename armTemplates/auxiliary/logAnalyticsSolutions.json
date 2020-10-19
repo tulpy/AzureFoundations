@@ -102,7 +102,7 @@
         "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-monitoring'))]",
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
         "logAnalyticsName": "[toLower(take(concat(variables('namingPrefix'), '-', parameters('omsPrefix'), '-', guid(parameters('companyPrefix'))), 24))]",
-        "laResourceId": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', variables('namingPrefix')))]",
+        "laResourceId": "[toLower(concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', variables('logAnalyticsName')))]",
         "solutions": {
             "security": {
                 "name": "[concat('Security', '(', variables('logAnalyticsName'), ')')]",
