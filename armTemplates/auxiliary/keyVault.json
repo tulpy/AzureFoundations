@@ -48,6 +48,9 @@
         "ownerTag": {
             "type": "string"
         },
+        "tenantId": {
+            "type": "string"
+        },
         "platformLzSubscriptionId": {
             "type": "string",
             "defaultValue": "",
@@ -69,7 +72,7 @@
             "enabledForDiskEncryption": true,
             "enabledForTemplateDeployment": true,
             "sku": "Standard",
-            "tenantId": "5ac45a75-47a9-4d20-aaad-c13a830ac5af",
+            "tenantId": "[parameters('tenantId')]",
             "objectId": "67a1d7fa-f0fd-4ade-8c65-07b124e22efd"
         },
         "storage": {
