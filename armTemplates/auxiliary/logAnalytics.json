@@ -42,7 +42,7 @@
             }
         },
         "retentionInDays": {
-            "type": "int"
+            "type": "string"
         }
     },
     "variables": {
