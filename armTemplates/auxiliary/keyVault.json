@@ -48,9 +48,6 @@
         "ownerTag": {
             "type": "string"
         },
-        "tenantId": {
-            "type": "string"
-        },
         "platformLzSubscriptionId": {
             "type": "string",
             "defaultValue": "",
@@ -72,7 +69,6 @@
             "enabledForDiskEncryption": true,
             "enabledForTemplateDeployment": true,
             "sku": "Standard",
-            "tenantId": "[parameters('tenantId')]",
             "objectId": "67a1d7fa-f0fd-4ade-8c65-07b124e22efd"
         },
         "storage": {
@@ -143,11 +139,11 @@
                                                 "enabledForDeployment": "[variables('keyVault').enabledForDeployment]",
                                                 "enabledForDiskEncryption": "[variables('keyVault').enabledForDiskEncryption]",
                                                 "enabledForTemplateDeployment": "[variables('keyVault').enabledForTemplateDeployment]",
-                                                "tenantId": "[variables('keyVault').tenantId]",
+                                                "tenantId": "[subscription().tenantId]",
                                                 "accessPolicies": [
                                                     {
                                                         "objectId": "[variables('keyVault').objectId]",
-                                                        "tenantId": "[variables('keyVault').tenantId]",
+                                                        "tenantId": "[subscription().tenantId]",
                                                         "permissions": {
                                                             "keys": [
                                                                 "Get",
