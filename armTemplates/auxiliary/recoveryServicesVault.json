@@ -36,6 +36,13 @@
         "ownerTag": {
             "type": "string"
         },
+        "baseTime":{
+            "type":"string",
+            "defaultValue": "[utcNow('u')]",
+            "metadata": {
+                "description": "Schedule will start one hour from this time."
+            }
+        },
         "platformLzSubscriptionId": {
             "type": "string",
             "defaultValue": "",
@@ -55,7 +62,7 @@
             "policyName": "[toLower(concat(parameters('companyPrefix'),'-backuppolicy'))]",
             "vaultStorageType": "LocallyRedundant",
             "scheduleRunTimes": [
-                "2021-01-26T05:30:00Z"
+                "[dateTimeAdd(parameters('baseTime'), 'PT1H')]"
             ],
             "dailyRetentionDurationCount": 31,
             "daysOfTheWeek": [
