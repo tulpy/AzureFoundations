@@ -316,17 +316,6 @@
                     },
                     {
                         "name": "esLogRetention",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Log Analytics Data Retention (days)",
-                        "toolTip": "Select retention days for Azure logs. Default is 30 days.",
-                        "defaultValue": "30",
-                        "visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]",
-                        "constraints": {
-                            "required": true
-                        }
-                    },
-                    {
-                        "name": "esLogRetention",
                         "type": "Microsoft.Common.Slider",
                         "min": 30,
                         "max": 730,
