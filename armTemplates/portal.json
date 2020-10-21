@@ -577,6 +577,17 @@
                         "visible": true
                     },
                     {
+                        "name": "esTenantId",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "TenantID ",
+                        "toolTip": "Provide the Tenant ID.",
+                        "defaultValue": "5ac45a75-47a9-4d20-aaad-c13a830ac5af",
+                        "visible": "[equals(steps('esPlatformLz').esAkv, 'Yes')]",
+                        "constraints": {
+                            "required": true
+                        }
+                    },
+                    {
                         "name": "esObjectId",
                         "type": "Microsoft.Common.TextBox",
                         "label": "ObjectID ",
@@ -1153,6 +1164,8 @@
             "enableServiceMap": "[steps('esPlatformLz').esServiceMap]",
             "enableSqlAssessment": "[steps('esPlatformLz').esSqlAssessment]",
             "enableAkv": "[steps('esPlatformLz').esAkv]",
+            "tenantId": "[steps('esPlatformLz').esTenantId]",
+            "objectId": "[steps('esPlatformLz').esObjectId]",
             "enableStorage": "[steps('esPlatformLz').esStorage]",
             "enableRsv": "[steps('esPlatformLz').esRsv]",
             "enableStorageHttps": "[steps('esAppLZ').esHttpsStorage]",

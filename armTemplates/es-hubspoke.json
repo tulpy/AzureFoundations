@@ -119,6 +119,18 @@
                 "description": "Provide the value for the owner tag"
             }
         },
+        "tenantId": {
+            "type": "string",
+            "metadata": {
+                "description": "Provide the value for tenant ID"
+            }
+        },
+        "objectId": {
+            "type": "string",
+            "metadata": {
+                "description": "Provide the value for object ID"
+            }
+        },
         "platformLzSubscriptionId": {
             "type": "string",
             "defaultValue": "",
@@ -745,6 +757,12 @@
                     },
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
+                    },
+                    "tenantId": {
+                        "value": "[parameters('tenantId')]"
+                    },
+                    "objectId": {
+                        "value": "[parameters('objectId')]"
                     },
                     "platformLzSubscriptionId": {
                         "value": "[parameters('platformLzSubscriptionId')]"
