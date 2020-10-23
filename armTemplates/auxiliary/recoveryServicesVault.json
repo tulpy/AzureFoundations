@@ -41,9 +41,9 @@
             "defaultValue": "",
             "maxLength": 36
         },
-                "baseTime":{
+        "baseTime":{
             "type":"string",
-            "defaultValue": "[utcNow('u')]"
+            "defaultValue": "[utcNow('yyyyMMddTHHmmssZ')]"
         }
     },
     "variables": {
@@ -60,7 +60,7 @@
             "policyName": "[toLower(concat(parameters('companyPrefix'),'-backuppolicy'))]",
             "vaultStorageType": "LocallyRedundant",
             "scheduleRunTimes": [
-                "[variables('add3Years')]"
+                "[dateTimeAdd(utcNow('yyyyMMddTHHmmssZ'), 'P3Y')]"
             ],
             "dailyRetentionDurationCount": 31,
             "daysOfTheWeek": [
