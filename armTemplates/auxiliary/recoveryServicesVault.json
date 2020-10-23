@@ -35,16 +35,20 @@
         },
         "ownerTag": {
             "type": "string"
-        },
-        
+        },    
         "platformLzSubscriptionId": {
             "type": "string",
             "defaultValue": "",
             "maxLength": 36
+        },
+                "baseTime":{
+            "type":"string",
+            "defaultValue": "[utcNow('u')]"
         }
     },
     "variables": {
         "deploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
+        "add3Years": "[dateTimeAdd(parameters('baseTime'), 'P3Y')]",
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
         "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-backup'))]",
         "tags": {
@@ -56,7 +60,7 @@
             "policyName": "[toLower(concat(parameters('companyPrefix'),'-backuppolicy'))]",
             "vaultStorageType": "LocallyRedundant",
             "scheduleRunTimes": [
-                "2021-01-26T05:30:00Z"
+                "[variables('add3Years')]"
             ],
             "dailyRetentionDurationCount": 31,
             "daysOfTheWeek": [
