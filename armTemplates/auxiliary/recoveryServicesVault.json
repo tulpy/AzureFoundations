@@ -58,9 +58,6 @@
             "name": "[toLower(take(concat(variables('namingPrefix'), '-', parameters('rsvPrefix'), '-', guid(parameters('companyPrefix'))), 24))]",
             "policyName": "[toLower(concat(parameters('companyPrefix'),'-backuppolicy'))]",
             "vaultStorageType": "LocallyRedundant",
-            "scheduleRunTimes": [
-                "[parameters('baseTime')]"
-            ],
             "dailyRetentionDurationCount": 31,
             "daysOfTheWeek": [
                 "Friday"
@@ -149,12 +146,12 @@
                                                 "schedulePolicy": {
                                                     "scheduleRunFrequency": "Daily",
                                                     "scheduleRunDays": null,
-                                                    "scheduleRunTimes": "[variables('recoveryServicesVault').scheduleRunTimes]",
+                                                    "scheduleRunTimes": "[parameters('baseTime')]",
                                                     "schedulePolicyType": "SimpleSchedulePolicy"
                                                 },
                                                 "retentionPolicy": {
                                                     "dailySchedule": {
-                                                        "retentionTimes": "[variables('recoveryServicesVault').scheduleRunTimes]",
+                                                        "retentionTimes": "[parameters('baseTime')]",
                                                         "retentionDuration": {
                                                             "count": "[variables('recoveryServicesVault').dailyRetentionDurationCount]",
                                                             "durationType": "Days"
@@ -162,7 +159,7 @@
                                                     },
                                                     "weeklySchedule": {
                                                         "daysOfTheWeek": "[variables('recoveryServicesVault').daysOfTheWeek]",
-                                                        "retentionTimes": "[variables('recoveryServicesVault').scheduleRunTimes]",
+                                                        "retentionTimes": "[parameters('baseTime')]",
                                                         "retentionDuration": {
                                                             "count": "[variables('recoveryServicesVault').weeklyRetentionDurationCount]",
                                                             "durationType": "Weeks"
@@ -179,7 +176,7 @@
                                                             ]
                                                         },
                                                         "retentionScheduleWeekly": null,
-                                                        "retentionTimes": "[variables('recoveryServicesVault').scheduleRunTimes]",
+                                                        "retentionTimes": "[parameters('baseTime')]",
                                                         "retentionDuration": {
                                                             "count": "[variables('recoveryServicesVault').monthlyRetentionDurationCount]",
                                                             "durationType": "Months"
@@ -197,7 +194,7 @@
                                                             ]
                                                         },
                                                         "retentionScheduleWeekly": null,
-                                                        "retentionTimes": "[variables('recoveryServicesVault').scheduleRunTimes]",
+                                                        "retentionTimes": "[parameters('baseTime')]",
                                                         "retentionDuration": {
                                                             "count": "[variables('recoveryServicesVault').yearlyRetentionDurationCount]",
                                                             "durationType": "Years"
