@@ -60,7 +60,7 @@
             "policyName": "[toLower(concat(parameters('companyPrefix'),'-backuppolicy'))]",
             "vaultStorageType": "LocallyRedundant",
             "scheduleRunTimes": [
-                "[dateTimeAdd(utcNow('yyyyMMddTHHmmssZ'), 'P3Y')]"
+                "[dateTimeAdd(utcNow('yyyy-MM-dd-THHmm:ssZ'), 'P3Y')]"
             ],
             "dailyRetentionDurationCount": 31,
             "daysOfTheWeek": [
