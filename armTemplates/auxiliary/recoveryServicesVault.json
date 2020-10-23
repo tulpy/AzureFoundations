@@ -146,12 +146,12 @@
                                                 "schedulePolicy": {
                                                     "scheduleRunFrequency": "Daily",
                                                     "scheduleRunDays": null,
-                                                    "scheduleRunTimes": "[parameters('baseTime')]",
+                                                    "scheduleRunTimes": "[dateTimeAdd(parameters('baseTime'), 'PT1H')]",
                                                     "schedulePolicyType": "SimpleSchedulePolicy"
                                                 },
                                                 "retentionPolicy": {
                                                     "dailySchedule": {
-                                                        "retentionTimes": "[parameters('baseTime')]",
+                                                        "retentionTimes": "[dateTimeAdd(parameters('baseTime'), 'PT1H')]",
                                                         "retentionDuration": {
                                                             "count": "[variables('recoveryServicesVault').dailyRetentionDurationCount]",
                                                             "durationType": "Days"
@@ -159,7 +159,7 @@
                                                     },
                                                     "weeklySchedule": {
                                                         "daysOfTheWeek": "[variables('recoveryServicesVault').daysOfTheWeek]",
-                                                        "retentionTimes": "[parameters('baseTime')]",
+                                                        "retentionTimes": "[dateTimeAdd(parameters('baseTime'), 'PT1H')]",
                                                         "retentionDuration": {
                                                             "count": "[variables('recoveryServicesVault').weeklyRetentionDurationCount]",
                                                             "durationType": "Weeks"
@@ -176,7 +176,7 @@
                                                             ]
                                                         },
                                                         "retentionScheduleWeekly": null,
-                                                        "retentionTimes": "[parameters('baseTime')]",
+                                                        "retentionTimes": "[dateTimeAdd(parameters('baseTime'), 'PT1H')]",
                                                         "retentionDuration": {
                                                             "count": "[variables('recoveryServicesVault').monthlyRetentionDurationCount]",
                                                             "durationType": "Months"
@@ -194,7 +194,7 @@
                                                             ]
                                                         },
                                                         "retentionScheduleWeekly": null,
-                                                        "retentionTimes": "[parameters('baseTime')]",
+                                                        "retentionTimes": "[dateTimeAdd(parameters('baseTime'), 'PT1H')]",
                                                         "retentionDuration": {
                                                             "count": "[variables('recoveryServicesVault').yearlyRetentionDurationCount]",
                                                             "durationType": "Years"
