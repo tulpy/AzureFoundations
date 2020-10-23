@@ -146,11 +146,11 @@
                                                 "enabledForDeployment": "[variables('keyVault').enabledForDeployment]",
                                                 "enabledForDiskEncryption": "[variables('keyVault').enabledForDiskEncryption]",
                                                 "enabledForTemplateDeployment": "[variables('keyVault').enabledForTemplateDeployment]",
-                                                "tenantId": "[variables('keyVault').tenantId]",
+                                                "tenantId": "[subscription().tenantId]",
                                                 "accessPolicies": [
                                                     {
                                                         "objectId": "[variables('keyVault').objectId]",
-                                                        "tenantId": "[variables('keyVault').tenantId]",
+                                                        "tenantId": "[subscription().tenantId]",
                                                         "permissions": {
                                                             "keys": [
                                                                 "Get",
