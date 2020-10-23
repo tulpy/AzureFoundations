@@ -146,52 +146,7 @@
                                                 "enabledForDeployment": "[variables('keyVault').enabledForDeployment]",
                                                 "enabledForDiskEncryption": "[variables('keyVault').enabledForDiskEncryption]",
                                                 "enabledForTemplateDeployment": "[variables('keyVault').enabledForTemplateDeployment]",
-                                                "tenantId": "[subscription().tenantId]",
-                                                "accessPolicies": [
-                                                    {
-                                                        "objectId": "[variables('keyVault').objectId]",
-                                                        "tenantId": "[subscription().tenantId]",
-                                                        "permissions": {
-                                                            "keys": [
-                                                                "Get",
-                                                                "List",
-                                                                "Update",
-                                                                "Create",
-                                                                "Import",
-                                                                "Delete",
-                                                                "Recover",
-                                                                "Backup",
-                                                                "Restore"
-                                                            ],
-                                                            "secrets": [
-                                                                "Get",
-                                                                "List",
-                                                                "Set",
-                                                                "Delete",
-                                                                "Recover",
-                                                                "Backup",
-                                                                "Restore"
-                                                            ],
-                                                            "certificates": [
-                                                                "Get",
-                                                                "List",
-                                                                "Update",
-                                                                "Create",
-                                                                "Import",
-                                                                "Delete",
-                                                                "Recover",
-                                                                "Backup",
-                                                                "Restore",
-                                                                "ManageContacts",
-                                                                "ManageIssuers",
-                                                                "GetIssuers",
-                                                                "ListIssuers",
-                                                                "SetIssuers",
-                                                                "DeleteIssuers"
-                                                            ]
-                                                        }
-                                                    }
-                                                ],
+                                                "tenantId": "[subscription().tenantId]",                                               
                                                 "sku": {
                                                     "name": "[variables('keyVault').sku]",
                                                     "family": "A"
