@@ -146,7 +146,7 @@
                                                 "enabledForDeployment": "[variables('keyVault').enabledForDeployment]",
                                                 "enabledForDiskEncryption": "[variables('keyVault').enabledForDiskEncryption]",
                                                 "enabledForTemplateDeployment": "[variables('keyVault').enabledForTemplateDeployment]",
-                                                "tenantId": "[subscription().tenantId]",                                               
+                                                "tenantId": "[variables('keyVault').tenantId]",                                             
                                                 "sku": {
                                                     "name": "[variables('keyVault').sku]",
                                                     "family": "A"
