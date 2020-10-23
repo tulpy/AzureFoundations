@@ -43,7 +43,7 @@
         },
         "baseTime":{
             "type":"string",
-            "defaultValue": "[utcNow('yyyyMMddTHHmmssZ')]"
+            "defaultValue": "[utcNow()]"
         }
     },
     "variables": {
