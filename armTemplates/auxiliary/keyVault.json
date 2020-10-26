@@ -48,9 +48,6 @@
         "tenantId": {
             "type": "string"
         },
-        "objectId": {
-            "type": "string"
-        },
         "ownerTag": {
             "type": "string"
         },
@@ -75,7 +72,6 @@
             "enabledForDiskEncryption": true,
             "enabledForTemplateDeployment": true,
             "sku": "Standard",
-            "objectId": "[parameters('objectId')]",
             "tenantId": "[parameters('tenantId')]"
         },
         "storage": {

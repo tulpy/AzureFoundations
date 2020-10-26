@@ -53,20 +53,7 @@
         "recoveryServicesVault": {
             "name": "[toLower(take(concat(variables('namingPrefix'), '-', parameters('rsvPrefix'), '-', guid(parameters('companyPrefix'))), 24))]",
             "policyName": "[toLower(concat(parameters('companyPrefix'),'-backuppolicy'))]",
-            "vaultStorageType": "LocallyRedundant",
-            "dailyRetentionDurationCount": 31,
-            "scheduleRunTimes": [
-                "2017-01-26T05:30:00Z"
-            ],
-            "daysOfTheWeek": [
-                "Friday"
-            ],
-            "weeklyRetentionDurationCount": 5,
-            "monthlyRetentionDurationCount": 12,
-            "monthsOfYear": [
-                "December"
-            ],
-            "yearlyRetentionDurationCount": 7
+            "vaultStorageType": "LocallyRedundant"
         }
     },
     "resources": [
@@ -131,77 +118,6 @@
                                                 "tier": "Standard"
                                             },
                                             "properties": {}
-                                        },
-                                        {
-                                            "apiVersion": "2019-06-15",
-                                            "name": "[concat(variables('recoveryServicesVault').name, '/', variables('recoveryServicesVault').policyName)]",
-                                            "type": "Microsoft.RecoveryServices/vaults/backupPolicies",
-                                            "location": "[deployment().location]",
-                                            "dependsOn": [
-                                                "[concat('Microsoft.RecoveryServices/vaults/', variables('recoveryServicesVault').name)]"
-                                            ],
-                                            "properties": {
-                                                "backupManagementType": "AzureIaasVM",
-                                                "schedulePolicy": {
-                                                    "scheduleRunFrequency": "Daily",
-                                                    "scheduleRunDays": null,
-                                                    "scheduleRunTimes": "[variables('recoveryServicesVault').scheduleRunTimes]",
-                                                    "schedulePolicyType": "SimpleSchedulePolicy"
-                                                },
-                                                "retentionPolicy": {
-                                                    "dailySchedule": {
-                                                        "retentionTimes": "[variables('recoveryServicesVault').scheduleRunTimes]",
-                                                        "retentionDuration": {
-                                                            "count": "[variables('recoveryServicesVault').dailyRetentionDurationCount]",
-                                                            "durationType": "Days"
-                                                        }
-                                                    },
-                                                    "weeklySchedule": {
-                                                        "daysOfTheWeek": "[variables('recoveryServicesVault').daysOfTheWeek]",
-                                                        "retentionTimes": "[variables('recoveryServicesVault').scheduleRunTimes]",
-                                                        "retentionDuration": {
-                                                            "count": "[variables('recoveryServicesVault').weeklyRetentionDurationCount]",
-                                                            "durationType": "Weeks"
-                                                        }
-                                                    },
-                                                    "monthlySchedule": {
-                                                        "retentionScheduleFormatType": "Daily",
-                                                        "retentionScheduleDaily": {
-                                                            "daysOfTheMonth": [
-                                                                {
-                                                                    "date": 1,
-                                                                    "isLast": false
-                                                                }
-                                                            ]
-                                                        },
-                                                        "retentionScheduleWeekly": null,
-                                                        "retentionTimes": "[variables('recoveryServicesVault').scheduleRunTimes]",
-                                                        "retentionDuration": {
-                                                            "count": "[variables('recoveryServicesVault').monthlyRetentionDurationCount]",
-                                                            "durationType": "Months"
-                                                        }
-                                                    },
-                                                    "yearlySchedule": {
-                                                        "retentionScheduleFormatType": "Daily",
-                                                        "monthsOfYear": "[variables('recoveryServicesVault').monthsOfYear]",
-                                                        "retentionScheduleDaily": {
-                                                            "daysOfTheMonth": [
-                                                                {
-                                                                    "date": 1,
-                                                                    "isLast": false
-                                                                }
-                                                            ]
-                                                        },
-                                                        "retentionScheduleWeekly": null,
-                                                        "retentionTimes": "[variables('recoveryServicesVault').scheduleRunTimes]",
-                                                        "retentionDuration": {
-                                                            "count": "[variables('recoveryServicesVault').yearlyRetentionDurationCount]",
-                                                            "durationType": "Years"
-                                                        }
-                                                    },
-                                                    "retentionPolicyType": "LongTermRetentionPolicy"
-                                                }
-                                            }
                                         },
                                         {
                                             "apiVersion": "2018-01-10",
