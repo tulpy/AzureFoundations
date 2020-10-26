@@ -577,17 +577,6 @@
                         "visible": true
                     },
                     {
-                        "name": "esTenantId",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "TenantID ",
-                        "toolTip": "Provide the Tenant ID.",
-                        "defaultValue": "5ac45a75-47a9-4d20-aaad-c13a830ac5af",
-                        "visible": "[equals(steps('esPlatformLz').esAkv, 'Yes')]",
-                        "constraints": {
-                            "required": false
-                        }
-                    },
-                    {
                         "name": "esStorage",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy the Platform Landing Zone Azure Storage account for diagnostics.",

@@ -45,9 +45,6 @@
         "environmentTag": {
             "type": "string"
         },
-        "tenantId": {
-            "type": "string"
-        },
         "ownerTag": {
             "type": "string"
         },
@@ -72,7 +69,7 @@
             "enabledForDiskEncryption": true,
             "enabledForTemplateDeployment": true,
             "sku": "Standard",
-            "tenantId": "[parameters('tenantId')]"
+            "tenantId": "5ac45a75-47a9-4d20-aaad-c13a830ac5af"
         },
         "storage": {
             "name": "[take(toLower(concat(variables('storageNamingPrefix'), parameters('staPrefix'), guid(parameters('companyPrefix')))), 20)]",
