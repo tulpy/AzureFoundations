@@ -328,7 +328,7 @@
                             "required": false
                         },
                         "visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
-                    },    
+                    },
                     {
                         "name": "textBlock1",
                         "type": "Microsoft.Common.TextBlock",
@@ -359,7 +359,7 @@
                                 }
                             ]
                         },
-						"visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
+                        "visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
                     },
                     {
                         "name": "esChangeTracking",
@@ -379,7 +379,7 @@
                                 }
                             ]
                         },
-						"visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
+                        "visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
                     },
                     {
                         "name": "esUpdateMgmt",
@@ -399,7 +399,7 @@
                                 }
                             ]
                         },
-						"visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
+                        "visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
                     },
                     {
                         "name": "esActivityLog",
@@ -419,7 +419,7 @@
                                 }
                             ]
                         },
-						"visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
+                        "visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
                     },
                     {
                         "name": "esVmInsights",
@@ -439,7 +439,7 @@
                                 }
                             ]
                         },
-						"visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
+                        "visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
                     },
                     {
                         "name": "esAntiMalware",
@@ -459,7 +459,7 @@
                                 }
                             ]
                         },
-						"visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
+                        "visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
                     },
                     {
                         "name": "esServiceMap",
@@ -479,7 +479,7 @@
                                 }
                             ]
                         },
-						"visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
+                        "visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
                     },
                     {
                         "name": "esSqlAssessment",
@@ -499,7 +499,7 @@
                                 }
                             ]
                         },
-						"visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
+                        "visible": "[equals(steps('esPlatformLz').esLogAnalytics, 'Yes')]"
                     },
                     {
                         "name": "textBlock2",
@@ -511,7 +511,7 @@
                                 "uri": "https://docs.microsoft.com/azure/security/fundamentals/overview"
                             }
                         }
-                    },	
+                    },
                     {
                         "name": "esAsc",
                         "type": "Microsoft.Common.OptionsGroup",
