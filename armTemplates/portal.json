@@ -1142,8 +1142,6 @@
             "enableServiceMap": "[steps('esPlatformLz').esServiceMap]",
             "enableSqlAssessment": "[steps('esPlatformLz').esSqlAssessment]",
             "enableAkv": "[steps('esPlatformLz').esAkv]",
-            "tenantId": "[steps('esPlatformLz').esTenantId]",
-            "objectId": "[steps('esPlatformLz').esObjectId]",
             "enableStorage": "[steps('esPlatformLz').esStorage]",
             "enableRsv": "[steps('esPlatformLz').esRsv]",
             "enableStorageHttps": "[steps('esAppLZ').esHttpsStorage]",
