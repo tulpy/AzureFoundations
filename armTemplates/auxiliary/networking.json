@@ -169,8 +169,6 @@
         "azErGwPipId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azErGwIpName'))]",
         "azFwName": "[toLower(concat(variables('namingPrefix'), '-', parameters('azFwPrefix'), '-001'))]",
         "azFwSubnetId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/virtualNetworks/', variables('azVnetName'), '/subnets/AzureFirewallSubnet')]",
-        "azFwCidr": "[substring(parameters('subnetMaskForAzFw'),0,sub(length(parameters('subnetMaskForAzFw')), 3))]",
-        "azFwIp": "[toLower(concat(variables('azFwCidr'), '4'))]",
         "azFwIpName": "[toLower(concat(variables('namingPrefix'), '-', parameters('pipPrefix'), '-003'))]",
         "azFwPipId": "[concat('/subscriptions/', parameters('platformLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azFwIpName'))]",
         "azUdrName002": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-002'))]",
@@ -362,7 +360,7 @@
                                                         "properties": {
                                                             "addressPrefix": "0.0.0.0/0",
                                                             "nextHopType": "VirtualAppliance",
-                                                            "nextHopIpAddress": "[variables('azFwIp')]"
+                                                            "nextHopIpAddress": "[variables('azVnetCidr')]"
                                                         }
                                                     }
                                                 ]
@@ -418,7 +416,7 @@
                                                         "properties": {
                                                             "addressPrefix": "0.0.0.0/0",
                                                             "nextHopType": "VirtualAppliance",
-                                                            "nextHopIpAddress": "[variables('azFwIp')]"
+                                                            "nextHopIpAddress": "[variables('azVnetCidr')]"
                                                         }
                                                     }
                                                 ]
