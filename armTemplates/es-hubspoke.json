@@ -700,7 +700,7 @@
             }
         },
         {
-            "condition": "[or(equals(parameters('enableAkv'), 'Yes'), equals(parameters('enableStorage'), 'Yes'), not(empty(parameters('platformLzSubscriptionId'))))]",
+            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableAkv'), 'Yes'),equals(parameters('enableStorage'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
