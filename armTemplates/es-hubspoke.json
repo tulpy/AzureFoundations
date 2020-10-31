@@ -801,7 +801,7 @@
             }
         },
         {
-            "condition": "[or(equals(parameters('enableSecuritySolution'), 'Yes'), equals(parameters('enableAgentHealth'), 'Yes'), equals(parameters('enableChangeTracking'), 'Yes'), equals(parameters('enableUpdateMgmt'), 'Yes'), equals(parameters('enableActivityLog'), 'Yes'), equals(parameters('enableAntiMalware'), 'Yes'), equals(parameters('enableVmInsights'), 'Yes'), equals(parameters('enableServiceMap'), 'Yes'), equals(parameters('enableSqlAssessment'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))), or(equals(parameters('enableSecuritySolution'), 'Yes'), or(equals(parameters('enableAgentHealth'), 'Yes'), or(equals(parameters('enableChangeTracking'), 'Yes'), or(equals(parameters('enableUpdateMgmt'), 'Yes'), or(equals(parameters('enableActivityLog'), 'Yes'), or(equals(parameters('enableAntiMalware'), 'Yes'), or(equals(parameters('enableVmInsights'), 'Yes'), or(equals(parameters('enableServiceMap'), 'Yes'), equals(parameters('enableSqlAssessment'), 'Yes'))))))))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "subscriptionId": "[parameters('platformLzSubscriptionId')]",
