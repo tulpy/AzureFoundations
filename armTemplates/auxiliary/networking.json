@@ -387,7 +387,7 @@
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]",
                                                 "[concat('Microsoft.Network/routeTables/', variables('udrName003'))]",
                                                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('nsgName003'))]",
-                                                "[resourceId('Microsoft.Network/virtualNetworks/subnets',variables('azVnetName'), variables('subnetName003'))]"
+                                                "[resourceId('Microsoft.Network/virtualNetworks/subnets',variables('azVnetName'), variables('subnetName001'))]"
                                             ],
                                             "properties": {
                                                 "addressPrefix": "[parameters('subnetMaskForIdentity')]",
