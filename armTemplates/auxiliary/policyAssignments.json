@@ -10,7 +10,7 @@
   "variables": {
     "scope": {
       "topLevel": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
-      "decommissioned": "[concat(parameters('companyPrefix'), '-', 'decommissioned')]"
+      "decommissioned": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-', 'decommissioned')]",
     },
     "policyDefinitions": {
       "allowedRegions": "/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c",
@@ -42,11 +42,11 @@
         "displayName": "Allowed-Resources",
         "policyDefinitionId": "[variables('policyDefinitions').allowedResources]",
         "parameters": {
-            "listOfResourceTypesAllowed": {
-              "value": [
-                "microsoft.costmanagement/budgets"
-              ]
-            }
+          "listOfResourceTypesAllowed": {
+            "value": [
+              "microsoft.costmanagement/budgets"
+            ]
+          }
         },
         "scope": "[variables('scope').decommissioned]"
       }
