@@ -9,13 +9,11 @@
   },
   "variables": {
     "scope": {
-      "topLevel": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
-      "decommissioned": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-decommissioned')]"
+      "topLevel": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]"
     },
     "policyDefinitions": {
       "allowedRegions": "/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c",
       "allowedRegionsRg": "/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988",
-      "allowedResources": "/providers/Microsoft.Authorization/policyDefinitions/a08ec900-254a-4555-9bf5-e42af04b5c5c",
       "denyAppGwyWaf": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-AppGW-Without-WAF')]",
       "appendKvSoftDelete": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Append-KV-SoftDelete')]",
       "storageHttps": "/providers/Microsoft.Authorization/policyDefinitions/404c3081-a854-4457-ae30-26a93ef643f9",
@@ -23,7 +21,6 @@
     },
     "policyAssignmentNames": {
       "allowedRegions": "Allowed-AzureRegions",
-      "allowedResources": "Allowed-Resources",
       "allowedRegionsRg": "Allowed-AzureRegions-RG",
       "denyAppGwyWaf": "Deny-AppGW-Without-WAF",
       "appendKvSoftDelete": "Append-KV-SoftDelete",
@@ -32,25 +29,6 @@
     }
   },
   "resources": [
-    {
-      "type": "Microsoft.Authorization/policyAssignments",
-      "apiVersion": "2018-05-01",
-      "name": "[variables('policyAssignmentNames').allowedResources]",
-      "location": "[deployment().location]",
-      "properties": {
-        "description": "Allowed-Resources",
-        "displayName": "Allowed-Resources",
-        "policyDefinitionId": "[variables('policyDefinitions').allowedResources]",
-        "parameters": {
-          "listOfResourceTypesAllowed": {
-            "value": [
-              "microsoft.costmanagement/budgets"
-            ]
-          }
-        },
-        "scope": "[variables('scope').decommissioned]"
-      }
-    },
     {
       "type": "Microsoft.Authorization/policyAssignments",
       "apiVersion": "2018-05-01",
