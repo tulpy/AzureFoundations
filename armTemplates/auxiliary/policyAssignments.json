@@ -10,12 +10,12 @@
   "variables": {
     "scope": {
       "topLevel": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
-      "decommissioned": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-', 'decommissioned')]"
+      "decommissioned": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-decommissioned')]"
     },
     "policyDefinitions": {
       "allowedRegions": "/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c",
       "allowedRegionsRg": "/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988",
-      "allowedResources": "/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988",
+      "allowedResources": "/providers/Microsoft.Authorization/policyDefinitions/a08ec900-254a-4555-9bf5-e42af04b5c5c",
       "denyAppGwyWaf": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-AppGW-Without-WAF')]",
       "appendKvSoftDelete": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Append-KV-SoftDelete')]",
       "storageHttps": "/providers/Microsoft.Authorization/policyDefinitions/404c3081-a854-4457-ae30-26a93ef643f9",
