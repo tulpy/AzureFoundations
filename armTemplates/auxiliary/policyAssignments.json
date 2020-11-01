@@ -10,7 +10,7 @@
   "variables": {
     "scope": {
       "topLevel": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
-      "decommissioned": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-', 'decommissioned')]",
+      "decommissioned": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-', 'decommissioned')]"
     },
     "policyDefinitions": {
       "allowedRegions": "/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c",
