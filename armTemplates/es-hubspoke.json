@@ -428,6 +428,7 @@
             "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
             "monitoringSolutions": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalyticsSolutions.json')]",
             "keyVault": "[uri(deployment().properties.templateLink.uri, 'auxiliary/keyVault.json')]",
+            "storage": "[uri(deployment().properties.templateLink.uri, 'auxiliary/storage.json')]",
             "recoveryServicesVault": "[uri(deployment().properties.templateLink.uri, 'auxiliary/recoveryServicesVault.json')]",
             "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
             "networking": "[uri(deployment().properties.templateLink.uri, 'auxiliary/networking.json')]",
@@ -442,6 +443,7 @@
             "monitoring": "[take(concat('monitoring', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "monitoringSolutions": "[take(concat('monSolutions', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "keyVault": "[take(concat('keyVault', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "storage": "[take(concat('storage', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "recoveryServicesVault": "[take(concat('rsv', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "diagnosticsAndSecurity": "[take(concat('diagSecurity', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "networking": "[take(concat('networking', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
@@ -700,7 +702,7 @@
             }
         },
         {
-            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableAkv'), 'Yes'),equals(parameters('enableStorage'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableAkv'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
@@ -728,14 +730,55 @@
                     "argPrefix": {
                         "value": "[parameters('argPrefix')]"
                     },
-                    "staPrefix": {
-                        "value": "[parameters('staPrefix')]"
-                    },
                     "akvPrefix": {
                         "value": "[parameters('akvPrefix')]"
                     },
                     "enableAkv": {
                         "value": "[parameters('enableAkv')]"
+                    },
+                    "environmentTag": {
+                        "value": "[parameters('environmentTag')]"
+                    },
+                    "ownerTag": {
+                        "value": "[parameters('ownerTag')]"
+                    },
+                    "platformLzSubscriptionId": {
+                        "value": "[parameters('platformLzSubscriptionId')]"
+                    }
+                }
+            }
+        },
+                {
+            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableStorage'), 'Yes'))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-05-01",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
+            "name": "[variables('deploymentNames').storage]",
+            "dependsOn": [
+                "DeploymentDelay"
+            ],
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('deploymentUris').storage]"
+                },
+                "parameters": {
+                    "companyPrefix": {
+                        "value": "[parameters('companyPrefix')]"
+                    },
+                    "locationPrefix": {
+                        "value": "[parameters('locationPrefix')]"
+                    },
+                    "environmentPrefix": {
+                        "value": "[parameters('environmentPrefix')]"
+                    },
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
+                    },
+                    "staPrefix": {
+                        "value": "[parameters('staPrefix')]"
                     },
                     "enableStorage": {
                         "value": "[parameters('enableStorage')]"
