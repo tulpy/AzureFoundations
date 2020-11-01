@@ -18,23 +18,11 @@
             "type": "string",
             "maxLength": 3
         },
-        "staPrefix": {
-            "type": "string",
-            "maxLength": 3
-        },
         "akvPrefix": {
             "type": "string",
             "maxLength": 3
         },
         "enableAkv": {
-            "type": "string",
-            "allowedValues": [
-                "Yes",
-                "No"
-            ],
-            "defaultValue": "Yes"
-        },
-        "enableStorage": {
             "type": "string",
             "allowedValues": [
                 "Yes",
@@ -69,18 +57,11 @@
             "enabledForDiskEncryption": true,
             "enabledForTemplateDeployment": true,
             "sku": "Standard"
-        },
-        "storage": {
-            "name": "[take(toLower(concat(variables('storageNamingPrefix'), parameters('staPrefix'), guid(parameters('companyPrefix')))), 20)]",
-            "sku": "Standard_LRS",
-            "kind": "StorageV2",
-            "use": "Diagnostics",
-            "httpsOnly": true
         }
     },
     "resources": [
         {
-            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableAkv'), 'Yes'),equals(parameters('enableStorage'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableAkv'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
             "name": "keyVault",
@@ -148,24 +129,6 @@
                                                     "defaultAction": "Allow",
                                                     "bypass": "AzureServices"
                                                 }
-                                            }
-                                        },
-                                        {
-                                            "condition": "[equals(parameters('enableStorage'), 'Yes')]",
-                                            "type": "Microsoft.Storage/storageAccounts",
-                                            "apiVersion": "2019-06-01",
-                                            "name": "[variables('storage').name]",
-                                            "location": "[deployment().location]",
-                                            "sku": {
-                                                "name": "[variables('storage').sku]"
-                                            },
-                                            "tags": {
-                                                "storageSKU": "[variables('storage').sku]",
-                                                "storageUse": "[variables('storage').use]"
-                                            },
-                                            "kind": "[variables('storage').kind]",
-                                            "properties": {
-                                                "supportsHttpsTrafficOnly": "[variables('storage').httpsOnly]"
                                             }
                                         }
                                     ]
