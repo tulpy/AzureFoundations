@@ -45,7 +45,6 @@
     "variables": {
         "deploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
-        "storageNamingPrefix": "[concat(parameters('companyPrefix'), parameters('locationPrefix'), parameters('environmentPrefix'))]",
         "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-security'))]",
         "tags": {
             "environment": "[parameters('environmentTag')]",
