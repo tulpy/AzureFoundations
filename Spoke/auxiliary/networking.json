@@ -221,6 +221,20 @@
                                                 }
                                             }
                                         },
+                                                                                {
+                                            "condition": "[and(equals(parameters('enableWeb'), 'Yes'), not(empty(parameters('subnetMaskForWeb'))))]",
+                                            "type": "Microsoft.Network/routeTables",
+                                            "apiVersion": "2020-05-01",
+                                            "name": "[variables('udrName001')]",
+                                            "location": "[parameters('location')]",
+                                            "tags": {
+                                                "appliedSubnet": "[concat(variables('azVnetName'), '/', variables('subnetName001'))]"
+                                            },
+                                            "properties": {
+                                                "routes": [
+                                                ]
+                                            }
+                                        },
                                         {
                                             "condition": "[and(equals(parameters('enableWeb'), 'Yes'), not(empty(parameters('subnetMaskForWeb'))))]",
                                             "type": "Microsoft.Network/networkSecurityGroups",
