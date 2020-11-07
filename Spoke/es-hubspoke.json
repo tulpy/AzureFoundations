@@ -84,7 +84,7 @@
                 "description": "Provide the value for the owner tag"
             }
         },
-        "applicationLzSubscriptionId": {
+        "appLzSubscriptionId": {
             "type": "string",
             "defaultValue": "",
             "maxLength": 36,
@@ -191,7 +191,7 @@
             "networking": "[uri(deployment().properties.templateLink.uri, 'auxiliary/networking.json')]",
             "applicationLandingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/appLz.json')]"
         },
-        "moveSubscription": "[concat(parameters('companyPrefix'), '-appLandingZones', '/', parameters('applicationLzSubscriptionId'))]",
+        "moveSubscription": "[concat(parameters('companyPrefix'), '-appLandingZones', '/', parameters('appLzSubscriptionId'))]",
         "noSubscription": "[concat(parameters('companyPrefix'), '-appLandingZones', '/', 'na')]",
         "deploymentNames": {
             "managementGroups": "[take(concat('mgmtGroups', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
@@ -222,49 +222,69 @@
             }
         },
         {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "name": "[concat('delayFor', copyIndex())]",
-            "location": "[deployment().location]",
-            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
-            "dependsOn": [
-                "[variables('deploymentNames').managementGroups]"
-            ],
-            "copy": {
-                "batchSize": 1,
-                "count": 10,
-                "mode": "Serial",
-                "name": "DeploymentDelay"
-            },
-            "properties": {
-                "mode": "Incremental",
-                "template": {
-                    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
-                    "contentVersion": "1.0.0.0",
-                    "parameters": {},
-                    "resources": [],
-                    "outputs": {}
-                }
-            }
-        },
-        {
-            "condition": "[not(empty(parameters('applicationLzSubscriptionId')))]",
+            "condition": "[not(empty(parameters('appLzSubscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
             "apiVersion": "2020-05-01",
-            "name": "[if(not(empty(parameters('applicationLzSubscriptionId'))), variables('moveSubscription'), variables('noSubscription'))]",
+            "name": "[if(not(empty(parameters('appLzSubscriptionId'))), variables('moveSubscription'), variables('noSubscription'))]",
             "dependsOn": [
                 "[variables('deploymentNames').managementGroups]"
             ],
             "properties": {}
         },
+                {
+            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),equals(parameters('enableRsv'), 'Yes'))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-05-01",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
+            "name": "[variables('deploymentNames').recoveryServicesVault]",
+            "dependsOn": [
+                "[variables('deploymentNames').managementGroups]"
+            ],
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('deploymentUris').recoveryServicesVault]"
+                },
+                "parameters": {
+                    "companyPrefix": {
+                        "value": "[parameters('companyPrefix')]"
+                    },
+                    "locationPrefix": {
+                        "value": "[parameters('locationPrefix')]"
+                    },
+                    "environmentPrefix": {
+                        "value": "[parameters('environmentPrefix')]"
+                    },
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
+                    },
+                    "rsvPrefix": {
+                        "value": "[parameters('rsvPrefix')]"
+                    },
+                    "enableRsv": {
+                        "value": "[parameters('enableRsv')]"
+                    },
+                    "environmentTag": {
+                        "value": "[parameters('environmentTag')]"
+                    },
+                    "ownerTag": {
+                        "value": "[parameters('ownerTag')]"
+                    },
+                    "appLzSubscriptionId": {
+                        "value": "[parameters('appLzSubscriptionId')]"
+                    }
+                }
+            }
+        },
         {
-            "condition": "[and(not(empty(parameters('applicationLzSubscriptionId'))),equals(parameters('enableSpoke'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),equals(parameters('enableSpoke'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
             "name": "[variables('deploymentNames').networking]",
             "dependsOn": [
-                "DeploymentDelay",
                 "[variables('deploymentNames').managementGroups]"
             ],
             "location": "[deployment().location]",
@@ -320,8 +340,8 @@
                     "location": {
                         "value": "[parameters('location')]"
                     },
-                    "applicationLzSubscriptionId": {
-                        "value": "[parameters('applicationLzSubscriptionId')]"
+                    "appLzSubscriptionId": {
+                        "value": "[parameters('appLzSubscriptionId')]"
                     },
                     "subnetMaskForWeb": {
                         "value": "[parameters('subnetMaskForWeb')]"
@@ -335,62 +355,14 @@
                 }
             }
         },
+
         {
-            "condition": "[and(not(empty(parameters('applicationLzSubscriptionId'))),equals(parameters('enableRsv'), 'Yes'))]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-05-01",
-            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
-            "name": "[variables('deploymentNames').recoveryServicesVault]",
-            "dependsOn": [
-                 "DeploymentDelay",
-                "[variables('deploymentNames').managementGroups]"
-            ],
-            "location": "[deployment().location]",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "contentVersion": "1.0.0.0",
-                    "uri": "[variables('deploymentUris').recoveryServicesVault]"
-                },
-                "parameters": {
-                    "companyPrefix": {
-                        "value": "[parameters('companyPrefix')]"
-                    },
-                    "locationPrefix": {
-                        "value": "[parameters('locationPrefix')]"
-                    },
-                    "environmentPrefix": {
-                        "value": "[parameters('environmentPrefix')]"
-                    },
-                    "argPrefix": {
-                        "value": "[parameters('argPrefix')]"
-                    },
-                    "rsvPrefix": {
-                        "value": "[parameters('rsvPrefix')]"
-                    },
-                    "enableRsv": {
-                        "value": "[parameters('enableRsv')]"
-                    },
-                    "environmentTag": {
-                        "value": "[parameters('environmentTag')]"
-                    },
-                    "ownerTag": {
-                        "value": "[parameters('ownerTag')]"
-                    },
-                    "applicationLzSubscriptionId": {
-                        "value": "[parameters('applicationLzSubscriptionId')]"
-                    }
-                }
-            }
-        },
-        {
-            "condition": "[and(not(empty(parameters('applicationLzSubscriptionId'))),equals(parameters('enableAkv'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),equals(parameters('enableAkv'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
             "name": "[variables('deploymentNames').keyVault]",
             "dependsOn": [
-                 "DeploymentDelay",
                 "[variables('deploymentNames').managementGroups]"
             ],
             "location": "[deployment().location]",
@@ -425,20 +397,19 @@
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
                     },
-                    "applicationLzSubscriptionId": {
-                        "value": "[parameters('applicationLzSubscriptionId')]"
+                    "appLzSubscriptionId": {
+                        "value": "[parameters('appLzSubscriptionId')]"
                     }
                 }
             }
         },
         {
-            "condition": "[and(not(empty(parameters('applicationLzSubscriptionId'))),equals(parameters('enableStorage'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),equals(parameters('enableStorage'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
             "name": "[variables('deploymentNames').storage]",
             "dependsOn": [
-                 "DeploymentDelay",
                 "[variables('deploymentNames').managementGroups]"
             ],
             "location": "[deployment().location]",
@@ -473,8 +444,8 @@
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
                     },
-                    "applicationLzSubscriptionId": {
-                        "value": "[parameters('applicationLzSubscriptionId')]"
+                    "appLzSubscriptionId": {
+                        "value": "[parameters('appLzSubscriptionId')]"
                     }
                 }
             }
