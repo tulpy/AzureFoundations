@@ -264,7 +264,8 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
             "name": "[variables('deploymentNames').networking]",
             "dependsOn": [
-                "DeploymentDelay"
+                "DeploymentDelay",
+                "[variables('deploymentNames').managementGroups]"
             ],
             "location": "[deployment().location]",
             "properties": {
@@ -341,7 +342,8 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
             "name": "[variables('deploymentNames').recoveryServicesVault]",
             "dependsOn": [
-                "DeploymentDelay"
+                 "DeploymentDelay",
+                "[variables('deploymentNames').managementGroups]"
             ],
             "location": "[deployment().location]",
             "properties": {
@@ -388,7 +390,8 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
             "name": "[variables('deploymentNames').keyVault]",
             "dependsOn": [
-                "DeploymentDelay"
+                 "DeploymentDelay",
+                "[variables('deploymentNames').managementGroups]"
             ],
             "location": "[deployment().location]",
             "properties": {
@@ -435,7 +438,8 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
             "name": "[variables('deploymentNames').storage]",
             "dependsOn": [
-                "DeploymentDelay"
+                 "DeploymentDelay",
+                "[variables('deploymentNames').managementGroups]"
             ],
             "location": "[deployment().location]",
             "properties": {
