@@ -36,7 +36,7 @@
         "ownerTag": {
             "type": "string"
         },
-        "platformLzSubscriptionId": {
+        "appLzSubscriptionId": {
             "type": "string",
             "defaultValue": "",
             "maxLength": 36
@@ -58,12 +58,12 @@
     },
     "resources": [
         {
-            "condition": "[or(equals(parameters('enableRsv'), 'Yes'), not(empty(parameters('platformLzSubscriptionId'))))]",
+            "condition": "[or(equals(parameters('enableRsv'), 'Yes'), not(empty(parameters('appLzSubscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
             "name": "backup",
             "location": "[deployment().location]",
-            "subscriptionId": "[parameters('platformLzSubscriptionId')]",
+            "subscriptionId": "[parameters('appLzSubscriptionId')]",
             "properties": {
                 "mode": "Incremental",
                 "template": {
