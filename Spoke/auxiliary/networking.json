@@ -221,7 +221,7 @@
                                                 }
                                             }
                                         },
-                                                                                {
+                                        {
                                             "condition": "[and(equals(parameters('enableWeb'), 'Yes'), not(empty(parameters('subnetMaskForWeb'))))]",
                                             "type": "Microsoft.Network/routeTables",
                                             "apiVersion": "2020-05-01",
