@@ -107,6 +107,7 @@
         "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-network'))]",
         "azVnetCidr": "[substring(parameters('addressPrefix'),0,sub(length(parameters('addressPrefix')), 3))]",
         "azVnetName": "[toLower(concat(variables('namingPrefix'), '-', parameters('vntPrefix'), '-', variables('azVnetCidr')))]",
+        "nwName": "[toLower(concat(variables('namingPrefix'), '-anw-', parameters('location')))]",
         "subnetName001": "Web",
         "nsgName001": "[toLower(concat(variables('namingPrefix'), '-', parameters('nsgPrefix'), '-', variables('subnetName001')))]",
         "udrName001": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-', variables('subnetName001')))]",
@@ -199,6 +200,15 @@
                                             },
                                             "resources": [
                                             ]
+                                        },
+                                        {
+                                            "name": "[variables('nwName')]",
+                                            "type": "Microsoft.Network/networkWatchers",
+                                            "apiVersion": "2019-11-01",
+                                            "location": "[deployment().location]",
+                                            "tags": {},
+                                            "properties": {},
+                                            "resources": []
                                         },
                                         {
                                             "condition": "[and(equals(parameters('enableWeb'), 'Yes'), not(empty(parameters('subnetMaskForWeb'))))]",
