@@ -1,0 +1,460 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "companyPrefix": {
+            "type": "string",
+            "maxLength": 5,
+            "metadata": {
+                "description": "Provide the company identifier prefix (max 5 characters)"
+            }
+        },
+        "locationPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the location identifier prefix (3 characters)"
+            }
+        },
+        "environmentPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the environment identifier prefix (3 characters)"
+            }
+        },
+        "argPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the resource group identifier"
+            }
+        },
+        "vntPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the virtual network identifier prefix"
+            }
+        },
+        "staPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the Azure Storage identifier prefix"
+            }
+        },
+        "udrPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the Route Table identifier prefix"
+            }
+        },
+        "nsgPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the Network Security Group identifier prefix"
+            }
+        },
+        "akvPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the Azure key Vault prefix"
+            }
+        },
+        "rsvPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the Recovery Services Vault prefix"
+            }
+        },
+        "environmentTag": {
+            "type": "string",
+            "metadata": {
+                "description": "Provide the value for the environment tag"
+            }
+        },
+        "ownerTag": {
+            "type": "string",
+            "metadata": {
+                "description": "Provide the value for the owner tag"
+            }
+        },
+        "appLzSubscriptionId": {
+            "type": "string",
+            "defaultValue": "",
+            "maxLength": 36,
+            "metadata": {
+                "description": "Provide the subscription id of an existing, empty subscription you want to dedicate to the Platform LZ. If you don't want to bring a subscription, leave this parameter empty as is."
+            }
+        },
+        "enableAkv": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "metadata": {
+                "description": "If 'Yes' is selected then an Azure Key Vault will be deployed."
+            }
+        },
+        "enableStorage": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "metadata": {
+                "description": "If 'Yes' is selected then an Azure Storage Account will be deployed."
+            }
+        },
+        "enableRsv": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "metadata": {
+                "description": "If 'Yes' is selected then a Recovery Services Vault will be deployed."
+            }
+        },
+        "enableSpoke": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "enableWeb": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "No"
+        },
+        "enableApp": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "No"
+        },
+        "enableData": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "No"
+        },
+        "subnetMaskForWeb": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "subnetMaskForApp": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "subnetMaskForData": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[deployment().location]"
+        },
+        "addressPrefix": {
+            "type": "string",
+            "metadata": {
+                "displayName": "addressPrefix",
+                "description": "Address prefix of the HUB"
+            },
+            "defaultValue": "192.168.0.0/24"
+        }
+    },
+    "variables": {
+        "deploymentUris": {
+            "managementGroups": "[uri(deployment().properties.templateLink.uri, 'auxiliary/mgmtGroups.json')]",
+            "keyVault": "[uri(deployment().properties.templateLink.uri, 'auxiliary/keyVault.json')]",
+            "storage": "[uri(deployment().properties.templateLink.uri, 'auxiliary/storage.json')]",
+            "recoveryServicesVault": "[uri(deployment().properties.templateLink.uri, 'auxiliary/recoveryServicesVault.json')]",
+            "networking": "[uri(deployment().properties.templateLink.uri, 'auxiliary/networking.json')]",
+            "applicationLandingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/appLz.json')]"
+        },
+        "moveSubscription": "[concat(parameters('companyPrefix'), '-appLandingZones', '/', parameters('appLzSubscriptionId'))]",
+        "noSubscription": "[concat(parameters('companyPrefix'), '-appLandingZones', '/', 'na')]",
+        "deploymentNames": {
+            "managementGroups": "[take(concat('mgmtGroups', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "keyVault": "[take(concat('keyVault', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "storage": "[take(concat('storage', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "recoveryServicesVault": "[take(concat('rsv', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "networking": "[take(concat('networking', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "applicationLandingZone": "[take(concat('appLz', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "[variables('deploymentNames').managementGroups]",
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('deploymentUris').managementGroups]"
+                },
+                "parameters": {
+                    "companyPrefix": {
+                        "value": "[parameters('companyPrefix')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[not(empty(parameters('appLzSubscriptionId')))]",
+            "type": "Microsoft.Management/managementGroups/subscriptions",
+            "apiVersion": "2020-05-01",
+            "name": "[if(not(empty(parameters('appLzSubscriptionId'))), variables('moveSubscription'), variables('noSubscription'))]",
+            "dependsOn": [
+                "[variables('deploymentNames').managementGroups]"
+            ],
+            "properties": {}
+        },
+                {
+            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),equals(parameters('enableRsv'), 'Yes'))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-05-01",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
+            "name": "[variables('deploymentNames').recoveryServicesVault]",
+            "dependsOn": [
+                "[variables('deploymentNames').managementGroups]"
+            ],
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('deploymentUris').recoveryServicesVault]"
+                },
+                "parameters": {
+                    "companyPrefix": {
+                        "value": "[parameters('companyPrefix')]"
+                    },
+                    "locationPrefix": {
+                        "value": "[parameters('locationPrefix')]"
+                    },
+                    "environmentPrefix": {
+                        "value": "[parameters('environmentPrefix')]"
+                    },
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
+                    },
+                    "rsvPrefix": {
+                        "value": "[parameters('rsvPrefix')]"
+                    },
+                    "enableRsv": {
+                        "value": "[parameters('enableRsv')]"
+                    },
+                    "environmentTag": {
+                        "value": "[parameters('environmentTag')]"
+                    },
+                    "ownerTag": {
+                        "value": "[parameters('ownerTag')]"
+                    },
+                    "appLzSubscriptionId": {
+                        "value": "[parameters('appLzSubscriptionId')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),equals(parameters('enableSpoke'), 'Yes'))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-05-01",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
+            "name": "[variables('deploymentNames').networking]",
+            "dependsOn": [
+                "[variables('deploymentNames').managementGroups]"
+            ],
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('deploymentUris').networking]"
+                },
+                "parameters": {
+                    "companyPrefix": {
+                        "value": "[parameters('companyPrefix')]"
+                    },
+                    "locationPrefix": {
+                        "value": "[parameters('locationPrefix')]"
+                    },
+                    "environmentPrefix": {
+                        "value": "[parameters('environmentPrefix')]"
+                    },
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
+                    },
+                    "vntPrefix": {
+                        "value": "[parameters('vntPrefix')]"
+                    },
+                    "udrPrefix": {
+                        "value": "[parameters('udrPrefix')]"
+                    },
+                    "nsgPrefix": {
+                        "value": "[parameters('nsgPrefix')]"
+                    },
+                    "environmentTag": {
+                        "value": "[parameters('environmentTag')]"
+                    },
+                    "ownerTag": {
+                        "value": "[parameters('ownerTag')]"
+                    },
+                    "enableSpoke": {
+                        "value": "[parameters('enableSpoke')]"
+                    },
+                    "addressPrefix": {
+                        "value": "[parameters('addressPrefix')]"
+                    },
+                    "enableWeb": {
+                        "value": "[parameters('enableWeb')]"
+                    },
+                    "enableApp": {
+                        "value": "[parameters('enableApp')]"
+                    },
+                    "enableData": {
+                        "value": "[parameters('enableData')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "appLzSubscriptionId": {
+                        "value": "[parameters('appLzSubscriptionId')]"
+                    },
+                    "subnetMaskForWeb": {
+                        "value": "[parameters('subnetMaskForWeb')]"
+                    },
+                    "subnetMaskForApp": {
+                        "value": "[parameters('subnetMaskForApp')]"
+                    },
+                    "subnetMaskForData": {
+                        "value": "[parameters('subnetMaskForData')]"
+                    }
+                }
+            }
+        },
+
+        {
+            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),equals(parameters('enableAkv'), 'Yes'))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-05-01",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
+            "name": "[variables('deploymentNames').keyVault]",
+            "dependsOn": [
+                "[variables('deploymentNames').managementGroups]"
+            ],
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('deploymentUris').keyVault]"
+                },
+                "parameters": {
+                    "companyPrefix": {
+                        "value": "[parameters('companyPrefix')]"
+                    },
+                    "locationPrefix": {
+                        "value": "[parameters('locationPrefix')]"
+                    },
+                    "environmentPrefix": {
+                        "value": "[parameters('environmentPrefix')]"
+                    },
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
+                    },
+                    "akvPrefix": {
+                        "value": "[parameters('akvPrefix')]"
+                    },
+                    "enableAkv": {
+                        "value": "[parameters('enableAkv')]"
+                    },
+                    "environmentTag": {
+                        "value": "[parameters('environmentTag')]"
+                    },
+                    "ownerTag": {
+                        "value": "[parameters('ownerTag')]"
+                    },
+                    "appLzSubscriptionId": {
+                        "value": "[parameters('appLzSubscriptionId')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),equals(parameters('enableStorage'), 'Yes'))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-05-01",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
+            "name": "[variables('deploymentNames').storage]",
+            "dependsOn": [
+                "[variables('deploymentNames').managementGroups]"
+            ],
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('deploymentUris').storage]"
+                },
+                "parameters": {
+                    "companyPrefix": {
+                        "value": "[parameters('companyPrefix')]"
+                    },
+                    "locationPrefix": {
+                        "value": "[parameters('locationPrefix')]"
+                    },
+                    "environmentPrefix": {
+                        "value": "[parameters('environmentPrefix')]"
+                    },
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
+                    },
+                    "staPrefix": {
+                        "value": "[parameters('staPrefix')]"
+                    },
+                    "enableStorage": {
+                        "value": "[parameters('enableStorage')]"
+                    },
+                    "environmentTag": {
+                        "value": "[parameters('environmentTag')]"
+                    },
+                    "ownerTag": {
+                        "value": "[parameters('ownerTag')]"
+                    },
+                    "appLzSubscriptionId": {
+                        "value": "[parameters('appLzSubscriptionId')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "deployment": {
+            "type": "string",
+            "value": "[concat(deployment().name, ' has successfully deployed.')]"
+        }
+    }
+}

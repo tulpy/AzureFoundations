@@ -18,11 +18,11 @@
             "type": "string",
             "maxLength": 3
         },
-        "akvPrefix": {
+        "rsvPrefix": {
             "type": "string",
             "maxLength": 3
         },
-        "enableAkv": {
+        "enableRsv": {
             "type": "string",
             "allowedValues": [
                 "Yes",
@@ -36,12 +36,7 @@
         "ownerTag": {
             "type": "string"
         },
-        "platformLzSubscriptionId": {
-            "type": "string",
-            "defaultValue": "",
-            "maxLength": 36
-        },
-        "platformLzTenantId": {
+        "appLzSubscriptionId": {
             "type": "string",
             "defaultValue": "",
             "maxLength": 36
@@ -50,27 +45,25 @@
     "variables": {
         "deploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
-        "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-security'))]",
+        "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-backup'))]",
         "tags": {
             "environment": "[parameters('environmentTag')]",
             "owner": "[parameters('ownerTag')]"
         },
-        "keyVault": {
-            "name": "[toLower(take(concat(variables('namingPrefix'), '-', parameters('akvPrefix'), '-', guid(parameters('companyPrefix'))), 24))]",
-            "enabledForDeployment": true,
-            "enabledForDiskEncryption": true,
-            "enabledForTemplateDeployment": true,
-            "sku": "Standard"
+        "recoveryServicesVault": {
+            "name": "[toLower(take(concat(variables('namingPrefix'), '-', parameters('rsvPrefix'), '-', guid(parameters('companyPrefix'))), 24))]",
+            "policyName": "[toLower(concat(parameters('companyPrefix'),'-backuppolicy'))]",
+            "vaultStorageType": "LocallyRedundant"
         }
     },
     "resources": [
         {
-            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableAkv'), 'Yes'))]",
+            "condition": "[or(equals(parameters('enableRsv'), 'Yes'), not(empty(parameters('appLzSubscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
-            "name": "keyVault",
+            "name": "backup",
             "location": "[deployment().location]",
-            "subscriptionId": "[parameters('platformLzSubscriptionId')]",
+            "subscriptionId": "[parameters('appLzSubscriptionId')]",
             "properties": {
                 "mode": "Incremental",
                 "template": {
@@ -114,25 +107,27 @@
                                             }
                                         },
                                         {
-                                            "condition": "[equals(parameters('enableAkv'), 'Yes')]",
-                                            "name": "[variables('keyVault').name]",
-                                            "type": "Microsoft.KeyVault/vaults",
-                                            "apiVersion": "2019-09-01",
+                                            "condition": "[equals(parameters('enableRsv'), 'Yes')]",
+                                            "type": "Microsoft.RecoveryServices/vaults",
+                                            "apiVersion": "2020-02-02",
+                                            "name": "[variables('recoveryServicesVault').name]",
+                                            "tags": { "vaultStorageType": "[variables('recoveryServicesVault').vaultStorageType]" },
                                             "location": "[deployment().location]",
+                                            "sku": {
+                                                "name": "RS0",
+                                                "tier": "Standard"
+                                            },
+                                            "properties": {}
+                                        },
+                                        {
+                                            "apiVersion": "2018-01-10",
+                                            "name": "[concat(variables('recoveryServicesVault').name, '/vaultstorageconfig')]",
+                                            "type": "Microsoft.RecoveryServices/vaults/backupstorageconfig",
+                                            "dependsOn": [
+                                                "[concat('Microsoft.RecoveryServices/vaults/', variables('recoveryServicesVault').name)]"
+                                            ],
                                             "properties": {
-                                                "enabledForDeployment": "[variables('keyVault').enabledForDeployment]",
-                                                "enabledForDiskEncryption": "[variables('keyVault').enabledForDiskEncryption]",
-                                                "enabledForTemplateDeployment": "[variables('keyVault').enabledForTemplateDeployment]",
-                                                "tenantId": "[parameters('platformLzTenantId')]",
-                                                "accessPolicies": [],
-                                                "sku": {
-                                                    "name": "[variables('keyVault').sku]",
-                                                    "family": "A"
-                                                },
-                                                "networkAcls": {
-                                                    "defaultAction": "Allow",
-                                                    "bypass": "AzureServices"
-                                                }
+                                                "StorageModelType": "[variables('recoveryServicesVault').vaultStorageType]"
                                             }
                                         }
                                     ]

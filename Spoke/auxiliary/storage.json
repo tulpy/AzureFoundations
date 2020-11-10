@@ -18,11 +18,11 @@
             "type": "string",
             "maxLength": 3
         },
-        "akvPrefix": {
+        "staPrefix": {
             "type": "string",
             "maxLength": 3
         },
-        "enableAkv": {
+        "enableStorage": {
             "type": "string",
             "allowedValues": [
                 "Yes",
@@ -36,12 +36,7 @@
         "ownerTag": {
             "type": "string"
         },
-        "platformLzSubscriptionId": {
-            "type": "string",
-            "defaultValue": "",
-            "maxLength": 36
-        },
-        "platformLzTenantId": {
+        "appLzSubscriptionId": {
             "type": "string",
             "defaultValue": "",
             "maxLength": 36
@@ -49,28 +44,28 @@
     },
     "variables": {
         "deploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
-        "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
-        "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-security'))]",
+        "storageNamingPrefix": "[concat(parameters('companyPrefix'), parameters('locationPrefix'), parameters('environmentPrefix'))]",
+        "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-monitoring'))]",
         "tags": {
             "environment": "[parameters('environmentTag')]",
             "owner": "[parameters('ownerTag')]"
         },
-        "keyVault": {
-            "name": "[toLower(take(concat(variables('namingPrefix'), '-', parameters('akvPrefix'), '-', guid(parameters('companyPrefix'))), 24))]",
-            "enabledForDeployment": true,
-            "enabledForDiskEncryption": true,
-            "enabledForTemplateDeployment": true,
-            "sku": "Standard"
+        "storage": {
+            "name": "[take(toLower(concat(variables('storageNamingPrefix'), parameters('staPrefix'), guid(parameters('companyPrefix')))), 20)]",
+            "sku": "Standard_LRS",
+            "kind": "StorageV2",
+            "use": "Diagnostics",
+            "httpsOnly": true
         }
     },
     "resources": [
         {
-            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableAkv'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),equals(parameters('enableStorage'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
             "name": "keyVault",
             "location": "[deployment().location]",
-            "subscriptionId": "[parameters('platformLzSubscriptionId')]",
+            "subscriptionId": "[parameters('appLzSubscriptionId')]",
             "properties": {
                 "mode": "Incremental",
                 "template": {
@@ -114,25 +109,21 @@
                                             }
                                         },
                                         {
-                                            "condition": "[equals(parameters('enableAkv'), 'Yes')]",
-                                            "name": "[variables('keyVault').name]",
-                                            "type": "Microsoft.KeyVault/vaults",
-                                            "apiVersion": "2019-09-01",
+                                            "condition": "[equals(parameters('enableStorage'), 'Yes')]",
+                                            "type": "Microsoft.Storage/storageAccounts",
+                                            "apiVersion": "2019-06-01",
+                                            "name": "[variables('storage').name]",
                                             "location": "[deployment().location]",
+                                            "sku": {
+                                                "name": "[variables('storage').sku]"
+                                            },
+                                            "tags": {
+                                                "storageSKU": "[variables('storage').sku]",
+                                                "storageUse": "[variables('storage').use]"
+                                            },
+                                            "kind": "[variables('storage').kind]",
                                             "properties": {
-                                                "enabledForDeployment": "[variables('keyVault').enabledForDeployment]",
-                                                "enabledForDiskEncryption": "[variables('keyVault').enabledForDiskEncryption]",
-                                                "enabledForTemplateDeployment": "[variables('keyVault').enabledForTemplateDeployment]",
-                                                "tenantId": "[parameters('platformLzTenantId')]",
-                                                "accessPolicies": [],
-                                                "sku": {
-                                                    "name": "[variables('keyVault').sku]",
-                                                    "family": "A"
-                                                },
-                                                "networkAcls": {
-                                                    "defaultAction": "Allow",
-                                                    "bypass": "AzureServices"
-                                                }
+                                                "supportsHttpsTrafficOnly": "[variables('storage').httpsOnly]"
                                             }
                                         }
                                     ]
