@@ -279,6 +279,30 @@
                         }
                     },
                     {
+                        "name": "mgmtTenantsApi",
+                        "type": "Microsoft.Solutions.ArmApiControl",
+                        "request": {
+                            "method": "GET",
+                            "path": "tenants?api-version=2020-01-01"
+                        }
+                    },
+                    {
+                        "name": "esPlatformLzTenant",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Platform Landing Zone Tenant (required)",
+                        "toolTip": "",
+                        "multiselect": false,
+                        "selectAll": true,
+                        "filter": true,
+                        "filterPlaceholder": "Filter items ...",
+                        "multiLine": true,
+                        "visible": true,
+                        "constraints": {
+                            "allowedValues": "[map(steps('esPlatformLz').mgmtTenantsApi.value, (tenant) => parse(concat('{\"label\":\"', tenant.displayName, '\",\"description\":\"', tenant.tenantId, '\",\"value\":\"', toLower(tenant.tenantId), '\"}')) )]",
+                            "required": true
+                        }
+                    },
+                    {
                         "name": "esPlatformLzSub",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Platform Landing Zone Subscription (required)",
@@ -1128,6 +1152,7 @@
             "enableIdentity": "[steps('esPlatformLz').esIdentity]",
             "addressPrefix": "[steps('esPlatformLz').esAddressHub]",
             "location": "[steps('esPlatformLz').esNwLocation]",
+            "platformLzTenantId": "[steps('esPlatformLz').esPlatformLzTenant]",
             "platformLzSubscriptionId": "[steps('esPlatformLz').esPlatformLzSub]",
             "enableLogAnalytics": "[steps('esPlatformLz').esLogAnalytics]",
             "enableAsc": "[steps('esPlatformLz').esAsc]",

@@ -119,6 +119,14 @@
                 "description": "Provide the value for the owner tag"
             }
         },
+        "platformLzTenantId": {
+            "type": "string",
+            "defaultValue": "",
+            "maxLength": 36,
+            "metadata": {
+                "description": "Provide the tenant id"
+            }
+        },
         "platformLzSubscriptionId": {
             "type": "string",
             "defaultValue": "",
@@ -741,6 +749,9 @@
                     },
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
+                    },
+                    "platformLzTenantId": {
+                        "value": "[parameters('platformLzTenantId')]"
                     },
                     "platformLzSubscriptionId": {
                         "value": "[parameters('platformLzSubscriptionId')]"
