@@ -36,14 +36,14 @@
         "ownerTag": {
             "type": "string"
         },
-        "platformLzSubscriptionId": {
+        "subscriptionId": {
             "type": "string",
             "defaultValue": "",
             "maxLength": 36
         }
     },
     "variables": {
-        "deploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
+        "deploymentName": "[take(concat(deployment().name, '-rsv'), 64)]",
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
         "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-backup'))]",
         "tags": {
@@ -58,12 +58,12 @@
     },
     "resources": [
         {
-            "condition": "[or(equals(parameters('enableRsv'), 'Yes'), not(empty(parameters('platformLzSubscriptionId'))))]",
+            "condition": "[or(equals(parameters('enableRsv'), 'Yes'), not(empty(parameters('subscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
             "name": "backup",
             "location": "[deployment().location]",
-            "subscriptionId": "[parameters('platformLzSubscriptionId')]",
+            "subscriptionId": "[parameters('subscriptionId')]",
             "properties": {
                 "mode": "Incremental",
                 "template": {

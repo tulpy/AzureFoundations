@@ -399,7 +399,7 @@
                         "visible": true
                     },
                     {
-                        "name": "esAddressHub",
+                        "name": "esAddress",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Application Landing Zone CIDR Range",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/16)",
@@ -421,7 +421,7 @@
                     {
                         "name": "esNwLocation",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Azure Region for the Virtual Netowrk Hub.",
+                        "label": "Azure Region for the Virtual Netowrk.",
                         "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
                         "toolTip": "Select the target Azure region for the deployment.",
                         "constraints": {
@@ -551,15 +551,15 @@
             "subnetMaskForApp": "[steps('esApplicationLz').esAddressApp]",
             "subnetMaskForData": "[steps('esApplicationLz').esAddressData]",
 
-            "enableHub": "[steps('esApplicationLz').esSpoke]",
+            "enableSpoke": "[steps('esApplicationLz').esSpoke]",
 
             "enableWeb": "[steps('esApplicationLz').esWeb]",
             "enableApp": "[steps('esApplicationLz').esApp]",
             "enableData": "[steps('esApplicationLz').esData]",
             
-            "addressPrefix": "[steps('esApplicationLz').esAddressHub]",
+            "addressPrefix": "[steps('esApplicationLz').esAddress]",
             "location": "[steps('esApplicationLz').esNwLocation]",
-            "appLzSubscriptionId": "[steps('esApplicationLz').esApplicationLzSub]",
+            "subscriptionId": "[steps('esApplicationLz').esApplicationLzSub]",
             "enableAsc": "[steps('esApplicationLz').esAsc]",
 
             "enableAkv": "[steps('esApplicationLz').esAkv]",

@@ -84,7 +84,7 @@
                 "description": "Provide the value for the owner tag"
             }
         },
-        "appLzSubscriptionId": {
+        "subscriptionId": {
             "type": "string",
             "defaultValue": "",
             "maxLength": 36,
@@ -177,7 +177,7 @@
             "type": "string",
             "metadata": {
                 "displayName": "addressPrefix",
-                "description": "Address prefix of the HUB"
+                "description": "Address prefix"
             },
             "defaultValue": "192.168.0.0/24"
         }
@@ -188,17 +188,17 @@
             "keyVault": "[uri(deployment().properties.templateLink.uri, 'auxiliary/keyVault.json')]",
             "storage": "[uri(deployment().properties.templateLink.uri, 'auxiliary/storage.json')]",
             "recoveryServicesVault": "[uri(deployment().properties.templateLink.uri, 'auxiliary/recoveryServicesVault.json')]",
-            "networking": "[uri(deployment().properties.templateLink.uri, 'auxiliary/networking.json')]",
+            "spokeNetworking": "[uri(deployment().properties.templateLink.uri, 'auxiliary/spokeNetworking.json')]",
             "applicationLandingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/appLz.json')]"
         },
-        "moveSubscription": "[concat(parameters('companyPrefix'), '-appLandingZones', '/', parameters('appLzSubscriptionId'))]",
+        "moveSubscription": "[concat(parameters('companyPrefix'), '-appLandingZones', '/', parameters('subscriptionId'))]",
         "noSubscription": "[concat(parameters('companyPrefix'), '-appLandingZones', '/', 'na')]",
         "deploymentNames": {
             "managementGroups": "[take(concat('mgmtGroups', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "keyVault": "[take(concat('keyVault', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "storage": "[take(concat('storage', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "recoveryServicesVault": "[take(concat('rsv', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-            "networking": "[take(concat('networking', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "spokeNetworking": "[take(concat('spokeNetworking', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "applicationLandingZone": "[take(concat('appLz', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
         }
     },
@@ -222,17 +222,17 @@
             }
         },
         {
-            "condition": "[not(empty(parameters('appLzSubscriptionId')))]",
+            "condition": "[not(empty(parameters('subscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
             "apiVersion": "2020-05-01",
-            "name": "[if(not(empty(parameters('appLzSubscriptionId'))), variables('moveSubscription'), variables('noSubscription'))]",
+            "name": "[if(not(empty(parameters('subscriptionId'))), variables('moveSubscription'), variables('noSubscription'))]",
             "dependsOn": [
                 "[variables('deploymentNames').managementGroups]"
             ],
             "properties": {}
         },
                 {
-            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),equals(parameters('enableRsv'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableRsv'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
@@ -272,18 +272,18 @@
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
                     },
-                    "appLzSubscriptionId": {
-                        "value": "[parameters('appLzSubscriptionId')]"
+                    "subscriptionId": {
+                        "value": "[parameters('subscriptionId')]"
                     }
                 }
             }
         },
         {
-            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),equals(parameters('enableSpoke'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableSpoke'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
-            "name": "[variables('deploymentNames').networking]",
+            "name": "[variables('deploymentNames').spokeNetworking]",
             "dependsOn": [
                 "[variables('deploymentNames').managementGroups]"
             ],
@@ -292,7 +292,7 @@
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('deploymentUris').networking]"
+                    "uri": "[variables('deploymentUris').spokeNetworking]"
                 },
                 "parameters": {
                     "companyPrefix": {
@@ -340,8 +340,8 @@
                     "location": {
                         "value": "[parameters('location')]"
                     },
-                    "appLzSubscriptionId": {
-                        "value": "[parameters('appLzSubscriptionId')]"
+                    "subscriptionId": {
+                        "value": "[parameters('subscriptionId')]"
                     },
                     "subnetMaskForWeb": {
                         "value": "[parameters('subnetMaskForWeb')]"
@@ -357,7 +357,7 @@
         },
 
         {
-            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),equals(parameters('enableAkv'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableAkv'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
@@ -397,14 +397,14 @@
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
                     },
-                    "appLzSubscriptionId": {
-                        "value": "[parameters('appLzSubscriptionId')]"
+                    "subscriptionId": {
+                        "value": "[parameters('subscriptionId')]"
                     }
                 }
             }
         },
         {
-            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),equals(parameters('enableStorage'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableStorage'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
@@ -444,8 +444,8 @@
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
                     },
-                    "appLzSubscriptionId": {
-                        "value": "[parameters('appLzSubscriptionId')]"
+                    "subscriptionId": {
+                        "value": "[parameters('subscriptionId')]"
                     }
                 }
             }

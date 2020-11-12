@@ -36,7 +36,7 @@
         "ownerTag": {
             "type": "string"
         },
-        "appLzSubscriptionId": {
+        "subscriptionId": {
             "type": "string",
             "defaultValue": "",
             "maxLength": 36
@@ -60,12 +60,12 @@
     },
     "resources": [
         {
-            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),equals(parameters('enableStorage'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableStorage'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
             "name": "keyVault",
             "location": "[deployment().location]",
-            "subscriptionId": "[parameters('appLzSubscriptionId')]",
+            "subscriptionId": "[parameters('subscriptionId')]",
             "properties": {
                 "mode": "Incremental",
                 "template": {

@@ -119,7 +119,7 @@
                 "description": "Provide the value for the owner tag"
             }
         },
-        "platformLzTenantId": {
+        "tenantId": {
             "type": "string",
             "defaultValue": "",
             "maxLength": 36,
@@ -127,7 +127,7 @@
                 "description": "Provide the tenant id"
             }
         },
-        "platformLzSubscriptionId": {
+        "subscriptionId": {
             "type": "string",
             "defaultValue": "",
             "maxLength": 36,
@@ -359,7 +359,7 @@
             "type": "string",
             "metadata": {
                 "displayName": "addressPrefix",
-                "description": "Address prefix of the HUB"
+                "description": "Address prefix"
             },
             "defaultValue": "192.168.0.0/24"
         },
@@ -439,10 +439,10 @@
             "storage": "[uri(deployment().properties.templateLink.uri, 'auxiliary/storage.json')]",
             "recoveryServicesVault": "[uri(deployment().properties.templateLink.uri, 'auxiliary/recoveryServicesVault.json')]",
             "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
-            "networking": "[uri(deployment().properties.templateLink.uri, 'auxiliary/networking.json')]",
+            "hubNetworking": "[uri(deployment().properties.templateLink.uri, 'auxiliary/hubNetworking.json')]",
             "applicationLandingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/appLz.json')]"
         },
-        "moveSubscription": "[concat(parameters('companyPrefix'), '-Platform', '/', parameters('platformLzSubscriptionId'))]",
+        "moveSubscription": "[concat(parameters('companyPrefix'), '-Platform', '/', parameters('subscriptionId'))]",
         "noSubscription": "[concat(parameters('companyPrefix'), '-Platform', '/', 'na')]",
         "deploymentNames": {
             "managementGroups": "[take(concat('mgmtGroups', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
@@ -454,7 +454,7 @@
             "storage": "[take(concat('storage', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "recoveryServicesVault": "[take(concat('rsv', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "diagnosticsAndSecurity": "[take(concat('diagSecurity', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-            "networking": "[take(concat('networking', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "hubNetworking": "[take(concat('hubNetworking', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "applicationLandingZone": "[take(concat('appLz', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
         }
     },
@@ -548,21 +548,21 @@
             }
         },
         {
-            "condition": "[not(empty(parameters('platformLzSubscriptionId')))]",
+            "condition": "[not(empty(parameters('subscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
             "apiVersion": "2020-05-01",
-            "name": "[if(not(empty(parameters('platformLzSubscriptionId'))), variables('moveSubscription'), variables('noSubscription'))]",
+            "name": "[if(not(empty(parameters('subscriptionId'))), variables('moveSubscription'), variables('noSubscription'))]",
             "dependsOn": [
                 "[variables('deploymentNames').managementGroups]"
             ],
             "properties": {}
         },
         {
-            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableHub'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableHub'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
-            "name": "[variables('deploymentNames').networking]",
+            "name": "[variables('deploymentNames').hubNetworking]",
             "dependsOn": [
                 "[variables('deploymentNames').diagnosticsAndSecurity]",
                 "DeploymentDelay"
@@ -572,7 +572,7 @@
                 "mode": "Incremental",
                 "templateLink": {
                     "contentVersion": "1.0.0.0",
-                    "uri": "[variables('deploymentUris').networking]"
+                    "uri": "[variables('deploymentUris').hubNetworking]"
                 },
                 "parameters": {
                     "companyPrefix": {
@@ -638,8 +638,8 @@
                     "location": {
                         "value": "[parameters('location')]"
                     },
-                    "platformLzSubscriptionId": {
-                        "value": "[parameters('platformLzSubscriptionId')]"
+                    "subscriptionId": {
+                        "value": "[parameters('subscriptionId')]"
                     },
                     "vpnGwType": {
                         "value": "[parameters('vpnGwType')]"
@@ -663,7 +663,7 @@
             }
         },
         {
-            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableRsv'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableRsv'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
@@ -703,14 +703,14 @@
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
                     },
-                    "platformLzSubscriptionId": {
-                        "value": "[parameters('platformLzSubscriptionId')]"
+                    "subscriptionId": {
+                        "value": "[parameters('subscriptionId')]"
                     }
                 }
             }
         },
         {
-            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableAkv'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableAkv'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
@@ -750,17 +750,17 @@
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
                     },
-                    "platformLzTenantId": {
-                        "value": "[parameters('platformLzTenantId')]"
+                    "tenantId": {
+                        "value": "[parameters('tenantId')]"
                     },
-                    "platformLzSubscriptionId": {
-                        "value": "[parameters('platformLzSubscriptionId')]"
+                    "subscriptionId": {
+                        "value": "[parameters('subscriptionId')]"
                     }
                 }
             }
         },
                 {
-            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableStorage'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableStorage'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
@@ -800,14 +800,14 @@
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
                     },
-                    "platformLzSubscriptionId": {
-                        "value": "[parameters('platformLzSubscriptionId')]"
+                    "subscriptionId": {
+                        "value": "[parameters('subscriptionId')]"
                     }
                 }
             }
         },
         {
-            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
@@ -842,8 +842,8 @@
                     "aaaPrefix": {
                         "value": "[parameters('aaaPrefix')]"
                     },
-                    "platformLzSubscriptionId": {
-                        "value": "[parameters('platformLzSubscriptionId')]"
+                    "subscriptionId": {
+                        "value": "[parameters('subscriptionId')]"
                     },
                     "enableLogAnalytics": {
                         "value": "[parameters('enableLogAnalytics')]"
@@ -855,10 +855,10 @@
             }
         },
         {
-            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))), or(or(or(or(or(equals(parameters('enableSecuritySolution'), 'Yes'), equals(parameters('enableAgentHealth'), 'Yes')), equals(parameters('enableChangeTracking'), 'Yes')), equals(parameters('enableUpdateMgmt'), 'Yes'), equals(parameters('enableActivityLog'), 'Yes')), equals(parameters('enableAntiMalware'), 'Yes'), equals(parameters('enableVmInsights'), 'Yes')), equals(parameters('enableServiceMap'), 'Yes'), equals(parameters('enableSqlAssessment'), 'Yes')))]",
+            "condition": "[and(not(empty(parameters('subscriptionId'))), or(or(or(or(or(equals(parameters('enableSecuritySolution'), 'Yes'), equals(parameters('enableAgentHealth'), 'Yes')), equals(parameters('enableChangeTracking'), 'Yes')), equals(parameters('enableUpdateMgmt'), 'Yes'), equals(parameters('enableActivityLog'), 'Yes')), equals(parameters('enableAntiMalware'), 'Yes'), equals(parameters('enableVmInsights'), 'Yes')), equals(parameters('enableServiceMap'), 'Yes'), equals(parameters('enableSqlAssessment'), 'Yes')))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
-            "subscriptionId": "[parameters('platformLzSubscriptionId')]",
+            "subscriptionId": "[parameters('subscriptionId')]",
             "name": "[variables('deploymentNames').monitoringSolutions]",
             "dependsOn": [
                 "[variables('deploymentNames').monitoring]"
@@ -886,8 +886,8 @@
                     "omsPrefix": {
                         "value": "[parameters('omsPrefix')]"
                     },
-                    "platformLzSubscriptionId": {
-                        "value": "[parameters('platformLzSubscriptionId')]"
+                    "subscriptionId": {
+                        "value": "[parameters('subscriptionId')]"
                     },
                     "enableSecuritySolution": {
                         "value": "[parameters('enableSecuritySolution')]"
@@ -968,7 +968,7 @@
             }
         },
         {
-            "condition": "[and(not(empty(parameters('platformLzSubscriptionId'))), or(equals(parameters('enableLogAnalytics'), 'Yes'), and(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))))]",
+            "condition": "[and(not(empty(parameters('subscriptionId'))), or(equals(parameters('enableLogAnalytics'), 'Yes'), and(equals(parameters('enableAsc'), 'Standard'), equals(parameters('enableAsc'), 'Free'))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
@@ -1007,8 +1007,8 @@
                     "enableAsc": {
                         "value": "[parameters('enableAsc')]"
                     },
-                    "platformLzSubscriptionId": {
-                        "value": "[parameters('platformLzSubscriptionId')]"
+                    "subscriptionId": {
+                        "value": "[parameters('subscriptionId')]"
                     }
                 }
             }

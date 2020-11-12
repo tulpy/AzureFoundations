@@ -83,7 +83,7 @@
             ],
             "defaultValue": "No"
         },
-        "appLzSubscriptionId": {
+        "subscriptionId": {
             "type": "string",
             "defaultValue": "",
             "maxLength": 36
@@ -103,7 +103,7 @@
     },
     "variables": {
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
-        "deploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
+        "deploymentName": "[take(concat(deployment().name, '-networking'), 64)]",
         "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-network'))]",
         "azVnetCidr": "[substring(parameters('addressPrefix'),0,sub(length(parameters('addressPrefix')), 3))]",
         "azVnetName": "[toLower(concat(variables('namingPrefix'), '-', parameters('vntPrefix'), '-', variables('azVnetCidr')))]",
@@ -111,18 +111,18 @@
         "subnetName001": "Web",
         "nsgName001": "[toLower(concat(variables('namingPrefix'), '-', parameters('nsgPrefix'), '-', variables('subnetName001')))]",
         "udrName001": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-', variables('subnetName001')))]",
-        "udrId001": "[concat('/subscriptions/', parameters('appLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('udrName001'))]",
-        "nsgId001": "[concat('/subscriptions/', parameters('appLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('nsgName001'))]",
+        "udrId001": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('udrName001'))]",
+        "nsgId001": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('nsgName001'))]",
         "subnetName002": "Apps",
         "NsgName002": "[toLower(concat(variables('namingPrefix'), '-', parameters('nsgPrefix'), '-', variables('subnetName002')))]",
         "UdrName002": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-', variables('subnetName002')))]",
-        "UdrId002": "[concat('/subscriptions/', parameters('appLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('udrName002'))]",
-        "NsgId002": "[concat('/subscriptions/', parameters('appLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('nsgName002'))]",
+        "UdrId002": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('udrName002'))]",
+        "NsgId002": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('nsgName002'))]",
         "subnetName003": "Data",
         "NsgName003": "[toLower(concat(variables('namingPrefix'), '-', parameters('nsgPrefix'), '-', variables('subnetName003')))]",
         "UdrName003": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-', variables('subnetName003')))]",
-        "UdrId003": "[concat('/subscriptions/', parameters('appLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('udrName003'))]",
-        "NsgId003": "[concat('/subscriptions/', parameters('appLzSubscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('nsgName003'))]",
+        "UdrId003": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('udrName003'))]",
+        "NsgId003": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('nsgName003'))]",
         "tags": {
             "environment": "[parameters('environmentTag')]",
             "owner": "[parameters('ownerTag')]"
@@ -130,12 +130,12 @@
     },
     "resources": [
         {
-            "condition": "[and(equals(parameters('enableSpoke'), 'Yes'), not(empty(parameters('appLzSubscriptionId'))))]",
+            "condition": "[and(equals(parameters('enableSpoke'), 'Yes'), not(empty(parameters('subscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
-            "name": "networking",
+            "name": "spokeNetworking",
             "location": "[deployment().location]",
-            "subscriptionId": "[parameters('appLzSubscriptionId')]",
+            "subscriptionId": "[parameters('subscriptionId')]",
             "properties": {
                 "mode": "Incremental",
                 "template": {

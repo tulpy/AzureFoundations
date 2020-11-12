@@ -36,14 +36,19 @@
         "ownerTag": {
             "type": "string"
         },
-        "appLzSubscriptionId": {
+        "subscriptionId": {
+            "type": "string",
+            "defaultValue": "",
+            "maxLength": 36
+        },
+        "tenantId": {
             "type": "string",
             "defaultValue": "",
             "maxLength": 36
         }
     },
     "variables": {
-        "deploymentName": "[take(concat(deployment().name, '-hubspoke'), 64)]",
+        "deploymentName": "[take(concat(deployment().name, '-keyVault'), 64)]",
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
         "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-security'))]",
         "tags": {
@@ -60,12 +65,12 @@
     },
     "resources": [
         {
-            "condition": "[and(not(empty(parameters('appLzSubscriptionId'))),equals(parameters('enableAkv'), 'Yes'))]",
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableAkv'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
             "name": "keyVault",
             "location": "[deployment().location]",
-            "subscriptionId": "[parameters('appLzSubscriptionId')]",
+            "subscriptionId": "[parameters('subscriptionId')]",
             "properties": {
                 "mode": "Incremental",
                 "template": {
@@ -118,7 +123,7 @@
                                                 "enabledForDeployment": "[variables('keyVault').enabledForDeployment]",
                                                 "enabledForDiskEncryption": "[variables('keyVault').enabledForDiskEncryption]",
                                                 "enabledForTemplateDeployment": "[variables('keyVault').enabledForTemplateDeployment]",
-                                                "tenantId": "5ac45a75-47a9-4d20-aaad-c13a830ac5af",
+                                                "tenantId": "[parameters('tenantId')]",
                                                 "accessPolicies": [],
                                                 "sku": {
                                                     "name": "[variables('keyVault').sku]",
