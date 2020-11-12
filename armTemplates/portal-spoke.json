@@ -90,71 +90,11 @@
                         }
                     },
                     {
-                        "name": "esOmsIdentifier",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Log Analytics Identifier",
-                        "toolTip": "Provide a naming prefix for the Log Analytics identifier",
-                        "defaultValue": "oms",
-                        "constraints": {
-                            "required": true,
-                            "regex": "^[a-z0-9A-Z-]{3}$",
-                            "validationMessage": "The prefix must be 3 characters."
-                        }
-                    },
-                    {
-                        "name": "esVngIdentifier",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Virtual Network Gateway Identifier",
-                        "toolTip": "Provide a naming prefix for the Virtual Network Gateway identifier",
-                        "defaultValue": "vng",
-                        "constraints": {
-                            "required": true,
-                            "regex": "^[a-z0-9A-Z-]{3}$",
-                            "validationMessage": "The prefix must be 3 characters."
-                        }
-                    },
-                    {
                         "name": "esVntIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Virtual Network Identifier",
                         "toolTip": "Provide a naming prefix for the Virtual Network identifier",
                         "defaultValue": "vnt",
-                        "constraints": {
-                            "required": true,
-                            "regex": "^[a-z0-9A-Z-]{3}$",
-                            "validationMessage": "The prefix must be 3 characters."
-                        }
-                    },
-                    {
-                        "name": "esPipIdentifier",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Public IP Identifier",
-                        "toolTip": "Provide a naming prefix for the Public IP identifier",
-                        "defaultValue": "pip",
-                        "constraints": {
-                            "required": true,
-                            "regex": "^[a-z0-9A-Z-]{3}$",
-                            "validationMessage": "The prefix must be 3 characters."
-                        }
-                    },
-                    {
-                        "name": "esAfwIdentifier",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Azure Firewall Identifier",
-                        "toolTip": "Provide a naming prefix for the Azure Firewall identifier",
-                        "defaultValue": "afw",
-                        "constraints": {
-                            "required": true,
-                            "regex": "^[a-z0-9A-Z-]{3}$",
-                            "validationMessage": "The prefix must be 3 characters."
-                        }
-                    },
-                    {
-                        "name": "esAaaIdentifier",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Azure Automation Identifier",
-                        "toolTip": "Provide a naming prefix for the Azure Automation identifier",
-                        "defaultValue": "aaa",
                         "constraints": {
                             "required": true,
                             "regex": "^[a-z0-9A-Z-]{3}$",
@@ -533,12 +473,7 @@
             "environmentPrefix": "[steps('esNaming').esEnvIdentifier]",
             "locationPrefix": "[steps('esNaming').esLocIdentifier]",
             "argPrefix": "[steps('esNaming').esArgIdentifier]",
-            "omsPrefix": "[steps('esNaming').esOmsIdentifier]",
-            "vngPrefix": "[steps('esNaming').esVngIdentifier]",
             "vntPrefix": "[steps('esNaming').esVntIdentifier]",
-            "pipPrefix": "[steps('esNaming').esPipIdentifier]",
-            "azFwPrefix": "[steps('esNaming').esAfwIdentifier]",
-            "aaaPrefix": "[steps('esNaming').esAaaIdentifier]",
             "staPrefix": "[steps('esNaming').esStaIdentifier]",
             "udrPrefix": "[steps('esNaming').esUdrIdentifier]",
             "nsgPrefix": "[steps('esNaming').esNsgIdentifier]",
@@ -546,22 +481,17 @@
             "rsvPrefix": "[steps('esNaming').esRsvIdentifier]",
             "environmentTag": "[steps('esNaming').esEnvironmentTag]",
             "ownerTag": "[steps('esNaming').esOwnerTag]",
-
             "subnetMaskForWeb": "[steps('esApplicationLz').esAddressWeb]",
             "subnetMaskForApp": "[steps('esApplicationLz').esAddressApp]",
             "subnetMaskForData": "[steps('esApplicationLz').esAddressData]",
-
             "enableSpoke": "[steps('esApplicationLz').esSpoke]",
-
             "enableWeb": "[steps('esApplicationLz').esWeb]",
             "enableApp": "[steps('esApplicationLz').esApp]",
             "enableData": "[steps('esApplicationLz').esData]",
-            
             "addressPrefix": "[steps('esApplicationLz').esAddress]",
             "location": "[steps('esApplicationLz').esNwLocation]",
             "subscriptionId": "[steps('esApplicationLz').esApplicationLzSub]",
             "enableAsc": "[steps('esApplicationLz').esAsc]",
-
             "enableAkv": "[steps('esApplicationLz').esAkv]",
             "enableStorage": "[steps('esApplicationLz').esStorage]",
             "enableRsv": "[steps('esApplicationLz').esRsv]"
