@@ -4,7 +4,7 @@ This article will guide you through the process to configure permissions to your
 
 > Note: The steps below requires you to use an identity that is local to the Azure AD, and **_not_** Guest user account due to known restrictions.
 
-Enterprise-Scale reference implementation requires permission at tenant root scope "/" to be able to configure Management Group and create/move subscription. In order to grant permission at tenant root scope "/", users in "AAD Global Administrators" group can temporarily elevate access, to manage all Azure resources in the directory.
+Azure Foundations reference implementation requires permission at tenant root scope "/" to be able to configure Management Group and create/move subscription. In order to grant permission at tenant root scope "/", users in "AAD Global Administrators" group can temporarily elevate access, to manage all Azure resources in the directory.
 
 Once UAA role is enabled, User Access Administrator can grant **_other users and service principles_** within organization to deploy/manage Enterprise-Scale reference implementation by granting "Owner" permission at tenant root scope "/".
 
@@ -23,7 +23,7 @@ Once permission is granted to other users and service principles, you can safely
 
 ![alt](https://docs.microsoft.com/en-us/azure/role-based-access-control/media/elevate-access-global-admin/aad-properties-global-admin-setting.png)
 
-## 2. Grant Access to User at root scope "/" to deploy Enterprise-Scale reference implementation
+## 2. Grant Access to User at root scope "/" to deploy Azure Foundations reference implementation
 
 Please ensure you are logged in as a user with UAA role enabled in AAD tenant and logged in user is not a guest user.
 
@@ -47,4 +47,4 @@ Please note, it may take up to 15-30 minutes for permission to propagate at tena
 
 ## Next steps
 
-Please proceed with [deploying reference implementation](./EnterpriseScale-Deploy-reference-implentations.md).
+Please proceed with [deploying reference implementation](./Azure-Foundations-Deploy-reference-implentations.md).

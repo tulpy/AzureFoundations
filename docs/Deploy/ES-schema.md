@@ -6,11 +6,9 @@ Azure Resource Manager (ARM) is the unified control-plane (global API front-door
 One of the essential capabilities of ARM, is the template orchestration engine that allows users to declare their Resource compositions, and deploy to one or more *scopes* in Azure.
 With the philosophy that everything in Azure is a Resource, that means you can declare the goal-state of your Azure Tenant as a whole and all its Resources using ARM templates.
 
-This article will help you to familiarize with the [Enterprise-Scale ARM template](../../../../../AzOps/blob/main/template/tenant.json), which consist on one and only one ARM template (one template to rule them all). We recommend to also explore the [Examples](../../../../tree/main/examples) to understand how parameter files are used to provide the Resources as objects to the template.
+## ARM template objectives for Azure Foundations
 
-## ARM template objectives for Enterprise-Scale
-
-Some of the key [design principles](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/design-principles) of Enterprise-Scale is to have a single control and management plane, be Azure native and aligned to the platform roadmap, and employ Azure Policy to enable policy driven governance and management. That means we rely on platform capabilities in order to compose and deploy the Enterprise-Scale architecture end-2-end.
+Some of the key [design principles](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/design-principles) of Azure Foundations is to have a single control and management plane, be Azure native and aligned to the platform roadmap, and employ Azure Policy to enable policy driven governance and management. That means we rely on platform capabilities in order to compose and deploy the architecture end-2-end.
 
 The objectives includes:
 
@@ -29,9 +27,9 @@ Further, this excludes:
 - A need to learn a new language and deployment approach to Azure
 - Imperative scripting
 
-## Azure Resources within scope of Enterprise-Scale
+## Azure Resources within scope of Azure Foundations
 
-The following ARM Resource types and deployment scopes are relevant for the Enterprise-Scale ARM template from a **platform** perspective, as it will build and operationalize the architecture itself. Any workload specific Resource types (e.g., Microsoft.Compute/virtualMachines, Microsoft.Web/sites etc.) is **NOT** in scope.
+The following ARM Resource types and deployment scopes are relevant for the ARM template from a **platform** perspective, as it will build and operationalize the architecture itself.
 
 | Resource Type          | Deployment Scope              | Description                                                        |
 | ---------------------|--------------------|--------------------------------------------------------------------|
@@ -44,11 +42,11 @@ The following ARM Resource types and deployment scopes are relevant for the Ente
 | Microsoft.Authorization/roleDefinitions          |Management Group, Subscription|Role-based access control definition, containing actions, notActions, dataActions, dataNotActions|
 | Microsoft.Authorization/roleAssignments          |Management Group, Subscription|RoleAssignments will manifests the runtime representation of a roleDefinition at the given scope|
 
->Note: The Enterprise-Scale architecture that enables a policy driven governance and management will ensure that Resource deployments to Resource Group scope from a platform perspective, such as virtual WAN, Log Analytics, diagnostics settings and more, are deployed using Azure Policy (policyDefinitions) with the **deployIfNotExists** effect. With regards to application teams; they can use any preferred method, tool, and interface when deploying their applications into the Landing Zones (Subscriptions) that are constructed by the Enterprise-Scale platform architecture.
+>Note: The Azure Foundations architecture that enables a policy driven governance and management will ensure that Resource deployments to Resource Group scope from a platform perspective, such as virtual WAN, Log Analytics, diagnostics settings and more, are deployed using Azure Policy (policyDefinitions) with the **deployIfNotExists** effect. With regards to application teams; they can use any preferred method, tool, and interface when deploying their applications into the Landing Zones (Subscriptions) that are constructed by the platform architecture.
 
-## Deployment sequencing for Enterprise-Scale ARM template
+## Deployment sequencing for  ARM templates
 
-The ARM template for Enterprise-Scale is developed to honor the ARM graph and will start at the Tenant root, so it can navigate across all scopes as needed per the Resource type(s) that has been declared.
+The ARM template for Azure Foundations is developed to honor the ARM graph and will start at the Tenant root, so it can navigate across all scopes as needed per the Resource type(s) that has been declared.
 This is achieved by using logical operators and Resource conditions so the ARM template can always resolve the correct scope(s) druing deployment runtime.
 
 Examples:
@@ -60,10 +58,10 @@ Examples:
 - When a new policyAssignment is being declared which references a policyDefinition with the "deployIfNotExist" effect with the deploymentScope set to Subscription, the ARM template will invoke a template deployment from the policyDefinition directly to ensure the Subscription is brought into its compliant goal state
 - When multiple Resources are declared at the same scope, the ARM template will deploy those in parallel
 
-The illustration below shows an end-to-end deployment workflow across the Azure scopes (Tenant, Management Group, Subscription, Resource Group), where Enterprise-Scale ARM template deploys directly to Tenant and Management Group scope, and policies using "deployIfNotExist" will carry out the deployments (also ARM template deployments) to the Subscriptions, and the Resource Groups when they are being created.
+The illustration below shows an end-to-end deployment workflow across the Azure scopes (Tenant, Management Group, Subscription, Resource Group), where the ARM template deploys directly to Tenant and Management Group scope, and policies using "deployIfNotExist" will carry out the deployments (also ARM template deployments) to the Subscriptions, and the Resource Groups when they are being created.
 
 ![ARM template](./media/arm-template.png)
 
-For additional information on how to use the Enterprise-Scale ARM template via GitHub actions, see the following article:
+For additional information on how to use ARM templates via GitHub actions, see the following article:
 
-[Deploy Enterprise-Scale platform infrastructure](./configure-own-environment.md)
+[Deploy platform infrastructure](./configure-own-environment.md)

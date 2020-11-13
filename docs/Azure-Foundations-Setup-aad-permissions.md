@@ -4,7 +4,7 @@ This article will guide you through the process to add your AzOps service princi
 
 > Note: The steps below requires you to use an identity that is local to the Azure AD, and **_not_** Guest user account due to known restrictions.
 
-The service principal used by the Enterprise-Scale reference implementation requires Azure AD directory reader permissions to be able to discover Azure role assignments. These permissions are used to enrich data around the role assignments with additional Azure AD context such as ObjectType and Azure AD Object DisplayName.
+The service principal used by the Azure Foundations reference implementation requires Azure AD directory reader permissions to be able to discover Azure role assignments. These permissions are used to enrich data around the role assignments with additional Azure AD context such as ObjectType and Azure AD Object DisplayName.
 
 ## Add service principal to directory role via Azure Portal (Option 1)
 
@@ -41,4 +41,4 @@ Please note, it may take up to 15-30 minutes for permission to propagate in Azur
 
 ## Next steps
 
-Please proceed with [deploying reference implementation](./EnterpriseScale-Deploy-reference-implentations.md).
+Please proceed with [deploying reference implementation](./Azure-Foundations-Deploy-reference-implentations.md).
