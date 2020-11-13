@@ -3,22 +3,17 @@
 ## Navigation Menu
 
 * [Azure Foundations Architecture](./docs/Azure-Foundations-Architecture.md)
-* [Configure Azure permission for ARM Template deployments](./docs/EnterpriseScale-Setup-azure.md)
-* [Deploy Reference Implementation](./docs/EnterpriseScale-Deploy-reference-implentations.md)
+* [Configure Azure permission for ARM Template deployments](./docs/Azure-Foundations-azure.md)
+* [Deploy Reference Implementation](./docs/Azure-Foundations-Deploy-reference-implentations.md)
   * [Contoso Reference - Scope and Design](./docs/reference/contoso/Readme.md)
-  * [AdventureWorks Reference - Scope and Design](./docs/reference/adventureworks/README.md)
-  * [WingTip Reference - Scope and Design](./docs/reference/wingtip/README.md)
-* [Create Landing Zones](./docs/EnterpriseScale-Deploy-landing-zones.md)
+* [Create Landing Zones](./docs/Azure-Foundations-Deploy-landing-zones.md)
 * [[Optional] Getting started with Infrastructure-as-code](./docs/Deploy/getting-started.md)
   * [Configure Azure permissions for ARM tenant deployments & setup GitHub](./docs/Deploy/setup-github.md)
   * [Initialize Git with current Azure configuration](./docs/Deploy/discover-environment.md)
   * [Deploy your own ARM templates with AzOps GitHub Actions](./docs/Deploy/deploy-new-arm.md)
   * [Configure Azure DevOps support](./docs/Deploy/setup-azuredevops.md)
 * [Enterprise-Scale "in-a-box" tutorial](./docs/enterprise-scale-iab/README.md)
-* [Known Issues](./docs/EnterpriseScale-Known-Issues.md)
-* [How Do I Contribute?](./docs/EnterpriseScale-Contribution.md)
 * [FAQ](./docs/EnterpriseScale-FAQ.md)
-* [Roadmap](./docs/EnterpriseScale-Roadmap.md)
 
 ---
 
