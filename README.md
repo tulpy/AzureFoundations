@@ -1,8 +1,8 @@
-# Enterprise-Scale - Reference Implementation
+# Azure Foundations - Reference Implementation
 
 ## Navigation Menu
 
-* [Enterprise-Scale Architecture](./docs/EnterpriseScale-Architecture.md)
+* [Azure Foundations Architecture](./docs/Azure-Foundations-Architecture.md)
 * [Configure Azure permission for ARM Template deployments](./docs/EnterpriseScale-Setup-azure.md)
 * [Deploy Reference Implementation](./docs/EnterpriseScale-Deploy-reference-implentations.md)
   * [Contoso Reference - Scope and Design](./docs/reference/contoso/Readme.md)
