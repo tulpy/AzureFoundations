@@ -430,17 +430,17 @@
     },
     "variables": {
         "deploymentUris": {
-            "managementGroups": "[uri(deployment().properties.templateLink.uri, 'auxiliary/mgmtGroups.json')]",
-            "policyDefinitions": "[uri(deployment().properties.templateLink.uri, 'auxiliary/policyDefinitions.json')]",
-            "policyAssignments": "[uri(deployment().properties.templateLink.uri, 'auxiliary/policyAssignments.json')]",
-            "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
-            "monitoringSolutions": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalyticsSolutions.json')]",
-            "keyVault": "[uri(deployment().properties.templateLink.uri, 'auxiliary/keyVault.json')]",
-            "storage": "[uri(deployment().properties.templateLink.uri, 'auxiliary/storage.json')]",
-            "recoveryServicesVault": "[uri(deployment().properties.templateLink.uri, 'auxiliary/recoveryServicesVault.json')]",
-            "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
-            "hubNetworking": "[uri(deployment().properties.templateLink.uri, 'auxiliary/hubNetworking.json')]",
-            "applicationLandingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/appLz.json')]"
+            "managementGroups": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/mgmtGroups.json')]",
+            "policyDefinitions": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/policyDefinitions.json')]",
+            "policyAssignments": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/policyAssignments.json')]",
+            "monitoring": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/logAnalytics.json')]",
+            "monitoringSolutions": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/logAnalyticsSolutions.json')]",
+            "keyVault": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/keyVault.json')]",
+            "storage": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/storage.json')]",
+            "recoveryServicesVault": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/recoveryServicesVault.json')]",
+            "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/diagnosticsAndSecurity.json')]",
+            "hubNetworking": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/hubNetworking.json')]",
+            "applicationLandingZone": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/appLz.json')]"
         },
         "moveSubscription": "[concat(parameters('companyPrefix'), '-Platform', '/', parameters('subscriptionId'))]",
         "noSubscription": "[concat(parameters('companyPrefix'), '-Platform', '/', 'na')]",
@@ -759,7 +759,7 @@
                 }
             }
         },
-                {
+        {
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableStorage'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
