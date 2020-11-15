@@ -17,23 +17,23 @@
         }
     },
     "variables": {
-        "vNet1Name": "sjt-syd-cor-vnt-10.49.0.0",
-        "vNet1ResourceGroup": "sjt-cor-arg-network",
-        "vNet1subscriptionId": "8f8224ca-1a9c-46d1-9206-1cf2a7c51de8",
-        "vNet1Id": "[concat('/subscriptions/',variables('vNet1subscriptionId'),'/resourceGroups/',variables('vNet1ResourceGroup'),'/providers/Microsoft.Network/virtualNetworks/',variables('vNet1Name'))]",
-        "vNet1tovNet2PeeringName": "[concat(variables('vNet1Name'), '-', variables('vNet2Name'))]",
-       
-        "vNet2Name": "sjt-syd-prd-vnt-10.50.0.0",
-        "vNet2ResourceGroup": "sjt-prd-arg-network",
-        "vNet2tovNet1PeeringName": "[concat(variables('vNet2Name'), '-', variables('vNet1Name'))]",
-        "vNet2Id": "[concat('/subscriptions/',parameters('subscriptionId'),'/resourceGroups/',variables('vNet2ResourceGroup'),'/providers/Microsoft.Network/virtualNetworks/',variables('vNet2Name'))]"
+        "hubVnetName": "sjt-syd-cor-vnt-10.49.0.0",
+        "hubVnetRG": "sjt-cor-arg-network",
+        "hubVnetSubscriptionId": "8f8224ca-1a9c-46d1-9206-1cf2a7c51de8",
+        "hubVnetId": "[concat('/subscriptions/',variables('hubVnetSubscriptionId'),'/resourceGroups/',variables('hubVnetRG'),'/providers/Microsoft.Network/virtualNetworks/',variables('hubVnetName'))]",
+        "hubVnetToSpokeVnetPeeringName": "[concat(variables('hubVnetName'), '-to-', variables('spokeVnetName'))]",
+
+        "spokeVnetName": "sjt-syd-prd-vnt-10.50.0.0",
+        "spokeVnetRG": "sjt-prd-arg-network",
+        "spokeVnetId": "[concat('/subscriptions/',parameters('subscriptionId'),'/resourceGroups/',variables('spokeVnetRG'),'/providers/Microsoft.Network/virtualNetworks/',variables('spokeVnetName'))]",
+        "spokeVnetToHubVnetPeeringName": "[concat(variables('spokeVnetName'), '-to-', variables('hubVnetName'))]"
     },
     "resources": [
         {
             "condition": "[and(equals(parameters('enableSpoke'), 'Yes'), not(empty(parameters('subscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
-            "name": "spokeVnetPeer",
+            "name": "spokePeer",
             "location": "[deployment().location]",
             "subscriptionId": "[parameters('subscriptionId')]",
             "properties": {
@@ -46,8 +46,8 @@
                         {
                             "type": "Microsoft.Resources/deployments",
                             "apiVersion": "2020-06-01",
-                            "name": "spoketohub",
-                            "resourceGroup": "[variables('vNet2ResourceGroup')]",
+                            "name": "spoke-hub",
+                            "resourceGroup": "[variables('spokeVnetRG')]",
                             "properties": {
                                 "mode": "Incremental",
                                 "template": {
@@ -59,7 +59,7 @@
                                         {
                                             "apiVersion": "2020-05-01",
                                             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-                                            "name": "[concat(variables('vNet2Name'), '/',variables('vNet2tovNet1PeeringName'))]",
+                                            "name": "[concat(variables('spokeVnetName'), '/',variables('spokeVnetToHubVnetPeeringName'))]",
                                             "location": "[deployment().location]",
                                             "properties": {
                                                 "allowVirtualNetworkAccess": true,
@@ -67,7 +67,7 @@
                                                 "allowGatewayTransit": false,
                                                 "useRemoteGateways": false,
                                                 "remoteVirtualNetwork": {
-                                                    "id": "[variables('vNet1Id')]"
+                                                    "id": "[variables('hubVnetId')]"
                                                 }
                                             }
                                         }
@@ -83,9 +83,9 @@
             "condition": "[and(equals(parameters('enableSpoke'), 'Yes'), not(empty(parameters('subscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
-            "name": "hubVnetPeer",
+            "name": "hubPeer",
             "location": "[deployment().location]",
-            "subscriptionId": "[variables('vNet1subscriptionId')]",
+            "subscriptionId": "[variables('hubVnetSubscriptionId')]",
             "properties": {
                 "mode": "Incremental",
                 "template": {
@@ -96,8 +96,8 @@
                         {
                             "type": "Microsoft.Resources/deployments",
                             "apiVersion": "2020-06-01",
-                            "name": "hubtospoke",
-                            "resourceGroup": "[variables('vNet1ResourceGroup')]",
+                            "name": "hub-spoke",
+                            "resourceGroup": "[variables('hubVnetRG')]",
                             "properties": {
                                 "mode": "Incremental",
                                 "template": {
@@ -109,7 +109,7 @@
                                         {
                                             "apiVersion": "2020-05-01",
                                             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-                                            "name": "[concat(variables('vNet1Name'), '/',variables('vNet1tovNet2PeeringName'))]",
+                                            "name": "[concat(variables('hubVnetName'), '/',variables('hubVnetToSpokeVnetPeeringName'))]",
                                             "location": "[deployment().location]",
                                             "properties": {
                                                 "allowVirtualNetworkAccess": true,
@@ -117,7 +117,7 @@
                                                 "allowGatewayTransit": false,
                                                 "useRemoteGateways": false,
                                                 "remoteVirtualNetwork": {
-                                                    "id": "[variables('vNet2Id')]"
+                                                    "id": "[variables('spokeVnetId')]"
                                                 }
                                             }
                                         }
