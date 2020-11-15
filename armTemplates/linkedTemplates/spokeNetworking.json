@@ -406,7 +406,7 @@
                                             "apiVersion": "2020-05-01",
                                             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
                                             "name": "[concat(variables('vNet1Name'), '/',variables('vNet1tovNet2PeeringName'))]",
-                                            "location": "[resourceGroup().location]",
+                                            "location": "[deployment().location]",
                                             "properties": {
                                                 "allowVirtualNetworkAccess": true,
                                                 "allowForwardedTraffic": false,
