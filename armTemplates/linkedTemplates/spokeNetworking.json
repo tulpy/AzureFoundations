@@ -168,7 +168,7 @@
                         },
                         {
                             "type": "Microsoft.Resources/deployments",
-                            "apiVersion": "2019-10-01",
+                            "apiVersion": "2020-06-01",
                             "name": "[variables('deploymentName')]",
                             "resourceGroup": "[variables('resourceGroupName')]",
                             "dependsOn": [
@@ -228,24 +228,6 @@
                                                 "useRemoteGateways": false,
                                                 "remoteVirtualNetwork": {
                                                     "id": "[variables('vNet1Id')]"
-                                                }
-                                            }
-                                        },
-                                        {
-                                            "apiVersion": "2020-05-01",
-                                            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-                                            "name": "[concat(variables('vNet1Name'), '/',variables('vNet1tovNet2PeeringName'))]",
-                                            "location": "[deployment().location]",
-                                            "dependsOn": [
-                                                "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]"
-                                            ],
-                                            "properties": {
-                                                "allowVirtualNetworkAccess": true,
-                                                "allowForwardedTraffic": false,
-                                                "allowGatewayTransit": false,
-                                                "useRemoteGateways": false,
-                                                "remoteVirtualNetwork": {
-                                                    "id": "[variables('vNet2Id')]"
                                                 }
                                             }
                                         },
@@ -400,6 +382,39 @@
                                             },
                                             "properties": {
                                                 "securityRules": []
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "apiVersion": "2020-06-01",
+                            "name": "hubtospoke",
+                            "type": "Microsoft.Resources/deployments",
+                            "resourceGroup": "[variables('vNet1ResourceGroup')]",
+                            "subscriptionId": "[variables('vNet1subscriptionId')]",
+                            "properties": {
+                                "mode": "Incremental",
+                                "template": {
+                                    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+                                    "contentVersion": "1.0.0.0",
+                                    "parameters": {},
+                                    "variables": {},
+                                    "resources": [
+                                        {
+                                            "apiVersion": "2020-05-01",
+                                            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+                                            "name": "[concat(variables('vNet1Name'), '/',variables('vNet1tovNet2PeeringName'))]",
+                                            "location": "[resourceGroup().location]",
+                                            "properties": {
+                                                "allowVirtualNetworkAccess": true,
+                                                "allowForwardedTraffic": false,
+                                                "allowGatewayTransit": false,
+                                                "useRemoteGateways": false,
+                                                "remoteVirtualNetwork": {
+                                                    "id": "[variables('vNet2Id')]"
+                                                }
                                             }
                                         }
                                     ]
