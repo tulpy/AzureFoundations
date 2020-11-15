@@ -393,9 +393,6 @@
                     "enableSpoke": {
                         "value": "[parameters('enableSpoke')]"
                     },
-                    "addressPrefix": {
-                        "value": "[parameters('addressPrefix')]"
-                    },
                     "subscriptionId": {
                         "value": "[parameters('subscriptionId')]"
                     }
