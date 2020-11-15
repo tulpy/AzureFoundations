@@ -35,22 +35,18 @@
         }
     },
     "variables": {
-        "hub": {
-            "vNet1Name": "sjt-syd-cor-vnt-10.49.0.0",
-            "vNet1ResourceGroup": "sjt-cor-arg-network",
-            "vNet1subscriptionId": "8f8224ca-1a9c-46d1-9206-1cf2a7c51de8",
-            "vNet1AllowGWTransit": false
-        },
-        "spoke": {
-            "vNet2Name": "sjt-syd-cor-vnt-10.49.0.0",
-            "vNet2ResourceGroup": "sjt-cor-arg-network",
-            "vNet2subscriptionId": "8f8224ca-1a9c-46d1-9206-1cf2a7c51de8",
-            "vNet2UseRemoteGW": true
-        },
-        "vNet1tovNet2PeeringName": "[concat(variables('hub').vNet1Name, '-', variables('spoke').vNet2Name)]",
-        "vNet2tovNet1PeeringName": "[concat(variables('spoke').vNet2Name, '-', variables('hub').vNet1Name)]",
-        "vNet1Id": "[concat('/subscriptions/',variables('hub').vNet1subscriptionId,'/resourceGroups/',variables('hub').vNet1ResourceGroup,'/providers/Microsoft.Network/virtualNetworks/',variables('hub').vNet1Name)]",
-        "vNet2Id": "[concat('/subscriptions/',variables('spoke').vNet2subscriptionId,'/resourceGroups/',variables('spoke').vNet2ResourceGroup,'/providers/Microsoft.Network/virtualNetworks/',variables('spoke').vNet2Name)]"
+        "vNet1Name": "sjt-syd-cor-vnt-10.49.0.0",
+        "vNet1ResourceGroup": "sjt-cor-arg-network",
+        "vNet1subscriptionId": "8f8224ca-1a9c-46d1-9206-1cf2a7c51de8",
+        "vNet1AllowGWTransit": false,
+        "vNet2Name": "sjt-syd-cor-vnt-10.49.0.0",
+        "vNet2ResourceGroup": "sjt-cor-arg-network",
+        "vNet2subscriptionId": "8f8224ca-1a9c-46d1-9206-1cf2a7c51de8",
+        "vNet2UseRemoteGW": true,
+        "vNet1tovNet2PeeringName": "[concat(variables('vNet1Name'), '-', variables('vNet2Name'))]",
+        "vNet2tovNet1PeeringName": "[concat(variables('vNet2Name'), '-', variables('vNet1Name'))]",
+        "vNet1Id": "[concat('/subscriptions/',variables('vNet1subscriptionId'),'/resourceGroups/',variables('vNet1ResourceGroup'),'/providers/Microsoft.Network/virtualNetworks/',variables('vNet1Name'))]",
+        "vNet2Id": "[concat('/subscriptions/',variables('vNet2subscriptionId'),'/resourceGroups/',variables('vNet2ResourceGroup'),'/providers/Microsoft.Network/virtualNetworks/',variables('vNet2Name'))]"
     },
     "resources": [
         {
@@ -71,8 +67,8 @@
                             "apiVersion": "2017-05-10",
                             "name": "spoketohub",
                             "type": "Microsoft.Resources/deployments",
-                            "resourceGroup": "[variables('spoke').vNet2ResourceGroup]",
-                            "subscriptionId": "[variables('spoke').vNet2subscriptionId]",
+                            "resourceGroup": "[variables('vNet2ResourceGroup')]",
+                            "subscriptionId": "[variables('vNet2subscriptionId')]",
                             "properties": {
                                 "mode": "Incremental",
                                 "template": {
@@ -84,13 +80,13 @@
                                         {
                                             "apiVersion": "2016-06-01",
                                             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-                                            "name": "[concat(variables('spoke').vNet2Name, '/',variables('vNet2tovNet1PeeringName'))]",
+                                            "name": "[concat(variables('vNet2Name'), '/',variables('vNet2tovNet1PeeringName'))]",
                                             "location": "[resourceGroup().location]",
                                             "properties": {
                                                 "allowVirtualNetworkAccess": "true",
                                                 "allowForwardedTraffic": "false",
                                                 "allowGatewayTransit": "false",
-                                                "useRemoteGateways": "[variables('spoke').vNet2UseRemoteGW]",
+                                                "useRemoteGateways": "[variables('vNet2UseRemoteGW')]",
                                                 "remoteVirtualNetwork": {
                                                     "id": "[variables('vNet1Id')]"
                                                 }
@@ -104,8 +100,8 @@
                             "apiVersion": "2017-05-10",
                             "name": "hubtospoke",
                             "type": "Microsoft.Resources/deployments",
-                            "resourceGroup": "[variables('hub').vNet1ResourceGroup]",
-                            "subscriptionId": "[variables('hub').vNet1subscriptionId]",
+                            "resourceGroup": "[variables('vNet1ResourceGroup')]",
+                            "subscriptionId": "[variables('vNet1subscriptionId')]",
                             "properties": {
                                 "mode": "Incremental",
                                 "template": {
@@ -117,12 +113,12 @@
                                         {
                                             "apiVersion": "2016-06-01",
                                             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-                                            "name": "[concat(variables('hub').vNet1Name, '/',variables('vNet1tovNet2PeeringName'))]",
+                                            "name": "[concat(variables('vNet1Name'), '/',variables('vNet1tovNet2PeeringName'))]",
                                             "location": "[resourceGroup().location]",
                                             "properties": {
                                                 "allowVirtualNetworkAccess": "true",
                                                 "allowForwardedTraffic": "false",
-                                                "allowGatewayTransit": "[variables('hub').vNet1AllowGWTransit]",
+                                                "allowGatewayTransit": "[variables('vNet1AllowGWTransit')]",
                                                 "useRemoteGateways": "false",
                                                 "remoteVirtualNetwork": {
                                                     "id": "[variables('vNet2Id')]"
