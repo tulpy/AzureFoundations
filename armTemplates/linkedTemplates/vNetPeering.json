@@ -2,61 +2,17 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "vNet1Name": {
+        "companyPrefix": {
             "type": "string",
-            "defaultValue": "sjt-syd-cor-vnt-10.49.0.0",
-            "metadata": {
-                "description": "Name for the hub vnet"
-            }
+            "maxLength": 5
         },
-        "vNet1ResourceGroup": {
+        "environmentPrefix": {
             "type": "string",
-            "defaultValue": "sjt-cor-arg-network",
-            "metadata": {
-                "description": "RG for the Hub vnet"
-            }
+            "maxLength": 3
         },
-        "vNet1subscriptionId": {
+        "argPrefix": {
             "type": "string",
-            "defaultValue": "8f8224ca-1a9c-46d1-9206-1cf2a7c51de8",
-            "metadata": {
-                "description": "subscriptionId for vNet 1"
-            }
-        },
-        "vNet1AllowGWTransit": {
-            "type": "bool",
-            "defaultValue": false,
-            "metadata": {
-                "description": "Allow gateway transit in the Hub VNet"
-            }
-        },
-        "vNet2Name": {
-            "type": "string",
-            "defaultValue": "sjt-syd-prd-vnt-10.50.0.0",
-            "metadata": {
-                "description": "Name for vNet 2"
-            }
-        },
-        "vNet2ResourceGroup": {
-            "type": "string",
-            "defaultValue": "sjt-prd-arg-network",
-            "metadata": {
-                "description": "Name for vNet 1"
-            }
-        },
-        "vNet2subscriptionId": {
-            "type": "string",
-            "defaultValue": "5cb7efe0-67af-4723-ab35-0f2b42a85839",
-            "metadata": {
-                "description": "Name for vNet 1"
-            }
-        },
-        "vNet2UseRemoteGW": {
-            "type": "bool",
-            "defaultValue": true,
-            "metadata": {
-                "description": "Indicates if the spoke VNet can use the remote GW"
-            }
+            "maxLength": 3
         },
         "subscriptionId": {
             "type": "string",
@@ -76,31 +32,25 @@
         },
         "ownerTag": {
             "type": "string"
-        },
-        "companyPrefix": {
-            "type": "string",
-            "maxLength": 5
-        },
-        "environmentPrefix": {
-            "type": "string",
-            "maxLength": 3
-        },
-        "argPrefix": {
-            "type": "string",
-            "maxLength": 3
-        },
+        }
     },
     "variables": {
-        "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-network'))]",
-        "deploymentName": "[take(concat(deployment().name, '-vNetPeer'), 64)]",
-        "vNet1tovNet2PeeringName": "[concat(parameters('vNet1Name'), '-', parameters('vNet2Name'))]",
-        "vNet2tovNet1PeeringName": "[concat(parameters('vNet2Name'), '-', parameters('vNet1Name'))]",
-        "vNet1Id": "[concat('/subscriptions/',parameters('vNet1subscriptionId'),'/resourceGroups/',parameters('vNet1ResourceGroup'),'/providers/Microsoft.Network/virtualNetworks/',parameters('vNet1Name'))]",
-        "vNet2Id": "[concat('/subscriptions/',parameters('vNet2subscriptionId'),'/resourceGroups/',parameters('vNet2ResourceGroup'),'/providers/Microsoft.Network/virtualNetworks/',parameters('vNet2Name'))]",
-        "tags": {
-            "environment": "[parameters('environmentTag')]",
-            "owner": "[parameters('ownerTag')]"
-        }
+        "hub": {
+            "vNet1Name": "sjt-syd-cor-vnt-10.49.0.0",
+            "vNet1ResourceGroup": "sjt-cor-arg-network",
+            "vNet1subscriptionId": "8f8224ca-1a9c-46d1-9206-1cf2a7c51de8",
+            "vNet1AllowGWTransit": false
+        },
+        "spoke": {
+            "vNet2Name": "sjt-syd-cor-vnt-10.49.0.0",
+            "vNet2ResourceGroup": "sjt-cor-arg-network",
+            "vNet2subscriptionId": "8f8224ca-1a9c-46d1-9206-1cf2a7c51de8",
+            "vNet2UseRemoteGW": true
+        },
+        "vNet1tovNet2PeeringName": "[concat(variables('hub').vNet1Name, '-', variables('spoke').vNet2Name)]",
+        "vNet2tovNet1PeeringName": "[concat(variables('spoke').vNet2Name, '-', variables('hub').vNet1Name)]",
+        "vNet1Id": "[concat('/subscriptions/',variables('hub').vNet1subscriptionId,'/resourceGroups/',variables('hub').vNet1ResourceGroup,'/providers/Microsoft.Network/virtualNetworks/',variables('hub').vNet1Name)]",
+        "vNet2Id": "[concat('/subscriptions/',variables('spoke').vNet2subscriptionId,'/resourceGroups/',variables('spoke').vNet2ResourceGroup,'/providers/Microsoft.Network/virtualNetworks/',variables('spoke').vNet2Name)]"
     },
     "resources": [
         {
@@ -121,8 +71,8 @@
                             "apiVersion": "2017-05-10",
                             "name": "spoketohub",
                             "type": "Microsoft.Resources/deployments",
-                            "resourceGroup": "[parameters('vNet2ResourceGroup')]",
-                            "subscriptionId": "[parameters('vNet2subscriptionId')]",
+                            "resourceGroup": "[variables('spoke').vNet2ResourceGroup]",
+                            "subscriptionId": "[variables('spoke').vNet2subscriptionId]",
                             "properties": {
                                 "mode": "Incremental",
                                 "template": {
@@ -134,13 +84,13 @@
                                         {
                                             "apiVersion": "2016-06-01",
                                             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-                                            "name": "[concat(parameters('vNet2Name'), '/',variables('vNet2tovNet1PeeringName'))]",
+                                            "name": "[concat(variables('spoke').vNet2Name, '/',variables('vNet2tovNet1PeeringName'))]",
                                             "location": "[resourceGroup().location]",
                                             "properties": {
                                                 "allowVirtualNetworkAccess": "true",
                                                 "allowForwardedTraffic": "false",
                                                 "allowGatewayTransit": "false",
-                                                "useRemoteGateways": "[parameters('vNet2UseRemoteGW')]",
+                                                "useRemoteGateways": "[variables('spoke').vNet2UseRemoteGW]",
                                                 "remoteVirtualNetwork": {
                                                     "id": "[variables('vNet1Id')]"
                                                 }
@@ -154,8 +104,8 @@
                             "apiVersion": "2017-05-10",
                             "name": "hubtospoke",
                             "type": "Microsoft.Resources/deployments",
-                            "resourceGroup": "[parameters('vNet1ResourceGroup')]",
-                            "subscriptionId": "[parameters('vNet1subscriptionId')]",
+                            "resourceGroup": "[variables('hub').vNet1ResourceGroup]",
+                            "subscriptionId": "[variables('hub').vNet1subscriptionId]",
                             "properties": {
                                 "mode": "Incremental",
                                 "template": {
@@ -167,12 +117,12 @@
                                         {
                                             "apiVersion": "2016-06-01",
                                             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-                                            "name": "[concat(parameters('vNet1Name'), '/',variables('vNet1tovNet2PeeringName'))]",
+                                            "name": "[concat(variables('hub').vNet1Name, '/',variables('vNet1tovNet2PeeringName'))]",
                                             "location": "[resourceGroup().location]",
                                             "properties": {
                                                 "allowVirtualNetworkAccess": "true",
                                                 "allowForwardedTraffic": "false",
-                                                "allowGatewayTransit": "[parameters('vNet1AllowGWTransit')]",
+                                                "allowGatewayTransit": "[variables('hub').vNet1AllowGWTransit]",
                                                 "useRemoteGateways": "false",
                                                 "remoteVirtualNetwork": {
                                                     "id": "[variables('vNet2Id')]"

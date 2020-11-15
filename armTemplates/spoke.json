@@ -378,23 +378,11 @@
                     "companyPrefix": {
                         "value": "[parameters('companyPrefix')]"
                     },
-                    "locationPrefix": {
-                        "value": "[parameters('locationPrefix')]"
-                    },
                     "environmentPrefix": {
                         "value": "[parameters('environmentPrefix')]"
                     },
                     "argPrefix": {
                         "value": "[parameters('argPrefix')]"
-                    },
-                    "vntPrefix": {
-                        "value": "[parameters('vntPrefix')]"
-                    },
-                    "udrPrefix": {
-                        "value": "[parameters('udrPrefix')]"
-                    },
-                    "nsgPrefix": {
-                        "value": "[parameters('nsgPrefix')]"
                     },
                     "environmentTag": {
                         "value": "[parameters('environmentTag')]"
@@ -405,32 +393,8 @@
                     "enableSpoke": {
                         "value": "[parameters('enableSpoke')]"
                     },
-                    "addressPrefix": {
-                        "value": "[parameters('addressPrefix')]"
-                    },
-                    "enableWeb": {
-                        "value": "[parameters('enableWeb')]"
-                    },
-                    "enableApp": {
-                        "value": "[parameters('enableApp')]"
-                    },
-                    "enableData": {
-                        "value": "[parameters('enableData')]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
                     "subscriptionId": {
                         "value": "[parameters('subscriptionId')]"
-                    },
-                    "subnetMaskForWeb": {
-                        "value": "[parameters('subnetMaskForWeb')]"
-                    },
-                    "subnetMaskForApp": {
-                        "value": "[parameters('subnetMaskForApp')]"
-                    },
-                    "subnetMaskForData": {
-                        "value": "[parameters('subnetMaskForData')]"
                     }
                 }
             }
