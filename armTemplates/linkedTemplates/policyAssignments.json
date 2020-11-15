@@ -26,7 +26,7 @@
       "denyAppGwyWaf": "Deny-AppGW-Without-WAF",
       "appendKvSoftDelete": "Append-KV-SoftDelete",
       "storageHttps": "Deny-Storage-http",
-      "azureFoundationsCIS": "DeployAzureCIS",
+      "azureFoundationsCIS": "Deploy-AzureCIS",
       "appendAzureHub": "Append-Azure-HUB"
     }
   },
