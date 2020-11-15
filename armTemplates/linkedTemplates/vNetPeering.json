@@ -35,6 +35,7 @@
         }
     },
     "variables": {
+        "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-network'))]",
         "vNet1Name": "sjt-syd-cor-vnt-10.49.0.0",
         "vNet1ResourceGroup": "sjt-cor-arg-network",
         "vNet1subscriptionId": "8f8224ca-1a9c-46d1-9206-1cf2a7c51de8",
@@ -46,7 +47,11 @@
         "vNet1tovNet2PeeringName": "[concat(variables('vNet1Name'), '-', variables('vNet2Name'))]",
         "vNet2tovNet1PeeringName": "[concat(variables('vNet2Name'), '-', variables('vNet1Name'))]",
         "vNet1Id": "[concat('/subscriptions/',variables('vNet1subscriptionId'),'/resourceGroups/',variables('vNet1ResourceGroup'),'/providers/Microsoft.Network/virtualNetworks/',variables('vNet1Name'))]",
-        "vNet2Id": "[concat('/subscriptions/',variables('vNet2subscriptionId'),'/resourceGroups/',variables('vNet2ResourceGroup'),'/providers/Microsoft.Network/virtualNetworks/',variables('vNet2Name'))]"
+        "vNet2Id": "[concat('/subscriptions/',variables('vNet2subscriptionId'),'/resourceGroups/',variables('vNet2ResourceGroup'),'/providers/Microsoft.Network/virtualNetworks/',variables('vNet2Name'))]",
+        "tags": {
+            "environment": "[parameters('environmentTag')]",
+            "owner": "[parameters('ownerTag')]"
+        }
     },
     "resources": [
         {
@@ -64,9 +69,20 @@
                     "parameters": {},
                     "resources": [
                         {
-                            "apiVersion": "2017-05-10",
-                            "name": "spoketohub",
+                            "type": "Microsoft.Resources/resourceGroups",
+                            "apiVersion": "2020-06-01",
+                            "location": "[deployment().location]",
+                            "name": "[variables('resourceGroupName')]",
+                            "tags": {
+                                "environment": "[variables('tags').environment]",
+                                "owner": "[variables('tags').owner]"
+                            },
+                            "properties": {}
+                        },
+                        {
                             "type": "Microsoft.Resources/deployments",
+                            "apiVersion": "2019-10-01",
+                            "name": "spoketohub",
                             "resourceGroup": "[variables('vNet2ResourceGroup')]",
                             "subscriptionId": "[variables('vNet2subscriptionId')]",
                             "properties": {
@@ -97,9 +113,9 @@
                             }
                         },
                         {
-                            "apiVersion": "2017-05-10",
-                            "name": "hubtospoke",
                             "type": "Microsoft.Resources/deployments",
+                            "apiVersion": "2019-10-01",
+                            "name": "hubtospoke",
                             "resourceGroup": "[variables('vNet1ResourceGroup')]",
                             "subscriptionId": "[variables('vNet1subscriptionId')]",
                             "properties": {
