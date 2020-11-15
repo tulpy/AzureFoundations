@@ -189,7 +189,6 @@
             "storage": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/storage.json')]",
             "recoveryServicesVault": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/recoveryServicesVault.json')]",
             "spokeNetworking": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/spokeNetworking.json')]",
-            "vNetPeering": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/vNetPeering.json')]",
             "applicationLandingZone": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/appLz.json')]"
         },
         "moveSubscription": "[concat(parameters('companyPrefix'), '-appLandingZones', '/', parameters('subscriptionId'))]",
@@ -200,7 +199,6 @@
             "storage": "[take(concat('storage', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "recoveryServicesVault": "[take(concat('rsv', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "spokeNetworking": "[take(concat('spokeNetworking', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-            "vNetPeering": "[take(concat('vNetPeering', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "applicationLandingZone": "[take(concat('appLz', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
         }
     },
@@ -353,48 +351,6 @@
                     },
                     "subnetMaskForData": {
                         "value": "[parameters('subnetMaskForData')]"
-                    }
-                }
-            }
-        },
-        {
-            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableSpoke'), 'Yes'))]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-05-01",
-            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
-            "name": "[variables('deploymentNames').vNetPeering]",
-            "dependsOn": [
-                "[variables('deploymentNames').managementGroups]",
-                "[variables('deploymentNames').spokeNetworking]"
-            ],
-            "location": "[deployment().location]",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "contentVersion": "1.0.0.0",
-                    "uri": "[variables('deploymentUris').vNetPeering]"
-                },
-                "parameters": {
-                    "companyPrefix": {
-                        "value": "[parameters('companyPrefix')]"
-                    },
-                    "environmentPrefix": {
-                        "value": "[parameters('environmentPrefix')]"
-                    },
-                    "argPrefix": {
-                        "value": "[parameters('argPrefix')]"
-                    },
-                    "environmentTag": {
-                        "value": "[parameters('environmentTag')]"
-                    },
-                    "ownerTag": {
-                        "value": "[parameters('ownerTag')]"
-                    },
-                    "enableSpoke": {
-                        "value": "[parameters('enableSpoke')]"
-                    },
-                    "subscriptionId": {
-                        "value": "[parameters('subscriptionId')]"
                     }
                 }
             }

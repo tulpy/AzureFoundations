@@ -84,7 +84,6 @@
                             "apiVersion": "2019-10-01",
                             "name": "spoketohub",
                             "resourceGroup": "[variables('vNet2ResourceGroup')]",
-                            "subscriptionId": "[variables('vNet2subscriptionId')]",
                             "properties": {
                                 "mode": "Incremental",
                                 "template": {
