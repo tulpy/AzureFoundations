@@ -96,7 +96,7 @@
                                             "apiVersion": "2016-06-01",
                                             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
                                             "name": "[concat(variables('vNet2Name'), '/',variables('vNet2tovNet1PeeringName'))]",
-                                            "location": "[resourceGroup().location]",
+                                            "location": "[deployment().location]",
                                             "properties": {
                                                 "allowVirtualNetworkAccess": "true",
                                                 "allowForwardedTraffic": "false",
@@ -129,7 +129,7 @@
                                             "apiVersion": "2016-06-01",
                                             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
                                             "name": "[concat(variables('vNet1Name'), '/',variables('vNet1tovNet2PeeringName'))]",
-                                            "location": "[resourceGroup().location]",
+                                            "location": "[deployment().location]",
                                             "properties": {
                                                 "allowVirtualNetworkAccess": "true",
                                                 "allowForwardedTraffic": "false",

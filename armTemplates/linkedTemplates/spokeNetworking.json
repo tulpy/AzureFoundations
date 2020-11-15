@@ -123,18 +123,6 @@
         "UdrName003": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-', variables('subnetName003')))]",
         "UdrId003": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('udrName003'))]",
         "NsgId003": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('nsgName003'))]",
-
-        "vNet1Name": "sjt-syd-cor-vnt-10.49.0.0",
-        "vNet1ResourceGroup": "sjt-cor-arg-network",
-        "vNet1subscriptionId": "8f8224ca-1a9c-46d1-9206-1cf2a7c51de8",
-        "vNet1tovNet2PeeringName": "[concat(variables('vNet1Name'), '-', variables('azVnetName'))]",
-        "vNet2tovNet1PeeringName": "[concat(variables('azVnetName'), '-', variables('vNet1Name'))]",
-        "vNet1Id": "[concat('/subscriptions/',variables('vNet1subscriptionId'),'/resourceGroups/',variables('vNet1ResourceGroup'),'/providers/Microsoft.Network/virtualNetworks/',variables('vNet1Name'))]",
-        "vNet2Id": "[concat('/subscriptions/',parameters('subscriptionId'),'/resourceGroups/',variables('resourceGroupName'),'/providers/Microsoft.Network/virtualNetworks/',variables('azVnetName'))]",
-
-
-
-
         "tags": {
             "environment": "[parameters('environmentTag')]",
             "owner": "[parameters('ownerTag')]"
@@ -212,24 +200,6 @@
                                             },
                                             "resources": [
                                             ]
-                                        },
-                                        {
-                                            "apiVersion": "2020-05-01",
-                                            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-                                            "name": "[concat(variables('azVnetName'), '/',variables('vNet2tovNet1PeeringName'))]",
-                                            "location": "[deployment().location]",
-                                            "dependsOn": [
-                                                "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]"
-                                            ],
-                                            "properties": {
-                                                "allowVirtualNetworkAccess": true,
-                                                "allowForwardedTraffic": false,
-                                                "allowGatewayTransit": false,
-                                                "useRemoteGateways": false,
-                                                "remoteVirtualNetwork": {
-                                                    "id": "[variables('vNet1Id')]"
-                                                }
-                                            }
                                         },
                                         {
                                             "name": "[variables('nwName')]",
@@ -382,39 +352,6 @@
                                             },
                                             "properties": {
                                                 "securityRules": []
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        },
-                        {
-                            "apiVersion": "2020-06-01",
-                            "name": "hubtospoke",
-                            "type": "Microsoft.Resources/deployments",
-                            "resourceGroup": "[variables('vNet1ResourceGroup')]",
-                            "subscriptionId": "[variables('vNet1subscriptionId')]",
-                            "properties": {
-                                "mode": "Incremental",
-                                "template": {
-                                    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
-                                    "contentVersion": "1.0.0.0",
-                                    "parameters": {},
-                                    "variables": {},
-                                    "resources": [
-                                        {
-                                            "apiVersion": "2020-05-01",
-                                            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-                                            "name": "[concat(variables('vNet1Name'), '/',variables('vNet1tovNet2PeeringName'))]",
-                                            "location": "[deployment().location]",
-                                            "properties": {
-                                                "allowVirtualNetworkAccess": true,
-                                                "allowForwardedTraffic": false,
-                                                "allowGatewayTransit": false,
-                                                "useRemoteGateways": false,
-                                                "remoteVirtualNetwork": {
-                                                    "id": "[variables('vNet2Id')]"
-                                                }
                                             }
                                         }
                                     ]
