@@ -1,5 +1,5 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vNet1Name": {
@@ -57,74 +57,129 @@
             "metadata": {
                 "description": "Indicates if the spoke VNet can use the remote GW"
             }
-        }
+        },
+        "subscriptionId": {
+            "type": "string",
+            "defaultValue": "",
+            "maxLength": 36
+        },
+        "enableSpoke": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "environmentTag": {
+            "type": "string"
+        },
+        "ownerTag": {
+            "type": "string"
+        },
+        "companyPrefix": {
+            "type": "string",
+            "maxLength": 5
+        },
+        "environmentPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "argPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
     },
     "variables": {
+        "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-network'))]",
+        "deploymentName": "[take(concat(deployment().name, '-vNetPeer'), 64)]",
         "vNet1tovNet2PeeringName": "[concat(parameters('vNet1Name'), '-', parameters('vNet2Name'))]",
         "vNet2tovNet1PeeringName": "[concat(parameters('vNet2Name'), '-', parameters('vNet1Name'))]",
         "vNet1Id": "[concat('/subscriptions/',parameters('vNet1subscriptionId'),'/resourceGroups/',parameters('vNet1ResourceGroup'),'/providers/Microsoft.Network/virtualNetworks/',parameters('vNet1Name'))]",
-        "vNet2Id": "[concat('/subscriptions/',parameters('vNet2subscriptionId'),'/resourceGroups/',parameters('vNet2ResourceGroup'),'/providers/Microsoft.Network/virtualNetworks/',parameters('vNet2Name'))]"
+        "vNet2Id": "[concat('/subscriptions/',parameters('vNet2subscriptionId'),'/resourceGroups/',parameters('vNet2ResourceGroup'),'/providers/Microsoft.Network/virtualNetworks/',parameters('vNet2Name'))]",
+        "tags": {
+            "environment": "[parameters('environmentTag')]",
+            "owner": "[parameters('ownerTag')]"
+        }
     },
     "resources": [
         {
-            "apiVersion": "2017-05-10",
-            "name": "spoketohub",
+            "condition": "[and(equals(parameters('enableSpoke'), 'Yes'), not(empty(parameters('subscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[parameters('vNet2ResourceGroup')]",
-            "subscriptionId": "[parameters('vNet2subscriptionId')]",
+            "apiVersion": "2020-06-01",
+            "name": "spokeVnetPeer",
+            "location": "[deployment().location]",
+            "subscriptionId": "[parameters('subscriptionId')]",
             "properties": {
                 "mode": "Incremental",
                 "template": {
-                    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+                    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
                     "contentVersion": "1.0.0.0",
                     "parameters": {},
-                    "variables": {},
                     "resources": [
                         {
-                            "apiVersion": "2016-06-01",
-                            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-                            "name": "[concat(parameters('vNet2Name'), '/',variables('vNet2tovNet1PeeringName'))]",
-                            "location": "[resourceGroup().location]",
+                            "apiVersion": "2017-05-10",
+                            "name": "spoketohub",
+                            "type": "Microsoft.Resources/deployments",
+                            "resourceGroup": "[parameters('vNet2ResourceGroup')]",
+                            "subscriptionId": "[parameters('vNet2subscriptionId')]",
                             "properties": {
-                                "allowVirtualNetworkAccess": "true",
-                                "allowForwardedTraffic": "false",
-                                "allowGatewayTransit": "false",
-                                "useRemoteGateways": "[parameters('vNet2UseRemoteGW')]",
-                                "remoteVirtualNetwork": {
-                                    "id": "[variables('vNet1Id')]"
+                                "mode": "Incremental",
+                                "template": {
+                                    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+                                    "contentVersion": "1.0.0.0",
+                                    "parameters": {},
+                                    "variables": {},
+                                    "resources": [
+                                        {
+                                            "apiVersion": "2016-06-01",
+                                            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+                                            "name": "[concat(parameters('vNet2Name'), '/',variables('vNet2tovNet1PeeringName'))]",
+                                            "location": "[resourceGroup().location]",
+                                            "properties": {
+                                                "allowVirtualNetworkAccess": "true",
+                                                "allowForwardedTraffic": "false",
+                                                "allowGatewayTransit": "false",
+                                                "useRemoteGateways": "[parameters('vNet2UseRemoteGW')]",
+                                                "remoteVirtualNetwork": {
+                                                    "id": "[variables('vNet1Id')]"
+                                                }
+                                            }
+                                        }
+                                    ]
                                 }
                             }
-                        }
-                    ]
-                }
-            }
-        },
-        {
-            "apiVersion": "2017-05-10",
-            "name": "hubtospoke",
-            "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[parameters('vNet1ResourceGroup')]",
-            "subscriptionId": "[parameters('vNet1subscriptionId')]",
-            "properties": {
-                "mode": "Incremental",
-                "template": {
-                    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
-                    "contentVersion": "1.0.0.0",
-                    "parameters": {},
-                    "variables": {},
-                    "resources": [
+                        },
                         {
-                            "apiVersion": "2016-06-01",
-                            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-                            "name": "[concat(parameters('vNet1Name'), '/',variables('vNet1tovNet2PeeringName'))]",
-                            "location": "[resourceGroup().location]",
+                            "apiVersion": "2017-05-10",
+                            "name": "hubtospoke",
+                            "type": "Microsoft.Resources/deployments",
+                            "resourceGroup": "[parameters('vNet1ResourceGroup')]",
+                            "subscriptionId": "[parameters('vNet1subscriptionId')]",
                             "properties": {
-                                "allowVirtualNetworkAccess": "true",
-                                "allowForwardedTraffic": "false",
-                                "allowGatewayTransit": "[parameters('vNet1AllowGWTransit')]",
-                                "useRemoteGateways": "false",
-                                "remoteVirtualNetwork": {
-                                    "id": "[variables('vNet2Id')]"
+                                "mode": "Incremental",
+                                "template": {
+                                    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+                                    "contentVersion": "1.0.0.0",
+                                    "parameters": {},
+                                    "variables": {},
+                                    "resources": [
+                                        {
+                                            "apiVersion": "2016-06-01",
+                                            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+                                            "name": "[concat(parameters('vNet1Name'), '/',variables('vNet1tovNet2PeeringName'))]",
+                                            "location": "[resourceGroup().location]",
+                                            "properties": {
+                                                "allowVirtualNetworkAccess": "true",
+                                                "allowForwardedTraffic": "false",
+                                                "allowGatewayTransit": "[parameters('vNet1AllowGWTransit')]",
+                                                "useRemoteGateways": "false",
+                                                "remoteVirtualNetwork": {
+                                                    "id": "[variables('vNet2Id')]"
+                                                }
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         }
