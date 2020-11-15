@@ -683,7 +683,7 @@
                     {
                         "name": "esNwLocation",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Azure Region for the Virtual Netowrk Hub.",
+                        "label": "Azure Region for the Virtual Network Hub.",
                         "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
                         "toolTip": "Select the target Azure region for the deployment.",
                         "constraints": {

@@ -361,7 +361,7 @@
                     {
                         "name": "esNwLocation",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Azure Region for the Virtual Netowrk.",
+                        "label": "Azure Region for the Virtual Network.",
                         "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
                         "toolTip": "Select the target Azure region for the deployment.",
                         "constraints": {
