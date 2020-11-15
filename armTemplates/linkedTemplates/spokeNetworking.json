@@ -217,7 +217,7 @@
                                             "apiVersion": "2020-05-01",
                                             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
                                             "name": "[concat(variables('azVnetName'), '/',variables('vNet2tovNet1PeeringName'))]",
-                                            "location": "[resourceGroup().location]",
+                                            "location": "[deployment().location]",
                                             "dependsOn": [
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]"
                                             ],
@@ -235,7 +235,7 @@
                                             "apiVersion": "2020-05-01",
                                             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
                                             "name": "[concat(variables('vNet1Name'), '/',variables('vNet1tovNet2PeeringName'))]",
-                                            "location": "[resourceGroup().location]",
+                                            "location": "[deployment().location]",
                                             "dependsOn": [
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]"
                                             ],
