@@ -1,54 +1,64 @@
-Appss
-Custom subscription owner roles should not exist
+# Azure Foundations - Reference Implementation
 
-Virtual networks should use specified virtual network gateway
-[Preview]: All Internet traffic should be routed via your deployed Azure Firewall
+## Navigation Menu
 
+* [Azure Foundations Architecture](./docs/Azure-Foundations-Architecture.md)
+* [Configure Azure permission for ARM Template deployments](./docs/Azure-Foundations-azure.md)
+* [Deploy Reference Implementation](./docs/Azure-Foundations-Deploy-reference-implentations.md)
+  * [Contoso Reference - Scope and Design](./docs/reference/contoso/Readme.md)
+* [Create Landing Zones](./docs/Azure-Foundations-Deploy-landing-zones.md)
+* [[Optional] Getting started with Infrastructure-as-code](./docs/Deploy/getting-started.md)
+  * [Configure Azure permissions for ARM tenant deployments & setup GitHub](./docs/Deploy/setup-github.md)
+  * [Initialize Git with current Azure configuration](./docs/Deploy/discover-environment.md)
+  * [Deploy your own ARM templates with AzOps GitHub Actions](./docs/Deploy/deploy-new-arm.md)
+  * [Configure Azure DevOps support](./docs/Deploy/setup-azuredevops.md)
+* [Enterprise-Scale "in-a-box" tutorial](./docs/enterprise-scale-iab/README.md)
+* [FAQ](./docs/EnterpriseScale-FAQ.md)
 
-Platform
+---
 
-Gateway subnets should not be configured with a network security group
-An activity log alert should exist for specific Security operations
-Append a tag and its value to resources (Platfrom LZ)
-Azure Monitor should collect activity logs from all regions
-Azure subscriptions should have a log profile for Activity Log
-An activity log alert should exist for specific Administrative operations
+## Deploying the Azure Foundations Architecture
 
+The Azure Foundations architecture is modular by design and allows customers to start with foundational Landing Zones that support their application portfolios, regardless of whether the applications are being migrated or are newly developed and deployed to Azure. The architecture can scale alongside the customer's business requirements regardless of scale point. In this repository we are providing the following three templates representing different scenarios composed using ARM templates.
 
-Root
+| Landing Zone Types | Description | ARM Template | Link |
+|:-------------------------|:-------------|:-------------|------|
+| Platform Landing Zone (Hub) | Platform Landing Zone deployment for Identity, Management and Networking |[![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2Fmaster%2FarmTemplates%2Fhub.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2Fmaster%2FarmTemplates%2Fportal-hub.json) | [Detailed description](./docs/reference/contoso/Readme.md) |
+| Application Landing Zone (Spoke) | Application Landing Zone deployment for a spoke subscription |[![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2Fmaster%2FarmTemplates%2Fspoke.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2Fmaster%2FarmTemplates%2Fportal-spoke.json) | [Detailed description](./docs/reference/adventureworks/README.md) |
 
+## Objective
 
-https://azure.microsoft.com/en-us/blog/preparing-for-whats-next-building-landing-zones-for-successful-cloud-migrations/?_lrsc=ea4b5c91-07b1-4b39-8622-f9ed7c6dfd62
+The Azure Foundations architecture provides prescriptive guidance coupled with Azure best practices, and it follows design principles across the critical design areas for organizations to define their Azure architecture. It will continue to evolve alongside the Azure platform and is ultimately defined by the various design decisions that organizations must make to define their Azure journey. 
 
+The Azure Foundations architecture is modular by design and allow organizations to start with foundational landing zones that support their application portfolios, and the architecture enables organizations to start as small as needed and scale alongside their business requirements regardless of scale point.
 
+![hippo](./ESLZ.gif)
 
-| Enterprise-Scale Design Principles | ARM Template | Scale without refactoring |
-|:-------------|:--------------|:--------------|
-|![Best Practice Check](https://azurequickstartsservice.blob.core.windows.net/badges/subscription-deployments/create-rg-lock-role-assignment/BestPracticeResult.svg)| [![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2Fmaster%2FarmTemplates%2Fes-hubspoke.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2Fmaster%2FarmTemplates%2Fportal.json)  | Yes |
+---
 
-# Deploy Enterprise-Scale with hub and spoke architecture
+_The Azure Foundatios architecture represents the strategic design path and target technical state for your Azure environment._
 
-## Customer profile
+---
 
-This reference implementation is ideal for customers that have started their Enterprise-Scale journey with a Enterprise-Scale foundation implementation and then there is a need to add connectivity on-premises datacenters and branch offices by using a hub and spoke network architecture. This reference implementation is also well suited for customers who want to start with Landing Zones for their net new
-deployment/development in Azure by implementing a network architecture based on the hub and spoke model.
+Not all enterprises adopt Azure in the same way, so the Enterprise-Scale architecture may vary between customers. Ultimately, the technical considerations and design recommendations of the Enterprise-Scale architecture may lead to different trade-offs based on the customer's scenario. Some variation is expected, but if core recommendations are followed, the resulting target architecture will put the customer on a path to sustainable scale.
 
-## How to evolve from Enterprise-Scale foundation
+The Enterprise-Scale reference implementations in this repository are intended to support Enterprise-Scale Azure adoption and provides prescriptive guidance based on authoratative design for the Azure platform as a whole.
 
-If customer started with a Enterprise-Scale foundation deployment, and if the business requirements changes over time, such as migration of on-premise applications to Azure that requires hybrid connectivity, you will simply create the **Connectivity** Subscription and place it into the **Platform** Management Group and assign Azure Policy for the hub and spoke network topology.
+| Key customer landing zone requirement | Enterprise-Scale reference implementations |
+|----------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Timelines to reach security and compliance requirements for a workload | Enabling all recommendations during setup, will ensure resources are compliant from a monitoring and security perspective |
+| Provides a baseline architecture using multi-subscription design | Yes, for the entire Azure tenant regardless of customer’s scale-point |
+| Best-practices from cloud provider | Yes, proven and validated with customers |
+| Be aligned with cloud provider’s platform roadmap | Yes |
+| UI Experience and simplified setup | Yes, Azure portal |
+| All critical services are present and properly configured according to recommend best practices for identity & access management, governance, security, network and logging | Yes, using a multi-subscription design, aligned with Azure platform roadmap |
+| Automation capabilities (IaC/DevOps) | Yes: ARM, Policy, GitHub/Azure DevOps CICD pipeline option included |
+| Provides long-term self-sufficiency | Yes, enterprise-scale architecture -> 1:N landing zones. Approach & architecture prepare the customer for long-term self-sufficiency, the RIs are there to get you started |
+| Enables migration velocity across the organization | Yes, enterprise-scale architecture -> 1:N landing zones, Architecture includes designs for segmentation and separation of duty to empower teams to act within appropriate landing zones |
+| Achieves operational excellence | Yes. Enables autonomy for platform and application teams with a policy driven governance and management |
 
-## Pre-requisites
+## Conditions for success
 
-To deploy this ARM template, your user/service principal must have Owner permission at the Tenant root.
-See the following [instructions](https://docs.microsoft.com/en-us/azure/role-based-access-control/elevate-access-global-admin) on how to grant access.
+To fully leverage this reference implementation in this repository, readers must have a collaborative engagement with key customer stakeholders across critical technical domains, such as identity, security, and networking. Ultimately, the success of cloud adoption hinges on cross-discipline cooperation within the organization, since key requisite Enterprise-Scale design decisions are cross cutting, and to be authoritative must involve domain Subject Matter Expertise (SME) and stakeholders within the customer. It is crucial that the organization has defined their [Enterprise-Scale Architecture](./docs/EnterpriseScale-Architecture.md) following the design principles and critical design areas.
 
-## What will be deployed?
-
-- A scalable Management Group hierarchy aligned to core platform capabilities, allowing you to operationalize at scale using RBAC and Policy
-- Azure Policies that will enable autonomy for the platform and the Landing Zones
-- An Azure Subscription dedicated for Management, which enables core platform capabilities at scale such as security, auditing, and logging
-- An Azure Subscription dedicated for Connectivity, which deploys core networking Resources such as the hub Virtual Network, Azure Firewall, VPN Gateway, Route Tables, among others
-- Landing Zone Management Group for corp-connected applications that require hybrid connectivity. This is where you will create your Subscriptions that will host your corp-connected workloads
-- Landing Zone Management Group for online applications that will be internet-facing, which doesn't require hybrid connectivity. This is where you will create your Subscriptions that will host your online workloads
-
-![Enterprise-Scale with connectivity](./media/es-hubspoke.png)
+It is also assumed that readers have a broad understanding of key Azure constructs and services in order to fully contextualize the prescriptive recommendations contained within Enterprise-Scale.
