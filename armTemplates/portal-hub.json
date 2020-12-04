@@ -38,7 +38,7 @@
                         "type": "Microsoft.Common.TextBox",
                         "label": "Company Identifier Prefix",
                         "toolTip": "Provide a naming prefix for the company identifier, 1-5 characters.",
-                        "defaultValue": "doc",
+                        "defaultValue": "sjt",
                         "constraints": {
                             "required": true,
                             "regex": "^[a-z0-9A-Z-]{1,5}$",
@@ -322,7 +322,7 @@
                         "name": "esLogAnalytics",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy the Platform Landing Zone Log Analytics workspace.",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, the Platform Landing Zone Log Analytics workspace will be deployed.",
                         "constraints": {
                             "allowedValues": [
@@ -584,7 +584,7 @@
                         "name": "esAkv",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy the Platform Landing Zone Azure Key Vault.",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, an Azure Key Vault will be deployed",
                         "constraints": {
                             "allowedValues": [
@@ -604,7 +604,7 @@
                         "name": "esStorage",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy the Platform Landing Zone Azure Storage account for diagnostics.",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, an Azure Storage Account will be deployed",
                         "constraints": {
                             "allowedValues": [
@@ -624,7 +624,7 @@
                         "name": "esRsv",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy the Platform Landing Zone Recovery Services Vault.",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, a Recovery Services Vault will be deployed",
                         "constraints": {
                             "allowedValues": [
@@ -644,7 +644,7 @@
                         "name": "esHub",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy the Platform Landing Zone Virtual Network",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected when adding the Platform Landing Zone Subscription, a Virtual Network will be deployed.",
                         "constraints": {
                             "allowedValues": [
@@ -747,7 +747,7 @@
                         "name": "esErGw",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy ExpressRoute Gateway",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected, ARM will deploy an ExpressRoute gateway",
                         "constraints": {
@@ -767,7 +767,7 @@
                         "name": "esAzFw",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure Firewall",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected, an Azure Firewall will be deployed.",
                         "constraints": {
@@ -799,7 +799,7 @@
                         "name": "esAppGw",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure App Gateway Subnet",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected, a subnet for App Gateways will be deployed.",
                         "constraints": {
@@ -831,7 +831,7 @@
                         "name": "esMgmt",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure Management Subnet",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected, a subnet for Management Services will be deployed.",
                         "constraints": {
@@ -863,7 +863,7 @@
                         "name": "esIdentity",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure Identity Subnet",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "visible": "[equals(steps('esPlatformLz').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected, a subnet for Active Directory Domain Services will be deployed.",
                         "constraints": {
