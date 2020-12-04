@@ -272,7 +272,7 @@
                                             "name": "[concat(variables('azVnetName'), '/', 'AzureFirewallSubnet')]",
                                             "dependsOn": [
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]",
-                                                "[resourceId('Microsoft.Network/virtualNetworks/subnets',variables('azVnetName'), '/', 'GatewaySubnet')]"
+                                                "[resourceId('Microsoft.Network/virtualNetworks/subnets', '/', variables('azVnetName'), '/', 'GatewaySubnet')]"
                                             ],
                                             "properties": {
                                                 "addressPrefix": "[parameters('subnetMaskForAzFw')]"
