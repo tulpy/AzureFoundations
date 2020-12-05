@@ -561,7 +561,8 @@
                                                 "name": "Standard"
                                             },
                                             "properties": {
-                                                "publicIPAllocationMethod": "Static"
+                                                "publicIPAllocationMethod": "Static",
+                                                "publicIPAddressVersion": "IPv4"
                                             }
                                         },
                                         {
