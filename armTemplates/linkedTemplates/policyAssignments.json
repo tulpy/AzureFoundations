@@ -15,7 +15,6 @@
       "allowedRegions": "/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c",
       "allowedRegionsRg": "/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988",
       "denyAppGwyWaf": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-AppGW-Without-WAF')]",
-      "appendKvSoftDelete": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Append-KV-SoftDelete')]",
       "storageHttps": "/providers/Microsoft.Authorization/policyDefinitions/404c3081-a854-4457-ae30-26a93ef643f9",
       "azureFoundationsCIS": "/providers/Microsoft.Authorization/policySetDefinitions/1a5bb27d-173f-493e-9568-eb56638dde4d",
       "appendAzureHub": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Append-Azure-HUB')]"
@@ -24,7 +23,6 @@
       "allowedRegions": "Allowed-AzureRegions",
       "allowedRegionsRg": "Allowed-AzureRegions-RG",
       "denyAppGwyWaf": "Deny-AppGW-Without-WAF",
-      "appendKvSoftDelete": "Append-KV-SoftDelete",
       "storageHttps": "Deny-Storage-http",
       "azureFoundationsCIS": "Deploy-AzureCIS",
       "appendAzureHub": "Append-Azure-HUB"
@@ -93,18 +91,6 @@
         "description": "Enforce-Secure-Storage",
         "displayName": "Enforce-Secure-Storage",
         "policyDefinitionId": "[variables('policyDefinitions').storageHttps]",
-        "scope": "[variables('scope').topLevel]"
-      }
-    },
-    {
-      "type": "Microsoft.Authorization/policyAssignments",
-      "apiVersion": "2018-05-01",
-      "name": "[variables('policyAssignmentNames').appendKvSoftDelete]",
-      "location": "[deployment().location]",
-      "properties": {
-        "description": "Append-KV-SoftDelete",
-        "displayName": "Append-KV-SoftDelete",
-        "policyDefinitionId": "[variables('policyDefinitions').appendKvSoftDelete]",
         "scope": "[variables('scope').topLevel]"
       }
     },

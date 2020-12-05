@@ -73,42 +73,6 @@
           }
         },
         {
-          "Name": "Append-KV-SoftDelete",
-          "Properties": {
-            "Description": "When a Key Vault is created without soft delete enabled, then this will add it.",
-            "DisplayName": "Append-KV-SoftDelete",
-            "Mode": "All",
-            "Parameters": {},
-            "PolicyRule": {
-              "if": {
-                "anyOf": [
-                  {
-                    "allOf": [
-                      {
-                        "field": "type",
-                        "equals": "Microsoft.KeyVault/vaults"
-                      },
-                      {
-                        "field": "Microsoft.KeyVault/vaults/enableSoftDelete",
-                        "notEquals": false
-                      }
-                    ]
-                  }
-                ]
-              },
-              "then": {
-                "effect": "append",
-                "details": [
-                  {
-                    "field": "Microsoft.KeyVault/vaults/enableSoftDelete",
-                    "value": true
-                  }
-                ]
-              }
-            }
-          }
-        },
-        {
           "Name": "Deny-AppGW-Without-WAF",
           "Properties": {
             "Description": null,
