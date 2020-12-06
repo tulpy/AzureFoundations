@@ -97,8 +97,8 @@
                 "type": "SystemAssigned"
             },
             "properties": {
-                "description": "Deploy-AzActivity-Log",
-                "displayName": "Deploy-AzActivity-Log",
+                "description": "[variables('policyAssignmentNames').deployAzActivityLog]",
+                "displayName": "[variables('policyAssignmentNames').deployAzActivityLog]",
                 "policyDefinitionId": "[variables('policyDefinitions').deployAzActivityLog]",
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
                 "parameters": {
@@ -132,8 +132,8 @@
                 "type": "SystemAssigned"
             },
             "properties": {
-                "description": "Deploy-VM-Monitoring",
-                "displayName": "Deploy-VM-Monitoring",
+                "description": "[variables('policyAssignmentNames').deployVmMonitoring]",
+                "displayName": "[variables('policyAssignmentNames').deployVmMonitoring]",
                 "policyDefinitionId": "[variables('policyDefinitions').deployVmMonitoring]",
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
                 "parameters": {
@@ -167,8 +167,8 @@
                 "type": "SystemAssigned"
             },
             "properties": {
-                "description": "Deploy-Resource-Diag",
-                "displayName": "Deploy-Resource-Diag",
+                "description": "[variables('policyAssignmentNames').deployAzResourceDiagnostics]",
+                "displayName": "[variables('policyAssignmentNames').deployAzResourceDiagnostics]",
                 "policyDefinitionId": "[variables('policyDefinitions').deployAzResourceDiagnostics]",
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
                 "parameters": {
@@ -202,8 +202,8 @@
                 "type": "SystemAssigned"
             },
             "properties": {
-                "description": "Deploy-ASC",
-                "displayName": "Deploy-ASC",
+                "description": "[variables('policyAssignmentNames').deployAzSecurityCenter]",
+                "displayName": "[variables('policyAssignmentNames').deployAzSecurityCenter]",
                 "policyDefinitionId": "[variables('policyDefinitions').deployAzSecurityCenter]",
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
                 "parameters": {
@@ -255,8 +255,8 @@
                 "type": "SystemAssigned"
             },
             "properties": {
-                "description": "ASC-Monitoring",
-                "displayName": "ASC-Monitoring",
+                "description": "[variables('policyAssignmentNames').enableAscMonitoring]",
+                "displayName": "[variables('policyAssignmentNames').enableAscMonitoring]",
                 "policyDefinitionId": "[variables('policyDefinitions').enableAscMonitoring]",
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]"
             }
