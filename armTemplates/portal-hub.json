@@ -692,6 +692,50 @@
                         }
                     },
                     {
+                        "name": "esPrivateDnsZones",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure Private DNS Zones.",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, Azure Private DNS Zones will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "esPrivateDnsZoneBlob",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Private DNS Zone - Blob",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected then the Azure Private DNS Zone will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformSub').esPrivateDnsZones, 'Yes')]"
+                    },
+
+
+
+
+                    {
                         "name": "esVpnGw",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy VPN Gateway",
