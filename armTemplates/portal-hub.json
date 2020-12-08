@@ -695,7 +695,7 @@
                         "name": "esPrivateDnsZones",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure Private DNS Zones.",
-                        "defaultValue": "Yes",
+                        "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected, Azure Private DNS Zones will be deployed.",
                         "constraints": {
                             "allowedValues": [
@@ -714,7 +714,7 @@
                     {
                         "name": "esPrivateDnsZoneBlob",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Private DNS Zone - Blob",
+                        "label": "Deploy Private DNS Zone - Blob Storage",
                         "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected then the Azure Private DNS Zone will be deployed.",
                         "constraints": {
@@ -731,10 +731,86 @@
                         },
                         "visible": "[equals(steps('esPlatformSub').esPrivateDnsZones, 'Yes')]"
                     },
-
-
-
-
+                    {
+                        "name": "esPrivateDnsZoneAkv",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Private DNS Zone - Azure Key Vault",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected then the Azure Private DNS Zone will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformSub').esPrivateDnsZones, 'Yes')]"
+                    },
+                    {
+                        "name": "esPrivateDnsZoneFiles",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Private DNS Zone - Azure Files",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected then the Azure Private DNS Zone will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformSub').esPrivateDnsZones, 'Yes')]"
+                    },
+                    {
+                        "name": "esPrivateDnsZoneQueue",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Private DNS Zone - Queue Storage",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected then the Azure Private DNS Zone will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformSub').esPrivateDnsZones, 'Yes')]"
+                    },
+                    {
+                        "name": "esPrivateDnsZoneTable",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Private DNS Zone - Table Storage",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected then the Azure Private DNS Zone will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformSub').esPrivateDnsZones, 'Yes')]"
+                    },
                     {
                         "name": "esVpnGw",
                         "type": "Microsoft.Common.OptionsGroup",
@@ -1181,6 +1257,12 @@
             "rsvPrefix": "[steps('esNaming').esRsvIdentifier]",
             "environmentTag": "[steps('esNaming').esSubscriptionTag]",
             "ownerTag": "[steps('esNaming').esOwnerTag]",
+            "privateDnsZones": "[steps('esPlatformSub').esPrivateDnsZones]",
+            "privateDnsZonesTable": "[steps('esPlatformSub').esPrivateDnsZoneTable]",
+            "privateDnsZonesQueue": "[steps('esPlatformSub').esPrivateDnsZoneQueue]",
+            "privateDnsZonesFiles": "[steps('esPlatformSub').esPrivateDnsZoneFiles]",
+            "privateDnsZonesBlob": "[steps('esPlatformSub').esPrivateDnsZoneBlob]",
+            "privateDnsZonesAkv": "[steps('esPlatformSub').esPrivateDnsZoneAkv]",
             "vpnGwType": "[steps('esPlatformSub').esVpnGwType]",
             "subnetMaskForGw": "[steps('esPlatformSub').esAddressVpnOrEr]",
             "subnetMaskForAzFw": "[steps('esPlatformSub').esAddressFw]",
