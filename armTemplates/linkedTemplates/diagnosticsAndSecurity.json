@@ -72,7 +72,7 @@
             "deployAzResourceDiagnostics": "[guid(concat(parameters('companyPrefix'), variables('policyAssignmentNames').deployAzResourceDiagnostics))]",
             "deployVmMonitoring": "[guid(concat(parameters('companyPrefix'),variables('policyAssignmentNames').deployVmMonitoring))]",
             "deployAzSecurityCenter": "[guid(concat(parameters('companyPrefix'),variables('policyAssignmentNames').deployAzSecurityCenter))]",
-            "deployenableAscMonitoring": "[guid(concat(parameters('companyPrefix'), variables('policyAssignmentNames').enableAscMonitoring))]"
+            "enableAscMonitoring": "[guid(concat(parameters('companyPrefix'), variables('policyAssignmentNames').enableAscMonitoring))]"
 
         },
         "blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}",
