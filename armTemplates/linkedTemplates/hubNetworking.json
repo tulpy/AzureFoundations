@@ -180,7 +180,7 @@
         "nsgId001": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('nsgName001'))]",
         "subnetName002": "AppGateway",
         "NsgName002": "[toLower(concat(variables('namingPrefix'), '-', parameters('nsgPrefix'), '-', variables('subnetName002')))]",
-        "UdrName002": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-', variables('subnetName002')))]",
+        "UdrName002": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-', 'GatewaySubnet'))]",
         "UdrId002": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('udrName002'))]",
         "NsgId002": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('nsgName002'))]",
         "subnetName003": "Identity",
