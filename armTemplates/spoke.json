@@ -282,9 +282,6 @@
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
                     },
-                    "tenantId": {
-                        "value": "[parameters('tenantId')]"
-                    },
                     "subscriptionId": {
                         "value": "[parameters('subscriptionId')]"
                     }
@@ -435,6 +432,9 @@
                     },
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
+                    },
+                    "tenantId": {
+                        "value": "[parameters('tenantId')]"
                     },
                     "subscriptionId": {
                         "value": "[parameters('subscriptionId')]"
