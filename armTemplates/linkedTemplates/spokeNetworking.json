@@ -59,6 +59,14 @@
             ],
             "defaultValue": "Yes"
         },
+        "enableUdr": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
         "enableWeb": {
             "type": "string",
             "allowedValues": [
@@ -196,6 +204,18 @@
                                             ]
                                         },
                                         {
+                                            "condition": "[equals(parameters('enableUdr'), 'Yes')]",
+                                            "type": "Microsoft.Network/routeTables",
+                                            "apiVersion": "2020-05-01",
+                                            "name": "[variables('udrName')]",
+                                            "location": "[parameters('location')]",
+                                            "properties": {
+                                                "routes": [
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "condition": "[and(equals(parameters('enableSpoke'), 'Yes'), not(empty(parameters('subscriptionId'))))]",
                                             "name": "[variables('nwName')]",
                                             "type": "Microsoft.Network/networkWatchers",
                                             "apiVersion": "2019-11-01",
@@ -223,16 +243,6 @@
                                                 "networkSecurityGroup": {
                                                     "id": "[variables('nsgId001')]"
                                                 }
-                                            }
-                                        },
-                                        {
-                                            "type": "Microsoft.Network/routeTables",
-                                            "apiVersion": "2020-05-01",
-                                            "name": "[variables('udrName')]",
-                                            "location": "[parameters('location')]",
-                                            "properties": {
-                                                "routes": [
-                                                ]
                                             }
                                         },
                                         {

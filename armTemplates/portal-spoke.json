@@ -10,7 +10,7 @@
                 "name": "esNaming",
                 "label": "Naming Convention Prefixes",
                 "subLabel": {
-                    "preValidation": "Provide naming prefixes for all Azure resources that will be created.",
+                    "preValidation": "Provide valuees for all Azure resources that will be created.",
                     "postValidation": "Done"
                 },
                 "bladeTitle": "Naming Convention Prefixes",
@@ -21,7 +21,7 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "Tenant level ARM deployment requires access at the tenant root (/) scope. Visit this link to ensure you have the appropriate RBAC permission to complete the deployment",
+                            "text": "Tenant level deployments require access at the tenant root (/) scope. Visit this link to ensure you have the appropriate RBAC permission to complete the deployment",
                             "uri": "https://docs.microsoft.com/azure/role-based-access-control/elevate-access-global-admin"
                         }
                     },
@@ -30,14 +30,14 @@
                         "type": "Microsoft.Common.TextBlock",
                         "visible": true,
                         "options": {
-                            "text": "Please provide naming prefixes for the Company, Location and Environment identifiers:"
+                            "text": "Please provide values for the Company, Location and Subscription identifiers:"
                         }
                     },
                     {
                         "name": "esComIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Company Identifier Prefix",
-                        "toolTip": "Provide a naming prefix for the company identifier, 1-5 characters.",
+                        "toolTip": "Provide a value for the company identifier, 1-5 characters.",
                         "defaultValue": "sjt",
                         "constraints": {
                             "required": true,
@@ -49,7 +49,7 @@
                         "name": "esLocIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Location Identifier Prefix",
-                        "toolTip": "Provide a naming prefix for the location identifier, 3 characters (Australia East - SYD) or (Australia SouthEast - MEL)",
+                        "toolTip": "Provide a value for the location identifier, 3 characters (Australia East - SYD) or (Australia SouthEast - MEL)",
                         "defaultValue": "syd",
                         "constraints": {
                             "required": true,
@@ -58,10 +58,10 @@
                         }
                     },
                     {
-                        "name": "esEnvIdentifier",
+                        "name": "esSubIdentifier",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Environment Identifier Prefix",
-                        "toolTip": "Provide a naming prefix for the environment identifier, 3 characters eg 'cor'.",
+                        "label": "Subscription Identifier Prefix",
+                        "toolTip": "Provide a value for the subscription identifier, 3 characters eg 'prd, dev, uat'.",
                         "defaultValue": "prd",
                         "constraints": {
                             "required": true,
@@ -74,14 +74,14 @@
                         "type": "Microsoft.Common.TextBlock",
                         "visible": true,
                         "options": {
-                            "text": "Please provide naming prefixes for the Azure resources:"
+                            "text": "Please provide Azure resource naming values:"
                         }
                     },
                     {
                         "name": "esArgIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Resource Group Identifier",
-                        "toolTip": "Provide a naming prefix for the Resource Group identifier",
+                        "toolTip": "Provide a value for the Resource Group identifier",
                         "defaultValue": "arg",
                         "constraints": {
                             "required": true,
@@ -93,7 +93,7 @@
                         "name": "esVntIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Virtual Network Identifier",
-                        "toolTip": "Provide a naming prefix for the Virtual Network identifier",
+                        "toolTip": "Provide a value for the Virtual Network identifier",
                         "defaultValue": "vnt",
                         "constraints": {
                             "required": true,
@@ -104,8 +104,8 @@
                     {
                         "name": "esStaIdentifier",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Azure Storage Identifier",
-                        "toolTip": "Provide a naming prefix for the Azure Storage identifier",
+                        "label": "Storage Identifier",
+                        "toolTip": "Provide a value for the Storage identifier",
                         "defaultValue": "sta",
                         "constraints": {
                             "required": true,
@@ -117,7 +117,7 @@
                         "name": "esUdrIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Route Table Identifier",
-                        "toolTip": "Provide a naming prefix for the Route Table identifier",
+                        "toolTip": "Provide a value for the Route Table identifier",
                         "defaultValue": "udr",
                         "constraints": {
                             "required": true,
@@ -129,7 +129,7 @@
                         "name": "esNsgIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Network Security Group Identifier",
-                        "toolTip": "Provide a naming prefix for the Network Security Group identifier",
+                        "toolTip": "Provide a value for the Network Security Group identifier",
                         "defaultValue": "nsg",
                         "constraints": {
                             "required": true,
@@ -141,7 +141,7 @@
                         "name": "esAkvIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Azure Key Vault Identifier",
-                        "toolTip": "Provide a naming prefix for the Azure Key Vault Identifier",
+                        "toolTip": "Provide a value for the Azure Key Vault Identifier",
                         "defaultValue": "akv",
                         "constraints": {
                             "required": true,
@@ -153,7 +153,7 @@
                         "name": "esRsvIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Recovery Services Vaults Identifier",
-                        "toolTip": "Provide a naming prefix for the Recovery Services Vaults Identifier",
+                        "toolTip": "Provide a value for the Recovery Services Vaults Identifier",
                         "defaultValue": "rsv",
                         "constraints": {
                             "required": true,
@@ -166,7 +166,7 @@
                         "type": "Microsoft.Common.TextBlock",
                         "visible": true,
                         "options": {
-                            "text": "Please provide values for the Platfrom Landing Zone Tags:"
+                            "text": "Please provide values for the Landing Zone tags:"
                         }
                     },
                     {
@@ -206,7 +206,7 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "To enable the Platform Landing Zone, you must allocate a Subscription. Please note, this Subscription will be moved to the Platform Management Group, and ARM will deploy Platform Landing Zone resources. Insight recommend using a new Subscription with no existing resources.    ",
+                            "text": "To enable the Application Landing Zone, you must allocate an Azure Subscription. Please note, this Azure Subscription will be moved to the Application Landing Zone Management Group, where policy will drive the deployment. Insight recommend using a new, empty Azure Subscription.",
                             "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
                         }
                     },
@@ -221,7 +221,7 @@
                     {
                         "name": "esApplicationLzSub",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Application Landing Zone Subscription (required)",
+                        "label": "Choose the Application Landing Zone Subscription (required)",
                         "toolTip": "",
                         "multiselect": false,
                         "selectAll": true,
@@ -237,8 +237,8 @@
                     {
                         "name": "esAsc",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Azure Security Center and enable security monitoring for your platform and resources.",
-                        "defaultValue": "Yes, Azure Defender On",
+                        "label": "Deploy Azure Security Center and enable security monitoring across the Landing Zone.",
+                        "defaultValue": "Yes, Azure Defender Off",
                         "toolTip": "If 'Yes' is selected when also adding a subscription, Azure Security Center will be enabled.",
                         "constraints": {
                             "allowedValues": [
@@ -261,7 +261,7 @@
                     {
                         "name": "esAkv",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy the Application Landing Zone Azure Key Vault.",
+                        "label": "Deploy an Azure Key Vault.",
                         "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected, an Azure Key Vault will be deployed",
                         "constraints": {
@@ -279,11 +279,11 @@
                         "visible": true
                     },
                     {
-                        "name": "esStorage",
+                        "name": "esSta",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy the Application Landing Zone Azure Storage account for diagnostics.",
+                        "label": "Deploy a Storage account for diagnostics.",
                         "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected, an Azure Storage Account will be deployed",
+                        "toolTip": "If 'Yes' is selected, a Storage account will be deployed",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -301,7 +301,7 @@
                     {
                         "name": "esRsv",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy the Application Landing Zone Recovery Services Vault.",
+                        "label": "Deploy a Recovery Services Vault.",
                         "defaultValue": "No",
                         "toolTip": "If 'Yes' is selected, a Recovery Services Vault will be deployed",
                         "constraints": {
@@ -321,9 +321,9 @@
                     {
                         "name": "esSpoke",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy the Application Landing Zone Virtual Network",
+                        "label": "Deploy a Virtual Network",
                         "defaultValue": "No",
-                        "toolTip": "If 'Yes' is selected when adding the Application Landing Zone Subscription, a Virtual Network will be deployed.",
+                        "toolTip": "If 'Yes' is selected, a Virtual Network will be deployed.",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -341,13 +341,13 @@
                     {
                         "name": "esAddress",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Application Landing Zone CIDR Range",
+                        "label": "Virtual network CIDR Range",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/16)",
                         "defaultValue": "10.50.0.0/18",
                         "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
                         "constraints": {
                             "required": true,
-                            "validationMessage": "The Application Landing Zone network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
+                            "validationMessage": "Virtual network's address space, specified as a CIDR notation (e.g. 192.168.1.0/24)"
                         }
                     },
                     {
@@ -367,6 +367,26 @@
                         "constraints": {
                             "allowedValues": "[map(steps('esApplicationLz').esLocationsApi.value, (item) => parse(concat('{\"label\":\"', item.displayName, '\",\"value\":\"', item.name, '\"}')))]",
                             "required": true
+                        }
+                    },
+                    {
+                        "name": "esUdr",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy UDRs to subnets",
+                        "defaultValue": "Yes",
+                        "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
+                        "toolTip": "If 'Yes' is selected, UDRs will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
                         }
                     },
                     {
@@ -470,7 +490,7 @@
         ],
         "outputs": {
             "companyPrefix": "[steps('esNaming').esComIdentifier]",
-            "environmentPrefix": "[steps('esNaming').esEnvIdentifier]",
+            "environmentPrefix": "[steps('esNaming').esSubIdentifier]",
             "locationPrefix": "[steps('esNaming').esLocIdentifier]",
             "argPrefix": "[steps('esNaming').esArgIdentifier]",
             "vntPrefix": "[steps('esNaming').esVntIdentifier]",
@@ -485,6 +505,7 @@
             "subnetMaskForApp": "[steps('esApplicationLz').esAddressApp]",
             "subnetMaskForData": "[steps('esApplicationLz').esAddressData]",
             "enableSpoke": "[steps('esApplicationLz').esSpoke]",
+            "enableUdr": "[steps('esApplicationLz').esUdr]",
             "enableWeb": "[steps('esApplicationLz').esWeb]",
             "enableApp": "[steps('esApplicationLz').esApp]",
             "enableData": "[steps('esApplicationLz').esData]",
@@ -493,7 +514,7 @@
             "subscriptionId": "[steps('esApplicationLz').esApplicationLzSub]",
             "enableAsc": "[steps('esApplicationLz').esAsc]",
             "enableAkv": "[steps('esApplicationLz').esAkv]",
-            "enableStorage": "[steps('esApplicationLz').esStorage]",
+            "enableStorage": "[steps('esApplicationLz').esSta]",
             "enableRsv": "[steps('esApplicationLz').esRsv]"
         }
     }
