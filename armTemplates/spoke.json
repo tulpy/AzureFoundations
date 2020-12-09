@@ -141,6 +141,14 @@
             ],
             "defaultValue": "Yes"
         },
+        "enableUdr": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
         "enableWeb": {
             "type": "string",
             "allowedValues": [
@@ -334,6 +342,9 @@
                     },
                     "enableSpoke": {
                         "value": "[parameters('enableSpoke')]"
+                    },
+                    "enableUdr": {
+                        "value": "[parameters('enableUdr')]"
                     },
                     "addressPrefix": {
                         "value": "[parameters('addressPrefix')]"
