@@ -84,6 +84,14 @@
                 "description": "Provide the value for the owner tag"
             }
         },
+        "tenantId": {
+            "type": "string",
+            "defaultValue": "",
+            "maxLength": 36,
+            "metadata": {
+                "description": "Provide the tenant id"
+            }
+        },
         "subscriptionId": {
             "type": "string",
             "defaultValue": "",
@@ -273,6 +281,9 @@
                     },
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
+                    },
+                    "tenantId": {
+                        "value": "[parameters('tenantId')]"
                     },
                     "subscriptionId": {
                         "value": "[parameters('subscriptionId')]"
