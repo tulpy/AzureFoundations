@@ -219,6 +219,30 @@
                         }
                     },
                     {
+                        "name": "mgmtTenantsApi",
+                        "type": "Microsoft.Solutions.ArmApiControl",
+                        "request": {
+                            "method": "GET",
+                            "path": "tenants?api-version=2020-01-01"
+                        }
+                    },
+                     {
+                        "name": "esApplicationLzTenant",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Application Landing Zone Tenant (required)",
+                        "toolTip": "",
+                        "multiselect": false,
+                        "selectAll": true,
+                        "filter": true,
+                        "filterPlaceholder": "Filter items ...",
+                        "multiLine": true,
+                        "visible": true,
+                        "constraints": {
+                            "allowedValues": "[map(steps('esApplicationLz').mgmtTenantsApi.value, (tenant) => parse(concat('{\"label\":\"', tenant.displayName, '\",\"description\":\"', tenant.tenantId, '\",\"value\":\"', toLower(tenant.tenantId), '\"}')) )]",
+                            "required": true
+                        }
+                    },
+                    {
                         "name": "esApplicationLzSub",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Application Landing Zone Subscription (required)",
@@ -490,6 +514,7 @@
             "enableData": "[steps('esApplicationLz').esData]",
             "addressPrefix": "[steps('esApplicationLz').esAddress]",
             "location": "[steps('esApplicationLz').esNwLocation]",
+            "tenantId": "[steps('esApplicationLz').esApplicationLzTenant]",
             "subscriptionId": "[steps('esApplicationLz').esApplicationLzSub]",
             "enableAsc": "[steps('esApplicationLz').esAsc]",
             "enableAkv": "[steps('esApplicationLz').esAkv]",
