@@ -12,32 +12,32 @@
       "topLevel": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]"
     },
     "policyDefinitions": {
-      "allowedRegions": "/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c",
-      "allowedRegionsRg": "/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988",
+      "allowedAzRegions": "/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c",
+      "allowedAzRegionsRg": "/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988",
       "denyAppGwyWaf": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-AppGW-Without-WAF')]",
-      "storageHttps": "/providers/Microsoft.Authorization/policyDefinitions/404c3081-a854-4457-ae30-26a93ef643f9",
-      "azureFoundationsCIS": "/providers/Microsoft.Authorization/policySetDefinitions/1a5bb27d-173f-493e-9568-eb56638dde4d",
-      "appendAzureHub": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Append-Azure-HUB')]"
+      "enforceStorageHttps": "/providers/Microsoft.Authorization/policyDefinitions/404c3081-a854-4457-ae30-26a93ef643f9",
+      "deployAzFoundationsCIS": "/providers/Microsoft.Authorization/policySetDefinitions/1a5bb27d-173f-493e-9568-eb56638dde4d",
+      "appendAzHub": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Append-AzHUB')]"
     },
     "policyAssignmentNames": {
-      "allowedRegions": "Allowed-AzureRegions",
-      "allowedRegionsRg": "Allowed-AzureRegions-RG",
+      "allowedAzRegions": "Allowed-AzRegions",
+      "allowedAzRegionsRg": "Allowed-AzRegions-RG",
       "denyAppGwyWaf": "Deny-AppGW-Without-WAF",
-      "storageHttps": "Deny-Storage-http",
-      "azureFoundationsCIS": "Deploy-AzureCIS",
-      "appendAzureHub": "Append-Azure-HUB"
+      "enforceStorageHttps": "Enforce-Storage-https",
+      "deployAzFoundationsCIS": "Deploy-AzureCIS",
+      "appendAzHub": "Append-AzHUB"
     }
   },
   "resources": [
     {
       "type": "Microsoft.Authorization/policyAssignments",
       "apiVersion": "2018-05-01",
-      "name": "[variables('policyAssignmentNames').allowedRegions]",
+      "name": "[variables('policyAssignmentNames').allowedAzRegions]",
       "location": "[deployment().location]",
       "properties": {
-        "description": "Allowed-AzureRegions",
-        "displayName": "Allowed-AzureRegions",
-        "policyDefinitionId": "[variables('policyDefinitions').allowedRegions]",
+        "description": "[variables('policyAssignmentNames').allowedAzRegions]",
+        "displayName": "[variables('policyAssignmentNames').allowedAzRegions]",
+        "policyDefinitionId": "[variables('policyDefinitions').allowedAzRegions]",
         "parameters": {
           "listOfAllowedLocations": {
             "value": [
@@ -52,12 +52,12 @@
     {
       "type": "Microsoft.Authorization/policyAssignments",
       "apiVersion": "2018-05-01",
-      "name": "[variables('policyAssignmentNames').allowedRegionsRg]",
+      "name": "[variables('policyAssignmentNames').allowedAzRegionsRg]",
       "location": "[deployment().location]",
       "properties": {
-        "description": "Allowed-AzureRegions-RG",
-        "displayName": "Allowed-AzureRegions-RG",
-        "policyDefinitionId": "[variables('policyDefinitions').allowedRegionsRg]",
+        "description": "[variables('policyAssignmentNames').allowedAzRegionsRg]",
+        "displayName": "[variables('policyAssignmentNames').allowedAzRegionsRg]",
+        "policyDefinitionId": "[variables('policyDefinitions').allowedAzRegionsRg]",
         "parameters": {
           "listOfAllowedLocations": {
             "value": [
@@ -75,8 +75,8 @@
       "name": "[variables('policyAssignmentNames').denyAppGwyWaf]",
       "location": "[deployment().location]",
       "properties": {
-        "description": "Deny-AppGW-Without-WAF",
-        "displayName": "Deny-AppGW-Without-WAF",
+        "description": "[variables('policyAssignmentNames').denyAppGwyWaf]",
+        "displayName": "[variables('policyAssignmentNames').denyAppGwyWaf]",
         "policyDefinitionId": "[variables('policyDefinitions').denyAppGwyWaf]",
         "parameters": {},
         "scope": "[variables('scope').topLevel]"
@@ -85,28 +85,28 @@
     {
       "type": "Microsoft.Authorization/policyAssignments",
       "apiVersion": "2018-05-01",
-      "name": "[variables('policyAssignmentNames').storageHttps]",
+      "name": "[variables('policyAssignmentNames').enforceStorageHttps]",
       "location": "[deployment().location]",
       "properties": {
-        "description": "Enforce-Secure-Storage",
-        "displayName": "Enforce-Secure-Storage",
-        "policyDefinitionId": "[variables('policyDefinitions').storageHttps]",
+        "description": "[variables('policyAssignmentNames').enforceStorageHttps]",
+        "displayName": "[variables('policyAssignmentNames').enforceStorageHttps]",
+        "policyDefinitionId": "[variables('policyDefinitions').enforceStorageHttps]",
         "scope": "[variables('scope').topLevel]"
       }
     },
     {
       "type": "Microsoft.Authorization/policyAssignments",
       "apiVersion": "2018-05-01",
-      "name": "[variables('policyAssignmentNames').azureFoundationsCIS]",
+      "name": "[variables('policyAssignmentNames').deployAzFoundationsCIS]",
       "location": "[deployment().location]",
       "properties": {
-        "description": "DeployAzureCIS",
-        "displayName": "DeployAzureCIS",
-        "policyDefinitionId": "[variables('policyDefinitions').azureFoundationsCIS]",
+        "description": "[variables('policyAssignmentNames').deployAzFoundationsCIS]",
+        "displayName": "[variables('policyAssignmentNames').deployAzFoundationsCIS]",
+        "policyDefinitionId": "[variables('policyDefinitions').deployAzFoundationsCIS]",
         "parameters": {
           "listOfRegionsWhereNetworkWatcherShouldBeEnabled": {
             "value": [
-              "australiaeast"
+              "[deployment().location]"
             ]
           }
         },
@@ -116,12 +116,12 @@
     {
       "type": "Microsoft.Authorization/policyAssignments",
       "apiVersion": "2018-05-01",
-      "name": "[variables('policyAssignmentNames').appendAzureHub]",
+      "name": "[variables('policyAssignmentNames').appendAzHub]",
       "location": "[deployment().location]",
       "properties": {
-        "description": "Append-Azure-HUB",
-        "displayName": "Append-Azure-HUB",
-        "policyDefinitionId": "[variables('policyDefinitions').appendAzureHub]",
+        "description": "[variables('policyAssignmentNames').appendAzHub]",
+        "displayName": "[variables('policyAssignmentNames').appendAzHub]",
+        "policyDefinitionId": "[variables('policyDefinitions').appendAzHub]",
         "scope": "[variables('scope').topLevel]"
       }
     }

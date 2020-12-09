@@ -12,7 +12,7 @@
     "policies": {
       "policyDefinitions": [
         {
-          "Name": "Append-Azure-HUB",
+          "Name": "Append-AzHUB",
           "Properties": {
             "Description": "Append Azure Hybrid Use Benefits licensing to all Windows VMs",
             "DisplayName": "Append-Azure-HUB",
@@ -387,10 +387,10 @@
           }
         },
         {
-          "Name": "Deploy-ASC-Standard",
+          "Name": "Deploy-ASC",
           "Properties": {
-            "Description": "Ensures that subscriptions have Security Center Standard enabled.",
-            "DisplayName": "Deploy-ASC-Standard",
+            "Description": "Ensures that subscriptions have ASC deployed.",
+            "DisplayName": "Deploy-ASC",
             "Mode": "All",
             "Parameters": {
               "pricingTierVMs": {
@@ -403,7 +403,7 @@
                   "Standard",
                   "Free"
                 ],
-                "defaultValue": "Standard"
+                "defaultValue": "Free"
               },
               "pricingTierSqlServers": {
                 "type": "String",
