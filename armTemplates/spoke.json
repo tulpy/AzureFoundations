@@ -97,7 +97,7 @@
             "defaultValue": "",
             "maxLength": 36,
             "metadata": {
-                "description": "Provide the subscription id of an existing, empty subscription you want to dedicate to the Platform LZ. If you don't want to bring a subscription, leave this parameter empty as is."
+                "description": "Provide the subscription id of an existing, empty subscription you want to dedicate to the Application LZ. If you don't want to bring a subscription, leave this parameter empty as is."
             }
         },
         "enableAkv": {
@@ -140,6 +140,41 @@
                 "No"
             ],
             "defaultValue": "Yes"
+        },
+        "hubCompanyPrefix": {
+            "type": "string",
+            "maxLength": 5
+        },
+        "hubLocationPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "hubEnvironmentPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "hubArgPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "hubVntPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "hubAddressPrefix": {
+            "type": "string",
+            "metadata": {
+                "displayName": "hubAddressPrefix",
+                "description": "Address prefix of the Hub"
+            }
+        },
+        "hubSubscriptionId": {
+            "type": "string",
+            "defaultValue": "",
+            "maxLength": 36,
+            "metadata": {
+                "description": "Provide the subscription id of the Hub."
+            }
         },
         "enableUdr": {
             "type": "string",
@@ -393,12 +428,51 @@
                     "contentVersion": "1.0.0.0",
                     "uri": "[variables('deploymentUris').vNetPeering]"
                 },
-                "parameters": {
+                "parameters": {                
                     "enableSpoke": {
                         "value": "[parameters('enableSpoke')]"
                     },
+                    "companyPrefix": {
+                        "value": "[parameters('companyPrefix')]"
+                    },
+                    "locationPrefix": {
+                        "value": "[parameters('locationPrefix')]"
+                    },
+                    "environmentPrefix": {
+                        "value": "[parameters('environmentPrefix')]"
+                    },
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
+                    },
+                    "vntPrefix": {
+                        "value": "[parameters('vntPrefix')]"
+                    },
+                    "addressPrefix": {
+                        "value": "[parameters('addressPrefix')]"
+                    },
                     "subscriptionId": {
                         "value": "[parameters('subscriptionId')]"
+                    },
+                    "hubCompanyPrefix": {
+                        "value": "[parameters('hubCompanyPrefix')]"
+                    },
+                    "hubLocationPrefix": {
+                        "value": "[parameters('hubLocationPrefix')]"
+                    },
+                    "hubEnvironmentPrefix": {
+                        "value": "[parameters('hubEnvironmentPrefix')]"
+                    },
+                    "hubArgPrefix": {
+                        "value": "[parameters('hubArgPrefix')]"
+                    },
+                    "hubVntPrefix": {
+                        "value": "[parameters('hubVntPrefix')]"
+                    },
+                    "hubAddressPrefix": {
+                        "value": "[parameters('hubAddressPrefix')]"
+                    },
+                    "hubSubscriptionId": {
+                        "value": "[parameters('hubSubscriptionId')]"
                     }
                 }
             }

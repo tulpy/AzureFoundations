@@ -508,6 +508,115 @@
                             "required": true,
                             "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
                         }
+                    },
+                    {
+                        "name": "esHubLzSub",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Choose the Hub Subscription (required)",
+                        "toolTip": "",
+                        "multiselect": false,
+                        "selectAll": true,
+                        "filter": true,
+                        "filterPlaceholder": "Filter items ...",
+                        "multiLine": true,
+                        "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": "[map(steps('esApplicationLz').mgmtSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "text1",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
+                        "options": {
+                            "text": "Please provide the Hub's values for the Company, Location and Subscription identifiers:"
+                        }
+                    },
+                    {
+                        "name": "esHubComIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
+                        "label": "Company Identifier Prefix",
+                        "toolTip": "Provide the value for the company identifier, 1-5 characters.",
+                        "defaultValue": "sjt",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{1,5}$",
+                            "validationMessage": "The prefix must be 1-5 characters."
+                        }
+                    },
+                    {
+                        "name": "esHubLocIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
+                        "label": "Location Identifier Prefix",
+                        "toolTip": "Provide the value for the location identifier, 3 characters (Australia East - SYD) or (Australia SouthEast - MEL)",
+                        "defaultValue": "syd",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esHubSubIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
+                        "label": "Subscription Identifier Prefix",
+                        "toolTip": "Provide tge value for the subscription identifier, 3 characters eg 'cor'.",
+                        "defaultValue": "cor",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "text2",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
+                        "options": {
+                            "text": "Please provide the Hub's resource naming values and CIDR range:"
+                        }
+                    },
+                    {
+                        "name": "esHubArgIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
+                        "label": "Resource Group Identifier",
+                        "toolTip": "Provide the value for the Resource Group identifier",
+                        "defaultValue": "arg",
+                        "constraints":  {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                                        }
+                    },
+                    {
+                        "name": "esHubVntIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
+                        "label": "Virtual Network Identifier",
+                        "toolTip": "Provide the value for the Virtual Network identifier",
+                        "defaultValue": "vnt",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esHubAddress",
+                        "type": "Microsoft.Common.TextBox",
+                        "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
+                        "label": "Virtual network CIDR Range",
+                        "toolTip": "Provide the address prefix in CIDR notation (e.g 10.100.0.0/16)",
+                        "defaultValue": "10.49.0.0/18",
+                        "constraints": {
+                            "required": true,
+                            "validationMessage": "Virtual network's address space, specified as a CIDR notation (e.g. 192.168.1.0/24)"
+                        }
                     }
                 ]
             }
@@ -540,7 +649,14 @@
             "enableAsc": "[steps('esApplicationLz').esAsc]",
             "enableAkv": "[steps('esApplicationLz').esAkv]",
             "enableStorage": "[steps('esApplicationLz').esSta]",
-            "enableRsv": "[steps('esApplicationLz').esRsv]"
+            "enableRsv": "[steps('esApplicationLz').esRsv]",
+            "hubSubscriptionId": "[steps('esApplicationLz').esHubLzSub]",
+            "hubCompanyPrefix": "[steps('esApplicationLz').esHubComIdentifier]",
+            "hubLocationPrefix": "[steps('esApplicationLz').esHubLocIdentifier]",
+            "hubEnvironmentPrefix": "[steps('esApplicationLz').esHubSubIdentifier]",
+            "hubArgPrefix": "[steps('esApplicationLz').esHubArgIdentifier]",
+            "hubVntPrefix": "[steps('esApplicationLz').esHubVntIdentifier]",
+            "hubAddressPrefix": "[steps('esApplicationLz').esHubAddress]"
         }
     }
 }
