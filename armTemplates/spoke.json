@@ -141,33 +141,6 @@
             ],
             "defaultValue": "Yes"
         },
-        "hubCompanyPrefix": {
-            "type": "string",
-            "maxLength": 5
-        },
-        "hubLocationPrefix": {
-            "type": "string",
-            "maxLength": 3
-        },
-        "hubEnvironmentPrefix": {
-            "type": "string",
-            "maxLength": 3
-        },
-        "hubArgPrefix": {
-            "type": "string",
-            "maxLength": 3
-        },
-        "hubVntPrefix": {
-            "type": "string",
-            "maxLength": 3
-        },
-        "hubAddressPrefix": {
-            "type": "string",
-            "metadata": {
-                "displayName": "hubAddressPrefix",
-                "description": "Address prefix of the Hub"
-            }
-        },
         "hubSubscriptionId": {
             "type": "string",
             "defaultValue": "",
@@ -175,6 +148,14 @@
             "metadata": {
                 "description": "Provide the subscription id of the Hub."
             }
+        },
+        "hubVnetName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "hubVnetRG": {
+            "type": "string",
+            "defaultValue": ""
         },
         "enableUdr": {
             "type": "string",
@@ -453,26 +434,14 @@
                     "subscriptionId": {
                         "value": "[parameters('subscriptionId')]"
                     },
-                    "hubCompanyPrefix": {
-                        "value": "[parameters('hubCompanyPrefix')]"
-                    },
-                    "hubLocationPrefix": {
-                        "value": "[parameters('hubLocationPrefix')]"
-                    },
-                    "hubEnvironmentPrefix": {
-                        "value": "[parameters('hubEnvironmentPrefix')]"
-                    },
-                    "hubArgPrefix": {
-                        "value": "[parameters('hubArgPrefix')]"
-                    },
-                    "hubVntPrefix": {
-                        "value": "[parameters('hubVntPrefix')]"
-                    },
-                    "hubAddressPrefix": {
-                        "value": "[parameters('hubAddressPrefix')]"
-                    },
                     "hubSubscriptionId": {
                         "value": "[parameters('hubSubscriptionId')]"
+                    },
+                    "hubVnetName": {
+                        "value": "[parameters('hubVnetName')]"
+                    },
+                    "hubVnetRG": {
+                        "value": "[parameters('hubVnetRG')]"
                     }
                 }
             }

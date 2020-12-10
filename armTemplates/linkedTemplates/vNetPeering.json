@@ -34,37 +34,18 @@
             "defaultValue": "",
             "maxLength": 36
         },
-        "hubCompanyPrefix": {
-            "type": "string",
-            "maxLength": 5
-        },
-        "hubLocationPrefix": {
-            "type": "string",
-            "maxLength": 3
-        },
-        "hubEnvironmentPrefix": {
-            "type": "string",
-            "maxLength": 3
-        },
-        "hubArgPrefix": {
-            "type": "string",
-            "maxLength": 3
-        },
-        "hubVntPrefix": {
-            "type": "string",
-            "maxLength": 3
-        },
-        "hubAddressPrefix": {
-            "type": "string",
-            "metadata": {
-                "displayName": "hubAddressPrefix",
-                "description": "Address prefix of the Hub"
-            }
-        },
         "hubSubscriptionId": {
             "type": "string",
             "defaultValue": "",
             "maxLength": 36
+        },
+        "hubVnetName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "hubVnetRG": {
+            "type": "string",
+            "defaultValue": ""
         },
         "enableSpoke": {
             "type": "string",
@@ -76,19 +57,15 @@
         }
     },
     "variables": {    
-        "hubNamingPrefix": "[concat(parameters('hubCompanyPrefix'), '-', parameters('hubLocationPrefix'), '-', parameters('hubEnvironmentPrefix'))]",
-        "hubVnetCidr": "[substring(parameters('hubAddressPrefix'),0,sub(length(parameters('hubAddressPrefix')), 3))]",
-        "hubVnetName": "[toLower(concat(variables('hubNamingPrefix'), '-', parameters('hubVntPrefix'), '-', variables('hubVnetCidr')))]",
-        "hubVnetRG": "[toLower(concat(parameters('hubCompanyPrefix'), '-', parameters('hubEnvironmentPrefix'), '-', parameters('hubArgPrefix'), '-network'))]",
-        "hubVnetId": "[concat('/subscriptions/',parameters('hubSubscriptionId'),'/resourceGroups/',variables('hubVnetRG'),'/providers/Microsoft.Network/virtualNetworks/',variables('hubVnetName'))]",
-        "hubVnetToSpokeVnetPeeringName": "[concat(variables('hubVnetName'), '-to-', variables('spokeVnetName'))]",
+        "hubVnetId": "[concat('/subscriptions/',parameters('hubSubscriptionId'),'/resourceGroups/',parameters('hubVnetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('hubVnetName'))]",
+        "hubVnetToSpokeVnetPeeringName": "[concat(parameters('hubVnetName'), '-to-', variables('spokeVnetName'))]",
 
         "spokeNamingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
         "spokeVnetCidr": "[substring(parameters('addressPrefix'),0,sub(length(parameters('addressPrefix')), 3))]",
         "spokeVnetName": "[toLower(concat(variables('spokeNamingPrefix'), '-', parameters('vntPrefix'), '-', variables('spokeVnetCidr')))]",
         "spokeVnetRG": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-network'))]",
         "spokeVnetId": "[concat('/subscriptions/',parameters('subscriptionId'),'/resourceGroups/',variables('spokeVnetRG'),'/providers/Microsoft.Network/virtualNetworks/',variables('spokeVnetName'))]",
-        "spokeVnetToHubVnetPeeringName": "[concat(variables('spokeVnetName'), '-to-', variables('hubVnetName'))]"
+        "spokeVnetToHubVnetPeeringName": "[concat(variables('spokeVnetName'), '-to-', parameters('hubVnetName'))]"
     },
     "resources": [
         {
@@ -159,7 +136,7 @@
                             "type": "Microsoft.Resources/deployments",
                             "apiVersion": "2020-06-01",
                             "name": "hub-spoke",
-                            "resourceGroup": "[variables('hubVnetRG')]",
+                            "resourceGroup": "[parameters('hubVnetRG')]",
                             "properties": {
                                 "mode": "Incremental",
                                 "template": {
@@ -171,7 +148,7 @@
                                         {
                                             "apiVersion": "2020-05-01",
                                             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-                                            "name": "[concat(variables('hubVnetName'), '/',variables('hubVnetToSpokeVnetPeeringName'))]",
+                                            "name": "[concat(parameters('hubVnetName'), '/',variables('hubVnetToSpokeVnetPeeringName'))]",
                                             "location": "[deployment().location]",
                                             "properties": {
                                                 "allowVirtualNetworkAccess": true,
