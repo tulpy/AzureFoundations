@@ -2,10 +2,50 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "companyPrefix": {
+            "type": "string",
+            "maxLength": 5
+        },
+        "locationPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "environmentPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "argPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "vntPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "addressPrefix": {
+            "type": "string",
+            "metadata": {
+                "displayName": "addressPrefix",
+                "description": "Address prefix of the Application Landing Zone"
+            }
+        },
         "subscriptionId": {
             "type": "string",
             "defaultValue": "",
             "maxLength": 36
+        },
+        "hubSubscriptionId": {
+            "type": "string",
+            "defaultValue": "",
+            "maxLength": 36
+        },
+        "hubVnetName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "hubVnetRG": {
+            "type": "string",
+            "defaultValue": ""
         },
         "enableSpoke": {
             "type": "string",
@@ -16,17 +56,16 @@
             "defaultValue": "Yes"
         }
     },
-    "variables": {
-        "hubVnetName": "sjt-syd-cor-vnt-10.49.0.0",
-        "hubVnetRG": "sjt-cor-arg-network",
-        "hubVnetSubscriptionId": "8f8224ca-1a9c-46d1-9206-1cf2a7c51de8",
-        "hubVnetId": "[concat('/subscriptions/',variables('hubVnetSubscriptionId'),'/resourceGroups/',variables('hubVnetRG'),'/providers/Microsoft.Network/virtualNetworks/',variables('hubVnetName'))]",
-        "hubVnetToSpokeVnetPeeringName": "[concat(variables('hubVnetName'), '-to-', variables('spokeVnetName'))]",
+    "variables": {    
+        "hubVnetId": "[concat('/subscriptions/',parameters('hubSubscriptionId'),'/resourceGroups/',parameters('hubVnetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('hubVnetName'))]",
+        "hubVnetToSpokeVnetPeeringName": "[concat(parameters('hubVnetName'), '-to-', variables('spokeVnetName'))]",
 
-        "spokeVnetName": "sjt-syd-prd-vnt-10.50.0.0",
-        "spokeVnetRG": "sjt-prd-arg-network",
+        "spokeNamingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
+        "spokeVnetCidr": "[substring(parameters('addressPrefix'),0,sub(length(parameters('addressPrefix')), 3))]",
+        "spokeVnetName": "[toLower(concat(variables('spokeNamingPrefix'), '-', parameters('vntPrefix'), '-', variables('spokeVnetCidr')))]",
+        "spokeVnetRG": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-network'))]",
         "spokeVnetId": "[concat('/subscriptions/',parameters('subscriptionId'),'/resourceGroups/',variables('spokeVnetRG'),'/providers/Microsoft.Network/virtualNetworks/',variables('spokeVnetName'))]",
-        "spokeVnetToHubVnetPeeringName": "[concat(variables('spokeVnetName'), '-to-', variables('hubVnetName'))]"
+        "spokeVnetToHubVnetPeeringName": "[concat(variables('spokeVnetName'), '-to-', parameters('hubVnetName'))]"
     },
     "resources": [
         {
@@ -85,7 +124,7 @@
             "apiVersion": "2020-06-01",
             "name": "hubPeer",
             "location": "[deployment().location]",
-            "subscriptionId": "[variables('hubVnetSubscriptionId')]",
+            "subscriptionId": "[parameters('hubSubscriptionId')]",
             "properties": {
                 "mode": "Incremental",
                 "template": {
@@ -97,7 +136,7 @@
                             "type": "Microsoft.Resources/deployments",
                             "apiVersion": "2020-06-01",
                             "name": "hub-spoke",
-                            "resourceGroup": "[variables('hubVnetRG')]",
+                            "resourceGroup": "[parameters('hubVnetRG')]",
                             "properties": {
                                 "mode": "Incremental",
                                 "template": {
@@ -109,7 +148,7 @@
                                         {
                                             "apiVersion": "2020-05-01",
                                             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-                                            "name": "[concat(variables('hubVnetName'), '/',variables('hubVnetToSpokeVnetPeeringName'))]",
+                                            "name": "[concat(parameters('hubVnetName'), '/',variables('hubVnetToSpokeVnetPeeringName'))]",
                                             "location": "[deployment().location]",
                                             "properties": {
                                                 "allowVirtualNetworkAccess": true,

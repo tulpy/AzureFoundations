@@ -97,7 +97,7 @@
             "defaultValue": "",
             "maxLength": 36,
             "metadata": {
-                "description": "Provide the subscription id of an existing, empty subscription you want to dedicate to the Platform LZ. If you don't want to bring a subscription, leave this parameter empty as is."
+                "description": "Provide the subscription id of an existing, empty subscription you want to dedicate to the Application LZ. If you don't want to bring a subscription, leave this parameter empty as is."
             }
         },
         "enableAkv": {
@@ -140,6 +140,22 @@
                 "No"
             ],
             "defaultValue": "Yes"
+        },
+        "hubSubscriptionId": {
+            "type": "string",
+            "defaultValue": "",
+            "maxLength": 36,
+            "metadata": {
+                "description": "Provide the subscription id of the Hub."
+            }
+        },
+        "hubVnetName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "hubVnetRG": {
+            "type": "string",
+            "defaultValue": ""
         },
         "enableUdr": {
             "type": "string",
@@ -393,12 +409,39 @@
                     "contentVersion": "1.0.0.0",
                     "uri": "[variables('deploymentUris').vNetPeering]"
                 },
-                "parameters": {
+                "parameters": {                
                     "enableSpoke": {
                         "value": "[parameters('enableSpoke')]"
                     },
+                    "companyPrefix": {
+                        "value": "[parameters('companyPrefix')]"
+                    },
+                    "locationPrefix": {
+                        "value": "[parameters('locationPrefix')]"
+                    },
+                    "environmentPrefix": {
+                        "value": "[parameters('environmentPrefix')]"
+                    },
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
+                    },
+                    "vntPrefix": {
+                        "value": "[parameters('vntPrefix')]"
+                    },
+                    "addressPrefix": {
+                        "value": "[parameters('addressPrefix')]"
+                    },
                     "subscriptionId": {
                         "value": "[parameters('subscriptionId')]"
+                    },
+                    "hubSubscriptionId": {
+                        "value": "[parameters('hubSubscriptionId')]"
+                    },
+                    "hubVnetName": {
+                        "value": "[parameters('hubVnetName')]"
+                    },
+                    "hubVnetRG": {
+                        "value": "[parameters('hubVnetRG')]"
                     }
                 }
             }
