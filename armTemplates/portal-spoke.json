@@ -534,28 +534,12 @@
                         }
                     },
                     {
-                                          "name": "mgmtVnetsApi",
-                                          "type": "Microsoft.Solutions.ArmApiControl",
-                                          "request": {
-                                            "method": "GET",
-                                            "path": "[concat('subscriptions/', hubSubscriptionId, '/providers/Microsoft.Network/virtualNetworks?api-version=2020-06-01')]"
-                                          }
-                    },
-                    {
-                        "name": "esApplicationHubLzVnets",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Hub Vnet (required)",
-                        "toolTip": "",
-                        "multiselect": false,
-                        "selectAll": true,
-                        "filter": true,
-                        "filterPlaceholder": "Filter items ...",
-                        "multiLine": true,
-                        "visible": "[equals(not(steps('esApplicationLz').esHubLzSub, json('null')))]",
-                        "constraints": {
-                            "allowedValues": "[map(steps('esApplicationLz').mgmtVnetsApi.value, (vnet) => parse(concat('{\"label\":\"', vnet.name, '\",\"description\":\"', vnet.name, '\",\"value\":\"', toLower(vnet.name), '\"}')) )]",
-                            "required": true
-                        }
+                        "name": "mgmtVnetsApi",
+                        "type": "Microsoft.Solutions.ArmApiControl",
+                        "request": {
+                                        "method": "GET",
+                                        "path": "[concat('subscriptions/', hubSubscriptionId(), '/providers/Microsoft.Network/virtualNetworks?api-version=2020-06-01')]"
+                                    }
                     },
                     {
                         "name": "text2",
