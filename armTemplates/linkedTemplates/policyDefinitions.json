@@ -8723,7 +8723,7 @@
                                       "sku": {
                                         "name": "pernode"
                                       },
-                                      "retentionInDays": "[[parameters('retentionInDays')]",
+                                      "retentionInDays": "[[int(parameters('retentionInDays'))]",
                                       "enableLogAccessUsingOnlyResourcePermissions": true
                                     },
                                     "resources": [
