@@ -542,6 +542,17 @@
                                     }
                     },
                     {
+    "name": "storageSelector",
+    "type": "Microsoft.Solutions.ResourceSelector",
+    "label": "Select storage accounts",
+    "resourceType": "Microsoft.Network/virtualNetworks",
+    "options": {
+        "filter": {
+            "subscription": "hubSubscriptionId"
+        }
+    }
+},
+                    {
                         "name": "esHubLzVnets",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Choose teh vnets(required)",
