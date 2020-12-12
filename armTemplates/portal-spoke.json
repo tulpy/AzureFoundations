@@ -534,21 +534,14 @@
                         }
                     },
                     {
-                        "name": "mgmtVnetsApi",
-                        "type": "Microsoft.Solutions.ArmApiControl",
-                        "request": {
-                                        "method": "GET",
-                                        "path": "[concat('subscriptions/', hubSubscriptionId().id, '/providers/Microsoft.Network/virtualNetworks?api-version=2020-06-01')]"
-                                    }
-                    },
-                    {
     "name": "storageSelector",
     "type": "Microsoft.Solutions.ResourceSelector",
     "label": "Select storage accounts",
     "resourceType": "Microsoft.Network/virtualNetworks",
     "options": {
         "filter": {
-            "subscription": "hubSubscriptionId"
+            "subscription": "all",
+            "location": "all"
         }
     }
 },
