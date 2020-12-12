@@ -562,6 +562,7 @@
     "type": "Microsoft.Solutions.ResourceSelector",
     "label": "Select storage accounts",
     "resourceType": "Microsoft.Storage/storageAccounts",
+    "visible": true,
     "options": {
         "filter": {
             "subscription": "all"
