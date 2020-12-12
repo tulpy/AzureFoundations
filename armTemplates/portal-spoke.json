@@ -533,14 +533,14 @@
                             "required": true
                         }
                     },
-                                        {
+                    {
                                           "name": "mgmtVnetsApi",
                                           "type": "Microsoft.Solutions.ArmApiControl",
                                           "request": {
                                             "method": "GET",
                                             "path": "[concat('/subscriptions/', hubSubscriptionId.id, '/providers/Microsoft.Network/virtualNetworks?api-version=2020-06-01')]"
                                           }
-                                        },
+                    },
                     {
                         "name": "esApplicationHubLzVnets",
                         "type": "Microsoft.Common.DropDown",
@@ -551,7 +551,7 @@
                         "filter": true,
                         "filterPlaceholder": "Filter items ...",
                         "multiLine": true,
-                        "visible": "[equals(not(steps('esApplicationLz').esHubLzSub, ''))]",
+                        "visible": "[if(equals(not(steps('esApplicationLz').esHubLzSub, '')))]",
                         "constraints": {
                             "allowedValues": "[map(steps('esApplicationLz').mgmtVnetsApi.value, (vnet) => parse(concat('{\"label\":\"', vnet.name, '\",\"description\":\"', vnet.name, '\",\"value\":\"', toLower(vnet.name), '\"}')) )]",
                             "required": true
