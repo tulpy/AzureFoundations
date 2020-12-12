@@ -305,7 +305,7 @@
                     {
                         "name": "esPlatformSubId",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Platform Subscription (required)",
+                        "label": "Platform Azure Subscription (required)",
                         "toolTip": "",
                         "multiselect": false,
                         "selectAll": true,
@@ -321,9 +321,9 @@
                     {
                         "name": "esLogAnalytics",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy the platform Log Analytics workspace.",
+                        "label": "Deploy the Log Analytics workspace.",
                         "defaultValue": "Yes",
-                        "toolTip": "If 'Yes' is selected, a platform Log Analytics workspace will be deployed.",
+                        "toolTip": "If 'Yes' is selected, a Log Analytics workspace will be deployed.",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -583,7 +583,7 @@
                     {
                         "name": "esAkv",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy the platform Azure Key Vault.",
+                        "label": "Deploy Azure Key Vault.",
                         "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, an Azure Key Vault will be deployed",
                         "constraints": {
@@ -603,9 +603,9 @@
                     {
                         "name": "esStorage",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy the platform Azure Storage account for diagnostics.",
+                        "label": "Deploy a Storage account for diagnostics.",
                         "defaultValue": "Yes",
-                        "toolTip": "If 'Yes' is selected, an Azure Storage Account will be deployed",
+                        "toolTip": "If 'Yes' is selected, a Storage Account will be deployed",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -623,7 +623,7 @@
                     {
                         "name": "esRsv",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy the platform Recovery Services Vault.",
+                        "label": "Deploy a Recovery Services Vault.",
                         "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, a Recovery Services Vault will be deployed",
                         "constraints": {
@@ -695,7 +695,7 @@
                         "name": "esNwLocation",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Azure Region for the platform virtual network.",
-                        "visible": "[equals(steps('esPlatformManagement').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esPlatformConnectivity').esHub, 'Yes')]",
                         "toolTip": "Select the target Azure region for the deployment.",
                         "constraints": {
                             "allowedValues": "[map(steps('esPlatformConnectivity').esLocationsApi.value, (item) => parse(concat('{\"label\":\"', item.displayName, '\",\"value\":\"', item.name, '\"}')))]",
@@ -827,7 +827,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy VPN Gateway",
                         "defaultValue": "No",
-                        "visible": "[equals(steps('esPlatformManagement').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esPlatformConnectivity').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected, ARM will deploy VPN gateway",
                         "constraints": {
                             "allowedValues": [
@@ -931,7 +931,7 @@
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure App Gateway Subnet",
                         "defaultValue": "Yes",
-                        "visible": "[equals(steps('esPlatformManagement').esHub, 'Yes')]",
+                        "visible": "[equals(steps('esPlatformConnectivity').esHub, 'Yes')]",
                         "toolTip": "If 'Yes' is selected, a subnet for App Gateways will be deployed.",
                         "constraints": {
                             "allowedValues": [
