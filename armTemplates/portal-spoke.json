@@ -533,66 +533,6 @@
                             "required": true
                         }
                     },
-{
-	       "name": "vnetSpec",
-               "type": "Microsoft.Network.VirtualNetworkCombo",
-               "label": {
-                   "virtualNetwork": "Virtual network",
-                   "subnets": "Subnets"
-               },
-               "toolTip": {
-                   "virtualNetwork": "To use an existing VNET, 3 subnets must already exist for Mgmt, Untrust and Trust. For a new VNET, the template will create them.",
-                   "subnets": ""
-               },
-               "options": {
-		"hideExisting" : false
-               },
-               "defaultValue": {
-                   "name": "fwVNET",
-                   "addressPrefixSize": "/16"
-               },
-               "constraints": {
-                   "minAddressPrefixSize": "/24"
-               },
-               "subnets": {
-                   "subnet0": {
-                       "label": "Management Subnet",
-                       "defaultValue": {
-                           "name": "Mgmt",
-                           "addressPrefixSize": "/24"
-                       },
-                       "constraints": {
-                           "minAddressPrefixSize": "/29",
-                           "minAddressCount": 1,
-                           "requireContiguousAddresses": true
-                       }
-                   },
-                   "subnet1": {
-                       "label": "Untrust Subnet",
-                       "defaultValue": {
-                           "name": "Untrust",
-                           "addressPrefixSize": "/24"
-                       },
-                       "constraints": {
-                           "minAddressPrefixSize": "/29",
-                           "minAddressCount": 4,
-                           "requireContiguousAddresses": true
-                       }
-                   },
-                   "subnet2": {
-                       "label": "Trust Subnet",
-                       "defaultValue": {
-                           "name": "Trust",
-                           "addressPrefixSize": "/24"
-                       },
-                       "constraints": {
-                           "minAddressPrefixSize": "/29",
-                           "minAddressCount": 4,
-                           "requireContiguousAddresses": true
-                       }
-                   }
-                }
-	    },
                     {
                         "name": "text2",
                         "type": "Microsoft.Common.TextBlock",
