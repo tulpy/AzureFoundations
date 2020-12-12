@@ -390,7 +390,7 @@
                                             "properties": {
                                                 "registrationEnabled": false,
                                                 "virtualNetwork": {
-                                                    "id": "[resourceId('Microsoft.Network/virtualNetworks', variables('azVnetName'))]"
+                                                    "id": "[resourceId('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]"
                                                 }
                                             }
                                         },
