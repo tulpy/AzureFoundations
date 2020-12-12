@@ -542,6 +542,22 @@
                                     }
                     },
                     {
+                        "name": "esHubLzVnets",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Choose teh vnets(required)",
+                        "toolTip": "",
+                        "multiselect": false,
+                        "selectAll": true,
+                        "filter": true,
+                        "filterPlaceholder": "Filter items ...",
+                        "multiLine": true,
+                        "visible": "[equals(steps('esApplicationLz').esHubLzSub, not(json('null')))]",
+                        "constraints": {
+                            "allowedValues": "[map(steps('esApplicationLz').mgmtVnetsApi.value, (sub) => parse(concat('{\"label\":\"', sub.name, '\",\"description\":\"', sub.name, '\",\"value\":\"', toLower(sub.name), '\"}')) )]",
+                            "required": true
+                        }
+                    },
+                    {
                         "name": "text2",
                         "type": "Microsoft.Common.TextBlock",
                         "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
