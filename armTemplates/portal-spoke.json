@@ -533,30 +533,6 @@
                             "required": true
                         }
                     },
-                    {
-    "name": "storageSelector1",
-    "type": "Microsoft.Solutions.ResourceSelector",
-    "label": "Select storage accounts",
-    "resourceType": "Microsoft.Network/virtualNetworks",
-    "options": {
-        "filter": {
-            "subscription": "all",
-            "location": "all"
-        }
-    }
-},
-                    {
-    "name": "storageSelector2",
-    "type": "Microsoft.Solutions.ResourceSelector",
-    "label": "Select subnets",
-    "resourceType": "Microsoft.Network/virtualNetworks/subnets",
-    "options": {
-        "filter": {
-            "subscription": "all",
-            "location": "all"
-        }
-    }
-},
 {
     "name": "storageSelector",
     "type": "Microsoft.Solutions.ResourceSelector",
