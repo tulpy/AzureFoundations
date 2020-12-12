@@ -551,7 +551,7 @@
                         "filter": true,
                         "filterPlaceholder": "Filter items ...",
                         "multiLine": true,
-                        "visible": "[equals(steps('esApplicationLz').esHubLzSub, not(json('null')))]",
+                        "visible": "[equals(not(steps('esApplicationLz').esHubLzSub, json('null')))]",
                         "constraints": {
                             "allowedValues": "[map(steps('esApplicationLz').mgmtVnetsApi.value, (sub) => parse(concat('{\"label\":\"', sub.name, '\",\"description\":\"', sub.name, '\",\"value\":\"', toLower(sub.name), '\"}')) )]",
                             "required": true
