@@ -703,7 +703,7 @@
                         }
                     },
                     {
-                        "name": "esPrivateDnsZones",
+                        "name": "esEnablePrivateDnsZones",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Azure Private DNS Zones.",
                         "defaultValue": "No",
@@ -723,7 +723,7 @@
                         "visible": true
                     },
                     {
-                        "name": "esPrivateDnsZoneBlob",
+                        "name": "esEnablePrivateDnsZoneBlob",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Private DNS Zone - Blob Storage",
                         "defaultValue": "Yes",
@@ -740,10 +740,10 @@
                                 }
                             ]
                         },
-                        "visible": "[equals(steps('esPlatformConnectivity').esPrivateDnsZones, 'Yes')]"
+                        "visible": "[equals(steps('esPlatformConnectivity').esEnablePrivateDnsZones, 'Yes')]"
                     },
                     {
-                        "name": "esPrivateDnsZoneAkv",
+                        "name": "esEnablePrivateDnsZoneAkv",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Private DNS Zone - Azure Key Vault",
                         "defaultValue": "Yes",
@@ -760,10 +760,10 @@
                                 }
                             ]
                         },
-                        "visible": "[equals(steps('esPlatformConnectivity').esPrivateDnsZones, 'Yes')]"
+                        "visible": "[equals(steps('esPlatformConnectivity').esEnablePrivateDnsZones, 'Yes')]"
                     },
                     {
-                        "name": "esPrivateDnsZoneFiles",
+                        "name": "esEnablePrivateDnsZoneFiles",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Private DNS Zone - Azure Files",
                         "defaultValue": "Yes",
@@ -780,10 +780,10 @@
                                 }
                             ]
                         },
-                        "visible": "[equals(steps('esPlatformConnectivity').esPrivateDnsZones, 'Yes')]"
+                        "visible": "[equals(steps('esPlatformConnectivity').esEnablePrivateDnsZones, 'Yes')]"
                     },
                     {
-                        "name": "esPrivateDnsZoneQueue",
+                        "name": "esEnablePrivateDnsZoneQueue",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Private DNS Zone - Queue Storage",
                         "defaultValue": "Yes",
@@ -800,10 +800,10 @@
                                 }
                             ]
                         },
-                        "visible": "[equals(steps('esPlatformConnectivity').esPrivateDnsZones, 'Yes')]"
+                        "visible": "[equals(steps('esPlatformConnectivity').esEnablePrivateDnsZones, 'Yes')]"
                     },
                     {
-                        "name": "esPrivateDnsZoneTable",
+                        "name": "esEnablePrivateDnsZoneTable",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Private DNS Zone - Table Storage",
                         "defaultValue": "Yes",
@@ -820,7 +820,7 @@
                                 }
                             ]
                         },
-                        "visible": "[equals(steps('esPlatformConnectivity').esPrivateDnsZones, 'Yes')]"
+                        "visible": "[equals(steps('esPlatformConnectivity').esEnablePrivateDnsZones, 'Yes')]"
                     },
                     {
                         "name": "esVpnGw",
@@ -1269,12 +1269,12 @@
             "environmentTag": "[steps('esNaming').esSubscriptionTag]",
             "ownerTag": "[steps('esNaming').esOwnerTag]",
 
-            "privateDnsZones": "[steps('esPlatformConnectivity').esPrivateDnsZones]",
-            "privateDnsZonesTable": "[steps('esPlatformConnectivity').esPrivateDnsZoneTable]",
-            "privateDnsZonesQueue": "[steps('esPlatformConnectivity').esPrivateDnsZoneQueue]",
-            "privateDnsZonesFiles": "[steps('esPlatformConnectivity').esPrivateDnsZoneFiles]",
-            "privateDnsZonesBlob": "[steps('esPlatformConnectivity').esPrivateDnsZoneBlob]",
-            "privateDnsZonesAkv": "[steps('esPlatformConnectivity').esPrivateDnsZoneAkv]",
+            "enablePrivateDnsZones": "[steps('esPlatformConnectivity').esPrivateDnsZones]",
+            "enablePrivateDnsZonesTable": "[steps('esPlatformConnectivity').esEnablePrivateDnsZoneTable]",
+            "enablePrivateDnsZonesQueue": "[steps('esPlatformConnectivity').esEnablePrivateDnsZoneQueue]",
+            "enablePrivateDnsZonesFiles": "[steps('esPlatformConnectivity').esEnablePrivateDnsZoneFiles]",
+            "enablePrivateDnsZonesBlob": "[steps('esPlatformConnectivity').esEnablePrivateDnsZoneBlob]",
+            "enablePrivateDnsZonesAkv": "[steps('esPlatformConnectivity').esEnablePrivateDnsZoneAkv]",
             "vpnGwType": "[steps('esPlatformConnectivity').esVpnGwType]",
             "subnetMaskForGw": "[steps('esPlatformConnectivity').esAddressVpnOrEr]",
             "subnetMaskForAzFw": "[steps('esPlatformConnectivity').esAddressFw]",

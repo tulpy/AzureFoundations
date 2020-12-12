@@ -500,7 +500,7 @@
                     "allOf": [
                       {
                         "field": "Microsoft.Security/pricings/pricingTier",
-                        "equals": "Standard"
+                        "equals": "Free"
                       },
                       {
                         "field": "type",

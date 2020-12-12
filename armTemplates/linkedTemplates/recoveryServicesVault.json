@@ -99,7 +99,7 @@
                                     "resources": [
                                         {
                                             "type": "Microsoft.Authorization/locks",
-                                            "apiVersion": "2017-04-01",
+                                            "apiVersion": "2016-09-01",
                                             "name": "ResourceGroup-DontDelete",
                                             "properties": {
                                                 "level": "CanNotDelete",

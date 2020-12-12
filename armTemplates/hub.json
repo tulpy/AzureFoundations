@@ -275,6 +275,54 @@
             ],
             "defaultValue": "Yes"
         },
+        "enablePrivateDnsZones": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "enablePrivateDnsZonesTable": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "enablePrivateDnsZonesQueue": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "enablePrivateDnsZonesFiles": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "enablePrivateDnsZonesBlob": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "enablePrivateDnsZonesAkv": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
         "enableAzFw": {
             "type": "string",
             "allowedValues": [
@@ -613,6 +661,24 @@
                     },
                     "enableHub": {
                         "value": "[parameters('enableHub')]"
+                    },
+                    "enablePrivateDnsZones": {
+                        "value": "[parameters('enablePrivateDnsZones')]"
+                    },
+                    "enablePrivateDnsZonesTable": {
+                        "value": "[parameters('enablePrivateDnsZonesTable')]"
+                    },
+                    "enablePrivateDnsZonesQueue": {
+                        "value": "[parameters('enablePrivateDnsZonesQueue')]"
+                    },
+                    "enablePrivateDnsZonesFiles": {
+                        "value": "[parameters('enablePrivateDnsZonesFiles')]"
+                    },
+                    "enablePrivateDnsZonesBlob": {
+                        "value": "[parameters('enablePrivateDnsZonesBlob')]"
+                    },
+                    "enablePrivateDnsZonesAkv": {
+                        "value": "[parameters('enablePrivateDnsZonesAkv')]"
                     },
                     "enableAzFw": {
                         "value": "[parameters('enableAzFw')]"

@@ -71,6 +71,54 @@
             ],
             "defaultValue": "Yes"
         },
+        "enablePrivateDnsZones": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "enablePrivateDnsZonesTable": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "enablePrivateDnsZonesQueue": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "enablePrivateDnsZonesFiles": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "enablePrivateDnsZonesBlob": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "enablePrivateDnsZonesAkv": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
         "enableAzFw": {
             "type": "string",
             "allowedValues": [
@@ -188,6 +236,13 @@
         "UdrName003": "[toLower(concat(variables('namingPrefix'), '-', parameters('udrPrefix'), '-', variables('subnetName003')))]",
         "UdrId003": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/routeTables/', variables('udrName003'))]",
         "NsgId003": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('nsgName003'))]",
+        "privateLinkDns": {
+            "blob": "privatelink.blob.core.windows.net",
+            "files": "privatelink.file.core.windows.net",
+            "queue": "privatelink.queue.core.windows.net",
+            "tables": "privatelink.table.core.windows.net",
+            "keyVault": "privatelink.vaultcore.azure.net"
+        },
         "tags": {
             "environment": "[parameters('environmentTag')]",
             "owner": "[parameters('ownerTag')]"
@@ -236,7 +291,7 @@
                                     "resources": [
                                         {
                                             "type": "Microsoft.Authorization/locks",
-                                            "apiVersion": "2017-04-01",
+                                            "apiVersion": "2016-09-01",
                                             "name": "ResourceGroup-DontDelete",
                                             "properties": {
                                                 "level": "CanNotDelete",
@@ -267,6 +322,7 @@
                                             ]
                                         },
                                         {
+                                            "condition": "[and(equals(parameters('enableHub'), 'Yes'), not(empty(parameters('subscriptionId'))))]",
                                             "name": "[variables('nwName')]",
                                             "type": "Microsoft.Network/networkWatchers",
                                             "apiVersion": "2019-11-01",
@@ -286,6 +342,41 @@
                                             "properties": {
                                                 "addressPrefix": "[parameters('subnetMaskForAzFw')]"
                                             }
+                                        },
+                                        {
+                                            "condition": "[and(equals(parameters('enablePrivateDnsZones'), 'Yes'), equals(parameters('enablePrivateDnsZonesBlob'), 'Yes'))]",
+                                            "type": "Microsoft.Network/privateDnsZones",
+                                            "apiVersion": "2020-01-01",
+                                            "name": "[variables('privateLinkDns').blob]",
+                                            "location": "global"
+                                        },
+                                        {
+                                            "condition": "[and(equals(parameters('enablePrivateDnsZones'), 'Yes'), equals(parameters('enablePrivateDnsZonesFiles'), 'Yes'))]",
+                                            "type": "Microsoft.Network/privateDnsZones",
+                                            "apiVersion": "2020-01-01",
+                                            "name": "[variables('privateLinkDns').files]",
+                                            "location": "global"
+                                        },
+                                        {
+                                            "condition": "[and(equals(parameters('enablePrivateDnsZones'), 'Yes'), equals(parameters('enablePrivateDnsZonesQueue'), 'Yes'))]",
+                                            "type": "Microsoft.Network/privateDnsZones",
+                                            "apiVersion": "2020-01-01",
+                                            "name": "[variables('privateLinkDns').queue]",
+                                            "location": "global"
+                                        },
+                                        {
+                                            "condition": "[and(equals(parameters('enablePrivateDnsZones'), 'Yes'), equals(parameters('enablePrivateDnsZonesTable'), 'Yes'))]",
+                                            "type": "Microsoft.Network/privateDnsZones",
+                                            "apiVersion": "2020-01-01",
+                                            "name": "[variables('privateLinkDns').tables]",
+                                            "location": "global"
+                                        },
+                                        {
+                                            "condition": "[and(equals(parameters('enablePrivateDnsZones'), 'Yes'), equals(parameters('enablePrivateDnsZonesAkv'), 'Yes'))]",
+                                            "type": "Microsoft.Network/privateDnsZones",
+                                            "apiVersion": "2020-01-01",
+                                            "name": "[variables('privateLinkDns').keyVault]",
+                                            "location": "global"
                                         },
                                         {
                                             "condition": "[and(equals(parameters('enableAppGw'), 'Yes'), not(empty(parameters('subnetMaskForAppGw'))))]",
