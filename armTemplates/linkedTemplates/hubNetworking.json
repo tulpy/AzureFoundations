@@ -385,7 +385,7 @@
                                             "location": "global",
                                             "dependsOn": [
                                                 "[resourceId('Microsoft.Network/privateDnsZones', variables('privateLinkDns').blob)]",
-                                                "[resourceId('Microsoft.Network/virtualNetworks', variables('azVnetName'))]"
+                                                "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]"
                                             ],
                                             "properties": {
                                                 "registrationEnabled": false,
