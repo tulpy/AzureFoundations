@@ -379,6 +379,22 @@
                                             "location": "global"
                                         },
                                         {
+                                            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+                                            "apiVersion": "2020-01-01",
+                                            "name": "[concat(variables('privateLinkDns').blob, '/', variables('privateLinkDns').blob, '-link')]",
+                                            "location": "global",
+                                            "dependsOn": [
+                                                "[resourceId('Microsoft.Network/privateDnsZones', variables('privateLinkDns').blob)]",
+                                                "[resourceId('Microsoft.Network/virtualNetworks', variables('azVnetName'))]"
+                                            ],
+                                            "properties": {
+                                                "registrationEnabled": false,
+                                                "virtualNetwork": {
+                                                    "id": "[resourceId('Microsoft.Network/virtualNetworks', variables('azVnetName'))]"
+                                                }
+                                            }
+                                        },
+                                        {
                                             "condition": "[and(equals(parameters('enableAppGw'), 'Yes'), not(empty(parameters('subnetMaskForAppGw'))))]",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
                                             "apiVersion": "2020-05-01",
