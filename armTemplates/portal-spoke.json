@@ -534,13 +534,13 @@
                         }
                     },
                                         {
-                        "name": "mgmtVnetsApi",
-                        "type": "Microsoft.Solutions.ArmApiControl",
-                        "request": {
-                            "method": "GET",
-                            "path": "[concat(hubSubscriptionId.id, '/providers/Microsoft.Network/virtualNetworks?api-version=2020-06-01')]"
-                            }
-                    },
+                                          "name": "mgmtVnetsApi",
+                                          "type": "Microsoft.Solutions.ArmApiControl",
+                                          "request": {
+                                            "method": "GET",
+                                            "path": "[concat('/subscriptions/', hubSubscriptionId.id, '/providers/Microsoft.Network/virtualNetworks?api-version=2020-06-01')]"
+                                          }
+                                        },
                     {
                         "name": "esApplicationHubLzVnets",
                         "type": "Microsoft.Common.DropDown",
