@@ -538,7 +538,7 @@
                         "type": "Microsoft.Solutions.ArmApiControl",
                         "request": {
                                         "method": "GET",
-                                        "path": "[concat('subscriptions/', hubSubscriptionId(), '/providers/Microsoft.Network/virtualNetworks?api-version=2020-06-01')]"
+                                        "path": "[concat('subscriptions/', hubSubscriptionId().id, '/providers/Microsoft.Network/virtualNetworks?api-version=2020-06-01')]"
                                     }
                     },
                     {
