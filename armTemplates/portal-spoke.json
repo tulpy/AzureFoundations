@@ -226,7 +226,31 @@
                             "path": "tenants?api-version=2020-01-01"
                         }
                     },
-                     {
+                    {
+                        "name": "mgmtVnetsApi",
+                        "type": "Microsoft.Solutions.ArmApiControl",
+                        "request": {
+                            "method": "GET",
+                            "path": "[concat(hubSubscriptionId.id, '/providers/Microsoft.Network/virtualNetworks?api-version=2020-06-01')]"
+                            }
+                    },
+                    {
+                        "name": "esApplicationHubLzVnets",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Hub Vnet (required)",
+                        "toolTip": "",
+                        "multiselect": false,
+                        "selectAll": true,
+                        "filter": true,
+                        "filterPlaceholder": "Filter items ...",
+                        "multiLine": true,
+                        "visible": true,
+                        "constraints": {
+                            "allowedValues": "[map(steps('esApplicationLz').mgmtVnetsApi.value, (vnet) => parse(concat('{\"label\":\"', vnet.name, '\",\"description\":\"', vnet.name, '\",\"value\":\"', toLower(vnet.name), '\"}')) )]",
+                            "required": true
+                        }
+                    },
+                    {
                         "name": "esApplicationLzTenant",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Application Landing Zone Tenant (required)",
