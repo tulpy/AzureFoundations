@@ -14,7 +14,7 @@
                 "No"
             ]
         },
-        "denyPublicendpoints": {
+        "denyPublicEndpoints": {
             "type": "string",
             "defaultValue": "No",
             "allowedValues": [
@@ -72,7 +72,7 @@
         },
         "denyPrivateDnsZones": {
             "type": "string",
-            "defaultValue": "No",
+            "defaultValue": "Yes",
             "allowedValues": [
                 "Yes",
                 "No"
@@ -116,7 +116,7 @@
             }
         },
         {
-            "condition": "[and(equals(parameters('denyIpForwarding'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
+            "condition": "[equals(parameters('denyIpForwarding'), 'Yes')]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "2018-05-01",
             "name": "[variables('policyAssignmentNames').denyIpForwarding]",
