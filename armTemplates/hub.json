@@ -482,6 +482,14 @@
             },
             "defaultValue": "192.168.0.0/24"
         },
+        "enableAppLz": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
         "denyPublicendpoints": {
             "type": "string",
             "defaultValue": "No",
@@ -1057,7 +1065,7 @@
             }
         },
         {
-            "condition": "[or(equals(parameters('denyPublicendpoints'), 'Yes'), equals(parameters('denyPublicIP'), 'Yes'), equals(parameters('denySubnetWithoutNsg'), 'Yes'), equals(parameters('denyIpForwarding'), 'Yes'), equals(parameters('denyRdpInternet'), 'Yes'), equals(parameters('denySshInternet'), 'Yes'), equals(parameters('denyVnetPeering'), 'Yes'), equals(parameters('denyPrivateDnsZones'), 'Yes'))]",
+            "condition": "[or(equals(parameters('enableAppLz'), 'Yes'), equals(parameters('denyPublicendpoints'), 'Yes'), equals(parameters('denyPublicIP'), 'Yes'), equals(parameters('denySubnetWithoutNsg'), 'Yes'), equals(parameters('denyIpForwarding'), 'Yes'), equals(parameters('denyRdpInternet'), 'Yes'), equals(parameters('denySshInternet'), 'Yes'), equals(parameters('denyVnetPeering'), 'Yes'), equals(parameters('denyPrivateDnsZones'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-AppLandingZones')]",
@@ -1079,6 +1087,9 @@
                     },
                     "denyPublicendpoints": {
                         "value": "[parameters('denyPublicendpoints')]"
+                    },
+                    "enableAppLz": {
+                        "value": "[parameters('enableAppLz')]"
                     },
                     "denyPublicIP": {
                         "value": "[parameters('denyPublicIP')]"
