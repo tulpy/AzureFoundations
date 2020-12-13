@@ -104,13 +104,12 @@
     },
     "resources": [
         {
-            "condition": "[and(equals(parameters('denyPublicendpoints'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "2018-05-01",
             "name": "[variables('policyAssignmentNames').denyPublicEndpoints]",
             "location": "[deployment().location]",
             "properties": {
-                "description": "Deny-Public-Endpoints-for-PaaS-Services",
+                "description": "Deny-Public-Endpoints",
                 "displayName": "Deny-Public-Endpoints",
                 "policyDefinitionId": "[variables('policyDefinitions').denyPublicEndpoints]",
                 "scope": "[variables('scope')]"

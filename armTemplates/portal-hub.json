@@ -1211,24 +1211,6 @@
                 "bladeTitle": "AppLZ",
                 "elements": [
                     {
-                        "name": "infoBox1",
-                        "type": "Microsoft.Common.InfoBox",
-                        "visible": true,
-                        "options": {
-                            "icon": "Info",
-                            "text": "You can optionally provide a subscription for your first landing zone, and also assign recommended policies that will ensure workloads will be secure, monitored, and protected according to best practices.",
-                            "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/Deploy/ES-schema.md"
-                        }
-                    },
-                    {
-                        "name": "lzSubsApi",
-                        "type": "Microsoft.Solutions.ArmApiControl",
-                        "request": {
-                            "method": "GET",
-                            "path": "subscriptions?api-version=2020-01-01"
-                        }
-                    },
-                    {
                         "name": "esAppLz",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy Application Landing Zone Policies",
@@ -1475,7 +1457,7 @@
             "enableAscForArm": "[steps('esPlatformManagement').esAscArm]",
             "enableAscForDns": "[steps('esPlatformManagement').esAscDns]",
             "enableAscForKubernetes": "[steps('esPlatformManagement').esAscKubernetes]",
-            "enableAscForRegistries": "[steps('esPlatformManagement').esAscRegistries]",  
+            "enableAscForRegistries": "[steps('esPlatformManagement').esAscRegistries]",
             "enableAppLz": "[steps('esAppLZ').esAppLz]",
             "denyPublicendpoints": "[steps('esAppLZ').esPublicendpoints]",
             "denyPublicIP": "[steps('esAppLZ').esPublicIP]",
