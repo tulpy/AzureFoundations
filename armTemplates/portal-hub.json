@@ -528,8 +528,9 @@
                     {
                         "name": "textBlock2",
                         "type": "Microsoft.Common.TextBlock",
+                        "visible": "[equals(steps('esPlatformManagement').esLogAnalytics, 'Yes')]",
                         "options": {
-                            "text": "Select which Azure Security solutions to enable.",
+                            "text": "Select which Azure Security solutions you will enable.",
                             "link": {
                                 "label": "Learn more",
                                 "uri": "https://docs.microsoft.com/azure/security/fundamentals/overview"
@@ -539,18 +540,14 @@
                     {
                         "name": "esAsc",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Azure Security Center and enable security monitoring for your platform and resources.",
-                        "defaultValue": "Yes, Azure Defender On",
-                        "toolTip": "If 'Yes' is selected when also adding a subscription, Azure Security Center will be enabled.",
+                        "label": "Deploy Azure Security Center and enable security monitoring for your platform and resources",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
                         "constraints": {
                             "allowedValues": [
                                 {
-                                    "label": "Yes, Azure Defender On",
-                                    "value": "Standard"
-                                },
-                                {
-                                    "label": "Yes, Azure Defender Off",
-                                    "value": "Free"
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
                                 },
                                 {
                                     "label": "No",
@@ -559,6 +556,186 @@
                             ]
                         },
                         "visible": "[equals(steps('esPlatformManagement').esLogAnalytics, 'Yes')]"
+                    },
+                    {
+                        "name": "esAscVms",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Azure Defender for servers",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Defender will be enabled for all servers.",
+                        "visible": "[equals(steps('esPlatformManagement').esAsc, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "No, Azure Defender Off",
+                                    "value": "Free"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAscApps",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Azure Defender for AppServices",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Defender will be enabled for AppServices.",
+                        "visible": "[equals(steps('esPlatformManagement').esAsc, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "No, Azure Defender Off",
+                                    "value": "Free"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAscStorage",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Azure Defender for Storage",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Defender will be enabled for Storage.",
+                        "visible": "[equals(steps('esPlatformManagement').esAsc, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "No, Azure Defender Off",
+                                    "value": "Free"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAscSql",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Azure Defender for SQL",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Defender will be enabled for SQL.",
+                        "visible": "[equals(steps('esPlatformManagement').esAsc, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "No, Azure Defender Off",
+                                    "value": "Free"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAscKeyVault",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Azure Defender for Key Vault",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Defender will be enabled for Key Vault.",
+                        "visible": "[equals(steps('esPlatformManagement').esAsc, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "No, Azure Defender Off",
+                                    "value": "Free"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAscArm",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Azure Defender for Azure Resource Manager",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Defender will be enabled for Resource Manager.",
+                        "visible": "[equals(steps('esPlatformManagement').esAsc, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "No, Azure Defender Off",
+                                    "value": "Free"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAscDns",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Azure Defender for DNS",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Defender will be enabled for DNS.",
+                        "visible": "[equals(steps('esPlatformManagement').esAsc, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "No, Azure Defender Off",
+                                    "value": "Free"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAscKubernetes",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Azure Defender for Kubernetes",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Defender will be enabled for Kubernetes.",
+                        "visible": "[equals(steps('esPlatformManagement').esAsc, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "No, Azure Defender Off",
+                                    "value": "Free"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAscRegistries",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Azure Defender for Container registries",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Defender will be enabled for Container registries.",
+                        "visible": "[equals(steps('esPlatformManagement').esAsc, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "No, Azure Defender Off",
+                                    "value": "Free"
+                                }
+                            ]
+                        }
                     },
                     {
                         "name": "esAzSentinel",
@@ -1028,8 +1205,8 @@
                 "name": "esApplicationLz",
                 "label": "Application Landing Zones",
                 "subLabel": {
-                    "preValidation": "Select 'Yes' if goal state should be enforced during deployment. Select 'No' if you want to do it post deployment using Azure Policy.",
-                    "postValidation": "Done"
+                    "preValidation": "",
+                    "postValidation": ""
                 },
                 "bladeTitle": "AppLZ",
                 "elements": [
@@ -1054,7 +1231,7 @@
                     {
                         "name": "esAppLz",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy Application Landing Zone",
+                        "label": "Deploy Application Landing Zone Policies",
                         "defaultValue": "Yes",
                         "toolTip": "If 'Yes' is selected, an Application Landing Zone will be deployed.",
                         "constraints": {
@@ -1070,22 +1247,6 @@
                             ]
                         },
                         "visible": true
-                    },
-                    {
-                        "name": "esAppLzSub",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Application landing zone subscription (optional)",
-                        "toolTip": "",
-                        "multiselect": false,
-                        "selectAll": true,
-                        "filter": true,
-                        "filterPlaceholder": "Filter items ...",
-                        "multiLine": true,
-                        "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]",
-                        "constraints": {
-                            "allowedValues": "[map(steps('esApplicationLz').lzSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
-                            "required": false
-                        }
                     },
                     {
                         "name": "esPublicendpoints",
@@ -1268,7 +1429,6 @@
             "rsvPrefix": "[steps('esNaming').esRsvIdentifier]",
             "environmentTag": "[steps('esNaming').esSubscriptionTag]",
             "ownerTag": "[steps('esNaming').esOwnerTag]",
-
             "enablePrivateDnsZones": "[steps('esPlatformConnectivity').esPrivateDnsZones]",
             "enablePrivateDnsZonesTable": "[steps('esPlatformConnectivity').esEnablePrivateDnsZoneTable]",
             "enablePrivateDnsZonesQueue": "[steps('esPlatformConnectivity').esEnablePrivateDnsZoneQueue]",
@@ -1290,7 +1450,6 @@
             "enableIdentity": "[steps('esPlatformConnectivity').esIdentity]",
             "addressPrefix": "[steps('esPlatformConnectivity').esAddressHub]",
             "location": "[steps('esPlatformConnectivity').esNwLocation]",
-            
             "tenantId": "[steps('esPlatformManagement').esAzureAdTenant]",
             "subscriptionId": "[steps('esPlatformManagement').esPlatformSubId]",
             "enableLogAnalytics": "[steps('esPlatformManagement').esLogAnalytics]",
@@ -1308,7 +1467,15 @@
             "enableAkv": "[steps('esPlatformManagement').esAkv]",
             "enableStorage": "[steps('esPlatformManagement').esStorage]",
             "enableRsv": "[steps('esPlatformManagement').esRsv]",
-
+            "enableAscForServers": "[steps('esPlatformManagement').esAscVms]",
+            "enableAscForAppServices": "[steps('esPlatformManagement').esAscApps]",
+            "enableAscForStorage": "[steps('esPlatformManagement').esAscStorage]",
+            "enableAscForSql": "[steps('esPlatformManagement').esAscSql]",
+            "enableAscForKeyVault": "[steps('esPlatformManagement').esAscKeyVault]",
+            "enableAscForArm": "[steps('esPlatformManagement').esAscArm]",
+            "enableAscForDns": "[steps('esPlatformManagement').esAscDns]",
+            "enableAscForKubernetes": "[steps('esPlatformManagement').esAscKubernetes]",
+            "enableAscForRegistries": "[steps('esPlatformManagement').esAscRegistries]",
             "enableStorageHttps": "[steps('esAppLZ').esHttpsStorage]",
             "enableKvSoftDelete": "[steps('esAppLZ').esKvSoftDelete]",
             "denyPublicendpoints": "[steps('esAppLZ').esPublicendpoints]",

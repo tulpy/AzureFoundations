@@ -387,11 +387,11 @@
           }
         },
         {
-          "Name": "Deploy-ASC",
-          "Properties": {
-            "Description": "Ensures that subscriptions have ASC deployed.",
-            "DisplayName": "Deploy-ASC",
-            "Mode": "All",
+          "name": "Deploy-ASC",
+          "properties": {
+            "Description": "Deploys  the Azure Defender settings in Azure Security Center for  the specific services.",
+            "DisplayName": "Deploy Azure Defender settings in Azure Security Center.",
+            "Mode": "Indexed",
             "Parameters": {
               "pricingTierVMs": {
                 "type": "String",
@@ -476,7 +476,47 @@
                   "Free"
                 ],
                 "defaultValue": "Free"
+              },
+              "pricingTierDns": {
+                "type": "String",
+                "metadata": {
+                  "displayName": "pricingTierDns",
+                  "description": null
+                },
+                "allowedValues": [
+                  "Standard",
+                  "Free"
+                ],
+                "defaultValue": "Free"
+              },
+              "pricingTierArm": {
+                "type": "String",
+                "metadata": {
+                  "displayName": "pricingTierArm",
+                  "description": null
+                },
+                "allowedValues": [
+                  "Standard",
+                  "Free"
+                ],
+                "defaultValue": "Free"
+              },
+              "effect": {
+                "type": "string",
+                "defaultValue": "DeployIfNotExists",
+                "allowedValues": [
+                  "DeployIfNotExists",
+                  "Disabled"
+                ],
+                "metadata": {
+                  "displayName": "Effect",
+                  "description": "Enable or disable the execution of the policy"
+                }
               }
+            },
+            "metadata": {
+              "version": "1.0.0",
+              "category": "Security Center"
             },
             "PolicyRule": {
               "if": {
@@ -488,19 +528,19 @@
                 ]
               },
               "then": {
-                "effect": "deployIfNotExists",
+                "effect": "[[parameters('effect')]",
                 "details": {
                   "type": "Microsoft.Security/pricings",
                   "deploymentScope": "subscription",
                   "existenceScope": "subscription",
                   "roleDefinitionIds": [
-                    "/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
+                    "/providers/Microsoft.Authorization/roleDefinitions/fb1c8493-542b-48eb-b624-b4c8fea62acd"
                   ],
                   "existenceCondition": {
                     "allOf": [
                       {
                         "field": "Microsoft.Security/pricings/pricingTier",
-                        "equals": "Free"
+                        "equals": "Standard"
                       },
                       {
                         "field": "type",
@@ -533,6 +573,12 @@
                         },
                         "pricingTierKubernetesService": {
                           "value": "[[parameters('pricingTierKubernetesService')]"
+                        },
+                        "pricingTierDns": {
+                          "value": "[[parameters('pricingTierDns')]"
+                        },
+                        "pricingTierArm": {
+                          "value": "[[parameters('pricingTierArm')]"
                         }
                       },
                       "template": {
@@ -576,6 +622,18 @@
                             }
                           },
                           "pricingTierKubernetesService": {
+                            "type": "string",
+                            "metadata": {
+                              "description": "KubernetesService"
+                            }
+                          },
+                          "pricingTierDns": {
+                            "type": "string",
+                            "metadata": {
+                              "description": "KubernetesService"
+                            }
+                          },
+                          "pricingTierArm": {
                             "type": "string",
                             "metadata": {
                               "description": "KubernetesService"
@@ -656,6 +714,28 @@
                             ],
                             "properties": {
                               "pricingTier": "[[parameters('pricingTierContainerRegistry')]"
+                            }
+                          },
+                          {
+                            "type": "Microsoft.Security/pricings",
+                            "apiVersion": "2018-06-01",
+                            "name": "Dns",
+                            "dependsOn": [
+                              "[[concat('Microsoft.Security/pricings/ContainerRegistry')]"
+                            ],
+                            "properties": {
+                              "pricingTier": "[[parameters('pricingTierDns')]"
+                            }
+                          },
+                          {
+                            "type": "Microsoft.Security/pricings",
+                            "apiVersion": "2018-06-01",
+                            "name": "Arm",
+                            "dependsOn": [
+                              "[[concat('Microsoft.Security/pricings/Dns')]"
+                            ],
+                            "properties": {
+                              "pricingTier": "[[parameters('pricingTierArm')]"
                             }
                           }
                         ],
