@@ -116,7 +116,6 @@
             }
         },
         {
-            "condition": "[equals(parameters('denyIpForwarding'), 'Yes')]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "2018-05-01",
             "name": "[variables('policyAssignmentNames').denyIpForwarding]",
