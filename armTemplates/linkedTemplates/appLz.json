@@ -83,8 +83,8 @@
         "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-AppLandingZones')]",
         "policyDefinitions": {
             "denyPublicEndpoints": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policySetDefinitions/Deny-PublicEndpoints')]",
-            "denyPublicIp": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIp')]",
-            "denySubnetWithoutNsg": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Nsg')]",
+            "denyPublicIp": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP')]",
+            "denySubnetWithoutNsg": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-NSG')]",
             "denyIpForwarding": "[concat('/providers/Microsoft.Authorization/policyDefinitions/bd352bd5-2853-4985-bf0d-73806b4a5744')]",
             "denyRdpInternet": "[concat('/providers/Microsoft.Authorization/policyDefinitions/e372f825-a257-4fb8-9175-797a8a8627d6')]",
             "denySshInternet": "[concat('/providers/Microsoft.Authorization/policyDefinitions/2c89a2e5-7285-40fe-afe0-ae8654b92fab')]",
@@ -94,7 +94,7 @@
         "policyAssignmentNames": {
             "denyPublicEndpoints": "Deny-Public-Endpoints",
             "denyPublicIp": "Deny-PublicIp",
-            "denySubnetWithoutNsg": "Deny-Subnet-Without-Nsg",
+            "denySubnetWithoutNsg": "Deny-Subnet-Without-NSG",
             "denyIpForwarding": "Deny-IpForwarding",
             "denyRdpInternet": "Deny-RDP-Internet",
             "denySshInternet": "Deny-SSH-Internet",
@@ -148,8 +148,8 @@
             "name": "[variables('policyAssignmentNames').denySubnetWithoutNsg]",
             "location": "[deployment().location]",
             "properties": {
-                "description": "Deny-Subnet-Without-Nsg",
-                "displayName": "Deny-Subnet-Without-Nsg",
+                "description": "Deny-Subnet-Without-NSG",
+                "displayName": "Deny-Subnet-Without-NSG",
                 "policyDefinitionId": "[variables('policyDefinitions').denySubnetWithoutNsg]",
                 "scope": "[variables('scope')]"
             }

@@ -361,10 +361,10 @@
           }
         },
         {
-          "Name": "Deny-Subnet-Without-Nsg",
+          "Name": "Deny-Subnet-Without-NSG",
           "Properties": {
             "Description": null,
-            "DisplayName": "Deny-Subnets-Without-NSG",
+            "DisplayName": "Deny-Subnet-Without-NSG",
             "Mode": "All",
             "Parameters": {},
             "PolicyRule": {
