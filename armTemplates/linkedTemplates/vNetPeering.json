@@ -56,7 +56,7 @@
             "defaultValue": "Yes"
         }
     },
-    "variables": {    
+    "variables": {
         "hubVnetId": "[concat('/subscriptions/',parameters('hubSubscriptionId'),'/resourceGroups/',parameters('hubVnetRG'),'/providers/Microsoft.Network/virtualNetworks/',parameters('hubVnetName'))]",
         "hubVnetToSpokeVnetPeeringName": "[concat(parameters('hubVnetName'), '-to-', variables('spokeVnetName'))]",
 
@@ -102,9 +102,9 @@
                                             "location": "[deployment().location]",
                                             "properties": {
                                                 "allowVirtualNetworkAccess": true,
-                                                "allowForwardedTraffic": false,
+                                                "allowForwardedTraffic": true,
                                                 "allowGatewayTransit": false,
-                                                "useRemoteGateways": false,
+                                                "useRemoteGateways": true,
                                                 "remoteVirtualNetwork": {
                                                     "id": "[variables('hubVnetId')]"
                                                 }
@@ -152,8 +152,8 @@
                                             "location": "[deployment().location]",
                                             "properties": {
                                                 "allowVirtualNetworkAccess": true,
-                                                "allowForwardedTraffic": false,
-                                                "allowGatewayTransit": false,
+                                                "allowForwardedTraffic": true,
+                                                "allowGatewayTransit": true,
                                                 "useRemoteGateways": false,
                                                 "remoteVirtualNetwork": {
                                                     "id": "[variables('spokeVnetId')]"
