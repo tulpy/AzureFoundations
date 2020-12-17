@@ -714,7 +714,7 @@
                         }
                     },
                     {
-                        "name": "esPlatformSub",
+                        "name": "esPlatformSubId",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Choose the Platform Azure Subscription (required)",
                         "toolTip": "",
@@ -783,7 +783,7 @@
             "enableAkv": "[steps('esApplicationLz').esAkv]",
             "enableStorage": "[steps('esApplicationLz').esSta]",
             "enableRsv": "[steps('esApplicationLz').esRsv]",
-            "hubSubscription": "[steps('esApplicationLz').esPlatformSubId]",
+            "hubSubscriptionId": "[steps('esApplicationLz').esPlatformSubId]",
             "hubVnetName": "[steps('esApplicationLz').esHubVnetName]",
             "hubVnetRG": "[steps('esApplicationLz').esHubVnetRG]"
         }
