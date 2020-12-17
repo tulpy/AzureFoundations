@@ -226,7 +226,7 @@
                             "path": "tenants?api-version=2020-01-01"
                         }
                     },
-                     {
+                    {
                         "name": "esAzureAdTenant",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Azure AD Tenant (required)",
@@ -710,13 +710,13 @@
                         "type": "Microsoft.Common.TextBlock",
                         "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
                         "options": {
-                            "text": "Please provide the Hub subscription for vNet peering:"
+                            "text": "Please provide details for the Platform Azure Subscription & Hub virtual network for peering:"
                         }
                     },
                     {
-                        "name": "esHubLzSub",
+                        "name": "esPlatformSub",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Choose the Hub Subscription (required)",
+                        "label": "Choose the Platform Azure Subscription (required)",
                         "toolTip": "",
                         "multiselect": false,
                         "selectAll": true,
@@ -730,34 +730,26 @@
                         }
                     },
                     {
-                        "name": "text2",
-                        "type": "Microsoft.Common.TextBlock",
+                        "name": "esHubVnetName",
+                        "type": "Microsoft.Common.TextBox",
                         "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
-                        "options": {
-                            "text": "Please provide the Hub's allocated Vnet Name and Resource Group"
+                        "label": "Hub virtual network",
+                        "toolTip": "Provide the name of the Hub virtual network",
+                        "defaultValue": "sjt-syd-cor-vnt-10.49.0.0",
+                        "constraints": {
+                            "required": true
                         }
                     },
                     {
-                      "name": "esHubVnetName",
-                      "type": "Microsoft.Common.TextBox",
-                      "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
-                      "label": "Hub Vnet Name",
-                      "toolTip": "Provide the name of the Hub's Vnet",
-                      "defaultValue": "sjt-syd-cor-vnt-10.49.0.0",
-                      "constraints": {
-                        "required": true
-                      }
-                    },
-                    {
-                      "name": "esHubVnetRG",
-                      "type": "Microsoft.Common.TextBox",
-                      "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
-                      "label": "Hub Vnet Resource Group Name",
-                      "toolTip": "Provide the Resource Group Name of the Hub's Vnet",
-                      "defaultValue": "sjt-cor-arg-network",
-                      "constraints": {
-                        "required": true
-                      }
+                        "name": "esHubVnetRG",
+                        "type": "Microsoft.Common.TextBox",
+                        "visible": "[equals(steps('esApplicationLz').esSpoke, 'Yes')]",
+                        "label": "Hub virtual network resource group ",
+                        "toolTip": "Provide the Resource Group of the Hub virtual network",
+                        "defaultValue": "sjt-cor-arg-network",
+                        "constraints": {
+                            "required": true
+                        }
                     }
                 ]
             }
@@ -791,7 +783,7 @@
             "enableAkv": "[steps('esApplicationLz').esAkv]",
             "enableStorage": "[steps('esApplicationLz').esSta]",
             "enableRsv": "[steps('esApplicationLz').esRsv]",
-            "hubSubscriptionId": "[steps('esApplicationLz').esHubLzSub]",
+            "hubSubscription": "[steps('esApplicationLz').esPlatformSubId]",
             "hubVnetName": "[steps('esApplicationLz').esHubVnetName]",
             "hubVnetRG": "[steps('esApplicationLz').esHubVnetRG]"
         }
