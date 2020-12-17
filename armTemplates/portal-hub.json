@@ -10,7 +10,7 @@
                 "name": "esNaming",
                 "label": "Naming Convention Prefixes",
                 "subLabel": {
-                    "preValidation": "Provide naming prefixes for all Azure resources that will be created.",
+                    "preValidation": "Provide values for all Azure resources that will be created.",
                     "postValidation": "Done"
                 },
                 "bladeTitle": "Naming Convention Prefixes",
@@ -21,7 +21,7 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "Tenant level ARM deployment requires access at the tenant root (/) scope. Visit this link to ensure you have the appropriate RBAC permission to complete the deployment",
+                            "text": "Tenant level deployments require access at the tenant root (/) scope. Visit this link to ensure you have the appropriate RBAC permission to complete the deployment",
                             "uri": "https://docs.microsoft.com/azure/role-based-access-control/elevate-access-global-admin"
                         }
                     },
@@ -30,14 +30,14 @@
                         "type": "Microsoft.Common.TextBlock",
                         "visible": true,
                         "options": {
-                            "text": "Please provide naming prefixes for the Company, Location and Environment identifiers:"
+                            "text": "Please provide values for the Company, Location and Subscription identifiers:"
                         }
                     },
                     {
                         "name": "esComIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Company Identifier Prefix",
-                        "toolTip": "Provide a naming prefix for the company identifier, 1-5 characters.",
+                        "toolTip": "Provide a value for the company identifier, 1-5 characters.",
                         "defaultValue": "sjt",
                         "constraints": {
                             "required": true,
@@ -49,7 +49,7 @@
                         "name": "esLocIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Location Identifier Prefix",
-                        "toolTip": "Provide a naming prefix for the location identifier, 3 characters (Australia East - SYD) or (Australia SouthEast - MEL)",
+                        "toolTip": "Provide a value for the location identifier, 3 characters (Australia East - SYD) or (Australia SouthEast - MEL)",
                         "defaultValue": "syd",
                         "constraints": {
                             "required": true,
@@ -58,10 +58,10 @@
                         }
                     },
                     {
-                        "name": "esEnvIdentifier",
+                        "name": "esSubIdentifier",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Environment Identifier Prefix",
-                        "toolTip": "Provide a naming prefix for the environment identifier, 3 characters eg 'cor'.",
+                        "label": "Subscription Identifier Prefix",
+                        "toolTip": "Provide a value for the subscription identifier, 3 characters eg 'cor'.",
                         "defaultValue": "cor",
                         "constraints": {
                             "required": true,
@@ -74,14 +74,14 @@
                         "type": "Microsoft.Common.TextBlock",
                         "visible": true,
                         "options": {
-                            "text": "Please provide the naming prefixes for platform Azure resources:"
+                            "text": "Please provide Azure resource naming values:"
                         }
                     },
                     {
                         "name": "esArgIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Resource Group Identifier",
-                        "toolTip": "Provide a naming prefix for the Resource Group identifier",
+                        "toolTip": "Provide a value for the Resource Group identifier",
                         "defaultValue": "arg",
                         "constraints": {
                             "required": true,
@@ -117,7 +117,7 @@
                         "name": "esVntIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Virtual Network Identifier",
-                        "toolTip": "Provide a naming prefix for the Virtual Network identifier",
+                        "toolTip": "Provide a value for the Virtual Network identifier",
                         "defaultValue": "vnt",
                         "constraints": {
                             "required": true,
@@ -164,8 +164,8 @@
                     {
                         "name": "esStaIdentifier",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Azure Storage Identifier",
-                        "toolTip": "Provide a naming prefix for the Azure Storage identifier",
+                        "label": "Storage Identifier",
+                        "toolTip": "Provide a value for the Storage identifier",
                         "defaultValue": "sta",
                         "constraints": {
                             "required": true,
@@ -177,7 +177,7 @@
                         "name": "esUdrIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Route Table Identifier",
-                        "toolTip": "Provide a naming prefix for the Route Table identifier",
+                        "toolTip": "Provide a value for the Route Table identifier",
                         "defaultValue": "udr",
                         "constraints": {
                             "required": true,
@@ -189,7 +189,7 @@
                         "name": "esNsgIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Network Security Group Identifier",
-                        "toolTip": "Provide a naming prefix for the Network Security Group identifier",
+                        "toolTip": "Provide a value for the Network Security Group identifier",
                         "defaultValue": "nsg",
                         "constraints": {
                             "required": true,
@@ -201,7 +201,7 @@
                         "name": "esAkvIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Azure Key Vault Identifier",
-                        "toolTip": "Provide a naming prefix for the Azure Key Vault Identifier",
+                        "toolTip": "Provide a value for the Azure Key Vault Identifier",
                         "defaultValue": "akv",
                         "constraints": {
                             "required": true,
@@ -213,7 +213,7 @@
                         "name": "esRsvIdentifier",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Recovery Services Vaults Identifier",
-                        "toolTip": "Provide a naming prefix for the Recovery Services Vaults Identifier",
+                        "toolTip": "Provide a value for the Recovery Services Vaults Identifier",
                         "defaultValue": "rsv",
                         "constraints": {
                             "required": true,
@@ -226,7 +226,7 @@
                         "type": "Microsoft.Common.TextBlock",
                         "visible": true,
                         "options": {
-                            "text": "Please provide values for the platform subscription Tags:"
+                            "text": "Please provide values for the Landing Zone tags:"
                         }
                     },
                     {
@@ -778,11 +778,11 @@
                         "visible": true
                     },
                     {
-                        "name": "esStorage",
+                        "name": "esSta",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy a Storage account for diagnostics.",
                         "defaultValue": "Yes",
-                        "toolTip": "If 'Yes' is selected, a Storage Account will be deployed",
+                        "toolTip": "If 'Yes' is selected, a Storage account will be deployed",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -831,9 +831,9 @@
                     {
                         "name": "esHub",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Deploy the platform Virtual Network (Hub)",
+                        "label": "Deploy a Virtual Network",
                         "defaultValue": "Yes",
-                        "toolTip": "If 'Yes' is selected when adding the Platform Landing Zone Subscription, a Virtual Network will be deployed.",
+                        "toolTip": "If 'Yes' is selected, a Virtual Network will be deployed.",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -849,15 +849,15 @@
                         "visible": true
                     },
                     {
-                        "name": "esAddressHub",
+                        "name": "esAddress",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Platform virtual network CIDR Range",
+                        "label": "Virtual network CIDR Range",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/16)",
                         "defaultValue": "10.49.0.0/18",
                         "visible": "[equals(steps('esPlatformConnectivity').esHub, 'Yes')]",
                         "constraints": {
                             "required": true,
-                            "validationMessage": "The virtual network address space, specified as a CIDR notation (e.g. 192.168.1.0/24)"
+                            "validationMessage": "Virtual network's address space, specified as a CIDR notation (e.g. 192.168.1.0/24)"
                         }
                     },
                     {
@@ -871,7 +871,7 @@
                     {
                         "name": "esNwLocation",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Azure Region for the platform virtual network.",
+                        "label": "Azure Region for the Virtual Network.",
                         "visible": "[equals(steps('esPlatformConnectivity').esHub, 'Yes')]",
                         "toolTip": "Select the target Azure region for the deployment.",
                         "constraints": {
@@ -1395,7 +1395,7 @@
         ],
         "outputs": {
             "companyPrefix": "[steps('esNaming').esComIdentifier]",
-            "environmentPrefix": "[steps('esNaming').esEnvIdentifier]",
+            "environmentPrefix": "[steps('esNaming').esSubIdentifier]",
             "locationPrefix": "[steps('esNaming').esLocIdentifier]",
             "argPrefix": "[steps('esNaming').esArgIdentifier]",
             "omsPrefix": "[steps('esNaming').esOmsIdentifier]",
@@ -1430,7 +1430,7 @@
             "enableAppGw": "[steps('esPlatformConnectivity').esAppGw]",
             "enableMgmt": "[steps('esPlatformConnectivity').esMgmt]",
             "enableIdentity": "[steps('esPlatformConnectivity').esIdentity]",
-            "addressPrefix": "[steps('esPlatformConnectivity').esAddressHub]",
+            "addressPrefix": "[steps('esPlatformConnectivity').esAddress]",
             "location": "[steps('esPlatformConnectivity').esNwLocation]",
             "tenantId": "[steps('esPlatformManagement').esAzureAdTenant]",
             "subscriptionId": "[steps('esPlatformManagement').esPlatformSubId]",
@@ -1447,7 +1447,7 @@
             "enableServiceMap": "[steps('esPlatformManagement').esServiceMap]",
             "enableSqlAssessment": "[steps('esPlatformManagement').esSqlAssessment]",
             "enableAkv": "[steps('esPlatformManagement').esAkv]",
-            "enableStorage": "[steps('esPlatformManagement').esStorage]",
+            "enableStorage": "[steps('esPlatformManagement').esSta]",
             "enableRsv": "[steps('esPlatformManagement').esRsv]",
             "enableAscForServers": "[steps('esPlatformManagement').esAscVms]",
             "enableAscForAppServices": "[steps('esPlatformManagement').esAscApps]",
