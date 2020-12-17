@@ -231,7 +231,7 @@
             "keyVault": "[take(concat('keyVault', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "storage": "[take(concat('storage', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "recoveryServicesVault": "[take(concat('rsv', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-            "spokeNetworking": "[take(concat('spokeNetworking', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "spokeNetworking": "[take(concat('spokeNetwork', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "vNetPeering": "[take(concat('vNetPeering', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "applicationLandingZone": "[take(concat('appLz', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
         }
@@ -409,10 +409,7 @@
                     "contentVersion": "1.0.0.0",
                     "uri": "[variables('deploymentUris').vNetPeering]"
                 },
-                "parameters": {                
-                    "enableSpoke": {
-                        "value": "[parameters('enableSpoke')]"
-                    },
+                "parameters": {
                     "companyPrefix": {
                         "value": "[parameters('companyPrefix')]"
                     },
@@ -427,6 +424,9 @@
                     },
                     "vntPrefix": {
                         "value": "[parameters('vntPrefix')]"
+                    },
+                    "enableSpoke": {
+                        "value": "[parameters('enableSpoke')]"
                     },
                     "addressPrefix": {
                         "value": "[parameters('addressPrefix')]"
