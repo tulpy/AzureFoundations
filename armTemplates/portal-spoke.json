@@ -758,7 +758,6 @@
             "rsvPrefix": "[steps('esNaming').esRsvIdentifier]",
             "environmentTag": "[steps('esNaming').esSubscriptionTag]",
             "ownerTag": "[steps('esNaming').esOwnerTag]",
-
             "tenantId": "[steps('esApplicationLz').esAzureAdTenant]",
             "subscriptionId": "[steps('esApplicationLz').esApplicationSubId]",
             "enableAsc": "[steps('esApplicationLz').esAsc]",
@@ -774,7 +773,6 @@
             "enableAkv": "[steps('esApplicationLz').esAkv]",
             "enableStorage": "[steps('esApplicationLz').esSta]",
             "enableRsv": "[steps('esApplicationLz').esRsv]",
-
             "enableSpoke": "[steps('esApplicationLzConnectivity').esSpoke]",
             "addressPrefix": "[steps('esApplicationLzConnectivity').esAddress]",
             "location": "[steps('esApplicationLzConnectivity').esNwLocation]",
