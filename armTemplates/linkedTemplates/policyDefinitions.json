@@ -2246,6 +2246,203 @@
           }
         },
         {
+          "name": "Deploy-Diagnostics-ApplicationInsights",
+          "properties": {
+            "Description": "This policy automatically deploys and enable diagnostic settings to Log Analytics",
+            "DisplayName": "Deploy-Diagnostics-ApplicationInsights",
+            "Mode": "All",
+            "Parameters": {
+              "logAnalytics": {
+                "type": "string",
+                "metadata": {
+                  "displayName": "Log Analytics workspace",
+                  "description": "Select the Log Analytics workspace from dropdown list",
+                  "strongType": "omsWorkspace"
+                }
+              }
+            },
+            "policyRule": {
+              "if": {
+                "field": "type",
+                "equals": "Microsoft.Insights/Components"
+              },
+              "then": {
+                "effect": "deployIfNotExists",
+                "details": {
+                  "type": "Microsoft.Insights/diagnosticSettings",
+                  "name": "setByPolicy",
+                  "existenceCondition": {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Insights/diagnosticSettings/logs.enabled",
+                        "equals": "true"
+                      },
+                      {
+                        "field": "Microsoft.Insights/diagnosticSettings/metrics.enabled",
+                        "equals": "true"
+                      },
+                      {
+                        "field": "Microsoft.Insights/diagnosticSettings/workspaceId",
+                        "equals": "[[parameters('logAnalytics')]"
+                      }
+                    ]
+                  },
+                  "roleDefinitionIds": [
+                    "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+                  ],
+                  "deployment": {
+                    "properties": {
+                      "mode": "incremental",
+                      "template": {
+                        "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                        "contentVersion": "1.0.0.0",
+                        "parameters": {
+                          "resourceName": {
+                            "type": "string"
+                          },
+                          "logAnalytics": {
+                            "type": "string"
+                          },
+                          "location": {
+                            "type": "string"
+                          }
+                        },
+                        "variables": {},
+                        "resources": [
+                          {
+                            "type": "Microsoft.Insights/Components/providers/diagnosticSettings",
+                            "apiVersion": "2017-05-01-preview",
+                            "name": "[[concat(parameters('resourceName'), '/', 'Microsoft.Insights/setByPolicy')]",
+                            "location": "[[parameters('location')]",
+                            "dependsOn": [],
+                            "properties": {
+                              "workspaceId": "[[parameters('logAnalytics')]",
+                              "metrics": [
+                                {
+                                  "category": "Availability",
+                                  "timeGrain": null,
+                                  "enabled": true,
+                                  "retentionPolicy": {
+                                    "enabled": false,
+                                    "days": 0
+                                  }
+                                },
+                                {
+                                  "category": "Browser",
+                                  "timeGrain": null,
+                                  "enabled": true,
+                                  "retentionPolicy": {
+                                    "enabled": false,
+                                    "days": 0
+                                  }
+                                },
+                                {
+                                  "category": "Server",
+                                  "timeGrain": null,
+                                  "enabled": true,
+                                  "retentionPolicy": {
+                                    "enabled": false,
+                                    "days": 0
+                                  }
+                                },
+                                {
+                                  "category": "Failures",
+                                  "timeGrain": null,
+                                  "enabled": true,
+                                  "retentionPolicy": {
+                                    "enabled": false,
+                                    "days": 0
+                                  }
+                                },
+                                {
+                                  "category": "Usage",
+                                  "timeGrain": null,
+                                  "enabled": true,
+                                  "retentionPolicy": {
+                                    "enabled": false,
+                                    "days": 0
+                                  }
+                                },
+                                {
+                                  "category": "Performance counters",
+                                  "timeGrain": null,
+                                  "enabled": true,
+                                  "retentionPolicy": {
+                                    "enabled": false,
+                                    "days": 0
+                                  }
+                                }
+                              ],
+                              "logs": [
+                                {
+                                  "category": "AppAvailabilityResults",
+                                  "enabled": true
+                                },
+                                {
+                                  "category": "AppBrowserTimings",
+                                  "enabled": true
+                                },
+                                {
+                                  "category": "AppEvents",
+                                  "enabled": true
+                                },
+                                {
+                                  "category": "AppMetrics",
+                                  "enabled": true
+                                },
+                                {
+                                  "category": "AppDependencies",
+                                  "enabled": true
+                                },
+                                {
+                                  "category": "AppExceptions",
+                                  "enabled": true
+                                },
+                                {
+                                  "category": "AppPageViews",
+                                  "enabled": true
+                                },
+                                {
+                                  "category": "AppPerformanceCounters",
+                                  "enabled": true
+                                },
+                                {
+                                  "category": "AppRequests",
+                                  "enabled": true
+                                },
+                                {
+                                  "category": "AppSystemEvents",
+                                  "enabled": true
+                                },
+                                {
+                                  "category": "AppTraces",
+                                  "enabled": true
+                                }
+                              ]
+                            }
+                          }
+                        ],
+                        "outputs": {}
+                      },
+                      "parameters": {
+                        "logAnalytics": {
+                          "value": "[[parameters('logAnalytics')]"
+                        },
+                        "location": {
+                          "value": "[[field('location')]"
+                        },
+                        "resourceName": {
+                          "value": "[[field('name')]"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
           "Name": "Deploy-Diagnostics-Batch",
           "Properties": {
             "Description": "Apply diagnostic settings for Azure Batch accounts - Log Analytics",
@@ -3950,6 +4147,118 @@
                               "logs": [
                                 {
                                   "category": "AuditEvent",
+                                  "enabled": true
+                                }
+                              ]
+                            }
+                          }
+                        ],
+                        "outputs": {}
+                      },
+                      "parameters": {
+                        "logAnalytics": {
+                          "value": "[[parameters('logAnalytics')]"
+                        },
+                        "location": {
+                          "value": "[[field('location')]"
+                        },
+                        "resourceName": {
+                          "value": "[[field('name')]"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Deploy-Diagnostics-LogAnalytics",
+          "properties": {
+            "Description": "This policy automatically deploys and enable diagnostic settings to Log Analytics",
+            "DisplayName": "Deploy-Diagnostics-LogAnalytics",
+            "Mode": "All",
+            "Parameters": {
+              "logAnalytics": {
+                "type": "string",
+                "metadata": {
+                  "displayName": "Log Analytics workspace",
+                  "description": "Select the Log Analytics workspace from dropdown list",
+                  "strongType": "omsWorkspace"
+                }
+              }
+            },
+            "policyRule": {
+              "if": {
+                "field": "type",
+                "equals": "Microsoft.OperationalInsights/Workspaces"
+              },
+              "then": {
+                "effect": "deployIfNotExists",
+                "details": {
+                  "type": "Microsoft.Insights/diagnosticSettings",
+                  "name": "setByPolicy",
+                  "existenceCondition": {
+                    "allOf": [
+                      {
+                        "field": "Microsoft.Insights/diagnosticSettings/logs.enabled",
+                        "equals": "True"
+                      },
+                      {
+                        "field": "Microsoft.Insights/diagnosticSettings/metrics.enabled",
+                        "equals": "True"
+                      },
+                      {
+                        "field": "Microsoft.Insights/diagnosticSettings/workspaceId",
+                        "equals": "[[parameters('logAnalytics')]"
+                      }
+                    ]
+                  },
+                  "roleDefinitionIds": [
+                    "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+                  ],
+                  "deployment": {
+                    "properties": {
+                      "mode": "incremental",
+                      "template": {
+                        "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                        "contentVersion": "1.0.0.0",
+                        "parameters": {
+                          "resourceName": {
+                            "type": "string"
+                          },
+                          "logAnalytics": {
+                            "type": "string"
+                          },
+                          "location": {
+                            "type": "string"
+                          }
+                        },
+                        "variables": {},
+                        "resources": [
+                          {
+                            "type": "Microsoft.OperationalInsights/Workspaces/providers/diagnosticSettings",
+                            "apiVersion": "2017-05-01-preview",
+                            "name": "[[concat(parameters('resourceName'), '/', 'Microsoft.Insights/setByPolicy')]",
+                            "location": "[[parameters('location')]",
+                            "dependsOn": [],
+                            "properties": {
+                              "workspaceId": "[[parameters('logAnalytics')]",
+                              "metrics": [
+                                {
+                                  "category": "AllMetrics",
+                                  "timeGrain": null,
+                                  "enabled": true,
+                                  "retentionPolicy": {
+                                    "enabled": false,
+                                    "days": 0
+                                  }
+                                }
+                              ],
+                              "logs": [
+                                {
+                                  "category": "Audit",
                                   "enabled": true
                                 }
                               ]
@@ -8699,7 +9008,7 @@
                   "type": "Microsoft.OperationalInsights/workspaces",
                   "deploymentScope": "Subscription",
                   "existenceScope": "Subscription",
-                   "roleDefinitionIds": [
+                  "roleDefinitionIds": [
                     "/providers/microsoft.authorization/roleDefinitions/749f88d5-cbae-40b8-bcfc-e573ddc772fa",
                     "/providers/microsoft.authorization/roleDefinitions/92aaf0da-9dab-42b6-94a3-d43ce8d16293"
                   ],
@@ -10581,6 +10890,22 @@
               },
               {
                 "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ApplicationGateway')]",
+                "parameters": {
+                  "logAnalytics": {
+                    "value": "[[parameters('logAnalytics')]"
+                  }
+                }
+              },
+              {
+                "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ApplicationInsights')]",
+                "parameters": {
+                  "logAnalytics": {
+                    "value": "[[parameters('logAnalytics')]"
+                  }
+                }
+              },
+              {
+                "policyDefinitionId": "[concat(variables('scope'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-LogAnalytics')]",
                 "parameters": {
                   "logAnalytics": {
                     "value": "[[parameters('logAnalytics')]"
