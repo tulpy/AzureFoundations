@@ -8,7 +8,7 @@
         "steps": [
             {
                 "name": "lzSettings",
-                "label": "Create Enterprise-Scale landing zones",
+                "label": "Create Application Landing Zone Subscription",
                 "bladeTitle": "Company prefix",
                 "elements": [
                     {
@@ -79,18 +79,18 @@
                             "required": true
                         }
                     },
-					{
-						"name": "textBlock1",
-						"type": "Microsoft.Common.TextBlock",
-						"visible": true,
-						"options": {
-							"text": "Select target management group for each subscription you will create",
-							"link": {
+                    {
+                        "name": "textBlock1",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": true,
+                        "options": {
+                            "text": "Select target management group for each subscription you will create",
+                            "link": {
                                 "label": "Learn more",
                                 "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization"
                             }
-						}
-					},
+                        }
+                    },
                     {
                         "name": "esSubscription",
                         "type": "Microsoft.Common.EditableGrid",
