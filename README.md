@@ -16,15 +16,6 @@
 
 ---
 
-## Deploying the Azure Foundations Architecture
-
-The Azure Foundations architecture is modular by design and allows customers to start with foundational Landing Zones that support their application portfolios, regardless of whether the applications are being migrated or are newly developed and deployed to Azure. The architecture can scale alongside the customer's business requirements regardless of scale point. In this repository we are providing the following three templates representing different scenarios composed using ARM templates.
-
-| Landing Zone Types | Description | ARM Template | Link |
-|:-------------------------|:-------------|:-------------|------|
-| Platform Landing Zone (Hub) | Platform Landing Zone deployment for Identity, Management and Networking |[![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2FRelease1%2FarmTemplates%2Fhub.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2FRelease1%2FarmTemplates%2Fportal-hub.json) | [Detailed description](./docs/reference/contoso/Readme.md) |
-| Application Landing Zone (Spoke) | Application Landing Zone deployment for a spoke subscription |[![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2FRelease1%2FarmTemplates%2Fspoke.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2FRelease1%2FarmTemplates%2Fportal-spoke.json) | [Detailed description](./docs/reference/adventureworks/README.md) |
-
 ## Objective
 
 The Azure Foundations architecture provides prescriptive guidance coupled with Azure best practices, and it follows design principles across the critical design areas for organizations to define their Azure architecture. It will continue to evolve alongside the Azure platform and is ultimately defined by the various design decisions that organizations must make to define their Azure journey. 
@@ -56,8 +47,18 @@ The Enterprise-Scale reference implementations in this repository are intended t
 | Enables migration velocity across the organization | Yes, the Azure Foundations architecture includes designs for segmentation and separation of duty to empower teams to act within appropriate landing zones |
 | Achieves operational excellence | Yes. Enables autonomy for platform and application teams with a policy driven governance and management |
 
+## Deploying the Azure Foundations Architecture
+
+The Azure Foundations architecture is modular by design and allows customers to start with foundational Landing Zones that support their application portfolios, regardless of whether the applications are being migrated or are newly developed and deployed to Azure. The architecture can scale alongside the customer's business requirements regardless of scale point. In this repository we are providing the following three templates representing different scenarios composed using ARM templates.
+
+| Reference Implementation | Description | ARM Template | Link |
+|:-------------------------|:-------------|:-------------|------|
+| Perth | Platform subscription deployment for Identity, Management and Networking resources (Traditional Hub & Spoke deployment pattern) |[![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2FRelease1%2FarmTemplates%2Fhub.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2FRelease1%2FarmTemplates%2Fportal-hub.json) | [Detailed description](./docs/reference/contoso/Readme.md) |
+| Barcelona | Application Landing Zone deployment for workloads (Spoke deployment pattern) |[![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2FRelease1%2FarmTemplates%2Fspoke.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2FRelease1%2FarmTemplates%2Fportal-spoke.json) | [Detailed description](./docs/reference/adventureworks/README.md) |
+| Hong Kong | Platform subscription deployment for Identity, Management and Networking resources (Azure vWAN deployment pattern) | Coming Soon! | Coming Soon!|
+
 ## Conditions for success
 
-To fully leverage this reference implementation in this repository, readers must have a collaborative engagement with key customer stakeholders across critical technical domains, such as identity, security, and networking. Ultimately, the success of cloud adoption hinges on cross-discipline cooperation within the organization, since key requisite Enterprise-Scale design decisions are cross cutting, and to be authoritative must involve domain Subject Matter Expertise (SME) and stakeholders within the customer. It is crucial that the organization has defined their [Enterprise-Scale Architecture](./docs/EnterpriseScale-Architecture.md) following the design principles and critical design areas.
+To fully leverage this reference architecture, there must have a collaborative engagement with key customer stakeholders across critical technical domains, such as identity, security, and networking. Ultimately, the success of cloud adoption hinges on cross-discipline cooperation within the organization, since key pre-requisite design decisions are cross cutting, and to be authoritative must involve domain Subject Matter Expertise (SME) and stakeholders within the customer. It is crucial that the organization has defined their [Azure Foundations Architecture](./docs/azureFoundations-architecture.md) following the design principles and critical design areas.
 
-It is also assumed that readers have a broad understanding of key Azure constructs and services in order to fully contextualize the prescriptive recommendations contained within Enterprise-Scale.
+It is also assumed that readers have a broad understanding of key Azure constructs and services in order to fully contextualize the prescriptive recommendations contained within this architecture.
