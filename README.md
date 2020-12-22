@@ -7,7 +7,6 @@
 * [Deploy Reference Implementation](./docs/AzureFoundations-deploy-reference-implentations.md)
 * [Create Landing Zones](./docs/azureFoundations-deploy-landing-zones.md)
 * [FAQ](./docs/azureFoundations-FAQ.md)
-
 * [[Optional] Getting started with Infrastructure-as-code](./docs/Deploy/getting-started.md)
   * [Configure Azure permissions for ARM tenant deployments & setup GitHub](./docs/Deploy/setup-github.md)
   * [Initialize Git with current Azure configuration](./docs/Deploy/discover-environment.md)
