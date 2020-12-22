@@ -1,6 +1,6 @@
 ## FAQ
 
-This page will list frequently asked question for Enterprise-scale design as well as Contoso Implementation.
+This page will list frequently asked question for the Azure Foundations architecture
 
 ### Azure Foundations Design
 

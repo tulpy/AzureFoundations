@@ -2,18 +2,18 @@
 
 ## Navigation Menu
 
-* [Azure Foundations Architecture](./docs/Azure-Foundations-Architecture.md)
-* [Configure Azure permission for ARM Template deployments](./docs/Azure-Foundations-azure.md)
-* [Deploy Reference Implementation](./docs/Azure-Foundations-Deploy-reference-implentations.md)
-  * [Contoso Reference - Scope and Design](./docs/reference/contoso/Readme.md)
-* [Create Landing Zones](./docs/Azure-Foundations-Deploy-landing-zones.md)
+* [Azure Foundations Architecture](./docs/azureFoundations-architecture.md)
+* [Configure Azure permission for ARM Template deployments](./docs/azureFoundations-setup-azure.md)
+* [Deploy Reference Implementation](./docs/AzureFoundations-deploy-reference-implentations.md)
+* [Create Landing Zones](./docs/azureFoundations-deploy-landing-zones.md)
+* [FAQ](./docs/azureFoundations-FAQ.md)
+
 * [[Optional] Getting started with Infrastructure-as-code](./docs/Deploy/getting-started.md)
   * [Configure Azure permissions for ARM tenant deployments & setup GitHub](./docs/Deploy/setup-github.md)
   * [Initialize Git with current Azure configuration](./docs/Deploy/discover-environment.md)
   * [Deploy your own ARM templates with AzOps GitHub Actions](./docs/Deploy/deploy-new-arm.md)
   * [Configure Azure DevOps support](./docs/Deploy/setup-azuredevops.md)
 * [Enterprise-Scale "in-a-box" tutorial](./docs/enterprise-scale-iab/README.md)
-* [FAQ](./docs/EnterpriseScale-FAQ.md)
 
 ---
 
@@ -44,7 +44,7 @@ Not all enterprises adopt Azure in the same way, so the Enterprise-Scale archite
 
 The Enterprise-Scale reference implementations in this repository are intended to support Enterprise-Scale Azure adoption and provides prescriptive guidance based on authoratative design for the Azure platform as a whole.
 
-| Key customer landing zone requirement | Enterprise-Scale reference implementations |
+| Key customer landing zone requirement | Azure Foundations reference implementations |
 |----------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Timelines to reach security and compliance requirements for a workload | Enabling all recommendations during setup, will ensure resources are compliant from a monitoring and security perspective |
 | Provides a baseline architecture using multi-subscription design | Yes, for the entire Azure tenant regardless of customer’s scale-point |
@@ -53,8 +53,8 @@ The Enterprise-Scale reference implementations in this repository are intended t
 | UI Experience and simplified setup | Yes, Azure portal |
 | All critical services are present and properly configured according to recommend best practices for identity & access management, governance, security, network and logging | Yes, using a multi-subscription design, aligned with Azure platform roadmap |
 | Automation capabilities (IaC/DevOps) | Yes: ARM, Policy, GitHub/Azure DevOps CICD pipeline option included |
-| Provides long-term self-sufficiency | Yes, enterprise-scale architecture -> 1:N landing zones. Approach & architecture prepare the customer for long-term self-sufficiency, the RIs are there to get you started |
-| Enables migration velocity across the organization | Yes, enterprise-scale architecture -> 1:N landing zones, Architecture includes designs for segmentation and separation of duty to empower teams to act within appropriate landing zones |
+| Provides long-term self-sufficiency | Yes, the Azure Foundations architecture prepare the customer for long-term self-sufficiency |
+| Enables migration velocity across the organization | Yes, the Azure Foundations architecture includes designs for segmentation and separation of duty to empower teams to act within appropriate landing zones |
 | Achieves operational excellence | Yes. Enables autonomy for platform and application teams with a policy driven governance and management |
 
 ## Conditions for success
