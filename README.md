@@ -26,13 +26,13 @@ The Azure Foundations architecture is modular by design and allow organizations 
 
 ---
 
-_The Azure Foundatios architecture represents the strategic design path and target technical state for your Azure environment._
+_The Azure Foundations architecture represents the strategic design path and target technical state for your Azure environment._
 
 ---
 
-Not all enterprises adopt Azure in the same way, so the Enterprise-Scale architecture may vary between customers. Ultimately, the technical considerations and design recommendations of the Enterprise-Scale architecture may lead to different trade-offs based on the customer's scenario. Some variation is expected, but if core recommendations are followed, the resulting target architecture will put the customer on a path to sustainable scale.
+Not all customers adopt Azure in the same way, so the Azure Foundations architecture may vary between customers. Ultimately, the technical considerations and design recommendations of the Azure Foundations architecture may lead to different trade-offs based on the customer's scenario. Some variation is expected, but if core recommendations are followed, the resulting target architecture will put the customer on a path to sustainable scale.
 
-The Enterprise-Scale reference implementations in this repository are intended to support Enterprise-Scale Azure adoption and provides prescriptive guidance based on authoratative design for the Azure platform as a whole.
+The Azure Foundations reference implementations in this repository are intended to support Azure adoption and provides prescriptive guidance based on authoratative design for the Azure platform as a whole.
 
 | Key customer landing zone requirement | Azure Foundations reference implementations |
 |----------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -59,6 +59,6 @@ The Azure Foundations architecture is modular by design and allows customers to 
 
 ## Conditions for success
 
-To fully leverage this reference architecture, there must have a collaborative engagement with key customer stakeholders across critical technical domains, such as identity, security, and networking. Ultimately, the success of cloud adoption hinges on cross-discipline cooperation within the organization, since key pre-requisite design decisions are cross cutting, and to be authoritative must involve domain Subject Matter Expertise (SME) and stakeholders within the customer. It is crucial that the organization has defined their [Azure Foundations Architecture](./docs/azureFoundations-architecture.md) following the design principles and critical design areas.
+To fully leverage this reference architecture, there must be a collaborative engagement with key customer stakeholders across critical technical domains, such as identity, security, and networking. Ultimately, the success of cloud adoption hinges on cross-discipline cooperation within the organization, since key pre-requisite design decisions are cross cutting, and to be authoritative must involve domain Subject Matter Expertise (SME) and stakeholders within the customer. It is crucial that the organization has defined their [Azure Foundations Architecture](./docs/azureFoundations-architecture.md) following the design principles and critical design areas.
 
 It is also assumed that readers have a broad understanding of key Azure constructs and services in order to fully contextualize the prescriptive recommendations contained within this architecture.

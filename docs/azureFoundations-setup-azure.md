@@ -6,7 +6,7 @@ This article will guide you through the process to configure permissions to your
 
 Azure Foundations reference implementation requires permission at tenant root scope "/" to be able to configure Management Group and create/move subscription. In order to grant permission at tenant root scope "/", users in "AAD Global Administrators" group can temporarily elevate access, to manage all Azure resources in the directory.
 
-Once UAA role is enabled, User Access Administrator can grant **_other users and service principles_** within organization to deploy/manage Enterprise-Scale reference implementation by granting "Owner" permission at tenant root scope "/".
+Once UAA role is enabled, User Access Administrator can grant **_other users and service principles_** within organization to deploy/manage the reference implementation by granting "Owner" permission at tenant root scope "/".
 
 Once permission is granted to other users and service principles, you can safely disable "User Access Administrator" permission for the "AAD Global Administrator" users. For more information please follow this article [elevated account permissions](https://docs.microsoft.com/en-us/azure/role-based-access-control/elevate-access-global-admin)
 
@@ -47,4 +47,4 @@ Please note, it may take up to 15-30 minutes for permission to propagate at tena
 
 ## Next steps
 
-Please proceed with [deploying reference implementation](./Azure-Foundations-Deploy-reference-implentations.md).
+Please proceed with [deploying reference implementation](./AzureFoundations-deploy-reference-implentations.md).

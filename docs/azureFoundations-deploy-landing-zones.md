@@ -12,7 +12,7 @@ Depending upon reference implementations deployed, navigate to appropriate manag
 
 Business units and/or application portfolio owners can use their preferred tool chain - ARM, PowerShell, Terraform, Portal, CLI etc. for subsequent resource deployments within their Landing Zone(s).
 
-## [Preview] Create Enterprise-Scale landing zones using Azure Portal
+## [Preview] Create landing zones using Azure Portal
 
 The following deployment experiences can be leveraged to create multiple landing zones (subscriptions) and target individual management groups (e.g., 'online', 'corp' etc.).
 

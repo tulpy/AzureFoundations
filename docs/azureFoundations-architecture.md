@@ -1,21 +1,21 @@
 
 # Azure Foundations Architecture
 
-The principle challenges facing enterprise customers adopting Azure are 1) how to allow applications (legacy or modern) to seamlessly move at their own pace, and 2) how to provide secure and streamlined operations, management, and governance across the entire platform and all encompassed applications. To address these challenges, customers require a forward looking and Azure-native design approach, which in the context of this playbook is represented by the Enterprise-Scale architecture.
+The principle challenges facing customers adopting Azure are 1) how to allow applications (legacy or modern) to seamlessly move at their own pace, and 2) how to provide secure and streamlined operations, management, and governance across the entire platform and all encompassed applications. To address these challenges, customers require a forward looking and Azure-native design approach, which in the context of this playbook is represented by the Azure Foundations architecture.
 
 ## What is the Azure Foundations Architecture
 
 The Azure Foundations Architecture represents the strategic design path and target technical state for the customer's Azure environment. It will continue to evolve in lockstep with the Azure platform and is ultimately defined by the various design decisions the customer organization must make to define their Azure journey.
 
-It is important to highlight that not all enterprises adopt Azure in the same way, and as a result the architecture may vary between customers. Ultimately, the technical considerations and design recommendations presented within this playbook may yield different trade-offs based on the customer scenario. Some variation is therefore expected, but provided core recommendations are followed, the resultant target architecture will position the customer on a path to sustainable scale.
+It is important to highlight that not all customers adopt Azure in the same way, and as a result the architecture may vary between customers. Ultimately, the technical considerations and design recommendations presented within this playbook may yield different trade-offs based on the customer scenario. Some variation is therefore expected, but provided core recommendations are followed, the resultant target architecture will position the customer on a path to sustainable scale.
 
 ## Landing Zones Definition
 
-Within the context of the Azure Foundations Architecture, a "Landing Zone" is a logical construct capturing everything that must be true to enable application migrations and development at an Enterprise-Scale in Azure. It considers all platform Resources that are required to support the customer's application portfolio and does not differentiate between IaaS or PaaS.
+Within the context of the Azure Foundations Architecture, a "Landing Zone" is a logical construct capturing everything that must be true to enable application migrations and development within Azure. It considers all platform Resources that are required to support the customer's application portfolio and does not differentiate between IaaS or PaaS.
 
-Every large enterprise software estate will encompass a myriad of application archetypes and each Landing Zone essentially represents the common elements, such as networking and IAM, that are shared across instances of these archetypes and must be in place to ensure that migrating applications have access to requisite components when deployed. Each Landing Zone must consequently be designed and deployed in accordance with the requirements of archetypes within the customer's application portfolio.
+Every customers software estate will encompass a myriad of application archetypes and each Landing Zone essentially represents the common elements, such as networking and IAM, that are shared across instances of these archetypes and must be in place to ensure that migrating applications have access to requisite components when deployed. Each Landing Zone must consequently be designed and deployed in accordance with the requirements of archetypes within the customer's application portfolio.
 
-The principle purpose of the "Landing Zones" is therefore to ensure that when an application lands on Azure, the required "plumbing" is already in place, providing greater agility and compliance with enterprise security and governance requirements.
+The principle purpose of the "Landing Zones" is therefore to ensure that when an application lands on Azure, the required "plumbing" is already in place, providing greater agility and compliance with security and governance requirements.
 
 ---
 
@@ -25,7 +25,7 @@ _Using an analogy, this is similar to how city utilities such as water, gas, and
 
 # Design Principles
 
-The Enterprise-Scale architecture is based on the [five design principles](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/design-principles). These principles serve as a compass for subsequent design decisions across critical technical domains. Readers and users of the reference implementation are strongly advised to familiarize themselves with these principles to better understand their impact and the trade-offs associated with non-adherence.
+The Azure Foundations architecture is based on the [five design principles](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/design-principles). These principles serve as a compass for subsequent design decisions across critical technical domains. Readers and users of the reference implementation are strongly advised to familiarize themselves with these principles to better understand their impact and the trade-offs associated with non-adherence.
 
 * [Subscription democratization](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/design-principles?branch#subscription-democratization)
 * [Policy-driven governance](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/design-principles#policy-driven-governance)
@@ -39,7 +39,7 @@ At the centre of the Azure Foundations Architecture lies a critical design path,
 
 ## Critical Design Areas
 
-The [eight critical design areas](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/design-guidelines#critical-design-areas) are intended to support the translation of customer requirements to Azure constructs and capabilities, to address the mismatch between on-premises infrastructure and cloud-design which typically creates dissonance and friction with respect to the Enterprise-Scale definition and Azure adoption.
+The [eight critical design areas](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/design-guidelines#critical-design-areas) are intended to support the translation of customer requirements to Azure constructs and capabilities, to address the mismatch between on-premises infrastructure and cloud-design which typically creates dissonance and friction with respect to Azure adoption.
 
 The impact of decisions made within these critical areas will reverberate across the Azure Foundations Architecture and influence other decisions. Readers and reference implementation users are strongly advised to familiarize themselves with these eight areas, to better understand the consequences of encompassed decisions, which may later produce trade-offs within related areas.
 

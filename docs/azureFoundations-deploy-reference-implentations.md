@@ -4,14 +4,15 @@ This section will guide you through the process of deploying the Azure Foundatio
 
 ## What is Reference Implementation?
 
-Azure Foundations design principles and implementation can be adopted by all customers no matter what size and history their Azure estate. The following customer reference implementations target different and most common customer scenarios for a Enterprise-Scale adoption.
+Azure Foundations design principles and implementation can be adopted by all customers no matter what size and history their Azure estate. The following reference implementations target different and most common customer scenarios for cloud adoption.
 
 ## Deploy Reference Implementation
 
-| Landing Zone Types | Description | ARM Template | Link |
+| Reference Implementation | Description | ARM Template | Link |
 |:-------------------------|:-------------|:-------------|------|
-| Platform  (Hub) | Platform deployment for Identity, Management and Networking |[![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2Fmaster%2FarmTemplates%2Fhub.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2Fmaster%2FarmTemplates%2Fportal-hub.json) | [Detailed description](./docs/reference/contoso/Readme.md) |
-| Application Landing Zone (Spoke) | Application Landing Zone deployment for a spoke subscription |[![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2Fmaster%2FarmTemplates%2Fspoke.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2Fmaster%2FarmTemplates%2Fportal-spoke.json) | [Detailed description](./docs/reference/adventureworks/README.md) |
+| Perth | Platform subscription deployment for Identity, Management and Networking resources (Traditional Hub & Spoke deployment pattern) |[![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2FRelease1%2FarmTemplates%2Fhub.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2FRelease1%2FarmTemplates%2Fportal-hub.json) | [Detailed description](./docs/reference/contoso/Readme.md) |
+| Barcelona | Application Landing Zone deployment for workloads (Spoke deployment pattern) |[![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2FRelease1%2FarmTemplates%2Fspoke.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Ftulpy%2FAzureFoundations%2FRelease1%2FarmTemplates%2Fportal-spoke.json) | [Detailed description](./docs/reference/adventureworks/README.md) |
+| Hong Kong | Platform subscription deployment for Identity, Management and Networking resources (Azure vWAN deployment pattern) | Coming Soon! | Coming Soon!|
 
 >Once the deployment is complete, please ensure required platform subscriptions are moved under the `Platform` Management Groups if you have not done so as a part of deployment.
 
