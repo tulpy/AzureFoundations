@@ -705,6 +705,14 @@
                         }
                     },
                     {
+                        "name": "platformSubsApi",
+                        "type": "Microsoft.Solutions.ArmApiControl",
+                        "request": {
+                            "method": "GET",
+                            "path": "subscriptions?api-version=2020-01-01"
+                        }
+                    },
+                    {
                         "name": "esHubSubId",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Choose the Platform Azure Subscription (required)",
@@ -716,7 +724,7 @@
                         "multiLine": true,
                         "visible": "[equals(steps('esApplicationLzConnectivity').esSpoke, 'Yes')]",
                         "constraints": {
-                            "allowedValues": "[map(steps('esApplicationLzConnectivity').mgmtSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
+                            "allowedValues": "[map(steps('esApplicationLzConnectivity').platformSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
                             "required": true
                         }
                     },
