@@ -38,7 +38,9 @@ Enterprise enrollment roles links users with their functional role and consists 
 ***Design Considerations***
 
 -The Enrollment provides a hierarchical organizational structure to govern the management of customers subscriptions.
+
 -Multiple customers environments can be separated at an EA account level to support holistic isolation.
+
 -A "Work and School Account" account type is sourced from a company Azure AD tenant and allows enforcing various enterprise security controls, e.g. MFA and Conditional Access. A "Microsoft Account" (MSA) account type is a consumer/personal account and does not support the recommended enterprise security controls.
 -There can be multiple administrators appointed to a single enrollment.
 -Each Subscription must have an associated Account Owner.
