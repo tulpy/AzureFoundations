@@ -576,7 +576,7 @@
                         "visible": "[equals(steps('esApplicationLzConnectivity').esSpoke, 'Yes')]",
                         "toolTip": "Select the target Azure region for the deployment.",
                         "constraints": {
-                            "allowedValues": "[map(steps('esApplicationLzConnectivity').esLocationsApi.value, (item) => parse(concat('{\"label\":\"', item.displayName, '\",\"value\":\"', item.name, '\"}')))]",
+                            "allowedValues": "[map(steps('esApplicationLz').esLocationsApi.value, (item) => parse(concat('{\"label\":\"', item.displayName, '\",\"value\":\"', item.name, '\"}')))]",
                             "required": true
                         }
                     },
@@ -716,7 +716,7 @@
                         "multiLine": true,
                         "visible": "[equals(steps('esApplicationLzConnectivity').esSpoke, 'Yes')]",
                         "constraints": {
-                            "allowedValues": "[map(steps('esApplicationLzConnectivity').mgmtSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
+                            "allowedValues": "[map(steps('esApplicationLz').mgmtSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
                             "required": true
                         }
                     },
