@@ -47,8 +47,8 @@ Many traditional IT operating models are unfortunately not compatible with the c
 
 * **NetOps** (Network Operations)
     * Network Management (holistic).
-* Allow application owners to create and manage application resources through a DevOps model.
-* The list below presents a recommended DevOps role for application teams.
+    * Allow application owners to create and manage application resources through a DevOps model.
+    * The list below presents a recommended DevOps role for application teams.
 
 * **AppDevOps**
     * Application migration and/or transformation.
