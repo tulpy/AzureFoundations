@@ -1,8 +1,7 @@
 # Navigation Menu
 
 * [Azure Foundations Architecture](./00-azureFoundations-architecture.md)
-  * [Design Guidelines & Principles](./01-azureFoundations-design-guidelines-principles)
-  * [Design](./02-azureFoundations-design.md)
+  * [Design Guidelines & Principles](./01-azureFoundations-design-guidelines-principles.md)
     * [A - Enterprise Enrollment and Azure AD Tenants](./A-Enterprise-Enrollment-and-Azure-AD-Tenants.md)
     * [B - Identity and Access Management](./B-Identity-and-Access-Management.md)
     * [C - Management Group and Subscription Organization](./C-Management-Group-and-Subscription-Organization.md)
@@ -11,6 +10,7 @@
     * [F - Business Continuity and Disaster Recovery](./F-Business-Continuity-and-Disaster-Recovery.md)
     * [G - Security, Governance and Compliance](./G-Security-Governance-and-Compliance.md)
     * [H - Platform Automation and DevOps](./H-Platform-Automation-and-DevOps.md)
+  * [Design](./02-azureFoundations-design.md)
 
 ## Design Guidelines
 
