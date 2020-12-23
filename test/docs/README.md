@@ -1,7 +1,7 @@
 # Navigation Menu
 
 * [Azure Foundations Architecture](./00-azureFoundations-architecture.md)
-  * [Design Guidelines & Principles](./01-azureFoundations-design-guidelines-principles)
+  * [Design Guidelines & Principles](./01-azureFoundations-design-guidelines-principles.md)
   * [Design](./02-azureFoundations-design.md)
     * [A - Enterprise Enrollment and Azure AD Tenants](./A-Enterprise-Enrollment-and-Azure-AD-Tenants.md)
     * [B - Identity and Access Management](./B-Identity-and-Access-Management.md)
