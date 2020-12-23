@@ -25,9 +25,8 @@ Departments help you segment costs into logical groupings. Departments enable yo
 
 Enterprise enrollment roles links users with their functional role and consists of
 
--Enterprise Administrator
-
--Department Administrator
+* Enterprise Administrator
+* Department Administrator
 
 -Account Owner
 
