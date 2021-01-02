@@ -219,6 +219,14 @@
                         }
                     },
                     {
+                        "name": "mgApi",
+                        "type": "Microsoft.Solutions.ArmApiControl",
+                        "request": {
+                            "method": "GET",
+                            "path": "providers/Microsoft.Management/managementGroups?api-version=2020-02-01"
+                        }
+                    },
+                    {
                         "name": "mgmtTenantsApi",
                         "type": "Microsoft.Solutions.ArmApiControl",
                         "request": {
@@ -240,6 +248,55 @@
                         "constraints": {
                             "allowedValues": "[map(steps('esApplicationLz').mgmtTenantsApi.value, (tenant) => parse(concat('{\"label\":\"', tenant.displayName, '\",\"description\":\"', tenant.tenantId, '\",\"value\":\"', toLower(tenant.tenantId), '\"}')) )]",
                             "required": true
+                        }
+                    },
+                    {
+                        "name": "esSubscription",
+                        "type": "Microsoft.Common.EditableGrid",
+                        "ariaLabel": "Select management group and Azure subscription",
+                        "label": "Subscriptions",
+                        "constraints": {
+                            "width": "Medium",
+                            "rows": {
+                                "count": {
+                                    "min": 1,
+                                    "max": 10
+                                }
+                            },
+                            "columns": [
+                                {
+                                    "id": "esMgSelection",
+                                    "header": "Management group",
+                                    "width": "1fr",
+                                    "element": {
+                                        "name": "dropDown1",
+                                        "type": "Microsoft.Common.DropDown",
+                                        "placeholder": "Select Management Group",
+                                        "constraints": {
+                                            "allowedValues": "[map(steps('lzSettings').mgApi.value, (mg) => parse(concat('{\"label\":\"', mg.name, '\",\"description\":\"', mg.id, '\",\"value\":\"', toLower(mg.name), '\"}')) )]",
+                                            "required": true
+                                        }
+                                    }
+                                },
+                                {
+                                    "id": "esSubName",
+                                    "header": "Subscription name",
+                                    "width": "1fr",
+                                    "element": {
+                                        "type": "Microsoft.Common.TextBox",
+                                        "placeholder": "Subscription name...",
+                                        "constraints": {
+                                            "required": true,
+                                            "validations": [
+                                                {
+                                                    "regex": "^[a-z0-9A-Z]{1,30}$",
+                                                    "message": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     {
