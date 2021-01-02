@@ -399,7 +399,6 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
             "name": "[variables('deploymentNames').vNetPeering]",
             "dependsOn": [
-                "[variables('deploymentNames').managementGroups]",
                 "[variables('deploymentNames').spokeNetworking]"
             ],
             "location": "[deployment().location]",
@@ -503,7 +502,6 @@
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
             "name": "[variables('deploymentNames').storage]",
             "dependsOn": [
-                "[variables('deploymentNames').managementGroups]",
                 "[variables('deploymentNames').keyVault]"
             ],
             "location": "[deployment().location]",

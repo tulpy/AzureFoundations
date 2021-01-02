@@ -104,7 +104,7 @@
                                                 "allowVirtualNetworkAccess": true,
                                                 "allowForwardedTraffic": true,
                                                 "allowGatewayTransit": false,
-                                                "useRemoteGateways": false,
+                                                "useRemoteGateways": true,
                                                 "remoteVirtualNetwork": {
                                                     "id": "[variables('hubVnetId')]"
                                                 }
@@ -153,7 +153,7 @@
                                             "properties": {
                                                 "allowVirtualNetworkAccess": true,
                                                 "allowForwardedTraffic": true,
-                                                "allowGatewayTransit": false,
+                                                "allowGatewayTransit": true,
                                                 "useRemoteGateways": false,
                                                 "remoteVirtualNetwork": {
                                                     "id": "[variables('spokeVnetId')]"

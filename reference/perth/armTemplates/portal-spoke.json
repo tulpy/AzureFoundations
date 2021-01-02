@@ -701,30 +701,17 @@
                         "type": "Microsoft.Common.TextBlock",
                         "visible": "[equals(steps('esApplicationLzConnectivity').esSpoke, 'Yes')]",
                         "options": {
-                            "text": "Please provide details for the Platform Azure Subscription & Hub virtual network for peering:"
-                        }
-                    },
-                    {
-                        "name": "platformSubsApi",
-                        "type": "Microsoft.Solutions.ArmApiControl",
-                        "request": {
-                            "method": "GET",
-                            "path": "subscriptions?api-version=2020-01-01"
+                            "text": "Please provide details for the Hub virtual network for peering:"
                         }
                     },
                     {
                         "name": "esHubSubId",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Choose the Platform Azure Subscription (required)",
-                        "toolTip": "",
-                        "multiselect": false,
-                        "selectAll": true,
-                        "filter": true,
-                        "filterPlaceholder": "Filter items ...",
-                        "multiLine": true,
+                        "type": "Microsoft.Common.TextBox",
                         "visible": "[equals(steps('esApplicationLzConnectivity').esSpoke, 'Yes')]",
+                        "label": "Hub subscription Id",
+                        "toolTip": "Provide the Hub subscription Id",
+                        "defaultValue": "8f8224ca-1a9c-46d1-9206-1cf2a7c51de8",
                         "constraints": {
-                            "allowedValues": "[map(steps('esApplicationLzConnectivity').platformSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
                             "required": true
                         }
                     },
