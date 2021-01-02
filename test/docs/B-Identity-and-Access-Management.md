@@ -36,7 +36,7 @@ Figure 1 – Identity and Access Management
 * There is a limit of 2000 custom RBAC role assignments per subscription.
 * There is a limit of 500 custom RBAC role assignments per management group.
 * Centralized versus federated resource ownership.
-     * Shared resources or any aspect of the environment that implements or enforces a security boundary, such as the network, must be managed centrally. This is both a requirement of many regulatory frameworks as well as standard practice for any organization which must grant or deny access to confidential or business critical resources.
+     ** Shared resources or any aspect of the environment that implements or enforces a security boundary, such as the network, must be managed centrally. This is both a requirement of many regulatory frameworks as well as standard practice for any organization which must grant or deny access to confidential or business critical resources.
      * The management of application resources which do not violate security boundaries or other aspects required to maintain security and compliance can be delegated to application teams. Allowing users to provision resources within a securely managed environment allows organizations to take advantage of the agile nature of cloud while preventing the violation of any critical security or governance boundary.
 
 ***Design Recommendations***
