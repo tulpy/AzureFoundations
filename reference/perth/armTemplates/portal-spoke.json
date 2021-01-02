@@ -291,40 +291,20 @@
                                     }
                                 },
                                 {
-                                    "id": "esSubName",
-                                    "header": "Subscription name",
+                                    "id": "esApplicationSubId",
+                                    "header": "Application Landing Zone Subscription",
                                     "width": "1fr",
                                     "element": {
-                                        "type": "Microsoft.Common.TextBox",
-                                        "placeholder": "Subscription name...",
+                                        "name": "dropDown1",
+                                        "type": "Microsoft.Common.DropDown",
+                                        "placeholder": "Select Azure subscription",
                                         "constraints": {
-                                            "required": true,
-                                            "validations": [
-                                                {
-                                                    "regex": "^[a-z0-9A-Z]{1,30}$",
-                                                    "message": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
-                                                }
-                                            ]
+                                            "allowedValues": "[map(steps('esApplicationLz').mgmtSubsApi.value, (mg) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
+                                            "required": true
                                         }
                                     }
                                 }
                             ]
-                        }
-                    },
-                    {
-                        "name": "esApplicationSubId",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Application Landing Zone Subscription (required)",
-                        "toolTip": "",
-                        "multiselect": false,
-                        "selectAll": true,
-                        "filter": true,
-                        "filterPlaceholder": "Filter items ...",
-                        "multiLine": true,
-                        "visible": true,
-                        "constraints": {
-                            "allowedValues": "[map(steps('esApplicationLz').mgmtSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
-                            "required": true
                         }
                     },
                     {
