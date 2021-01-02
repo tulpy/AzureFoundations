@@ -11,11 +11,10 @@
     * [G - Security, Governance and Compliance](./G-Security-Governance-and-Compliance.md)
     * [H - Platform Automation and DevOps](./H-Platform-Automation-and-DevOps.md)
   * [Design](./02-azureFoundations-design.md)
----
 
 ## Objective
 
-The Azure Foundations architecture provides prescriptive guidance coupled with Azure best practices, and it follows design principles across the critical design areas for organizations to define their Azure architecture. It will continue to evolve alongside the Azure platform and is ultimately defined by the various design decisions that organizations must make to define their Azure journey. 
+The Azure Foundations architecture provides prescriptive guidance coupled with Azure best practices, and it follows design principles across the critical design areas for organizations to define their Azure architecture. It will continue to evolve alongside the Azure platform and is ultimately defined by the various design decisions that organizations must make to define their Azure journey.
 
 The Azure Foundations architecture is modular by design and allow organizations to start with foundational landing zones that support their application portfolios, and the architecture enables organizations to start as small as needed and scale alongside their business requirements regardless of scale point.
 
@@ -56,26 +55,27 @@ It is also assumed that readers have a broad understanding of key Azure construc
 
 The following resources have been provisioned as part of the deployment.
 
-- A scalable Management Group hierarchy aligned to core platform capabilities, allowing Silver Chain to operationalize at scale using centrally managed Azure RBAC and Azure Policy where platform and workloads have clear separation.
-- Azure Policies that will enable autonomy for the platform and the landing zones.
-- An Azure subscription dedicated for the **platform**, which enables core platform capabilities across Identity, Networking and Management services, such as:
-  - A Log Analytics workspace and an Automation account
-  - Azure Security Center monitoring
-  - Azure Security Center (Free tier)
-  - Diagnostics settings for Activity Logs, VMs, and PaaS resources sent to Log Analytics
-  - A hub virtual network and associated subnets
-  - Network Security Groups assigned to all subnets
-  - User Define Routes to redirect traffic to the Azure Firewall
-  - Azure Firewall
-  - ExpressRoute Gateway
-- Application Landing Zone Management Group for **production** and **non-production** applications that require connectivity to on-premises, to other landing zones or to the internet via shared services provided in the hub virtual network.
-- Azure Policies for **production** and **non-production** landing zones, which include:
-  - Enforce VM monitoring (Windows & Linux)
-  - Enforce secure access (HTTPS) to storage accounts
-  - Prevent IP forwarding
-  - Prevent inbound SSH from internet
-  - Prevent inbound RDP from internet
-  - Prevent Public IP addresses
-  - Prevent Public endpoints for all Azure PaaS services
-  - Ensure subnets are associated with NSG
-  - Appending environment tags to all resources
+* A scalable Management Group hierarchy aligned to core platform capabilities, allowing Silver Chain to operationalize at scale using centrally managed Azure RBAC and Azure Policy where platform and workloads have clear separation.
+* Azure Policies that will enable autonomy for the platform and the landing zones.
+* An Azure subscription dedicated for the **platform**, which enables core platform capabilities across Identity, Networking and Management services, such as:
+  * A Log Analytics workspace and an Automation account
+  * Azure Security Center monitoring
+  * Azure Security Center (Free tier)
+  * Diagnostics settings for Activity Logs, VMs, and PaaS resources sent to Log Analytics
+  * A hub virtual network and associated subnets
+  * Network Security Groups assigned to all subnets
+  * User Define Routes to redirect traffic to the Azure Firewall
+  * Azure Firewall
+  * ExpressRoute Gateway
+* Application Landing Zone Management Group for **production** and **non-production** applications that require connectivity to on-premises, to other landing zones or to the internet via shared services provided in the hub virtual network.
+* Azure Policies for **production** and **non-production** landing zones, which include:
+  * Enforce VM monitoring (Windows & Linux)
+  * Enforce secure access (HTTPS) to storage accounts
+  * Prevent IP forwarding
+  * Prevent inbound SSH from internet
+  * Prevent inbound RDP from internet
+  * Prevent Public IP addresses
+  * Prevent Public endpoints for all Azure PaaS services
+  * Ensure subnets are associated with NSG
+  * Appending environment tags to all resources
+  
