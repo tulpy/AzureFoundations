@@ -299,7 +299,7 @@
                                         "type": "Microsoft.Common.DropDown",
                                         "placeholder": "Select Azure subscription",
                                         "constraints": {
-                                            "allowedValues": "[map(steps('esApplicationLz').mgmtSubsApi.value, (mg) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
+                                            "allowedValues": "[map(steps('esApplicationLz').mgmtSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
                                             "required": true
                                         }
                                     }
