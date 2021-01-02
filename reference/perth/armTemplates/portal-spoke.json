@@ -268,13 +268,8 @@
                         "ariaLabel": "Select management group and Azure subscription",
                         "label": "Subscriptions",
                         "constraints": {
-                            "width": "Medium",
-                            "rows": {
-                                "count": {
-                                    "min": 1,
-                                    "max": 1
-                                }
-                            },
+                            "width": "Large",
+   
                             "columns": [
                                 {
                                     "id": "esMgSelection",
