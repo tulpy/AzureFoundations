@@ -14,7 +14,7 @@
 
 ## E. Management and Monitoring
 
-[![Management and Monitoring](./media/mgmt-mon.png "Management and Monitoring")](#)
+[![Management and Monitoring](./media/mgmt-mon.png "Management and Monitoring")]
 Figure 9 – Platform Management and Monitoring
 
 ### 1. Planning for Platform Management and Monitoring
@@ -25,24 +25,24 @@ This section will focus on centralized management and monitoring at a platform l
 
 * A Log Analytics workspace is an administrative boundary.
 * App Centric Platform monitoring, encompassing both hot and cold telemetry paths for metrics and logs respectively
-    * OS metrics (e.g. perf counters, custom metrics)
-    * OS logs (e.g. IIS, ETW, Syslogs)
-    * Resource Health events
+  * OS metrics (e.g. perf counters, custom metrics)
+  * OS logs (e.g. IIS, ETW, Syslogs)
+  * Resource Health events
 * Security audit logging and achieving a horizontal security lens across the entire customer Azure estate.
-    * Potential integration with on-premises SIEM systems.
-    * Azure Activity Logs
-    * Azure AD audit reports
-    * Azure Diagnostic Service; Diagnostic Logs and metrics, KV audit events, NSG flow and event logs
-    * Azure Monitor, Network Watcher, Security Center, and Azure Sentinel
+  * Potential integration with on-premises SIEM systems.
+  * Azure Activity Logs
+  * Azure AD audit reports
+  * Azure Diagnostic Service; Diagnostic Logs and metrics, KV audit events, NSG flow and event logs
+  * Azure Monitor, Network Watcher, Security Center, and Azure Sentinel
 * Azure data retention thresholds and requirements for archiving.
-    * The default retention period for Log Analytics is 30 days, with a maximum of 2 years.
-    * The default retention period for Azure AD reports (premium) is 30 days.
-    * The default retention period for the Azure Diagnostic service is 90 days.
+  * The default retention period for Log Analytics is 30 days, with a maximum of 2 years.
+  * The default retention period for Azure AD reports (premium) is 30 days.
+  * The default retention period for the Azure Diagnostic service is 90 days.
 * Operational requirements
-    * Operational dashboarding using native tools, such as Log Analytics, or third party tooling.
-    * Controlling privileged activities with centralized roles.
-    * [Managed identities for Azure resources](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview) for access to Azure services.
-    * Resource Locks to protect both the deletion and edit of resources.
+  * Operational dashboarding using native tools, such as Log Analytics, or third party tooling.
+  * Controlling privileged activities with centralized roles.
+  * [Managed identities for Azure resources](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview) for access to Azure services.
+  * Resource Locks to protect both the deletion and edit of resources.
 
 ***Design Recommendations***
 
@@ -50,7 +50,7 @@ This section will focus on centralized management and monitoring at a platform l
     Centralized logging is critical to the visibility that's required by the operations management teams. The centralization of logging drives reports about change management, service health, configuration, and most other aspects of IT operations. Converging on a centralized workspace model reduces administrative effort and reduces the chances for gaps in observability.
     Within the context of the Enterprise Scale architecture, centralized logging is primarily concerned with platform operations. However, this does not preclude the use of the same workspace for application logging (VM based). With a workspace configured in resource centric access control mode, granular RBAC is enforced to ensure app teams will only have access to the logs from their resources. In this model app teams benefit from the use of existing platform infrastructure by reducing their management overhead. For any non-compute resources (Web Apps, CosmosDb etc.), application teams can use their own Log Analytics workspaces and enable diagnostics/metrics to be routed here.
 * Export logs to Azure Storage if log retention requirements exceed 2 years.
-    * Leverage immutable storage with WORM policy (Write Once, Read Many) to make data non-erasable and non-modifiable for a user-specified interval.
+  * Leverage immutable storage with WORM policy (Write Once, Read Many) to make data non-erasable and non-modifiable for a user-specified interval.
 * Use Azure Policy for access control and compliance reporting.
     This provides the ability to enforce the settings across an organization to ensure consistent policy adherence and fast violation detection, as described in this [article](https://docs.microsoft.com/en-us/azure/governance/policy/concepts/effects).
 * Monitor in-guest VM configuration drift using Azure Policy.
@@ -65,7 +65,7 @@ This section will focus on centralized management and monitoring at a platform l
 * Include [Service](https://docs.microsoft.com/en-us/azure/service-health/service-health-overview) and [Resource](https://docs.microsoft.com/en-us/azure/service-health/resource-health-overview) Health events as part of the overall platform monitoring solution.
     Tracking service and resource health from the platform perspective is an important component of resource management in Azure.
 * Do not send raw logs entries back to on premise monitoring systems, but instead adopt the principal of "data born in Azure, stays in Azure".
-    * If on-premises SIEM integration is required [send critical alerts](https://docs.microsoft.com/en-us/azure/security-center/continuous-export) instead of logs.
+  * If on-premises SIEM integration is required [send critical alerts](https://docs.microsoft.com/en-us/azure/security-center/continuous-export) instead of logs.
 
 ### 2. Planning for Application Management and Monitoring
 
@@ -78,8 +78,8 @@ Expanding on the previous section, this next section will now consider the feder
 * Application performance and health monitoring for both IaaS and PaaS resources.
 * Data aggregation across all application components.
 * [Health modelling and operationalization](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/manage/monitor/cloud-models-monitor-overview)
-    * How to measure the health of the workload and its subsystems; "traffic light" model for health representation.
-    * How to respond to failures across application components.
+  * How to measure the health of the workload and its subsystems; "traffic light" model for health representation.
+  * How to respond to failures across application components.
 
 ***Design Recommendations***
 

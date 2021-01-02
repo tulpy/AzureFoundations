@@ -22,7 +22,7 @@ Many traditional IT operating models are unfortunately not compatible with the c
 
 * Where central teams are concerned, CI/CD pipelines should be used to manage policy definitions, role-definitions, policy assignments, and template galleries. Such pipelines will help ensure multiple subscriptions can be operationally managed whilst still conforming to a desired state.
 * The blanket application of a DevOps model will not miraculously establish capable DevOps teams.
-    * Investment in engineering capabilities and resources is critical.
+  * Investment in engineering capabilities and resources is critical.
 * The customer can resource DevOps roles and functions from a variety of sources aligned to their organization strategy, both internal and external.
 * For some legacy applications, the associated application team may not have engineering resources required to align with a DevOps strategy.
 
@@ -33,31 +33,31 @@ Many traditional IT operating models are unfortunately not compatible with the c
   The list below presents a recommended set of DevOps roles for the central **Platform Team**.
 
 * **PlatformOps** (Platform Operations) to
-    * Subscription provisioning and delegation of required network, IAM, and policies.
-    * Platform management and monitoring (holistic).
-    * Cost Management (holistic).
-    * "Platform as Code" (management of templates, scripts and other assets).
-    * Responsible for overall operations on Azure within the Azure AD tenant, such as managing service principles, Graph API registration, and role definitions.
+  * Subscription provisioning and delegation of required network, IAM, and policies.
+  * Platform management and monitoring (holistic).
+  * Cost Management (holistic).
+  * "Platform as Code" (management of templates, scripts and other assets).
+  * Responsible for overall operations on Azure within the Azure AD tenant, such as managing service principles, Graph API registration, and role definitions.
 
 * **SecOps** (Security Operations)
-    * Role based access control (holistic).
-    * Key management (for central services, for example SMTP, Domain Controller).
-    * Policy management and enforcement (holistic).
-    * Security monitoring and audit (holistic).
+  * Role based access control (holistic).
+  * Key management (for central services, for example SMTP, Domain Controller).
+  * Policy management and enforcement (holistic).
+  * Security monitoring and audit (holistic).
 
 * **NetOps** (Network Operations)
-    * Network Management (holistic).
-    * Allow application owners to create and manage application resources through a DevOps model.
-    * The list below presents a recommended DevOps role for application teams.
+  * Network Management (holistic).
+  * Allow application owners to create and manage application resources through a DevOps model.
+  * The list below presents a recommended DevOps role for application teams.
 
 * **AppDevOps**
-    * Application migration and/or transformation.
-    * Application management and monitoring.
-    * Role based access control (app resources).
-    * Security monitoring and audit (app resources).
-    * Cost Management (app resources).
-    * Network Management (app resources).
-    * In some instances, customers may wish to break AppDevOps into more granular roles such as AppDataOps for database management like traditional DBA roles, or AppSecOps where more security sensitive applications are concerned; this is to be expected.
+  * Application migration and/or transformation.
+  * Application management and monitoring.
+  * Role based access control (app resources).
+  * Security monitoring and audit (app resources).
+  * Cost Management (app resources).
+  * Network Management (app resources).
+  * In some instances, customers may wish to break AppDevOps into more granular roles such as AppDataOps for database management like traditional DBA roles, or AppSecOps where more security sensitive applications are concerned; this is to be expected.
 * Provide a central application DevOps function to support applications which do not have existing DevOps capabilities or a business case to establish one, i.e. legacy applications with minimal development capabilities.
 * Leverage a policy-driven approach with clear RBAC boundaries to centrally enforce consistency and security across application teams.
   This ensures a least privilege approach is taken by using a combination of RBAC assignments and Azure Policy, and that workloads are compliant with Azure Policy assignments at all times.
@@ -81,22 +81,22 @@ The distribution of roles, responsibilities, and trust between central IT teams 
 * The list below presents a recommended distribution of responsibilities between central IT and application teams, striving to empower migration/transformation activities with minimal central dependencies, while still supporting the centralized governance of security and operability across the entire estate.
 
 * **Application Functions**
-    * Application migration and/or transformation.
-    * Application management and monitoring (app resources).
-    * Key management (app keys).
-    * Role based access control (app resources).
-    * Security monitoring and audit (app resources).
-    * Cost Management (app resources).
-    * Network Management (app resources).
+  * Application migration and/or transformation.
+  * Application management and monitoring (app resources).
+  * Key management (app keys).
+  * Role based access control (app resources).
+  * Security monitoring and audit (app resources).
+  * Cost Management (app resources).
+  * Network Management (app resources).
 
 * **Central Functions**
-    * Architecture governance.
-    * Subscription management.
-    * Platform as Code (management of templates, scripts and other assets).
-    * Policy management and enforcement (holistic).
-    * Platform management and monitoring (holistic).
-    * Role based access control (holistic).
-    * Key Management (central services).
-    * Network management (networks, NVAs, etc.).
-    * Security monitoring and audit (holistic).
-    * Cost Management (holistic).
+  * Architecture governance.
+  * Subscription management.
+  * Platform as Code (management of templates, scripts and other assets).
+  * Policy management and enforcement (holistic).
+  * Platform management and monitoring (holistic).
+  * Role based access control (holistic).
+  * Key Management (central services).
+  * Network management (networks, NVAs, etc.).
+  * Security monitoring and audit (holistic).
+  * Cost Management (holistic).

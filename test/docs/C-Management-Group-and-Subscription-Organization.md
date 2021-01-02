@@ -15,7 +15,6 @@
 ## C. Management Group and Subscription Organization
 
 ![Management Group Hierarchy](./media/sub-org.png)
-
 Figure 5 – Management Group Hierarchy
 
 ### 1. Define Management Group Hierarchy
@@ -71,9 +70,9 @@ Subscriptions are a unit of management, billing, and scale within Azure, and the
 * Treat subscriptions as a democratized unit of management aligned with business needs and priorities.
   This minimizes the management overhead created when a subcription is broken down into many resources groups that are then managed by different teams. And provides a better billing mechanism for workloads that is not linked only to tagging.
 * Make subscription owners aware of their roles and responsibility, which are as follows:
-    * Perform an access review in Azure AD PIM, either quarterly or twice a year, to ensure there is no proliferation of privileges as users move within the customer organization.
-    * Take full ownership of budget spending and resource utilization.
-    * Ensure policy compliance and perform remediation when required.
+  * Perform an access review in Azure AD PIM, either quarterly or twice a year, to ensure there is no proliferation of privileges as users move within the customer organization.
+  * Take full ownership of budget spending and resource utilization.
+  * Ensure policy compliance and perform remediation when required.
 * Use the following principals when identifying requirements for new subscriptions
     **Scale limits** – Subscriptions serve as a scale unit so that component workloads are able to scale within platform subscription limits. For example, large specialized workloads such as HPC, IoT or SAP are better suited to use a separate subscription each to avoid limits (e.g. there is a limit of 50 ADF integrations).
     **Management boundary** – Subscriptions provide a management boundary for governance and isolation, allowing for a clear separation of concerns. For example, different environments such as development, test and production are often isolated from a management perspective.
@@ -87,7 +86,7 @@ Subscriptions are a unit of management, billing, and scale within Azure, and the
   This ensures all foundation network resources are billed together, and isolated from any other workloads.
 * Avoid a rigid subscription model, opting instead for a set of flexible criteria to group subscriptions across the organization
   This ensures that as your organization structure and workload composition changes, you are able to create new groups of subscriptions instead of using a fixed set of existing subscriptions.
-    * One size does not fit all for subscriptions; what works for one business unit may not work for another. Some applications may coexist within the same **Landing Zone** subscription while others may require their own subscription.
+  * One size does not fit all for subscriptions; what works for one business unit may not work for another. Some applications may coexist within the same **Landing Zone** subscription while others may require their own subscription.
 
 ### 3. Configure Subscription Quota and Capacity
 
