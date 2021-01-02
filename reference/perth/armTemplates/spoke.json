@@ -165,6 +165,10 @@
             ],
             "defaultValue": "Yes"
         },
+        "hubFwIp": {
+            "type": "string",
+            "defaultValue": ""
+        },
         "enableWeb": {
             "type": "string",
             "allowedValues": [
@@ -361,6 +365,9 @@
                     },
                     "enableUdr": {
                         "value": "[parameters('enableUdr')]"
+                    },
+                    "hubFwIp": {
+                        "value": "[parameters('hubFwIp')]"
                     },
                     "addressPrefix": {
                         "value": "[parameters('addressPrefix')]"
