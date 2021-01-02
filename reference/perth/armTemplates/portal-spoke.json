@@ -251,6 +251,18 @@
                         }
                     },
                     {
+                        "name": "textBlock1",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": true,
+                        "options": {
+                            "text": "Select target management group and Azure Subscription",
+                            "link": {
+                                "label": "Learn more",
+                                "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization"
+                            }
+                        }
+                    },
+                    {
                         "name": "esSubscription",
                         "type": "Microsoft.Common.EditableGrid",
                         "ariaLabel": "Select management group and Azure subscription",
@@ -273,7 +285,7 @@
                                         "type": "Microsoft.Common.DropDown",
                                         "placeholder": "Select Management Group",
                                         "constraints": {
-                                            "allowedValues": "[map(steps('lzSettings').mgApi.value, (mg) => parse(concat('{\"label\":\"', mg.name, '\",\"description\":\"', mg.id, '\",\"value\":\"', toLower(mg.name), '\"}')) )]",
+                                            "allowedValues": "[map(steps('esApplicationLz').mgApi.value, (mg) => parse(concat('{\"label\":\"', mg.name, '\",\"description\":\"', mg.id, '\",\"value\":\"', toLower(mg.name), '\"}')) )]",
                                             "required": true
                                         }
                                     }
