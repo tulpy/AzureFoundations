@@ -211,7 +211,7 @@
                         }
                     },
                     {
-                        "name": "mgmtSubsApi",
+                        "name": "subApi",
                         "type": "Microsoft.Solutions.ArmApiControl",
                         "request": {
                             "method": "GET",
@@ -227,7 +227,7 @@
                         }
                     },
                     {
-                        "name": "mgmtTenantsApi",
+                        "name": "tenantApi",
                         "type": "Microsoft.Solutions.ArmApiControl",
                         "request": {
                             "method": "GET",
@@ -246,7 +246,7 @@
                         "multiLine": true,
                         "visible": true,
                         "constraints": {
-                            "allowedValues": "[map(steps('esApplicationLz').mgmtTenantsApi.value, (tenant) => parse(concat('{\"label\":\"', tenant.displayName, '\",\"description\":\"', tenant.tenantId, '\",\"value\":\"', toLower(tenant.tenantId), '\"}')) )]",
+                            "allowedValues": "[map(steps('esApplicationLz').tenantApi.value, (tenant) => parse(concat('{\"label\":\"', tenant.displayName, '\",\"description\":\"', tenant.tenantId, '\",\"value\":\"', toLower(tenant.tenantId), '\"}')) )]",
                             "required": true
                         }
                     },
@@ -265,10 +265,10 @@
                     {
                         "name": "esSubscription",
                         "type": "Microsoft.Common.EditableGrid",
+                        "ariaLabel": "Select management group and Azure subscription",
                         "label": "Subscriptions",
                         "constraints": {
                             "width": "Large",
-   
                             "columns": [
                                 {
                                     "id": "esMgSelection",
@@ -293,7 +293,7 @@
                                         "type": "Microsoft.Common.DropDown",
                                         "placeholder": "Select Azure subscription",
                                         "constraints": {
-                                            "allowedValues": "[map(steps('esApplicationLz').mgmtSubsApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
+                                            "allowedValues": "[map(steps('esApplicationLz').subApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
                                             "required": true
                                         }
                                     }
