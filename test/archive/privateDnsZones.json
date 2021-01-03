@@ -1,0 +1,119 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "companyPrefix": {
+            "type": "string",
+            "maxLength": 5
+        },
+        "locationPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "environmentPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "argPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
+        "subscriptionId": {
+            "type": "string",
+            "maxLength": 36
+        },
+        "enablePrivateDnsZones": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "enablePrivateDnsZonesBlob": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        }
+    },
+    "variables": {
+        "policyDefinitions": {
+            "deployDnsZoneBlob": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-DNSZoneGroup-For-Blob-PrivateEndpoint')]"
+        },
+        "policyAssignmentNames": {
+            "dnsZoneBlob": "Deploy-DnsZone-Blob"
+        },
+        "rbacContributor": "b24988ac-6180-42a0-ab88-20f7382dd24c",
+        "roleAssignmentNames": {
+            "deployDnsZoneBlob": "[guid(concat(parameters('companyPrefix'), variables('policyAssignmentNames').dnsZoneBlob))]"
+        },
+        "resourceDeploymentName": "[take(concat('dnsZone', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+        "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
+        "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-network'))]",
+        "dnsZoneBlobName": "[toLower(take(concat(variables('namingPrefix'), '-dnsblob-', guid(parameters('companyPrefix'))), 24))]"
+    },
+    "resources": [
+        {
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enablePrivateDnsZones'), 'Yes'),equals(parameters('enablePrivateDnsZonesBlob'), 'Yes'))]",
+            "type": "Microsoft.Authorization/policyAssignments",
+            "apiVersion": "2018-05-01",
+            "name": "[variables('policyAssignmentNames').dnsZoneBlob]",
+            "location": "[deployment().location]",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "description": "Deploy-DnsZone-Blob",
+                "displayName": "Deploy-DnsZone-Blob",
+                "policyDefinitionId": "[variables('policyDefinitions').deployDnsZoneBlob]",
+                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform')]",
+                "parameters": {
+                    "workspaceName": {
+                        "value": "[variables('dnsZoneBlobName')]"
+                    },
+
+                    "rgName": {
+                        "value": "[variables('resourceGroupName')]"
+                    },
+                    "privateDnsZoneId": {
+                        "value": "[variables('resourceGroupName')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enablePrivateDnsZones'), 'Yes'),equals(parameters('enablePrivateDnsZonesBlob'), 'Yes'))]",
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2019-04-01-preview",
+            "name": "[variables('roleAssignmentNames').deployDnsZoneBlob]",
+            "dependsOn": [
+                "[variables('policyAssignmentNames').dnsZoneBlob]"
+            ],
+            "properties": {
+                "principalType": "ServicePrincipal",
+                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbacContributor'))]",
+                "principalId": "[toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').dnsZoneBlob), '2018-05-01', 'Full' ).identity.principalId)]"
+            }
+        },
+        {
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enablePrivateDnsZones'), 'Yes'),equals(parameters('enablePrivateDnsZonesBlob'), 'Yes'))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "[variables('resourceDeploymentName')]",
+            "location": "[deployment().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployDnsZoneBlob)]"
+            ],
+            "subscriptionId": "[parameters('subscriptionId')]",
+            "properties": {
+                "mode": "incremental",
+                "template": "[reference(variables('policyDefinitions').deployDnsZoneBlob, '2018-05-01').policyRule.then.details.deployment.properties.template]",
+                "parameters": "[reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-Platform', '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').dnsZoneBlob), '2018-05-01').parameters]"
+            }
+        }
+    ],
+    "outputs": {}
+}
