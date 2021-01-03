@@ -206,7 +206,7 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "To enable the Application Landing Zone, you must allocate an Azure Subscription. Please note, this Azure Subscription will be moved to the Application Landing Zone Management Group, where policy will drive the deployment. Insight recommend using a new, empty Azure Subscription.",
+                            "text": "To enable the Application Landing Zone, you must allocate an Azure Subscription. Please note, this Azure Subscription will be moved to the chosent Management Group, where policy will drive the deployment. Insight recommend using a new, empty Azure Subscription.",
                             "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
                         }
                     },
@@ -272,7 +272,7 @@
                             "columns": [
                                 {
                                     "id": "esMgSelection",
-                                    "header": "Management group",
+                                    "header": "Management Group",
                                     "width": "1fr",
                                     "element": {
                                         "name": "dropDown1",
