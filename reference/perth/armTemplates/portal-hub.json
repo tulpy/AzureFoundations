@@ -851,7 +851,7 @@
                     {
                         "name": "esAddress",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Virtual network CIDR Range",
+                        "label": "Virtual network CIDR Address Range",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/16)",
                         "defaultValue": "10.49.0.0/18",
                         "visible": "[equals(steps('esPlatformConnectivity').esHub, 'Yes')]",
@@ -871,7 +871,7 @@
                     {
                         "name": "esNwLocation",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Azure Region for the Virtual Network.",
+                        "label": "Azure Region for the Virtual Network Hub.",
                         "visible": "[equals(steps('esPlatformConnectivity').esHub, 'Yes')]",
                         "toolTip": "Select the target Azure region for the deployment.",
                         "constraints": {
@@ -1042,7 +1042,7 @@
                     {
                         "name": "esAddressVpnOrEr",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "CIDR range for GatewaySubnet",
+                        "label": "Subnet for VPN/ExpressRoute Gateway",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.1.0/24)",
                         "defaultValue": "10.49.63.0/27",
                         "visible": "[or(equals(steps('esPlatformConnectivity').esErGw, 'Yes'), equals(steps('esPlatformConnectivity').esVpnGw, 'Yes'))]",
@@ -1094,7 +1094,7 @@
                     {
                         "name": "esAddressFw",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "CIDR range for Azure Firewall Subnet",
+                        "label": "Subnet for Azure Firewall",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
                         "defaultValue": "10.49.61.0/24",
                         "visible": "[equals(steps('esPlatformConnectivity').esAzFw, 'Yes')]",
@@ -1126,7 +1126,7 @@
                     {
                         "name": "esAddressAppGw",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "CIDR range for Azure App gateway Subnet",
+                        "label": "Subnet for Azure App gateways",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
                         "defaultValue": "10.49.62.0/24",
                         "visible": "[equals(steps('esPlatformConnectivity').esAppGw, 'Yes')]",
@@ -1158,7 +1158,7 @@
                     {
                         "name": "esAddressMgmt",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "CIDR range for Azure Management Subnet",
+                        "label": "Subnet for Management services",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
                         "defaultValue": "10.49.0.0/24",
                         "visible": "[equals(steps('esPlatformConnectivity').esMgmt, 'Yes')]",
@@ -1190,7 +1190,7 @@
                     {
                         "name": "esAddressIdentity",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "CIDR range for Azure Identity Subnet",
+                        "label": "Subnet for Identity services",
                         "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
                         "defaultValue": "10.49.1.0/24",
                         "visible": "[equals(steps('esPlatformConnectivity').esIdentity, 'Yes')]",
@@ -1203,7 +1203,7 @@
             },
             {
                 "name": "esApplicationLz",
-                "label": "Application Landing Zones",
+                "label": "Application Landing Zone Configuration",
                 "subLabel": {
                     "preValidation": "",
                     "postValidation": ""

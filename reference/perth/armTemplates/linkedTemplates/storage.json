@@ -61,7 +61,7 @@
             "deployments": "2020-06-01",
             "resourceGroups": "2020-06-01",
             "locks": "2016-09-01",
-            "storage": "2016-09-01"
+            "storage": "2019-06-01"
         }
     },
     "resources": [
