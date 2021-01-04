@@ -107,6 +107,7 @@
     },
     "resources": [
         {
+            "condition": "[and(equals(parameters('denyPublicEndpoints'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').denyPublicEndpoints]",
@@ -119,6 +120,7 @@
             }
         },
         {
+            "condition": "[and(equals(parameters('denyIpForwarding'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').denyIpForwarding]",
