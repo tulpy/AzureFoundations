@@ -263,7 +263,7 @@
                         }
                     },
                     {
-                        "name": "esApplicationLzSub",
+                        "name": "esApplicationSubId",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Choose the Application Landing Zone Subscription (required)",
                         "toolTip": "",
