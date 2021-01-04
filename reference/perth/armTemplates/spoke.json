@@ -240,7 +240,7 @@
             "applicationLandingZone": "[take(concat('appLz', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
         },
         "apiVersions": {
-            "deployments": "2019-05-01",
+            "deployments": "2020-06-01",
             "subscriptions": "2020-05-01"
         }
     },
