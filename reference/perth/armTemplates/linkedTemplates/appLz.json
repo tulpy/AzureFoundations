@@ -80,7 +80,7 @@
         }
     },
     "variables": {
-        "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-AppLandingZones')]",
+        "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
         "policyDefinitions": {
             "denyPublicEndpoints": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policySetDefinitions/Deny-PublicEndpoints')]",
             "denyPublicIp": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP')]",
@@ -107,7 +107,6 @@
     },
     "resources": [
         {
-            "condition": "[and(equals(parameters('denyPublicEndpoints'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').denyPublicEndpoints]",
