@@ -42,7 +42,7 @@
             "type": "string",
             "maxLength": 3
         },
-        "environmentTag": {
+        "subscriptionTag": {
             "type": "string"
         },
         "ownerTag": {
@@ -245,7 +245,7 @@
             "keyVault": "privatelink.vaultcore.azure.net"
         },
         "tags": {
-            "environment": "[parameters('environmentTag')]",
+            "environment": "[parameters('subscriptionTag')]",
             "owner": "[parameters('ownerTag')]"
         },
         "apiVersions": {

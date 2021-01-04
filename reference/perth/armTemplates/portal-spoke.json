@@ -263,7 +263,7 @@
                         }
                     },
                     {
-                        "name": "esSubscription",
+                        "name": "esApplicationSubId",
                         "type": "Microsoft.Common.EditableGrid",
                         "ariaLabel": "Select management group and Azure subscription",
                         "label": "Subscriptions",
@@ -805,7 +805,7 @@
             "nsgPrefix": "[steps('esNaming').esNsgIdentifier]",
             "akvPrefix": "[steps('esNaming').esAkvIdentifier]",
             "rsvPrefix": "[steps('esNaming').esRsvIdentifier]",
-            "environmentTag": "[steps('esNaming').esSubscriptionTag]",
+            "subscriptionTag": "[steps('esNaming').esSubscriptionTag]",
             "ownerTag": "[steps('esNaming').esOwnerTag]",
             "tenantId": "[steps('esApplicationLz').esAzureAdTenant]",
             "subscriptionId": "[steps('esApplicationLz').esApplicationSubId]",

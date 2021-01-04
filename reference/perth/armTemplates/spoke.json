@@ -72,7 +72,7 @@
                 "description": "Provide the Recovery Services Vault prefix"
             }
         },
-        "environmentTag": {
+        "subscriptionTag": {
             "type": "string",
             "metadata": {
                 "description": "Provide the value for the environment tag"
@@ -308,8 +308,8 @@
                     "enableRsv": {
                         "value": "[parameters('enableRsv')]"
                     },
-                    "environmentTag": {
-                        "value": "[parameters('environmentTag')]"
+                    "subscriptionTag": {
+                        "value": "[parameters('subscriptionTag')]"
                     },
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
@@ -358,8 +358,8 @@
                     "nsgPrefix": {
                         "value": "[parameters('nsgPrefix')]"
                     },
-                    "environmentTag": {
-                        "value": "[parameters('environmentTag')]"
+                    "subscriptionTag": {
+                        "value": "[parameters('subscriptionTag')]"
                     },
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
@@ -491,8 +491,8 @@
                     "enableAkv": {
                         "value": "[parameters('enableAkv')]"
                     },
-                    "environmentTag": {
-                        "value": "[parameters('environmentTag')]"
+                    "subscriptionTag": {
+                        "value": "[parameters('subscriptionTag')]"
                     },
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"
@@ -541,8 +541,8 @@
                     "enableStorage": {
                         "value": "[parameters('enableStorage')]"
                     },
-                    "environmentTag": {
-                        "value": "[parameters('environmentTag')]"
+                    "subscriptionTag": {
+                        "value": "[parameters('subscriptionTag')]"
                     },
                     "ownerTag": {
                         "value": "[parameters('ownerTag')]"

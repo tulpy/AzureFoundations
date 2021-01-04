@@ -1409,7 +1409,7 @@
             "nsgPrefix": "[steps('esNaming').esNsgIdentifier]",
             "akvPrefix": "[steps('esNaming').esAkvIdentifier]",
             "rsvPrefix": "[steps('esNaming').esRsvIdentifier]",
-            "environmentTag": "[steps('esNaming').esSubscriptionTag]",
+            "subscriptionTag": "[steps('esNaming').esSubscriptionTag]",
             "ownerTag": "[steps('esNaming').esOwnerTag]",
             "enablePrivateDnsZones": "[steps('esPlatformConnectivity').esPrivateDnsZones]",
             "enablePrivateDnsZonesTable": "[steps('esPlatformConnectivity').esEnablePrivateDnsZoneTable]",

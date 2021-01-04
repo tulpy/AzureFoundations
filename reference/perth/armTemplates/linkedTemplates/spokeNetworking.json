@@ -30,7 +30,7 @@
             "type": "string",
             "maxLength": 3
         },
-        "environmentTag": {
+        "subscriptionTag": {
             "type": "string"
         },
         "ownerTag": {
@@ -133,7 +133,7 @@
         "nsgName003": "[toLower(concat(variables('namingPrefix'), '-', parameters('nsgPrefix'), '-', variables('subnetName003')))]",
         "nsgId003": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'),'/providers/Microsoft.Network/networkSecurityGroups/', variables('nsgName003'))]",
         "tags": {
-            "environment": "[parameters('environmentTag')]",
+            "environment": "[parameters('subscriptionTag')]",
             "owner": "[parameters('ownerTag')]"
         },
         "apiVersions": {

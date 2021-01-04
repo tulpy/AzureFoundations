@@ -30,7 +30,7 @@
             ],
             "defaultValue": "Yes"
         },
-        "environmentTag": {
+        "subscriptionTag": {
             "type": "string"
         },
         "ownerTag": {
@@ -47,7 +47,7 @@
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
         "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-backup'))]",
         "tags": {
-            "environment": "[parameters('environmentTag')]",
+            "environment": "[parameters('subscriptionTag')]",
             "owner": "[parameters('ownerTag')]"
         },
         "recoveryServicesVault": {
