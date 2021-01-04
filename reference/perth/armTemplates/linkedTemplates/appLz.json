@@ -8,7 +8,7 @@
         },
         "enableAppLz": {
             "type": "string",
-            "defaultValue": "No",
+            "defaultValue": "Yes",
             "allowedValues": [
                 "Yes",
                 "No"
@@ -16,7 +16,7 @@
         },
         "denyPublicEndpoints": {
             "type": "string",
-            "defaultValue": "No",
+            "defaultValue": "Yes",
             "allowedValues": [
                 "Yes",
                 "No"
@@ -24,7 +24,7 @@
         },
         "denyPublicIp": {
             "type": "string",
-            "defaultValue": "No",
+            "defaultValue": "Yes",
             "allowedValues": [
                 "Yes",
                 "No"
@@ -32,7 +32,7 @@
         },
         "denySubnetWithoutNsg": {
             "type": "string",
-            "defaultValue": "No",
+            "defaultValue": "Yes",
             "allowedValues": [
                 "Yes",
                 "No"
@@ -40,7 +40,7 @@
         },
         "denyIpForwarding": {
             "type": "string",
-            "defaultValue": "No",
+            "defaultValue": "Yes",
             "allowedValues": [
                 "Yes",
                 "No"
@@ -48,7 +48,7 @@
         },
         "denyRdpInternet": {
             "type": "string",
-            "defaultValue": "No",
+            "defaultValue": "Yes",
             "allowedValues": [
                 "Yes",
                 "No"
@@ -56,7 +56,7 @@
         },
         "denySshInternet": {
             "type": "string",
-            "defaultValue": "No",
+            "defaultValue": "Yes",
             "allowedValues": [
                 "Yes",
                 "No"
@@ -64,7 +64,7 @@
         },
         "denyVnetPeering": {
             "type": "string",
-            "defaultValue": "No",
+            "defaultValue": "Yes",
             "allowedValues": [
                 "Yes",
                 "No"
