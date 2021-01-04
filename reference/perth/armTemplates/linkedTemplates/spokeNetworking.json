@@ -135,13 +135,23 @@
         "tags": {
             "environment": "[parameters('environmentTag')]",
             "owner": "[parameters('ownerTag')]"
+        },
+        "apiVersions": {
+            "deployments": "2020-06-01",
+            "resourceGroups": "2020-06-01",
+            "locks": "2016-09-01",
+            "virtualNetworks": "2020-05-01",
+            "subnets": "2020-05-01",
+            "networkWatchers": "2019-11-01",
+            "networkSecurityGroups": "2020-05-01",
+            "routeTables": "2020-05-01"
         }
     },
     "resources": [
         {
             "condition": "[and(equals(parameters('enableSpoke'), 'Yes'), not(empty(parameters('subscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-06-01",
+            "apiVersion": "[variables('apiVersions').deployments]",
             "name": "spokeNetworking",
             "location": "[deployment().location]",
             "subscriptionId": "[parameters('subscriptionId')]",
@@ -154,9 +164,9 @@
                     "resources": [
                         {
                             "type": "Microsoft.Resources/resourceGroups",
-                            "apiVersion": "2020-06-01",
-                            "location": "[deployment().location]",
+                            "apiVersion": "[variables('apiVersions').resourceGroups]",
                             "name": "[variables('resourceGroupName')]",
+                            "location": "[deployment().location]",
                             "tags": {
                                 "environment": "[variables('tags').environment]",
                                 "owner": "[variables('tags').owner]"
@@ -165,7 +175,7 @@
                         },
                         {
                             "type": "Microsoft.Resources/deployments",
-                            "apiVersion": "2020-06-01",
+                            "apiVersion": "[variables('apiVersions').deployments]",
                             "name": "[variables('deploymentName')]",
                             "resourceGroup": "[variables('resourceGroupName')]",
                             "dependsOn": [
@@ -180,7 +190,7 @@
                                     "resources": [
                                         {
                                             "type": "Microsoft.Authorization/locks",
-                                            "apiVersion": "2017-04-01",
+                                            "apiVersion": "[variables('apiVersions').locks]",
                                             "name": "ResourceGroup-DontDelete",
                                             "properties": {
                                                 "level": "CanNotDelete",
@@ -188,9 +198,9 @@
                                             }
                                         },
                                         {
-                                            "name": "[variables('azVnetName')]",
                                             "type": "Microsoft.Network/virtualNetworks",
-                                            "apiVersion": "2020-05-01",
+                                            "apiVersion": "[variables('apiVersions').virtualNetworks]",
+                                            "name": "[variables('azVnetName')]",
                                             "location": "[deployment().location]",
                                             "dependsOn": [
                                                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('nsgName001'))]",
@@ -211,7 +221,7 @@
                                         {
                                             "condition": "[and(equals(parameters('enableUdr'), 'Yes'), not(empty(parameters('hubFwIp'))))]",
                                             "type": "Microsoft.Network/routeTables",
-                                            "apiVersion": "2020-05-01",
+                                            "apiVersion": "[variables('apiVersions').routeTables]",
                                             "name": "[variables('udrName')]",
                                             "location": "[parameters('location')]",
                                             "properties": {
@@ -229,9 +239,9 @@
                                         },
                                         {
                                             "condition": "[and(equals(parameters('enableSpoke'), 'Yes'), not(empty(parameters('subscriptionId'))))]",
-                                            "name": "[variables('nwName')]",
                                             "type": "Microsoft.Network/networkWatchers",
-                                            "apiVersion": "2019-11-01",
+                                            "apiVersion": "[variables('apiVersions').networkWatchers]",
+                                            "name": "[variables('nwName')]",
                                             "location": "[deployment().location]",
                                             "tags": {},
                                             "properties": {},
@@ -240,7 +250,7 @@
                                         {
                                             "condition": "[and(equals(parameters('enableWeb'), 'Yes'), not(empty(parameters('subnetMaskForWeb'))))]",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
-                                            "apiVersion": "2020-05-01",
+                                            "apiVersion": "[variables('apiVersions').subnets]",
                                             "name": "[concat(variables('azVnetName'), '/', variables('subnetName001'))]",
                                             "dependsOn": [
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]",
@@ -261,7 +271,7 @@
                                         {
                                             "condition": "[and(equals(parameters('enableWeb'), 'Yes'), not(empty(parameters('subnetMaskForWeb'))))]",
                                             "type": "Microsoft.Network/networkSecurityGroups",
-                                            "apiVersion": "2020-05-01",
+                                            "apiVersion": "[variables('apiVersions').networkSecurityGroups]",
                                             "name": "[variables('nsgName001')]",
                                             "location": "[parameters('location')]",
                                             "tags": {
@@ -275,7 +285,7 @@
                                         {
                                             "condition": "[and(equals(parameters('enableApp'), 'Yes'), not(empty(parameters('subnetMaskForApp'))))]",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
-                                            "apiVersion": "2020-05-01",
+                                            "apiVersion": "[variables('apiVersions').subnets]",
                                             "name": "[concat(variables('azVnetName'), '/', variables('subnetName002'))]",
                                             "dependsOn": [
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]",
@@ -295,7 +305,7 @@
                                         {
                                             "condition": "[and(equals(parameters('enableApp'), 'Yes'), not(empty(parameters('subnetMaskForApp'))))]",
                                             "type": "Microsoft.Network/networkSecurityGroups",
-                                            "apiVersion": "2020-05-01",
+                                            "apiVersion": "[variables('apiVersions').networkSecurityGroups]",
                                             "name": "[variables('nsgName002')]",
                                             "location": "[parameters('location')]",
                                             "tags": {
@@ -308,7 +318,7 @@
                                         {
                                             "condition": "[and(equals(parameters('enableData'), 'Yes'), not(empty(parameters('subnetMaskForData'))))]",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
-                                            "apiVersion": "2020-05-01",
+                                            "apiVersion": "[variables('apiVersions').subnets]",
                                             "name": "[concat(variables('azVnetName'), '/', variables('subnetName003'))]",
                                             "dependsOn": [
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('azVnetName'))]",
@@ -329,7 +339,7 @@
                                         {
                                             "condition": "[and(equals(parameters('enableData'), 'Yes'), not(empty(parameters('subnetMaskForData'))))]",
                                             "type": "Microsoft.Network/networkSecurityGroups",
-                                            "apiVersion": "2020-05-01",
+                                            "apiVersion": "[variables('apiVersions').networkSecurityGroups]",
                                             "name": "[variables('nsgName003')]",
                                             "location": "[parameters('location')]",
                                             "tags": {

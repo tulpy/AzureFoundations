@@ -16,7 +16,7 @@
                 "nonProduction"
             ],
             "metadata": {
-                "description": "These are the child Management Groups under the App Landign Zone."
+                "description": "These are the child Management Groups under the App Landing Zone Management Group."
             }
         }
     },
@@ -26,20 +26,23 @@
             "appLandingZone": "[concat(parameters('companyPrefix'), '-', 'appLandingZones')]",
             "decommissioned": "[concat(parameters('companyPrefix'), '-', 'decommissioned')]",
             "sandbox": "[concat(parameters('companyPrefix'), '-', 'sandbox')]"
+        },
+        "apiVersions": {
+            "managementGroups": "2020-05-01"
         }
     },
     "resources": [
         {
             // Create top level management group under the tenant root
             "type": "Microsoft.Management/managementGroups",
-            "apiVersion": "2020-05-01",
+            "apiVersion": "[variables('apiVersions').managementGroups]",
             "name": "[parameters('companyPrefix')]",
             "properties": {}
         },
         {
             // Create management group for the platform
             "type": "Microsoft.Management/managementGroups",
-            "apiVersion": "2020-05-01",
+            "apiVersion": "[variables('apiVersions').managementGroups]",
             "name": "[variables('managementGroups').platform]",
             "dependsOn": [
                 "[tenantResourceId('Microsoft.Management/managementGroups', parameters('companyPrefix'))]"
@@ -55,7 +58,7 @@
         {
             // Create management group for app landing zones
             "type": "Microsoft.Management/managementGroups",
-            "apiVersion": "2020-05-01",
+            "apiVersion": "[variables('apiVersions').managementGroups]",
             "name": "[variables('managementGroups').appLandingZone]",
             "dependsOn": [
                 "[tenantResourceId('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]"
@@ -72,7 +75,7 @@
         {
             // Create management group for sandbox subscriptions
             "type": "Microsoft.Management/managementGroups",
-            "apiVersion": "2020-05-01",
+            "apiVersion": "[variables('apiVersions').managementGroups]",
             "name": "[variables('managementGroups').sandbox]",
             "dependsOn": [
                 "[tenantResourceId('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]"
@@ -89,7 +92,7 @@
         {
             // Create management group for decommissioned subscriptions
             "type": "Microsoft.Management/managementGroups",
-            "apiVersion": "2020-05-01",
+            "apiVersion": "[variables('apiVersions').managementGroups]",
             "name": "[variables('managementGroups').decommissioned]",
             "dependsOn": [
                 "[tenantResourceId('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]"
@@ -107,7 +110,7 @@
             // Create child management groups for app landing zones
             "condition": "[not(empty(parameters('appLandingZoneMgs')))]",
             "type": "Microsoft.Management/managementGroups",
-            "apiVersion": "2020-05-01",
+            "apiVersion": "[variables('apiVersions').managementGroups]",
             "name": "[concat(parameters('companyPrefix'), '-', parameters('appLandingZoneMgs')[copyIndex()])]",
             "dependsOn": [
                 "[tenantResourceId('Microsoft.Management/managementGroups/', variables('managementGroups').appLandingZone)]"

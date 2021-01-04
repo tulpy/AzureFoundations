@@ -100,12 +100,15 @@
             "denySshInternet": "Deny-SSH-Internet",
             "denyVnetPeering": "Deny-VnetPeering",
             "denyPrivateDnsZones": "Deny-Private-DNS-Zones"
+        },
+        "apiVersions": {
+            "policyAssignments": "2020-03-01"
         }
     },
     "resources": [
         {
             "type": "Microsoft.Authorization/policyAssignments",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').denyPublicEndpoints]",
             "location": "[deployment().location]",
             "properties": {
@@ -117,7 +120,7 @@
         },
         {
             "type": "Microsoft.Authorization/policyAssignments",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').denyIpForwarding]",
             "location": "[deployment().location]",
             "properties": {
@@ -130,7 +133,7 @@
         {
             "condition": "[and(equals(parameters('denyPublicIp'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').denyPublicIp]",
             "location": "[deployment().location]",
             "properties": {
@@ -143,7 +146,7 @@
         {
             "condition": "[and(equals(parameters('denySubnetWithoutNsg'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').denySubnetWithoutNsg]",
             "location": "[deployment().location]",
             "properties": {
@@ -156,7 +159,7 @@
         {
             "condition": "[and(equals(parameters('denyRdpInternet'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').denyRdpInternet]",
             "location": "[deployment().location]",
             "properties": {
@@ -169,7 +172,7 @@
         {
             "condition": "[and(equals(parameters('denySshInternet'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').denySshInternet]",
             "location": "[deployment().location]",
             "properties": {
@@ -182,7 +185,7 @@
         {
             "condition": "[and(equals(parameters('denyVnetPeering'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').denyVnetPeering]",
             "location": "[deployment().location]",
             "properties": {
@@ -195,7 +198,7 @@
         {
             "condition": "[and(equals(parameters('denyPrivateDnsZones'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').denyPrivateDnsZones]",
             "location": "[deployment().location]",
             "properties": {

@@ -9,6 +9,10 @@
   },
   "variables": {
     "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
+    "apiVersions": {
+      "policyDefinitions": "2020-03-01",
+      "policySetDefinitions": "2020-03-01"
+    },
     "policies": {
       "policyDefinitions": [
         {
@@ -11211,7 +11215,7 @@
     {
       "type": "Microsoft.Authorization/policyDefinitions",
       "name": "[variables('policies').policyDefinitions[copyIndex()].name]",
-      "apiVersion": "2019-09-01",
+      "apiVersion": "[variables('apiVersions').policyDefinitions]",
       "copy": {
         "name": "policyDefinitionCopy",
         "count": "[length(variables('policies').policyDefinitions)]"
@@ -11228,7 +11232,7 @@
     {
       "type": "Microsoft.Authorization/policySetDefinitions",
       "name": "[variables('initiatives').policySetDefinitions[copyIndex()].name]",
-      "apiVersion": "2019-09-01",
+      "apiVersion": "[variables('apiVersions').policySetDefinitions]",
       "dependsOn": [
         "policyDefinitionCopy"
       ],

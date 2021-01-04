@@ -61,13 +61,19 @@
             "enabledForDiskEncryption": true,
             "enabledForTemplateDeployment": true,
             "sku": "Standard"
+        },
+        "apiVersions": {
+            "deployments": "2020-06-01",
+            "resourceGroups": "2020-06-01",
+            "locks": "2016-09-01",
+            "KeyVault": "2019-09-01"
         }
     },
     "resources": [
         {
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableAkv'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-06-01",
+            "apiVersion": "[variables('apiVersions').deployments]",
             "name": "keyVault",
             "location": "[deployment().location]",
             "subscriptionId": "[parameters('subscriptionId')]",
@@ -80,7 +86,7 @@
                     "resources": [
                         {
                             "type": "Microsoft.Resources/resourceGroups",
-                            "apiVersion": "2020-06-01",
+                            "apiVersion": "[variables('apiVersions').resourceGroups]",
                             "location": "[deployment().location]",
                             "name": "[variables('resourceGroupName')]",
                             "tags": {
@@ -91,7 +97,7 @@
                         },
                         {
                             "type": "Microsoft.Resources/deployments",
-                            "apiVersion": "2019-10-01",
+                            "apiVersion": "[variables('apiVersions').deployments]",
                             "name": "[variables('deploymentName')]",
                             "resourceGroup": "[variables('resourceGroupName')]",
                             "dependsOn": [
@@ -106,7 +112,7 @@
                                     "resources": [
                                         {
                                             "type": "Microsoft.Authorization/locks",
-                                            "apiVersion": "2016-09-01",
+                                            "apiVersion": "[variables('apiVersions').locks]",
                                             "name": "ResourceGroup-DontDelete",
                                             "properties": {
                                                 "level": "CanNotDelete",
@@ -117,7 +123,7 @@
                                             "condition": "[equals(parameters('enableAkv'), 'Yes')]",
                                             "name": "[variables('keyVault').name]",
                                             "type": "Microsoft.KeyVault/vaults",
-                                            "apiVersion": "2019-09-01",
+                                            "apiVersion": "[variables('apiVersions').KeyVault]",
                                             "location": "[deployment().location]",
                                             "properties": {
                                                 "enabledForDeployment": "[variables('keyVault').enabledForDeployment]",

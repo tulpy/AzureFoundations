@@ -102,7 +102,7 @@
         "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-monitoring'))]",
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
         "logAnalyticsName": "[toLower(take(concat(variables('namingPrefix'), '-', parameters('omsPrefix'), '-', guid(parameters('companyPrefix'))), 24))]",
-        "laResourceId": "[toLower(concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', variables('logAnalyticsName')))]",
+        "logAnalyticsResourceId": "[toLower(concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', variables('logAnalyticsName')))]",
         "solutions": {
             "security": {
                 "name": "[concat('Security', '(', variables('logAnalyticsName'), ')')]",
@@ -144,13 +144,18 @@
                 "name": "[concat('SecurityInsights', '(', variables('logAnalyticsName'), ')')]",
                 "marketplaceName": "SecurityInsights"
             }
+        },
+        "apiVersions": {
+            "deployments": "2020-06-01",
+            "locks": "2016-09-01",
+            "operationsManagementSolutions": "2015-11-01-preview"
         }
     },
     "resources": [
         {
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2018-05-01",
-            "name": "monitoringSol",
+            "apiVersion": "[variables('apiVersions').deployments]",
+            "name": "monSolutions",
             "resourceGroup": "[variables('resourceGroupName')]",
             "properties": {
                 "mode": "Incremental",
@@ -162,7 +167,7 @@
                     "resources": [
                         {
                             "type": "Microsoft.Authorization/locks",
-                            "apiVersion": "2017-04-01",
+                            "apiVersion": "[variables('apiVersions').locks]",
                             "name": "ResourceGroup-DontDelete",
                             "properties": {
                                 "level": "CanNotDelete",
@@ -176,7 +181,7 @@
                             "name": "[variables('solutions').agentHealth.name]",
                             "location": "[deployment().location]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[variables('logAnalyticsResourceId')]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').agentHealth.name]",
@@ -192,7 +197,7 @@
                             "name": "[variables('solutions').antiMalware.name]",
                             "location": "[deployment().location]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[variables('logAnalyticsResourceId')]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').antiMalware.name]",
@@ -208,7 +213,7 @@
                             "name": "[variables('solutions').azureActivity.name]",
                             "location": "[deployment().location]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[variables('logAnalyticsResourceId')]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').azureActivity.name]",
@@ -224,7 +229,7 @@
                             "name": "[variables('solutions').changeTracking.name]",
                             "location": "[deployment().location]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[variables('logAnalyticsResourceId')]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').changeTracking.name]",
@@ -240,7 +245,7 @@
                             "name": "[variables('solutions').vmInsights.name]",
                             "location": "[deployment().location]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[variables('logAnalyticsResourceId')]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').vmInsights.name]",
@@ -256,7 +261,7 @@
                             "name": "[variables('solutions').security.name]",
                             "location": "[deployment().location]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[variables('logAnalyticsResourceId')]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').security.name]",
@@ -272,7 +277,7 @@
                             "name": "[variables('solutions').securityInsights.name]",
                             "location": "[deployment().location]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[variables('logAnalyticsResourceId')]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').securityInsights.name]",
@@ -288,7 +293,7 @@
                             "name": "[variables('solutions').serviceMap.name]",
                             "location": "[deployment().location]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[variables('logAnalyticsResourceId')]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').serviceMap.name]",
@@ -302,9 +307,9 @@
                             "apiVersion": "2015-11-01-preview",
                             "type": "Microsoft.OperationsManagement/solutions",
                             "name": "[variables('solutions').sqlAssessment.name]",
-                           "location": "[deployment().location]",
+                            "location": "[deployment().location]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[variables('logAnalyticsResourceId')]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').sqlAssessment.name]",
@@ -320,7 +325,7 @@
                             "name": "[variables('solutions').updateMgmt.name]",
                             "location": "[deployment().location]",
                             "properties": {
-                                "workspaceResourceId": "[variables('laResourceId')]"
+                                "workspaceResourceId": "[variables('logAnalyticsResourceId')]"
                             },
                             "plan": {
                                 "name": "[variables('solutions').updateMgmt.name]",

@@ -60,13 +60,18 @@
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
         "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-monitoring'))]",
         "logAnalyticsName": "[toLower(take(concat(variables('namingPrefix'), '-', parameters('omsPrefix'), '-', guid(parameters('companyPrefix'))), 24))]",
-        "azAutomationName": "[toLower(take(concat(variables('namingPrefix'), '-', parameters('aaaPrefix'), '-', guid(parameters('companyPrefix'))), 24))]"
+        "azAutomationName": "[toLower(take(concat(variables('namingPrefix'), '-', parameters('aaaPrefix'), '-', guid(parameters('companyPrefix'))), 24))]",
+        "apiVersions": {
+            "deployments": "2020-06-01",
+            "policyAssignments": "2020-03-01",
+            "roleAssignments": "2020-04-01-preview"
+        }
     },
     "resources": [
         {
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').loganalytics]",
             "location": "[deployment().location]",
             "identity": {
@@ -102,7 +107,7 @@
         {
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Authorization/roleAssignments",
-            "apiVersion": "2019-04-01-preview",
+            "apiVersion": "[variables('apiVersions').roleAssignments]",
             "name": "[variables('roleAssignmentNames').deployLogAnalytics]",
             "dependsOn": [
                 "[variables('policyAssignmentNames').loganalytics]"
@@ -116,7 +121,7 @@
         {
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
+            "apiVersion": "[variables('apiVersions').deployments]",
             "name": "[variables('resourceDeploymentName')]",
             "location": "[deployment().location]",
             "dependsOn": [

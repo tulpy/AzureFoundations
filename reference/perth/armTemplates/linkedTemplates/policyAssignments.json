@@ -26,12 +26,15 @@
       "enforceStorageHttps": "Enforce-Storage-https",
       "deployAzFoundationsCIS": "Deploy-AzureCIS",
       "appendAzHub": "Append-AzHUB"
+    },
+    "apiVersions": {
+      "policyAssignments": "2020-03-01"
     }
   },
   "resources": [
     {
       "type": "Microsoft.Authorization/policyAssignments",
-      "apiVersion": "2018-05-01",
+      "apiVersion": "[variables('apiVersions').policyAssignments]",
       "name": "[variables('policyAssignmentNames').allowedAzRegions]",
       "location": "[deployment().location]",
       "properties": {
@@ -51,7 +54,7 @@
     },
     {
       "type": "Microsoft.Authorization/policyAssignments",
-      "apiVersion": "2018-05-01",
+      "apiVersion": "[variables('apiVersions').policyAssignments]",
       "name": "[variables('policyAssignmentNames').allowedAzRegionsRg]",
       "location": "[deployment().location]",
       "properties": {
@@ -71,7 +74,7 @@
     },
     {
       "type": "Microsoft.Authorization/policyAssignments",
-      "apiVersion": "2018-05-01",
+      "apiVersion": "[variables('apiVersions').policyAssignments]",
       "name": "[variables('policyAssignmentNames').denyAppGwyWaf]",
       "location": "[deployment().location]",
       "properties": {
@@ -84,7 +87,7 @@
     },
     {
       "type": "Microsoft.Authorization/policyAssignments",
-      "apiVersion": "2018-05-01",
+      "apiVersion": "[variables('apiVersions').policyAssignments]",
       "name": "[variables('policyAssignmentNames').enforceStorageHttps]",
       "location": "[deployment().location]",
       "properties": {
@@ -96,7 +99,7 @@
     },
     {
       "type": "Microsoft.Authorization/policyAssignments",
-      "apiVersion": "2018-05-01",
+      "apiVersion": "[variables('apiVersions').policyAssignments]",
       "name": "[variables('policyAssignmentNames').deployAzFoundationsCIS]",
       "location": "[deployment().location]",
       "properties": {
@@ -115,7 +118,7 @@
     },
     {
       "type": "Microsoft.Authorization/policyAssignments",
-      "apiVersion": "2018-05-01",
+      "apiVersion": "[variables('apiVersions').policyAssignments]",
       "name": "[variables('policyAssignmentNames').appendAzHub]",
       "location": "[deployment().location]",
       "properties": {

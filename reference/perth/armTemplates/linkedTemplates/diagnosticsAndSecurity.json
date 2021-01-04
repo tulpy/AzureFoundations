@@ -153,14 +153,19 @@
         "deploymentNames": {
             "azSecurityCenter": "[take(concat('azSecurityCenter', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "azActivityLogs": "[take(concat('azActivityLogs', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
+        },
+        "apiVersions": {
+            "deployments": "2020-06-01",
+            "policyAssignments": "2020-03-01",
+            "roleAssignments": "2020-04-01-preview"
         }
     },
     "resources": [
         {
-            // Conditional assignment of policy to enforce activity logs from subscriptions to Log Analytics
+            // Conditional assignment of Azure Policy to enforce activity logs from subscriptions to Log Analytics
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').deployAzActivityLog]",
             "location": "[deployment().location]",
             "identity": {
@@ -179,10 +184,10 @@
             }
         },
         {
-            // Role assignment for the conditional policy assignment
+            // Role assignment for the conditional policy assignment for Azure Activity Logs
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Authorization/roleAssignments",
-            "apiVersion": "2019-04-01-preview",
+            "apiVersion": "[variables('apiVersions').roleAssignments]",
             "name": "[variables('roleAssignmentNames').deployAzActivityLog]",
             "dependsOn": [
                 "[variables('policyAssignmentNames').deployAzActivityLog]"
@@ -194,10 +199,10 @@
             }
         },
         {
-            // Conditional assignment of policy to enforce Log Analytics VM extension to Windows and Linux virtual machines
+            // Conditional assignment of Azure Policy to enforce Log Analytics VM extension to Windows and Linux virtual machines
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').deployVmMonitoring]",
             "location": "[deployment().location]",
             "identity": {
@@ -219,7 +224,7 @@
             // Role assignment of the conditional VM monitoring policy assignment
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Authorization/roleAssignments",
-            "apiVersion": "2019-04-01-preview",
+            "apiVersion": "[variables('apiVersions').roleAssignments]",
             "name": "[variables('roleAssignmentNames').deployVmMonitoring]",
             "dependsOn": [
                 "[variables('policyAssignmentNames').deployVmMonitoring]"
@@ -231,10 +236,10 @@
             }
         },
         {
-            // Conditional assignment of policy to enforce Azure Resource Diagnostics to Log Analytics
+            // Conditional assignment of Azure Policy to enforce Azure resource diagnostics to Log Analytics
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').deployAzResourceDiagnostics]",
             "location": "[deployment().location]",
             "identity": {
@@ -253,10 +258,10 @@
             }
         },
         {
-            // Role assignment of the conditional Azure Resource Diagnostics policy assignment
+            // Role assignment of the conditional Azure resource diagnostics policy assignment
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Authorization/roleAssignments",
-            "apiVersion": "2019-04-01-preview",
+            "apiVersion": "[variables('apiVersions').roleAssignments]",
             "name": "[variables('roleAssignmentNames').deployAzResourceDiagnostics]",
             "dependsOn": [
                 "[variables('policyAssignmentNames').deployAzResourceDiagnostics]"
@@ -268,10 +273,10 @@
             }
         },
         {
-            // Conditional assignment of policy to enforce Azure Security Center on subscriptions
+            // Conditional assignment of Azure Policy to enforce Azure Security Center on subscriptions
             "condition": "[and(not(empty(parameters('subscriptionId'))), equals(parameters('enableAsc'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').deployAzSecurityCenter]",
             "location": "[deployment().location]",
             "identity": {
@@ -309,6 +314,9 @@
                     },
                     "pricingTierDns": {
                         "value": "[parameters('enableAscForDns')]"
+                    },
+                    "pricingTierRegistries": {
+                        "value": "[parameters('enableAscForRegistries')]"
                     }
                 }
             }
@@ -317,7 +325,7 @@
             // Role assignment of the conditional ASC policy assignment
             "condition": "[and(not(empty(parameters('subscriptionId'))), equals(parameters('enableAsc'), 'Yes'))]",
             "type": "Microsoft.Authorization/roleAssignments",
-            "apiVersion": "2019-04-01-preview",
+            "apiVersion": "[variables('apiVersions').roleAssignments]",
             "name": "[variables('roleAssignmentNames').deployAzSecurityCenter]",
             "dependsOn": [
                 "[variables('policyAssignmentNames').deployAzSecurityCenter]"
@@ -329,10 +337,10 @@
             }
         },
         {
-            // Conditional assignment of policy to enable ASC monitoring
+            // Conditional assignment of Azure Policy to enable ASC monitoring
             "condition": "[and(not(empty(parameters('subscriptionId'))), equals(parameters('enableAsc'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').enableAscMonitoring]",
             "location": "[deployment().location]",
             "identity": {
@@ -349,7 +357,7 @@
             // Conditional ARM deployments to invoke template from ActivityLog diagnostics on the platform subscription
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
+            "apiVersion": "[variables('apiVersions').deployments]",
             "name": "[variables('deploymentNames').azActivityLogs]",
             "location": "[deployment().location]",
             "dependsOn": [
@@ -366,7 +374,7 @@
             // Conditional ARM deployments to invoke template from ASC on the platform subscription
             "condition": "[and(not(empty(parameters('subscriptionId'))), equals(parameters('enableAsc'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
+            "apiVersion": "[variables('apiVersions').deployments]",
             "name": "[variables('deploymentNames').azSecurityCenter]",
             "location": "[deployment().location]",
             "dependsOn": [

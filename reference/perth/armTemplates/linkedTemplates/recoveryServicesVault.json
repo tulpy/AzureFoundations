@@ -54,13 +54,20 @@
             "name": "[toLower(take(concat(variables('namingPrefix'), '-', parameters('rsvPrefix'), '-', guid(parameters('companyPrefix'))), 24))]",
             "policyName": "[toLower(concat(parameters('companyPrefix'),'-backuppolicy'))]",
             "vaultStorageType": "LocallyRedundant"
+        },
+        "apiVersions": {
+            "deployments": "2020-06-01",
+            "resourceGroups": "2020-06-01",
+            "locks": "2016-09-01",
+            "vaults": "2020-02-02",
+            "backupstorageconfig": "2018-01-10"
         }
     },
     "resources": [
         {
             "condition": "[or(equals(parameters('enableRsv'), 'Yes'), not(empty(parameters('subscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-06-01",
+            "apiVersion": "[variables('apiVersions').deployments]",
             "name": "backup",
             "location": "[deployment().location]",
             "subscriptionId": "[parameters('subscriptionId')]",
@@ -73,7 +80,7 @@
                     "resources": [
                         {
                             "type": "Microsoft.Resources/resourceGroups",
-                            "apiVersion": "2020-06-01",
+                            "apiVersion": "[variables('apiVersions').resourceGroups]",
                             "location": "[deployment().location]",
                             "name": "[variables('resourceGroupName')]",
                             "tags": {
@@ -84,7 +91,7 @@
                         },
                         {
                             "type": "Microsoft.Resources/deployments",
-                            "apiVersion": "2019-10-01",
+                            "apiVersion": "[variables('apiVersions').deployments]",
                             "name": "[variables('deploymentName')]",
                             "resourceGroup": "[variables('resourceGroupName')]",
                             "dependsOn": [
@@ -99,7 +106,7 @@
                                     "resources": [
                                         {
                                             "type": "Microsoft.Authorization/locks",
-                                            "apiVersion": "2016-09-01",
+                                            "apiVersion": "[variables('apiVersions').locks]",
                                             "name": "ResourceGroup-DontDelete",
                                             "properties": {
                                                 "level": "CanNotDelete",
@@ -109,7 +116,7 @@
                                         {
                                             "condition": "[equals(parameters('enableRsv'), 'Yes')]",
                                             "type": "Microsoft.RecoveryServices/vaults",
-                                            "apiVersion": "2020-02-02",
+                                            "apiVersion": "[variables('apiVersions').vaults]",
                                             "name": "[variables('recoveryServicesVault').name]",
                                             "tags": { "vaultStorageType": "[variables('recoveryServicesVault').vaultStorageType]" },
                                             "location": "[deployment().location]",
@@ -120,9 +127,9 @@
                                             "properties": {}
                                         },
                                         {
-                                            "apiVersion": "2018-01-10",
-                                            "name": "[concat(variables('recoveryServicesVault').name, '/vaultstorageconfig')]",
                                             "type": "Microsoft.RecoveryServices/vaults/backupstorageconfig",
+                                            "apiVersion": "[variables('apiVersions').backupstorageconfig]",
+                                            "name": "[concat(variables('recoveryServicesVault').name, '/vaultstorageconfig')]",
                                             "dependsOn": [
                                                 "[concat('Microsoft.RecoveryServices/vaults/', variables('recoveryServicesVault').name)]"
                                             ],
