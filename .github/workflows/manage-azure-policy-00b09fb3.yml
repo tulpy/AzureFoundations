@@ -1,5 +1,5 @@
 name: manage-azure-policy-00b09fb3
-on: push
+on:
   workflow_dispatch:
     inputs:
       remarks:
@@ -10,9 +10,9 @@ on: push
 
 ## Uncomment the following if you wish to automatically trigger workflow run with every commit
 #
-#  push:
-#    paths:
-#      - 'policies/Append-Azure-HUB_Append-AzHUB/**'
+  push:
+    paths:
+      - 'policies/Append-Azure-HUB_Append-AzHUB/**'
 #      - 'policies/Deny-AppGW-Without-WAF_Deny-AppGW-Without-WAF/**'
 #      - 'policies/Deploy_Azure_Defender_settings_in_Azure_Security_Center._Deploy-ASC/**'
 #      - .github/workflows/manage-azure-policy-00b09fb3.yml
