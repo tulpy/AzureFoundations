@@ -300,9 +300,6 @@
                     "pricingTierStorageAccounts": {
                         "value": "[parameters('enableAscForStorage')]"
                     },
-                    "pricingTierContainerRegistry": {
-                        "value": "[parameters('enableAscForStorage')]"
-                    },
                     "pricingTierKeyVaults": {
                         "value": "[parameters('enableAscForKeyVault')]"
                     },
@@ -315,7 +312,7 @@
                     "pricingTierDns": {
                         "value": "[parameters('enableAscForDns')]"
                     },
-                    "pricingTierRegistries": {
+                    "pricingTierContainerRegistry": {
                         "value": "[parameters('enableAscForRegistries')]"
                     }
                 }
