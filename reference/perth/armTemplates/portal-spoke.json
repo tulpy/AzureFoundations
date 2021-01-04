@@ -263,7 +263,7 @@
                         }
                     },
                     {
-                        "name": "esApplicationSubId",
+                        "name": "esSubscription",
                         "type": "Microsoft.Common.EditableGrid",
                         "ariaLabel": "Select management group and Azure subscription",
                         "label": "Subscriptions",
