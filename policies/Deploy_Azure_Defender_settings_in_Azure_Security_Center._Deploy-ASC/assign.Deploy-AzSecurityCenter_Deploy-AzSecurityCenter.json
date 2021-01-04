@@ -1,0 +1,57 @@
+{
+ "sku": {
+  "name": "A0",
+  "tier": "Free"
+ },
+ "properties": {
+  "displayName": "Deploy-AzSecurityCenter",
+  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/sjt/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC",
+  "scope": "/providers/Microsoft.Management/managementGroups/sjt",
+  "parameters": {
+   "pricingTierVms": {
+    "value": "Standard"
+   },
+   "pricingTierSqlServers": {
+    "value": "Standard"
+   },
+   "pricingTierAppServices": {
+    "value": "Standard"
+   },
+   "pricingTierStorageAccounts": {
+    "value": "Standard"
+   },
+   "pricingTierKeyVaults": {
+    "value": "Standard"
+   },
+   "pricingTierKubernetesService": {
+    "value": "Standard"
+   },
+   "pricingTierArm": {
+    "value": "Standard"
+   },
+   "pricingTierDns": {
+    "value": "Standard"
+   },
+   "pricingTierContainerRegistry": {
+    "value": "Standard"
+   }
+  },
+  "description": "Deploy-AzSecurityCenter",
+  "metadata": {
+   "createdBy": "e5906c27-d401-4768-9c79-1dab42fd1a80",
+   "createdOn": "2020-12-13T10:14:13.9668428Z",
+   "updatedBy": "e5906c27-d401-4768-9c79-1dab42fd1a80",
+   "updatedOn": "2021-01-04T14:06:27.8416355Z"
+  },
+  "enforcementMode": "Default"
+ },
+ "identity": {
+  "principalId": "32e1d8dd-dd2f-4f65-aa06-c6959150943c",
+  "tenantId": "a2ebc691-c318-4ec2-998a-a87c528378e0",
+  "type": "SystemAssigned"
+ },
+ "id": "/providers/Microsoft.Management/managementGroups/sjt/providers/Microsoft.Authorization/policyAssignments/Deploy-AzSecurityCenter",
+ "type": "Microsoft.Authorization/policyAssignments",
+ "name": "Deploy-AzSecurityCenter",
+ "location": "australiaeast"
+}
