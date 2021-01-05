@@ -184,7 +184,6 @@
                 "displayName": "[variables('policyAssignmentNames').deployAzActivityLog]",
                 "policyDefinitionId": "[variables('policyDefinitions').deployAzActivityLog]",
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
-                "assignedBy": "stephen tulp",
                 "parameters": {
                     "logAnalytics": {
                         "value": "[toLower(concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', variables('logAnalyticsName')))]"
@@ -201,6 +200,9 @@
             "dependsOn": [
                 "[variables('policyAssignmentNames').deployAzActivityLog]"
             ],
+            "metadata": {
+                "assignedBy": "stephen tulp"
+            },
             "properties": {
                 "principalType": "ServicePrincipal",
                 "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbac').owner)]",
