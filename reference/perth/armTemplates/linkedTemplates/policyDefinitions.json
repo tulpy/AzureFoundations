@@ -391,7 +391,7 @@
           }
         },
         {
-          "name": "Deploy-ASC",
+          "name": "Deploy-ASC-Pricing",
           "properties": {
             "Description": "Deploys  the Azure Defender settings in Azure Security Center for  the specific services.",
             "DisplayName": "Deploy Azure Defender settings in Azure Security Center.",

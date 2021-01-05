@@ -38,7 +38,7 @@
                 "No"
             ]
         },
-        "denyIpForwarding": {
+        "auditIpForwarding": {
             "type": "string",
             "defaultValue": "Yes",
             "allowedValues": [
@@ -85,7 +85,7 @@
             "denyPublicEndpoints": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policySetDefinitions/Deny-PublicEndpoints')]",
             "denyPublicIp": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP')]",
             "denySubnetWithoutNsg": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-NSG')]",
-            "denyIpForwarding": "[concat('/providers/Microsoft.Authorization/policyDefinitions/bd352bd5-2853-4985-bf0d-73806b4a5744')]",
+            "auditIpForwarding": "[concat('/providers/Microsoft.Authorization/policyDefinitions/bd352bd5-2853-4985-bf0d-73806b4a5744')]",
             "denyRdpInternet": "[concat('/providers/Microsoft.Authorization/policyDefinitions/e372f825-a257-4fb8-9175-797a8a8627d6')]",
             "denySshInternet": "[concat('/providers/Microsoft.Authorization/policyDefinitions/2c89a2e5-7285-40fe-afe0-ae8654b92fab')]",
             "denyVnetPeering": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deny-VnetPeering')]",
@@ -93,9 +93,9 @@
         },
         "policyAssignmentNames": {
             "denyPublicEndpoints": "Deny-Public-Endpoints",
-            "denyPublicIp": "Deny-PublicIp",
+            "denyPublicIp": "Deny-Public-IP",
             "denySubnetWithoutNsg": "Deny-Subnet-Without-NSG",
-            "denyIpForwarding": "Deny-IpForwarding",
+            "auditIpForwarding": "Audit-IP-Forwarding",
             "denyRdpInternet": "Deny-RDP-Internet",
             "denySshInternet": "Deny-SSH-Internet",
             "denyVnetPeering": "Deny-VnetPeering",
@@ -107,105 +107,113 @@
     },
     "resources": [
         {
+             // Conditional assignment of Azure Policy to deny public endpoints on PaaS services
             "condition": "[and(equals(parameters('denyPublicEndpoints'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').denyPublicEndpoints]",
             "location": "[deployment().location]",
             "properties": {
-                "description": "Deny-Public-Endpoints",
-                "displayName": "Deny-Public-Endpoints",
+                "description": "[variables('policyAssignmentNames').denyPublicEndpoints]",
+                "displayName": "[variables('policyAssignmentNames').denyPublicEndpoints]",
                 "policyDefinitionId": "[variables('policyDefinitions').denyPublicEndpoints]",
                 "scope": "[variables('scope')]"
             }
         },
         {
-            "condition": "[and(equals(parameters('denyIpForwarding'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
+             // Conditional assignment of Azure Policy to audit IP forwarding in NICs
+            "condition": "[and(equals(parameters('auditIpForwarding'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "[variables('apiVersions').policyAssignments]",
-            "name": "[variables('policyAssignmentNames').denyIpForwarding]",
+            "name": "[variables('policyAssignmentNames').auditIpForwarding]",
             "location": "[deployment().location]",
             "properties": {
-                "description": "Deny-IP-Forwarding",
-                "displayName": "Deny-IP-Forwarding",
-                "policyDefinitionId": "[variables('policyDefinitions').denyIpForwarding]",
+                "description": "[variables('policyAssignmentNames').auditIpForwarding]",
+                "displayName": "[variables('policyAssignmentNames').auditIpForwarding]",
+                "policyDefinitionId": "[variables('policyDefinitions').auditIpForwarding]",
                 "scope": "[variables('scope')]"
             }
         },
         {
+             // Conditional assignment of Azure Policy to deny public IP addresses
             "condition": "[and(equals(parameters('denyPublicIp'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').denyPublicIp]",
             "location": "[deployment().location]",
             "properties": {
-                "description": "Deny-PublicIP",
-                "displayName": "Deny-PublicIP",
+                "description": "[variables('policyAssignmentNames').denyPublicIp]",
+                "displayName": "[variables('policyAssignmentNames').denyPublicIp]",
                 "policyDefinitionId": "[variables('policyDefinitions').denyPublicIp]",
                 "scope": "[variables('scope')]"
             }
         },
         {
+             // Conditional assignment of Azure Policy to deny the creation of subnets without NSGs
             "condition": "[and(equals(parameters('denySubnetWithoutNsg'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').denySubnetWithoutNsg]",
             "location": "[deployment().location]",
             "properties": {
-                "description": "Deny-Subnet-Without-NSG",
-                "displayName": "Deny-Subnet-Without-NSG",
+                "description": "[variables('policyAssignmentNames').denySubnetWithoutNsg]",
+                "displayName": "[variables('policyAssignmentNames').denySubnetWithoutNsg]",
                 "policyDefinitionId": "[variables('policyDefinitions').denySubnetWithoutNsg]",
                 "scope": "[variables('scope')]"
             }
         },
         {
+            // Conditional assignment of Azure Policy to deny NSG rules with RDP inbound access from the internet
             "condition": "[and(equals(parameters('denyRdpInternet'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').denyRdpInternet]",
             "location": "[deployment().location]",
             "properties": {
-                "description": "Deny-RDP-Internet",
-                "displayName": "Deny-RDP-Internet",
+                "description": "[variables('policyAssignmentNames').denyRdpInternet]",
+                "displayName": "[variables('policyAssignmentNames').denyRdpInternet]",
                 "policyDefinitionId": "[variables('policyDefinitions').denyRdpInternet]",
                 "scope": "[variables('scope')]"
             }
         },
         {
+            // Conditional assignment of Azure Policy to deny NSG rules with SSH inbound access from the internet
             "condition": "[and(equals(parameters('denySshInternet'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').denySshInternet]",
             "location": "[deployment().location]",
             "properties": {
-                "description": "Deny-SSH-Internet",
-                "displayName": "Deny-SSH-Internet",
+                "description": "[variables('policyAssignmentNames').denySshInternet]",
+                "displayName": "[variables('policyAssignmentNames').denySshInternet]",
                 "policyDefinitionId": "[variables('policyDefinitions').denySshInternet]",
                 "scope": "[variables('scope')]"
             }
         },
         {
+            // Conditional assignment of Azure Policy to deny vNet peering
             "condition": "[and(equals(parameters('denyVnetPeering'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').denyVnetPeering]",
             "location": "[deployment().location]",
             "properties": {
-                "description": "Deny-VnetPeering",
-                "displayName": "Deny-VnetPeering",
+                "description": "[variables('policyAssignmentNames').denyVnetPeering]",
+                "displayName": "[variables('policyAssignmentNames').denyVnetPeering]",
                 "policyDefinitionId": "[variables('policyDefinitions').denyVnetPeering]",
                 "scope": "[variables('scope')]"
             }
         },
         {
+            // Conditional assignment of Azure Policy to deny creation of Private DNS Zones
             "condition": "[and(equals(parameters('denyPrivateDnsZones'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').denyPrivateDnsZones]",
             "location": "[deployment().location]",
             "properties": {
-                "description": "Deny-Private-DNS-Zones",
-                "displayName": "Deny-Private-DNS-Zones",
+                "description": "[variables('policyAssignmentNames').denyPrivateDnsZones]",
+                "displayName": "[variables('policyAssignmentNames').denyPrivateDnsZones]",
                 "policyDefinitionId": "[variables('policyDefinitions').denyPrivateDnsZones]",
                 "scope": "[variables('scope')]"
             }
