@@ -141,7 +141,12 @@
             "enableAscMonitoring": "Enable-ASC-Monitoring"
 
         },
-        "rbacOwner": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+        "rbac": {
+            "owner": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+            "contributor": "b24988ac-6180-42a0-ab88-20f7382dd24c",
+            "logAnalyticsContributor": "92aaf0da-9dab-42b6-94a3-d43ce8d16293",
+            "securityAdmin": "fb1c8493-542b-48eb-b624-b4c8fea62acd"
+        },
         "roleAssignmentNames": {
             "deployAzActivityLog": "[guid(concat(parameters('companyPrefix'),variables('policyAssignmentNames').deployAzActivityLog))]",
             "deployAzResourceDiagnostics": "[guid(concat(parameters('companyPrefix'), variables('policyAssignmentNames').deployAzResourceDiagnostics))]",
@@ -200,7 +205,7 @@
             ],
             "properties": {
                 "principalType": "ServicePrincipal",
-                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbacOwner'))]",
+                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbac').owner)]",
                 "principalId": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployAzActivityLog), '2018-05-01', 'Full' ).identity.principalId), 'na')]"
             }
         },
@@ -237,7 +242,7 @@
             ],
             "properties": {
                 "principalType": "ServicePrincipal",
-                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbacOwner'))]",
+                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbac').logAnalyticsContributor)]",
                 "principalId": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployVmMonitoring), '2018-05-01', 'Full' ).identity.principalId), 'na')]"
             }
         },
@@ -274,7 +279,7 @@
             ],
             "properties": {
                 "principalType": "ServicePrincipal",
-                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbacOwner'))]",
+                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbac').contributor)]",
                 "principalId": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployAzResourceDiagnostics), '2018-05-01', 'Full' ).identity.principalId), 'na')]"
             }
         },
@@ -335,7 +340,7 @@
             ],
             "properties": {
                 "principalType": "ServicePrincipal",
-                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbacOwner'))]",
+                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbac').owner)]",
                 "principalId": "[if(equals(parameters('enableAsc'), 'Yes'), toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployAzSecurityCenterPricing), '2018-05-01', 'Full' ).identity.principalId), 'na')]"
             }
         },
@@ -372,7 +377,7 @@
             ],
             "properties": {
                 "principalType": "ServicePrincipal",
-                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbacOwner'))]",
+                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbac').contributor)]",
                 "principalId": "[if(equals(parameters('enableAsc'), 'Yes'), toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployAzSecurityCenterAutoProvision), '2018-05-01', 'Full' ).identity.principalId), 'na')]"
             }
         },
