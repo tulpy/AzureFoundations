@@ -1462,7 +1462,7 @@
             "denyPublicendpoints": "[steps('esAppLZ').esPublicendpoints]",
             "denyPublicIP": "[steps('esAppLZ').esPublicIP]",
             "denySubnetWithoutNsg": "[steps('esAppLZ').esSubnetNSG]",
-            "denyIpForwarding": "[steps('esAppLZ').esIpForwarding]",
+            "auditIpForwarding": "[steps('esAppLZ').esIpForwarding]",
             "denyRdpInternet": "[steps('esAppLZ').esRdpInternet]",
             "denySshInternet": "[steps('esAppLZ').esSshInternet]",
             "denyVnetPeering": "[steps('esAppLZ').esVnetPeering]",

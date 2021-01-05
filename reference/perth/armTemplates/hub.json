@@ -514,7 +514,7 @@
                 "No"
             ]
         },
-        "denyIpForwarding": {
+        "auditIpForwarding": {
             "type": "string",
             "defaultValue": "Yes",
             "allowedValues": [
@@ -1065,7 +1065,7 @@
             }
         },
         {
-            "condition": "[or(equals(parameters('enableAppLz'), 'Yes'), equals(parameters('denyPublicendpoints'), 'Yes'), equals(parameters('denyPublicIP'), 'Yes'), equals(parameters('denySubnetWithoutNsg'), 'Yes'), equals(parameters('denyIpForwarding'), 'Yes'), equals(parameters('denyRdpInternet'), 'Yes'), equals(parameters('denySshInternet'), 'Yes'), equals(parameters('denyVnetPeering'), 'Yes'), equals(parameters('denyPrivateDnsZones'), 'Yes'))]",
+            "condition": "[or(equals(parameters('enableAppLz'), 'Yes'), equals(parameters('denyPublicendpoints'), 'Yes'), equals(parameters('denyPublicIP'), 'Yes'), equals(parameters('denySubnetWithoutNsg'), 'Yes'), equals(parameters('auditIpForwarding'), 'Yes'), equals(parameters('denyRdpInternet'), 'Yes'), equals(parameters('denySshInternet'), 'Yes'), equals(parameters('denyVnetPeering'), 'Yes'), equals(parameters('denyPrivateDnsZones'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-AppLandingZones')]",
@@ -1097,8 +1097,8 @@
                     "denySubnetWithoutNsg": {
                         "value": "[parameters('denySubnetWithoutNsg')]"
                     },
-                    "denyIPforwarding": {
-                        "value": "[parameters('denyIpForwarding')]"
+                    "auditIpForwarding": {
+                        "value": "[parameters('auditIpForwarding')]"
                     },
                     "denyRdpInternet": {
                         "value": "[parameters('denyRdpInternet')]"
