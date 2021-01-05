@@ -357,9 +357,6 @@
                 "parameters": {
                     "logAnalytics": {
                         "value": "[toLower(concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', variables('logAnalyticsName')))]"
-                    },
-                    "pricingTierVms": {
-                        "value": "[parameters('enableAscForServers')]"
                     }
                 }
             }
