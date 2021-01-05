@@ -176,6 +176,9 @@
             "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').deployAzActivityLog]",
             "location": "[deployment().location]",
+            "metadata": {
+                "assignedBy": "stephen tulp"
+            },
             "identity": {
                 "type": "SystemAssigned"
             },
@@ -200,9 +203,6 @@
             "dependsOn": [
                 "[variables('policyAssignmentNames').deployAzActivityLog]"
             ],
-            "metadata": {
-                "assignedBy": "stephen tulp"
-            },
             "properties": {
                 "principalType": "ServicePrincipal",
                 "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbac').owner)]",
