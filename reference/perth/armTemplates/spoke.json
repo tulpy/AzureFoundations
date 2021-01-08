@@ -122,6 +122,10 @@
                 "description": "If 'Yes' is selected then an Azure Storage Account will be deployed."
             }
         },
+        "onPremisesIP": {
+            "type": "string",
+            "defaultValue": ""
+        },
         "enableRsv": {
             "type": "string",
             "defaultValue": "Yes",
@@ -491,6 +495,9 @@
                     "enableAkv": {
                         "value": "[parameters('enableAkv')]"
                     },
+                    "onPremisesIP": {
+                        "value": "[parameters('onPremisesIP')]"
+                    },
                     "subscriptionTag": {
                         "value": "[parameters('subscriptionTag')]"
                     },
@@ -540,6 +547,9 @@
                     },
                     "enableStorage": {
                         "value": "[parameters('enableStorage')]"
+                    },
+                    "onPremisesIP": {
+                        "value": "[parameters('onPremisesIP')]"
                     },
                     "subscriptionTag": {
                         "value": "[parameters('subscriptionTag')]"

@@ -30,6 +30,10 @@
             ],
             "defaultValue": "Yes"
         },
+        "onPremisesIP": {
+            "type": "string",
+            "defaultValue": ""
+        },
         "subscriptionTag": {
             "type": "string"
         },
@@ -138,6 +142,33 @@
                                                 "networkAcls": {
                                                     "defaultAction": "Allow",
                                                     "bypass": "AzureServices"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "condition": "[and(equals(parameters('enableAkv'), 'Yes'), not(empty(parameters('onPremisesIP'))))]",
+                                            "name": "[variables('keyVault').name]",
+                                            "type": "Microsoft.KeyVault/vaults",
+                                            "apiVersion": "[variables('apiVersions').KeyVault]",
+                                            "location": "[deployment().location]",
+                                            "properties": {
+                                                "enabledForDeployment": "[variables('keyVault').enabledForDeployment]",
+                                                "enabledForDiskEncryption": "[variables('keyVault').enabledForDiskEncryption]",
+                                                "enabledForTemplateDeployment": "[variables('keyVault').enabledForTemplateDeployment]",
+                                                "tenantId": "[parameters('tenantId')]",
+                                                "accessPolicies": [],
+                                                "sku": {
+                                                    "name": "[variables('keyVault').sku]",
+                                                    "family": "A"
+                                                },
+                                                "networkAcls": {
+                                                    "defaultAction": "Allow",
+                                                    "bypass": "AzureServices",
+                                                    "ipRules": [
+                                                        {
+                                                            "value": "[parameters('onPremisesIP')]"
+                                                        }
+                                                    ]
                                                 }
                                             }
                                         }

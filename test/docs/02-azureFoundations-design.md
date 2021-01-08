@@ -41,7 +41,7 @@ The table below outlines the subscriptions that will be enabled across both Aust
 | DoC-Dev-LZ             | Australia East (SYD)                             |
 | DoC-Test-LZ            | Australia East (SYD)                             |
 
-Communities has decided to use Azure Resource Tags for billing and showback/chargeback purposes, instead of blending a cost management structure within the Management Group and Subscription hierarchy. This will provide horizontal capabilities to query cost across multiple subscriptions. Tags required for billing (Owner, Environment, CreatedDate) will be enforced by policy at the various scopes
+Communities has decided to use Azure Resource Tags for billing and show back/charge back purposes, instead of blending a cost management structure within the Management Group and Subscription hierarchy. This will provide horizontal capabilities to query cost across multiple subscriptions. Tags required for billing (Owner, Environment, CreatedDate) will be enforced by policy at the various scopes
 
 #### Management Groups
 
@@ -57,7 +57,7 @@ All workloads will be created in subscriptions within child management groups of
 **Production, Dev, Test**
 Communities has identified 3 common archetypes they will migrate/deploy to Azure and have developed the requisite policies to ensure appropriate guard-rails are in place for each landing zone that is created as these management groups.
 
-Azure policy will require tags for each subscription that will be created, to identify ownership, billing and show/chargeback.
+Azure policy will require tags for each subscription that will be created, to identify ownership, billing and show/charge back.
 
 * Production -
 * Dev -
@@ -83,7 +83,7 @@ TBC
 ***Networking***
 TBC
 
-All Management GRoup Azure Policies have been defined in the following spreadsheet.
+All Management Group Azure Policies have been defined in the following spreadsheet.
 
 ## Network Topology and Connectivity
 

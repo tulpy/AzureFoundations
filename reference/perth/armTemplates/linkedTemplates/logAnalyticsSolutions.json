@@ -175,6 +175,7 @@
                             }
                         },
                         {
+                            // Log Analytics Solution for Agent Health
                             "condition": "[equals(parameters('enableAgentHealth'), 'Yes')]",
                             "apiVersion": "2015-11-01-preview",
                             "type": "Microsoft.OperationsManagement/solutions",
@@ -191,6 +192,7 @@
                             }
                         },
                         {
+                            // Log Analytics Solution for AntiMalware
                             "condition": "[equals(parameters('enableAntiMalware'), 'Yes')]",
                             "apiVersion": "2015-11-01-preview",
                             "type": "Microsoft.OperationsManagement/solutions",
@@ -207,6 +209,7 @@
                             }
                         },
                         {
+                            // Log Analytics Solution for Azure Activity Logs
                             "condition": "[equals(parameters('enableActivityLog'), 'Yes')]",
                             "apiVersion": "2015-11-01-preview",
                             "type": "Microsoft.OperationsManagement/solutions",
@@ -223,6 +226,7 @@
                             }
                         },
                         {
+                            // Log Analytics Solution for Change Tracking
                             "condition": "[equals(parameters('enableChangeTracking'), 'Yes')]",
                             "apiVersion": "2015-11-01-preview",
                             "type": "Microsoft.OperationsManagement/solutions",
@@ -239,6 +243,7 @@
                             }
                         },
                         {
+                            // Log Analytics Solution for VM Insights
                             "condition": "[equals(parameters('enableVmInsights'), 'Yes')]",
                             "apiVersion": "2015-11-01-preview",
                             "type": "Microsoft.OperationsManagement/solutions",
@@ -255,6 +260,7 @@
                             }
                         },
                         {
+                            // Log Analytics Solution for Security
                             "condition": "[equals(parameters('enableSecuritySolution'), 'Yes')]",
                             "apiVersion": "2015-11-01-preview",
                             "type": "Microsoft.OperationsManagement/solutions",
@@ -271,6 +277,7 @@
                             }
                         },
                         {
+                            // Log Analytics Solution for Security Insights
                             "condition": "[equals(parameters('enableSecuritySolution'), 'Yes')]",
                             "apiVersion": "2015-11-01-preview",
                             "type": "Microsoft.OperationsManagement/solutions",
@@ -287,6 +294,7 @@
                             }
                         },
                         {
+                            // Log Analytics Solution for Service Map
                             "condition": "[equals(parameters('enableServiceMap'), 'Yes')]",
                             "apiVersion": "2015-11-01-preview",
                             "type": "Microsoft.OperationsManagement/solutions",
@@ -303,6 +311,7 @@
                             }
                         },
                         {
+                            // Log Analytics Solution for SQL Assessment
                             "condition": "[equals(parameters('enableSqlAssessment'), 'Yes')]",
                             "apiVersion": "2015-11-01-preview",
                             "type": "Microsoft.OperationsManagement/solutions",
@@ -319,6 +328,7 @@
                             }
                         },
                         {
+                            // Log Analytics Solution for Update Management
                             "condition": "[equals(parameters('enableUpdateMgmt'), 'Yes')]",
                             "apiVersion": "2015-11-01-preview",
                             "type": "Microsoft.OperationsManagement/solutions",

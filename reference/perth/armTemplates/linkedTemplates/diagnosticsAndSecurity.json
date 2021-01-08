@@ -176,9 +176,6 @@
             "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').deployAzActivityLog]",
             "location": "[deployment().location]",
-            "metadata": {
-                "assignedBy": "stephen tulp"
-            },
             "identity": {
                 "type": "SystemAssigned"
             },

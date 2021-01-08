@@ -499,6 +499,18 @@
                         "visible": true
                     },
                     {
+                        "name": "esOnPremisesIP",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "On-premises Public IP",
+                        "toolTip": "Provide the public IP on-premises that will be used to access PaaS services",
+                        "defaultValue": "106.68.11.192",
+                        "visible": "[or(equals(steps('esApplicationLz').esSta, 'Yes'), equals(steps('esApplicationLz').esAkv, 'Yes'))]",
+                        "constraints": {
+                            "required": true,
+                            "validationMessage": "This needs to be a public IP address"
+                        }
+                    },
+                    {
                         "name": "esSta",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy a Storage account for diagnostics.",
@@ -798,6 +810,7 @@
             "enableAscForRegistries": "[steps('esApplicationLz').esAscRegistries]",
             "enableAkv": "[steps('esApplicationLz').esAkv]",
             "enableStorage": "[steps('esApplicationLz').esSta]",
+            "onPremisesIP": "[steps('esApplicationLz').esOnPremisesIP]",
             "enableRsv": "[steps('esApplicationLz').esRsv]",
             "enableSpoke": "[steps('esApplicationLzConnectivity').esSpoke]",
             "addressPrefix": "[steps('esApplicationLzConnectivity').esAddress]",
