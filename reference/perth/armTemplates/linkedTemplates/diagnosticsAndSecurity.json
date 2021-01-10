@@ -237,7 +237,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
                 "parameters": {
                     "storageAccountId": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', variables('storageName')))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.Storage/storageAccounts/', variables('storageName')))]"
                     }
                 }
             }
