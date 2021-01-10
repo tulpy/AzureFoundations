@@ -146,7 +146,8 @@
                                                         {
                                                             "value": "[parameters('onPremisesIP')]"
                                                         }
-                                                    ]
+                                                    ],
+                                                    "virtualNetworkRules": []
                                                 }
                                             }
                                         }
