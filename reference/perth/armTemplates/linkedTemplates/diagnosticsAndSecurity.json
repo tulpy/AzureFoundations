@@ -124,7 +124,8 @@
     },
     "variables": {
         "policyDefinitions": {
-            "deployAzActivityLog": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ActivityLog')]",
+            "deployAzActivityLogLa": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ActivityLog-La')]",
+            "deployAzActivityLogSta": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ActivityLog-sta')]",
             "deployAzResourceDiagnostics": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Diag-LogAnalytics')]",
             "deployVmMonitoring": "/providers/Microsoft.Authorization/policyDefinitions/0868462e-646c-4fe3-9ced-a733534b6a2c",
             "deployAzSecurityCenterPricing": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC')]",
@@ -133,7 +134,8 @@
             "deployNsgFlowLogs": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Nsg-FlowLogs')]"
         },
         "policyAssignmentNames": {
-            "deployAzActivityLog": "Deploy-AzActivity-Log",
+            "deployAzActivityLogLa": "Deploy-AzActivity-La",
+            "deployAzActivityLogSta": "Deploy-AzActivity-Sta",
             "deployAzResourceDiagnostics": "Deploy-AzResource-Diag",
             "deployVmMonitoring": "Deploy-VM-Monitoring",
             "deployAzSecurityCenterPricing": "Deploy-ASC-Pricing",
@@ -148,7 +150,8 @@
             "securityAdmin": "fb1c8493-542b-48eb-b624-b4c8fea62acd"
         },
         "roleAssignmentNames": {
-            "deployAzActivityLog": "[guid(concat(parameters('companyPrefix'),variables('policyAssignmentNames').deployAzActivityLog))]",
+            "deployAzActivityLogLa": "[guid(concat(parameters('companyPrefix'),variables('policyAssignmentNames').deployAzActivityLogLa))]",
+            "deployAzActivityLogSta": "[guid(concat(parameters('companyPrefix'),variables('policyAssignmentNames').deployAzActivityLogSta))]",
             "deployAzResourceDiagnostics": "[guid(concat(parameters('companyPrefix'), variables('policyAssignmentNames').deployAzResourceDiagnostics))]",
             "deployVmMonitoring": "[guid(concat(parameters('companyPrefix'),variables('policyAssignmentNames').deployVmMonitoring))]",
             "deployAzSecurityCenterPricing": "[guid(concat(parameters('companyPrefix'),variables('policyAssignmentNames').deployAzSecurityCenterPricing))]",
@@ -163,7 +166,8 @@
         "deploymentNames": {
             "ascPricing": "[take(concat('ascPricing', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "ascAutoProvision": "[take(concat('ascAutoProvision', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
-            "azActivityLogs": "[take(concat('azActivityLogs', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "azActivityLogsLa": "[take(concat('azActivityLogsLa', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "azActivityLogsSta": "[take(concat('azActivityLogsSta', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "nsgFlowLogs": "[take(concat('nsgFlowLogs', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
         },
         "apiVersions": {
@@ -178,15 +182,15 @@
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "[variables('apiVersions').policyAssignments]",
-            "name": "[variables('policyAssignmentNames').deployAzActivityLog]",
+            "name": "[variables('policyAssignmentNames').deployAzActivityLogLa]",
             "location": "[deployment().location]",
             "identity": {
                 "type": "SystemAssigned"
             },
             "properties": {
-                "description": "[variables('policyAssignmentNames').deployAzActivityLog]",
-                "displayName": "[variables('policyAssignmentNames').deployAzActivityLog]",
-                "policyDefinitionId": "[variables('policyDefinitions').deployAzActivityLog]",
+                "description": "[variables('policyAssignmentNames').deployAzActivityLogLa]",
+                "displayName": "[variables('policyAssignmentNames').deployAzActivityLogLa]",
+                "policyDefinitionId": "[variables('policyDefinitions').deployAzActivityLogLa]",
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
@@ -196,18 +200,55 @@
             }
         },
         {
-            // Role assignment for the conditional policy assignment for Azure Activity Logs
+            // Role assignment for the conditional policy assignment for Azure Activity Logs to Log Analytics
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "[variables('apiVersions').roleAssignments]",
-            "name": "[variables('roleAssignmentNames').deployAzActivityLog]",
+            "name": "[variables('roleAssignmentNames').deployAzActivityLogLa]",
             "dependsOn": [
-                "[variables('policyAssignmentNames').deployAzActivityLog]"
+                "[variables('policyAssignmentNames').deployAzActivityLogLa]"
             ],
             "properties": {
                 "principalType": "ServicePrincipal",
                 "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbac').owner)]",
-                "principalId": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployAzActivityLog), '2018-05-01', 'Full' ).identity.principalId), 'na')]"
+                "principalId": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployAzActivityLogLa), '2018-05-01', 'Full' ).identity.principalId), 'na')]"
+            }
+        },
+                {
+            // Conditional assignment of Azure Policy to enforce activity logs from subscriptions to Storage Account
+
+            "type": "Microsoft.Authorization/policyAssignments",
+            "apiVersion": "[variables('apiVersions').policyAssignments]",
+            "name": "[variables('policyAssignmentNames').deployAzActivityLogSta]",
+            "location": "[deployment().location]",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "description": "[variables('policyAssignmentNames').deployAzActivityLogSta]",
+                "displayName": "[variables('policyAssignmentNames').deployAzActivityLogSta]",
+                "policyDefinitionId": "[variables('policyDefinitions').deployAzActivityLogSta]",
+                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
+                "parameters": {
+                    "storageAccountId": {
+                        "value": "[toLower(concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', variables('storageName')))]"
+                    }
+                }
+            }
+        },
+        {
+            // Role assignment for the conditional policy assignment for Azure Activity Logs to Storage Account
+
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "[variables('apiVersions').roleAssignments]",
+            "name": "[variables('roleAssignmentNames').deployAzActivityLogSta]",
+            "dependsOn": [
+                "[variables('policyAssignmentNames').deployAzActivityLogSta]"
+            ],
+            "properties": {
+                "principalType": "ServicePrincipal",
+                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbac').owner)]",
+                "principalId": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployAzActivityLogSta), '2018-05-01', 'Full' ).identity.principalId), 'na')]"
             }
         },
         {
@@ -444,16 +485,33 @@
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('apiVersions').deployments]",
-            "name": "[variables('deploymentNames').azActivityLogs]",
+            "name": "[variables('deploymentNames').azActivityLogsLa]",
             "location": "[deployment().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzActivityLog)]"
+                "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzActivityLogLa)]"
             ],
             "subscriptionId": "[parameters('subscriptionId')]",
             "properties": {
                 "mode": "incremental",
-                "template": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(variables('policyDefinitions').deployAzActivityLog, '2018-05-01').policyRule.then.details.deployment.properties.template, variables('blankTemplateEscaped'))]",
-                "parameters": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployAzActivityLog), '2018-05-01').parameters, json('null'))]"
+                "template": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(variables('policyDefinitions').deployAzActivityLogLa, '2018-05-01').policyRule.then.details.deployment.properties.template, variables('blankTemplateEscaped'))]",
+                "parameters": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployAzActivityLogLa), '2018-05-01').parameters, json('null'))]"
+            }
+        },
+                {
+            // Conditional ARM deployments to invoke template from ActivityLog diagnostics on the platform subscription
+
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "[variables('apiVersions').deployments]",
+            "name": "[variables('deploymentNames').azActivityLogsSta]",
+            "location": "[deployment().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Authorization/roleAssignments/', variables('roleAssignmentNames').deployAzActivityLogSta)]"
+            ],
+            "subscriptionId": "[parameters('subscriptionId')]",
+            "properties": {
+                "mode": "incremental",
+                "template": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(variables('policyDefinitions').deployAzActivityLogSta, '2018-05-01').policyRule.then.details.deployment.properties.template, variables('blankTemplateEscaped'))]",
+                "parameters": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployAzActivityLogSta), '2018-05-01').parameters, json('null'))]"
             }
         },
         {
