@@ -22,6 +22,10 @@
             "type": "string",
             "maxLength": 3
         },
+        "staPrefix": {
+            "type": "string",
+            "maxLength": 3
+        },
         "subscriptionId": {
             "type": "string",
             "maxLength": 36,
@@ -163,6 +167,8 @@
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
         "resourceGroupName": "[toLower(concat(parameters('companyPrefix'), '-', parameters('environmentPrefix'), '-', parameters('argPrefix'), '-monitoring'))]",
         "logAnalyticsName": "[toLower(take(concat(variables('namingPrefix'), '-', parameters('omsPrefix'), '-', guid(parameters('companyPrefix'))), 24))]",
+        "storageNamingPrefix": "[concat(parameters('companyPrefix'), parameters('locationPrefix'), parameters('environmentPrefix'))]",
+        "storageName": "[take(toLower(concat(variables('storageNamingPrefix'), parameters('staPrefix'), guid(parameters('companyPrefix')))), 20)]",
         "deploymentNames": {
             "ascPricing": "[take(concat('ascPricing', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
             "ascAutoProvision": "[take(concat('ascAutoProvision', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
@@ -214,7 +220,7 @@
                 "principalId": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployAzActivityLogLa), '2018-05-01', 'Full' ).identity.principalId), 'na')]"
             }
         },
-                {
+        {
             // Conditional assignment of Azure Policy to enforce activity logs from subscriptions to Storage Account
 
             "type": "Microsoft.Authorization/policyAssignments",
@@ -497,7 +503,7 @@
                 "parameters": "[if(equals(parameters('enableLogAnalytics'), 'Yes'), reference(concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployAzActivityLogLa), '2018-05-01').parameters, json('null'))]"
             }
         },
-                {
+        {
             // Conditional ARM deployments to invoke template from ActivityLog diagnostics on the platform subscription
 
             "type": "Microsoft.Resources/deployments",

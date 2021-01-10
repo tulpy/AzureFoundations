@@ -1149,6 +1149,9 @@
                     "omsPrefix": {
                         "value": "[parameters('omsPrefix')]"
                     },
+                    "staPrefix": {
+                        "value": "[parameters('staPrefix')]"
+                    },
                     "enableLogAnalytics": {
                         "value": "[parameters('enableLogAnalytics')]"
                     },
