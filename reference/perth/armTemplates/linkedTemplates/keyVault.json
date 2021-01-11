@@ -31,8 +31,7 @@
             "defaultValue": "Yes"
         },
         "onPremisesIP": {
-            "type": "string",
-            "defaultValue": ""
+            "type": "string"
         },
         "subscriptionTag": {
             "type": "string"
