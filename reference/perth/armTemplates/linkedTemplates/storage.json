@@ -30,6 +30,10 @@
             ],
             "defaultValue": "Yes"
         },
+        "onPremisesIP": {
+            "type": "string",
+            "defaultValue": ""
+        },
         "subscriptionTag": {
             "type": "string"
         },
@@ -115,7 +119,7 @@
                                             }
                                         },
                                         {
-                                            "condition": "[equals(parameters('enableStorage'), 'Yes')]",
+                                            "condition": "[and(equals(parameters('enableStorage'), 'Yes'), not(empty(parameters('onPremisesIP'))))]",
                                             "type": "Microsoft.Storage/storageAccounts",
                                             "apiVersion": "[variables('apiVersions').storage]",
                                             "name": "[variables('storage').name]",
@@ -129,7 +133,18 @@
                                             },
                                             "kind": "[variables('storage').kind]",
                                             "properties": {
-                                                "supportsHttpsTrafficOnly": "[variables('storage').httpsOnly]"
+                                                "supportsHttpsTrafficOnly": "[variables('storage').httpsOnly]",
+                                                "networkAcls": {
+                                                    "bypass": "AzureServices",
+                                                    "virtualNetworkRules": [],
+                                                    "ipRules": [
+                                                        {
+                                                            "value": "[parameters('onPremisesIP')]",
+                                                            "action": "Allow"
+                                                        }
+                                                    ],
+                                                    "defaultAction": "Deny"
+                                                }
                                             }
                                         }
                                     ]
