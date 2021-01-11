@@ -107,7 +107,7 @@
     },
     "resources": [
         {
-             // Conditional assignment of Azure Policy to deny public endpoints on PaaS services
+            // Conditional assignment of Azure Policy to deny public endpoints on PaaS services
             "condition": "[and(equals(parameters('denyPublicEndpoints'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "[variables('apiVersions').policyAssignments]",
@@ -121,7 +121,7 @@
             }
         },
         {
-             // Conditional assignment of Azure Policy to audit IP forwarding in NICs
+            // Conditional assignment of Azure Policy to audit IP forwarding in NICs
             "condition": "[and(equals(parameters('auditIpForwarding'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "[variables('apiVersions').policyAssignments]",
@@ -135,7 +135,7 @@
             }
         },
         {
-             // Conditional assignment of Azure Policy to deny public IP addresses
+            // Conditional assignment of Azure Policy to deny public IP addresses
             "condition": "[and(equals(parameters('denyPublicIp'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "[variables('apiVersions').policyAssignments]",
@@ -149,7 +149,7 @@
             }
         },
         {
-             // Conditional assignment of Azure Policy to deny the creation of subnets without NSGs
+            // Conditional assignment of Azure Policy to deny the creation of subnets without NSGs
             "condition": "[and(equals(parameters('denySubnetWithoutNsg'), 'Yes'), equals(parameters('enableAppLz'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "[variables('apiVersions').policyAssignments]",
