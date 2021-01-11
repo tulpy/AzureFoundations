@@ -1480,7 +1480,7 @@
             "enableSqlAssessment": "[steps('esPlatformManagement').esSqlAssessment]",
             "enableAkv": "[steps('esPlatformManagement').esAkv]",
             "enableStorage": "[steps('esPlatformManagement').esSta]",
-            "onPremisesIP": "[steps('esApplicationLz').esOnPremisesIP]",
+            "onPremisesIP": "[steps('esPlatformManagement').esOnPremisesIP]",
             "enableLtrStorage": "[steps('esPlatformManagement').esActivityLogSta]",
             "enableRsv": "[steps('esPlatformManagement').esRsv]",
             "enableAscForServers": "[steps('esPlatformManagement').esAscVms]",
