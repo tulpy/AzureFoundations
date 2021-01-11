@@ -124,6 +124,14 @@
                 "Standard",
                 "Free"
             ]
+        },
+        "enableLtrStorage": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ]
         }
     },
     "variables": {
@@ -222,7 +230,7 @@
         },
         {
             // Conditional assignment of Azure Policy to enforce activity logs from subscriptions to Storage Account
-
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLtrStorage'), 'Yes'))]",
             "type": "Microsoft.Authorization/policyAssignments",
             "apiVersion": "[variables('apiVersions').policyAssignments]",
             "name": "[variables('policyAssignmentNames').deployAzActivityLogSta]",
@@ -244,7 +252,7 @@
         },
         {
             // Role assignment for the conditional policy assignment for Azure Activity Logs to Storage Account
-
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLtrStorage'), 'Yes'))]",
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "[variables('apiVersions').roleAssignments]",
             "name": "[variables('roleAssignmentNames').deployAzActivityLogSta]",
@@ -487,7 +495,7 @@
             }
         },
         {
-            // Conditional ARM deployments to invoke template from ActivityLog diagnostics on the platform subscription
+            // Conditional ARM deployments to invoke template from ActivityLog diagnostics Logs to Log Analytics
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('apiVersions').deployments]",
@@ -504,8 +512,8 @@
             }
         },
         {
-            // Conditional ARM deployments to invoke template from ActivityLog diagnostics on the platform subscription
-
+            // Conditional ARM deployments to invoke template from ActivityLog diagnostics Logs to Azure Storage
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLtrStorage'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('apiVersions').deployments]",
             "name": "[variables('deploymentNames').azActivityLogsSta]",

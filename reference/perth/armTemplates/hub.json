@@ -327,6 +327,17 @@
                 "description": "If 'Yes' is selected then an Azure Storage Account will be deployed."
             }
         },
+        "enableLtrStorage": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "metadata": {
+                "description": "If 'Yes' is selected then Long Term Retention to Storage will be enabled."
+            }
+        },
         "enableRsv": {
             "type": "string",
             "defaultValue": "Yes",
@@ -1184,6 +1195,9 @@
                     },
                     "enableAscForRegistries": {
                         "value": "[parameters('enableAscForRegistries')]"
+                    },
+                    "enableLtrStorage": {
+                        "value": "[parameters('enableLtrStorage')]"
                     },
                     "subscriptionId": {
                         "value": "[parameters('subscriptionId')]"

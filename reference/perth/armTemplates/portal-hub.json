@@ -798,6 +798,26 @@
                         "visible": true
                     },
                     {
+                        "name": "esActivityLogSta",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Long Term retention of Logs to Azure Storage.",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, Long term retention of Azure Activity Logs to Azure Storage will be enabled",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformManagement').esSta, 'Yes')]"
+                    },
+                    {
                         "name": "esRsv",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Deploy a Recovery Services Vault.",
@@ -1448,6 +1468,7 @@
             "enableSqlAssessment": "[steps('esPlatformManagement').esSqlAssessment]",
             "enableAkv": "[steps('esPlatformManagement').esAkv]",
             "enableStorage": "[steps('esPlatformManagement').esSta]",
+            "enableLtrStorage": "[steps('esPlatformManagement').esActivityLogSta]",
             "enableRsv": "[steps('esPlatformManagement').esRsv]",
             "enableAscForServers": "[steps('esPlatformManagement').esAscVms]",
             "enableAscForAppServices": "[steps('esPlatformManagement').esAscApps]",
