@@ -135,7 +135,7 @@
                                             "properties": {
                                                 "supportsHttpsTrafficOnly": "[variables('storage').httpsOnly]",
                                                 "networkAcls": {
-                                                    "bypass": "Logging, Metrics, AzureServices",
+                                                    "bypass": "Logging, Metrics, AzureServices" ,
                                                     "virtualNetworkRules": [],
                                                     "ipRules": [
                                                         {
