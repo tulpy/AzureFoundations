@@ -142,8 +142,7 @@
             "deployVmMonitoring": "/providers/Microsoft.Authorization/policyDefinitions/0868462e-646c-4fe3-9ced-a733534b6a2c",
             "deployAzSecurityCenterPricing": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC')]",
             "deployAzSecurityCenterAutoProvision": "/providers/Microsoft.Authorization/policyDefinitions/8e7da0a5-0a0e-4bbc-bfc0-7773c018b616",
-            "enableAscMonitoring": "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8",
-            "deployNsgFlowLogs": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Nsg-FlowLogs')]"
+            "enableAscMonitoring": "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8"
         },
         "policyAssignmentNames": {
             "deployAzActivityLogLa": "Deploy-AzActivity-La",
@@ -152,8 +151,7 @@
             "deployVmMonitoring": "Deploy-VM-Monitoring",
             "deployAzSecurityCenterPricing": "Deploy-ASC-Pricing",
             "deployAzSecurityCenterAutoProvision": "Deploy-ASC-AutoProvision",
-            "enableAscMonitoring": "Enable-ASC-Monitoring",
-            "deployNsgFlowLogs": "Deploy-NSG-Flow-Logs"
+            "enableAscMonitoring": "Enable-ASC-Monitoring"
         },
         "rbac": {
             "owner": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
@@ -168,8 +166,7 @@
             "deployVmMonitoring": "[guid(concat(parameters('companyPrefix'),variables('policyAssignmentNames').deployVmMonitoring))]",
             "deployAzSecurityCenterPricing": "[guid(concat(parameters('companyPrefix'),variables('policyAssignmentNames').deployAzSecurityCenterPricing))]",
             "deployAzSecurityCenterAutoProvision": "[guid(concat(parameters('companyPrefix'),variables('policyAssignmentNames').deployAzSecurityCenterAutoProvision))]",
-            "enableAscMonitoring": "[guid(concat(parameters('companyPrefix'), variables('policyAssignmentNames').enableAscMonitoring))]",
-            "deployNsgFlowLogs": "[guid(concat(parameters('companyPrefix'),variables('policyAssignmentNames').deployNsgFlowLogs))]"
+            "enableAscMonitoring": "[guid(concat(parameters('companyPrefix'), variables('policyAssignmentNames').enableAscMonitoring))]"
         },
         "blankTemplateEscaped": "{\"$schema\":\"https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#\",\"contentVersion\":\"1.0.0.0\",\"parameters\":{},\"variables\":{},\"resources\":[],\"outputs\":{}}",
         "namingPrefix": "[concat(parameters('companyPrefix'), '-', parameters('locationPrefix'), '-', parameters('environmentPrefix'))]",
@@ -452,46 +449,6 @@
                 "displayName": "[variables('policyAssignmentNames').enableAscMonitoring]",
                 "policyDefinitionId": "[variables('policyDefinitions').enableAscMonitoring]",
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]"
-            }
-        },
-        {
-            // Conditional assignment of Azure Policy to deploy NSG Flow Logs
-            "condition": "[and(not(empty(parameters('subscriptionId'))), equals(parameters('enableAsc'), 'Yes'))]",
-            "type": "Microsoft.Authorization/policyAssignments",
-            "apiVersion": "[variables('apiVersions').policyAssignments]",
-            "name": "[variables('policyAssignmentNames').deployNsgFlowLogs]",
-            "location": "[deployment().location]",
-            "identity": {
-                "type": "SystemAssigned"
-            },
-            "properties": {
-                "description": "[variables('policyAssignmentNames').deployNsgFlowLogs]",
-                "displayName": "[variables('policyAssignmentNames').deployNsgFlowLogs]",
-                "policyDefinitionId": "[variables('policyDefinitions').deployNsgFlowLogs]",
-                "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
-                "parameters": {
-                    "retention": {
-                        "value": 7
-                    },
-                    "storageAccountResourceId": {
-                        "value": "/subscriptions/8f8224ca-1a9c-46d1-9206-1cf2a7c51de8/resourceGroups/sjt-cor-arg-monitoring/providers/Microsoft.Storage/storageAccounts/sjtsydcorstac310db5e"
-                    }
-                }
-            }
-        },
-        {
-            // Role assignment of the conditional NSG Flow Log policy assignment
-            "condition": "[and(not(empty(parameters('subscriptionId'))), equals(parameters('enableAsc'), 'Yes'))]",
-            "type": "Microsoft.Authorization/roleAssignments",
-            "apiVersion": "[variables('apiVersions').roleAssignments]",
-            "name": "[variables('roleAssignmentNames').deployNsgFlowLogs]",
-            "dependsOn": [
-                "[variables('policyAssignmentNames').deployNsgFlowLogs]"
-            ],
-            "properties": {
-                "principalType": "ServicePrincipal",
-                "roleDefinitionId": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', variables('rbac').contributor)]",
-                "principalId": "[if(equals(parameters('enableAsc'), 'Yes'), toLower(reference(concat('/providers/Microsoft.Authorization/policyAssignments/', variables('policyAssignmentNames').deployNsgFlowLogs), '2018-05-01', 'Full' ).identity.principalId), 'na')]"
             }
         },
         {
