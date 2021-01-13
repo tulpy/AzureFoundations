@@ -753,7 +753,7 @@
                         "visible": "[equals(steps('esApplicationLzConnectivity').esSpoke, 'Yes')]",
                         "label": "Hub subscription Id",
                         "toolTip": "Provide the Hub subscription Id",
-                        "defaultValue": "8f8224ca-1a9c-46d1-9206-1cf2a7c51de8",
+                        "defaultValue": "afa561b9-1bcc-4e69-bb33-af606363a7df",
                         "constraints": {
                             "required": true
                         }
@@ -764,7 +764,7 @@
                         "visible": "[equals(steps('esApplicationLzConnectivity').esSpoke, 'Yes')]",
                         "label": "Hub virtual network",
                         "toolTip": "Provide the name of the Hub virtual network",
-                        "defaultValue": "sjt-syd-cor-vnt-10.49.0.0",
+                        "defaultValue": "stt-syd-cor-vnt-10.49.0.0",
                         "constraints": {
                             "required": true
                         }
@@ -775,7 +775,7 @@
                         "visible": "[equals(steps('esApplicationLzConnectivity').esSpoke, 'Yes')]",
                         "label": "Hub virtual network resource group ",
                         "toolTip": "Provide the Resource Group of the Hub virtual network",
-                        "defaultValue": "sjt-cor-arg-network",
+                        "defaultValue": "stt-cor-arg-network",
                         "constraints": {
                             "required": true
                         }
