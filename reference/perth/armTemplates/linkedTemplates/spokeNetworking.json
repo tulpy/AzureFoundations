@@ -149,6 +149,7 @@
     },
     "resources": [
         {
+            // Nested deloyment for Storage (Subscription Level)
             "condition": "[and(equals(parameters('enableSpoke'), 'Yes'), not(empty(parameters('subscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('apiVersions').deployments]",
@@ -219,6 +220,7 @@
                                             ]
                                         },
                                         {
+                                            // Conditional deployment of Route Table
                                             "condition": "[and(equals(parameters('enableUdr'), 'Yes'), not(empty(parameters('hubFwIp'))))]",
                                             "type": "Microsoft.Network/routeTables",
                                             "apiVersion": "[variables('apiVersions').routeTables]",
@@ -238,6 +240,7 @@
                                             }
                                         },
                                         {
+                                            // Conditional deployment of Network Watcher
                                             "condition": "[and(equals(parameters('enableSpoke'), 'Yes'), not(empty(parameters('subscriptionId'))))]",
                                             "type": "Microsoft.Network/networkWatchers",
                                             "apiVersion": "[variables('apiVersions').networkWatchers]",
@@ -248,6 +251,7 @@
                                             "resources": []
                                         },
                                         {
+                                            // Conditional deployment of Web Subnet
                                             "condition": "[and(equals(parameters('enableWeb'), 'Yes'), not(empty(parameters('subnetMaskForWeb'))))]",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
                                             "apiVersion": "[variables('apiVersions').subnets]",
@@ -269,6 +273,7 @@
                                             }
                                         },
                                         {
+                                            // Conditional deployment of NSG (Web)
                                             "condition": "[and(equals(parameters('enableWeb'), 'Yes'), not(empty(parameters('subnetMaskForWeb'))))]",
                                             "type": "Microsoft.Network/networkSecurityGroups",
                                             "apiVersion": "[variables('apiVersions').networkSecurityGroups]",
@@ -283,6 +288,7 @@
                                             }
                                         },
                                         {
+                                            // Conditional deployment of apps Subnet
                                             "condition": "[and(equals(parameters('enableApp'), 'Yes'), not(empty(parameters('subnetMaskForApp'))))]",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
                                             "apiVersion": "[variables('apiVersions').subnets]",
@@ -303,6 +309,7 @@
                                             }
                                         },
                                         {
+                                            // Conditional deployment of NSG (Apps)
                                             "condition": "[and(equals(parameters('enableApp'), 'Yes'), not(empty(parameters('subnetMaskForApp'))))]",
                                             "type": "Microsoft.Network/networkSecurityGroups",
                                             "apiVersion": "[variables('apiVersions').networkSecurityGroups]",
@@ -316,6 +323,7 @@
                                             }
                                         },
                                         {
+                                            // Conditional deployment of NSG (Data)
                                             "condition": "[and(equals(parameters('enableData'), 'Yes'), not(empty(parameters('subnetMaskForData'))))]",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
                                             "apiVersion": "[variables('apiVersions').subnets]",
@@ -337,6 +345,7 @@
                                             }
                                         },
                                         {
+                                            // Conditional deployment of NSG (Data)
                                             "condition": "[and(equals(parameters('enableData'), 'Yes'), not(empty(parameters('subnetMaskForData'))))]",
                                             "type": "Microsoft.Network/networkSecurityGroups",
                                             "apiVersion": "[variables('apiVersions').networkSecurityGroups]",

@@ -70,6 +70,7 @@
     },
     "resources": [
         {
+            // Nested deloyment for Storage (Subscription Level)
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableStorage'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('apiVersions').deployments]",
@@ -119,6 +120,7 @@
                                             }
                                         },
                                         {
+                                            // Nested deployment for Storage (Resource Group Level)
                                             "condition": "[and(equals(parameters('enableStorage'), 'Yes'), not(empty(parameters('onPremisesIP'))))]",
                                             "type": "Microsoft.Storage/storageAccounts",
                                             "apiVersion": "[variables('apiVersions').storage]",
@@ -135,7 +137,7 @@
                                             "properties": {
                                                 "supportsHttpsTrafficOnly": "[variables('storage').httpsOnly]",
                                                 "networkAcls": {
-                                                    "bypass": "Logging, Metrics, AzureServices" ,
+                                                    "bypass": "Logging, Metrics, AzureServices",
                                                     "virtualNetworkRules": [],
                                                     "ipRules": [
                                                         {

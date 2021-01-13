@@ -72,6 +72,7 @@
     },
     "resources": [
         {
+            // Nested template for vNet peering deployment (Spoke >> Hub)
             "condition": "[and(equals(parameters('enableSpoke'), 'Yes'), not(empty(parameters('subscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('apiVersions').deployments]",
@@ -122,6 +123,7 @@
             }
         },
         {
+            // Nested template for vNet peering deployment (Hub >> Spoke)
             "condition": "[and(equals(parameters('enableSpoke'), 'Yes'), not(empty(parameters('subscriptionId'))))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('apiVersions').deployments]",
