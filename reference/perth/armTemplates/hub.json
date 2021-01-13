@@ -678,7 +678,7 @@
             "location": "[deployment().location]",
             "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'))]",
             "dependsOn": [
-                "[concat('delayFor', copyIndex())]"
+                "delayFor9"
             ],
             "properties": {
                 "mode": "Incremental",
