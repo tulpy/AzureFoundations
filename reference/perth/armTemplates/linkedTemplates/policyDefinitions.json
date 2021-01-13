@@ -19,7 +19,7 @@
           "Name": "Append-AzHUB",
           "Properties": {
             "Description": "Append Azure Hybrid Use Benefits licensing to all Windows VMs",
-            "DisplayName": "Append-Azure-HUB",
+            "DisplayName": "Append-AzHUB",
             "Mode": "All",
             "Parameters": {},
             "policyRule": {

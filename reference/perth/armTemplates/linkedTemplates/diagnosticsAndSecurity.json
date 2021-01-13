@@ -140,7 +140,7 @@
             "deployAzActivityLogSta": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ActivityLog-sta')]",
             "deployAzResourceDiagnostics": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policySetDefinitions/Deploy-Diag-LogAnalytics')]",
             "deployVmMonitoring": "/providers/Microsoft.Authorization/policyDefinitions/0868462e-646c-4fe3-9ced-a733534b6a2c",
-            "deployAzSecurityCenterPricing": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC')]",
+            "deployAzSecurityCenterPricing": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('companyPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Pricing')]",
             "deployAzSecurityCenterAutoProvision": "/providers/Microsoft.Authorization/policyDefinitions/8e7da0a5-0a0e-4bbc-bfc0-7773c018b616",
             "enableAscMonitoring": "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8"
         },
