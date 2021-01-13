@@ -602,6 +602,7 @@
     },
     "resources": [
         {
+            // Linked template for the creation of Management Groups
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[variables('deploymentNames').managementGroups]",
@@ -620,6 +621,7 @@
             }
         },
         {
+            // Linked template for the creation of Azure Policy Definitions
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[variables('deploymentNames').policyDefinitions]",
@@ -642,6 +644,7 @@
             }
         },
         {
+            // nested template for delay counter
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[concat('delayFor', copyIndex())]",
@@ -668,6 +671,7 @@
             }
         },
         {
+            // Linked template for the creation of Azure Policy Assignments
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "[variables('deploymentNames').policyAssignments]",
@@ -690,6 +694,7 @@
             }
         },
         {
+            // Move identified Azure subscription to the appropriate Management Group
             "condition": "[not(empty(parameters('subscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
             "apiVersion": "2020-05-01",
@@ -700,6 +705,7 @@
             "properties": {}
         },
         {
+            // Linked template for the creation of hub virtual networking
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableHub'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
@@ -823,6 +829,7 @@
             }
         },
         {
+            // Linked template for the creation of Recovery Services Vaults
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableRsv'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
@@ -870,6 +877,7 @@
             }
         },
         {
+            // Linked template for the creation of Azure Key Vault
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableAkv'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
@@ -923,6 +931,7 @@
             }
         },
         {
+            // Linked template for the creation of Azure Storage
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableStorage'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
@@ -973,6 +982,7 @@
             }
         },
         {
+            // Linked template for the creation of Log Analytics workspace
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
@@ -1021,6 +1031,7 @@
             }
         },
         {
+            // Linked template for the creation of Log Analytics monitoring solutions
             "condition": "[and(not(empty(parameters('subscriptionId'))), or(or(or(or(or(equals(parameters('enableSecuritySolution'), 'Yes'), equals(parameters('enableAgentHealth'), 'Yes')), equals(parameters('enableChangeTracking'), 'Yes')), equals(parameters('enableUpdateMgmt'), 'Yes'), equals(parameters('enableActivityLog'), 'Yes')), equals(parameters('enableAntiMalware'), 'Yes'), equals(parameters('enableVmInsights'), 'Yes')), equals(parameters('enableServiceMap'), 'Yes'), equals(parameters('enableSqlAssessment'), 'Yes')))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
@@ -1086,6 +1097,7 @@
             }
         },
         {
+            // Linked template for the creation of Azure Policy for the Landing Zone Management Group
             "condition": "[or(equals(parameters('enableAppLz'), 'Yes'), equals(parameters('denyPublicendpoints'), 'Yes'), equals(parameters('denyPublicIP'), 'Yes'), equals(parameters('denySubnetWithoutNsg'), 'Yes'), equals(parameters('auditIpForwarding'), 'Yes'), equals(parameters('denyRdpInternet'), 'Yes'), equals(parameters('denySshInternet'), 'Yes'), equals(parameters('denyVnetPeering'), 'Yes'), equals(parameters('denyPrivateDnsZones'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
@@ -1137,6 +1149,7 @@
             }
         },
         {
+            // Linked template for the creation of Azure Policy for diagnostics for the platform
             "condition": "[and(not(empty(parameters('subscriptionId'))), and(equals(parameters('enableLogAnalytics'), 'Yes'),  equals(parameters('enableAsc'), 'Yes')))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",

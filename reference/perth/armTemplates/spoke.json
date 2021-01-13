@@ -250,6 +250,7 @@
     },
     "resources": [
         {
+            // Linked template for the creation of Management Groups
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('apiVersions').deployments]",
             "name": "[variables('deploymentNames').managementGroups]",
@@ -268,6 +269,7 @@
             }
         },
         {
+            // Move identified Azure subscription to the appropriate Management Group
             "condition": "[not(empty(parameters('subscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
             "apiVersion": "[variables('apiVersions').subscriptions]",
@@ -278,6 +280,7 @@
             "properties": {}
         },
         {
+            // Linked template for the creation of Recovery Services Vault
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableRsv'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('apiVersions').deployments]",
@@ -325,6 +328,7 @@
             }
         },
         {
+            // Linked template for the creation of spoke virtual networking
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableSpoke'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('apiVersions').deployments]",
@@ -408,6 +412,7 @@
             }
         },
         {
+            // Linked template for the creation of vNet peering to the Hub
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableSpoke'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('apiVersions').deployments]",
@@ -461,6 +466,7 @@
             }
         },
         {
+            // Linked template for the creation of Azure Key Vault
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableAkv'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('apiVersions').deployments]",
@@ -514,6 +520,7 @@
             }
         },
         {
+            // Linked template for the creation of Azure Storage
             "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableStorage'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "[variables('apiVersions').deployments]",
