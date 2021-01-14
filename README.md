@@ -5,7 +5,7 @@
 * [Azure Foundations Architecture](./docs/azureFoundations-architecture.md)
 * [Configure Azure permission for ARM Template deployments](./docs/azureFoundations-setup-azure.md)
 * [Deploy Reference Implementation](./docs/azureFoundations-deploy-reference-implentations.md)
-    * [Create Landing Zones](./docs/azureFoundations-deploy-landing-zones.md)
+  * [Create Landing Zones](./docs/azureFoundations-deploy-landing-zones.md)
 * [FAQ](./docs/azureFoundations-FAQ.md)
 * [[Optional] Getting started with Infrastructure-as-code](./docs/Deploy/getting-started.md)
   * [Configure Azure permissions for ARM tenant deployments & setup GitHub](./docs/Deploy/setup-github.md)
@@ -18,7 +18,7 @@
 
 ## Objective
 
-The Azure Foundations architecture provides prescriptive guidance coupled with Azure best practices, and it follows design principles across the critical design areas for organizations to define their Azure architecture. It will continue to evolve alongside the Azure platform and is ultimately defined by the various design decisions that organizations must make to define their Azure journey. 
+The Azure Foundations architecture provides prescriptive guidance coupled with Azure best practices, and it follows design principles across the critical design areas for organizations to define their Azure architecture. It will continue to evolve alongside the Azure platform and is ultimately defined by the various design decisions that organizations must make to define their Azure journey.
 
 The Azure Foundations architecture is modular by design and allow organizations to start with foundational landing zones that support their application portfolios, and the architecture enables organizations to start as small as needed and scale alongside their business requirements regardless of scale point.
 
