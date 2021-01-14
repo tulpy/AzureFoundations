@@ -1,0 +1,580 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/tenantDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "companyPrefix": {
+            "type": "string",
+            "maxLength": 5,
+            "metadata": {
+                "description": "Provide the company identifier prefix (max 5 characters)"
+            }
+        },
+        "locationPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the location identifier prefix (3 characters)"
+            }
+        },
+        "environmentPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the environment identifier prefix (3 characters)"
+            }
+        },
+        "argPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the resource group identifier"
+            }
+        },
+        "vntPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the virtual network identifier prefix"
+            }
+        },
+        "staPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the Azure Storage identifier prefix"
+            }
+        },
+        "udrPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the Route Table identifier prefix"
+            }
+        },
+        "nsgPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the Network Security Group identifier prefix"
+            }
+        },
+        "akvPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the Azure key Vault prefix"
+            }
+        },
+        "rsvPrefix": {
+            "type": "string",
+            "maxLength": 3,
+            "metadata": {
+                "description": "Provide the Recovery Services Vault prefix"
+            }
+        },
+        "subscriptionTag": {
+            "type": "string",
+            "metadata": {
+                "description": "Provide the value for the environment tag"
+            }
+        },
+        "ownerTag": {
+            "type": "string",
+            "metadata": {
+                "description": "Provide the value for the owner tag"
+            }
+        },
+        "tenantId": {
+            "type": "string",
+            "defaultValue": "",
+            "maxLength": 36,
+            "metadata": {
+                "description": "Provide the tenant id"
+            }
+        },
+        "subscriptionId": {
+            "type": "string",
+            "defaultValue": "",
+            "maxLength": 36,
+            "metadata": {
+                "description": "Provide the subscription id of an existing, empty subscription you want to dedicate to the Application LZ. If you don't want to bring a subscription, leave this parameter empty as is."
+            }
+        },
+        "enableAkv": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "metadata": {
+                "description": "If 'Yes' is selected then an Azure Key Vault will be deployed."
+            }
+        },
+        "enableStorage": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "metadata": {
+                "description": "If 'Yes' is selected then an Azure Storage Account will be deployed."
+            }
+        },
+        "onPremisesIP": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "enableRsv": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "metadata": {
+                "description": "If 'Yes' is selected then a Recovery Services Vault will be deployed."
+            }
+        },
+        "enableSpoke": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "hubSubscriptionId": {
+            "type": "string",
+            "defaultValue": "",
+            "maxLength": 36,
+            "metadata": {
+                "description": "Provide the subscription id of the Hub."
+            }
+        },
+        "hubVnetName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "hubVnetRG": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "enableUdr": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "Yes"
+        },
+        "hubFwIp": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "enableWeb": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "No"
+        },
+        "enableApp": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "No"
+        },
+        "enableData": {
+            "type": "string",
+            "allowedValues": [
+                "Yes",
+                "No"
+            ],
+            "defaultValue": "No"
+        },
+        "subnetMaskForWeb": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "subnetMaskForApp": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "subnetMaskForData": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[deployment().location]"
+        },
+        "addressPrefix": {
+            "type": "string",
+            "metadata": {
+                "displayName": "addressPrefix",
+                "description": "Address prefix"
+            },
+            "defaultValue": "192.168.0.0/24"
+        }
+    },
+    "variables": {
+        "deploymentUris": {
+            "managementGroups": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/mgmtGroups.json')]",
+            "keyVault": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/keyVault.json')]",
+            "storage": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/storage.json')]",
+            "recoveryServicesVault": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/recoveryServicesVault.json')]",
+            "spokeNetworking": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/spokeNetworking.json')]",
+            "vNetPeering": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/vNetPeering.json')]",
+            "applicationLandingZone": "[uri(deployment().properties.templateLink.uri, 'linkedTemplates/appLz.json')]"
+        },
+        "moveSubscription": "[concat(parameters('companyPrefix'), '-appLandingZones', '/', parameters('subscriptionId'))]",
+        "noSubscription": "[concat(parameters('companyPrefix'), '-appLandingZones', '/', 'na')]",
+        "deploymentNames": {
+            "managementGroups": "[take(concat('mgmtGroups', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "keyVault": "[take(concat('keyVault', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "storage": "[take(concat('storage', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "recoveryServicesVault": "[take(concat('rsv', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "spokeNetworking": "[take(concat('spokeNetwork', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "vNetPeering": "[take(concat('vNetPeering', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]",
+            "applicationLandingZone": "[take(concat('appLz', '-', deployment().location, '-', guid(parameters('companyPrefix'))), 64)]"
+        },
+        "apiVersions": {
+            "deployments": "2020-06-01",
+            "subscriptions": "2020-05-01"
+        }
+    },
+    "resources": [
+        {
+            // Linked template for the creation of Management Groups
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "[variables('apiVersions').deployments]",
+            "name": "[variables('deploymentNames').managementGroups]",
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('deploymentUris').managementGroups]"
+                },
+                "parameters": {
+                    "companyPrefix": {
+                        "value": "[parameters('companyPrefix')]"
+                    }
+                }
+            }
+        },
+        {
+            // Move identified Azure subscription to the appropriate Management Group
+            "condition": "[not(empty(parameters('subscriptionId')))]",
+            "type": "Microsoft.Management/managementGroups/subscriptions",
+            "apiVersion": "[variables('apiVersions').subscriptions]",
+            "name": "[if(not(empty(parameters('subscriptionId'))), variables('moveSubscription'), variables('noSubscription'))]",
+            "dependsOn": [
+                "[variables('deploymentNames').managementGroups]"
+            ],
+            "properties": {}
+        },
+        {
+            // Linked template for the creation of Recovery Services Vault
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableRsv'), 'Yes'))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "[variables('apiVersions').deployments]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
+            "name": "[variables('deploymentNames').recoveryServicesVault]",
+            "dependsOn": [
+                "[variables('deploymentNames').managementGroups]"
+            ],
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('deploymentUris').recoveryServicesVault]"
+                },
+                "parameters": {
+                    "companyPrefix": {
+                        "value": "[parameters('companyPrefix')]"
+                    },
+                    "locationPrefix": {
+                        "value": "[parameters('locationPrefix')]"
+                    },
+                    "environmentPrefix": {
+                        "value": "[parameters('environmentPrefix')]"
+                    },
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
+                    },
+                    "rsvPrefix": {
+                        "value": "[parameters('rsvPrefix')]"
+                    },
+                    "enableRsv": {
+                        "value": "[parameters('enableRsv')]"
+                    },
+                    "subscriptionTag": {
+                        "value": "[parameters('subscriptionTag')]"
+                    },
+                    "ownerTag": {
+                        "value": "[parameters('ownerTag')]"
+                    },
+                    "subscriptionId": {
+                        "value": "[parameters('subscriptionId')]"
+                    }
+                }
+            }
+        },
+        {
+            // Linked template for the creation of spoke virtual networking
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableSpoke'), 'Yes'))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "[variables('apiVersions').deployments]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
+            "name": "[variables('deploymentNames').spokeNetworking]",
+            "dependsOn": [
+                "[variables('deploymentNames').managementGroups]"
+            ],
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('deploymentUris').spokeNetworking]"
+                },
+                "parameters": {
+                    "companyPrefix": {
+                        "value": "[parameters('companyPrefix')]"
+                    },
+                    "locationPrefix": {
+                        "value": "[parameters('locationPrefix')]"
+                    },
+                    "environmentPrefix": {
+                        "value": "[parameters('environmentPrefix')]"
+                    },
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
+                    },
+                    "vntPrefix": {
+                        "value": "[parameters('vntPrefix')]"
+                    },
+                    "udrPrefix": {
+                        "value": "[parameters('udrPrefix')]"
+                    },
+                    "nsgPrefix": {
+                        "value": "[parameters('nsgPrefix')]"
+                    },
+                    "subscriptionTag": {
+                        "value": "[parameters('subscriptionTag')]"
+                    },
+                    "ownerTag": {
+                        "value": "[parameters('ownerTag')]"
+                    },
+                    "enableSpoke": {
+                        "value": "[parameters('enableSpoke')]"
+                    },
+                    "enableUdr": {
+                        "value": "[parameters('enableUdr')]"
+                    },
+                    "hubFwIp": {
+                        "value": "[parameters('hubFwIp')]"
+                    },
+                    "addressPrefix": {
+                        "value": "[parameters('addressPrefix')]"
+                    },
+                    "enableWeb": {
+                        "value": "[parameters('enableWeb')]"
+                    },
+                    "enableApp": {
+                        "value": "[parameters('enableApp')]"
+                    },
+                    "enableData": {
+                        "value": "[parameters('enableData')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "subscriptionId": {
+                        "value": "[parameters('subscriptionId')]"
+                    },
+                    "subnetMaskForWeb": {
+                        "value": "[parameters('subnetMaskForWeb')]"
+                    },
+                    "subnetMaskForApp": {
+                        "value": "[parameters('subnetMaskForApp')]"
+                    },
+                    "subnetMaskForData": {
+                        "value": "[parameters('subnetMaskForData')]"
+                    }
+                }
+            }
+        },
+        {
+            // Linked template for the creation of vNet peering to the Hub
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableSpoke'), 'Yes'))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "[variables('apiVersions').deployments]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
+            "name": "[variables('deploymentNames').vNetPeering]",
+            "dependsOn": [
+                "[variables('deploymentNames').spokeNetworking]"
+            ],
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('deploymentUris').vNetPeering]"
+                },
+                "parameters": {
+                    "companyPrefix": {
+                        "value": "[parameters('companyPrefix')]"
+                    },
+                    "locationPrefix": {
+                        "value": "[parameters('locationPrefix')]"
+                    },
+                    "environmentPrefix": {
+                        "value": "[parameters('environmentPrefix')]"
+                    },
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
+                    },
+                    "vntPrefix": {
+                        "value": "[parameters('vntPrefix')]"
+                    },
+                    "enableSpoke": {
+                        "value": "[parameters('enableSpoke')]"
+                    },
+                    "addressPrefix": {
+                        "value": "[parameters('addressPrefix')]"
+                    },
+                    "subscriptionId": {
+                        "value": "[parameters('subscriptionId')]"
+                    },
+                    "hubSubscriptionId": {
+                        "value": "[parameters('hubSubscriptionId')]"
+                    },
+                    "hubVnetName": {
+                        "value": "[parameters('hubVnetName')]"
+                    },
+                    "hubVnetRG": {
+                        "value": "[parameters('hubVnetRG')]"
+                    }
+                }
+            }
+        },
+        {
+            // Linked template for the creation of Azure Key Vault
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableAkv'), 'Yes'))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "[variables('apiVersions').deployments]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
+            "name": "[variables('deploymentNames').keyVault]",
+            "dependsOn": [
+                "[variables('deploymentNames').managementGroups]"
+            ],
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('deploymentUris').keyVault]"
+                },
+                "parameters": {
+                    "companyPrefix": {
+                        "value": "[parameters('companyPrefix')]"
+                    },
+                    "locationPrefix": {
+                        "value": "[parameters('locationPrefix')]"
+                    },
+                    "environmentPrefix": {
+                        "value": "[parameters('environmentPrefix')]"
+                    },
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
+                    },
+                    "akvPrefix": {
+                        "value": "[parameters('akvPrefix')]"
+                    },
+                    "enableAkv": {
+                        "value": "[parameters('enableAkv')]"
+                    },
+                    "onPremisesIP": {
+                        "value": "[parameters('onPremisesIP')]"
+                    },
+                    "subscriptionTag": {
+                        "value": "[parameters('subscriptionTag')]"
+                    },
+                    "ownerTag": {
+                        "value": "[parameters('ownerTag')]"
+                    },
+                    "tenantId": {
+                        "value": "[parameters('tenantId')]"
+                    },
+                    "subscriptionId": {
+                        "value": "[parameters('subscriptionId')]"
+                    }
+                }
+            }
+        },
+        {
+            // Linked template for the creation of Azure Storage
+            "condition": "[and(not(empty(parameters('subscriptionId'))),equals(parameters('enableStorage'), 'Yes'))]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "[variables('apiVersions').deployments]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('companyPrefix'), '-appLandingZones')]",
+            "name": "[variables('deploymentNames').storage]",
+            "dependsOn": [
+                "[variables('deploymentNames').keyVault]"
+            ],
+            "location": "[deployment().location]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('deploymentUris').storage]"
+                },
+                "parameters": {
+                    "companyPrefix": {
+                        "value": "[parameters('companyPrefix')]"
+                    },
+                    "locationPrefix": {
+                        "value": "[parameters('locationPrefix')]"
+                    },
+                    "environmentPrefix": {
+                        "value": "[parameters('environmentPrefix')]"
+                    },
+                    "argPrefix": {
+                        "value": "[parameters('argPrefix')]"
+                    },
+                    "staPrefix": {
+                        "value": "[parameters('staPrefix')]"
+                    },
+                    "enableStorage": {
+                        "value": "[parameters('enableStorage')]"
+                    },
+                    "onPremisesIP": {
+                        "value": "[parameters('onPremisesIP')]"
+                    },
+                    "subscriptionTag": {
+                        "value": "[parameters('subscriptionTag')]"
+                    },
+                    "ownerTag": {
+                        "value": "[parameters('ownerTag')]"
+                    },
+                    "subscriptionId": {
+                        "value": "[parameters('subscriptionId')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "deployment": {
+            "type": "string",
+            "value": "[concat(deployment().name, ' has successfully deployed.')]"
+        }
+    }
+}

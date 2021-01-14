@@ -1,0 +1,1506 @@
+{
+    "handler": "Microsoft.Azure.CreateUIDef",
+    "version": "0.1.2-preview",
+    "parameters": {
+        "basics": [
+            {}
+        ],
+        "steps": [
+            {
+                "name": "esNaming",
+                "label": "Naming Convention Prefixes",
+                "subLabel": {
+                    "preValidation": "Provide values for all Azure resources that will be created.",
+                    "postValidation": "Done"
+                },
+                "bladeTitle": "Naming Convention Prefixes",
+                "elements": [
+                    {
+                        "name": "infoBox1",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": true,
+                        "options": {
+                            "icon": "Info",
+                            "text": "Tenant level deployments require access at the tenant root (/) scope. Visit this link to ensure you have the appropriate RBAC permission to complete the deployment",
+                            "uri": "https://docs.microsoft.com/azure/role-based-access-control/elevate-access-global-admin"
+                        }
+                    },
+                    {
+                        "name": "text1",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": true,
+                        "options": {
+                            "text": "Please provide values for the Company, Location and Subscription identifiers:"
+                        }
+                    },
+                    {
+                        "name": "esComIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Company Identifier Prefix",
+                        "toolTip": "Provide a value for the company identifier, 1-5 characters.",
+                        "defaultValue": "stt",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{1,5}$",
+                            "validationMessage": "The prefix must be 1-5 characters."
+                        }
+                    },
+                    {
+                        "name": "esLocIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Location Identifier Prefix",
+                        "toolTip": "Provide a value for the location identifier, 3 characters (Australia East - SYD) or (Australia SouthEast - MEL)",
+                        "defaultValue": "syd",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esSubIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Subscription Identifier Prefix",
+                        "toolTip": "Provide a value for the subscription identifier, 3 characters eg 'cor'.",
+                        "defaultValue": "cor",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "text2",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": true,
+                        "options": {
+                            "text": "Please provide Azure resource naming values:"
+                        }
+                    },
+                    {
+                        "name": "esArgIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Resource Group Identifier",
+                        "toolTip": "Provide a value for the Resource Group identifier",
+                        "defaultValue": "arg",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esOmsIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Log Analytics Identifier",
+                        "toolTip": "Provide a naming prefix for the Log Analytics workspace identifier",
+                        "defaultValue": "oms",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esVngIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Virtual Network Gateway Identifier",
+                        "toolTip": "Provide a naming prefix for the Virtual Network Gateway identifier",
+                        "defaultValue": "vng",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esVntIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Virtual Network Identifier",
+                        "toolTip": "Provide a value for the Virtual Network identifier",
+                        "defaultValue": "vnt",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esPipIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Public IP Identifier",
+                        "toolTip": "Provide a naming prefix for the Public IP identifier",
+                        "defaultValue": "pip",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esAfwIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Azure Firewall Identifier",
+                        "toolTip": "Provide a naming prefix for the Azure Firewall identifier",
+                        "defaultValue": "afw",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esAaaIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Azure Automation Identifier",
+                        "toolTip": "Provide a naming prefix for the Azure Automation identifier",
+                        "defaultValue": "aaa",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esStaIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Storage Identifier",
+                        "toolTip": "Provide a value for the Storage identifier",
+                        "defaultValue": "sta",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esUdrIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Route Table Identifier",
+                        "toolTip": "Provide a value for the Route Table identifier",
+                        "defaultValue": "udr",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esNsgIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Network Security Group Identifier",
+                        "toolTip": "Provide a value for the Network Security Group identifier",
+                        "defaultValue": "nsg",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esAkvIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Azure Key Vault Identifier",
+                        "toolTip": "Provide a value for the Azure Key Vault Identifier",
+                        "defaultValue": "akv",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "esRsvIdentifier",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Recovery Services Vaults Identifier",
+                        "toolTip": "Provide a value for the Recovery Services Vaults Identifier",
+                        "defaultValue": "rsv",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z-]{3}$",
+                            "validationMessage": "The prefix must be 3 characters."
+                        }
+                    },
+                    {
+                        "name": "text3",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": true,
+                        "options": {
+                            "text": "Please provide values for the Landing Zone tags:"
+                        }
+                    },
+                    {
+                        "name": "esSubscriptionTag",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Subscription Tag",
+                        "toolTip": "Provide a value for the subscription tag",
+                        "defaultValue": "platform",
+                        "constraints": {
+                            "required": false
+                        }
+                    },
+                    {
+                        "name": "esOwnerTag",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Owner Tag",
+                        "toolTip": "Provide a value for the owner tag",
+                        "defaultValue": "tulpy",
+                        "constraints": {
+                            "required": false
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "esPlatformManagement",
+                "label": "Platform Management, Security, and Governance",
+                "subLabel": {
+                    "preValidation": "",
+                    "postValidation": ""
+                },
+                "bladeTitle": "PlatformManagement",
+                "elements": [
+                    {
+                        "name": "infoBox1",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": true,
+                        "options": {
+                            "icon": "Info",
+                            "text": "To enable the Platform Azure subscription, you must choose an existing Azure subscription. Please note, this subscription will be moved to the Platform Management Group and Platform resources will be deployed.",
+                            "uri": "https://github.com/Azure/Enterprise-Scale/blob/main/docs/reference/Readme.md"
+                        }
+                    },
+                    {
+                        "name": "subApi",
+                        "type": "Microsoft.Solutions.ArmApiControl",
+                        "request": {
+                            "method": "GET",
+                            "path": "subscriptions?api-version=2020-01-01"
+                        }
+                    },
+                    {
+                        "name": "tenantApi",
+                        "type": "Microsoft.Solutions.ArmApiControl",
+                        "request": {
+                            "method": "GET",
+                            "path": "tenants?api-version=2020-01-01"
+                        }
+                    },
+                    {
+                        "name": "esAzureAdTenant",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Azure AD Tenant (required)",
+                        "toolTip": "",
+                        "multiselect": false,
+                        "selectAll": true,
+                        "filter": true,
+                        "filterPlaceholder": "Filter items ...",
+                        "multiLine": true,
+                        "visible": true,
+                        "constraints": {
+                            "allowedValues": "[map(steps('esPlatformManagement').tenantApi.value, (tenant) => parse(concat('{\"label\":\"', tenant.displayName, '\",\"description\":\"', tenant.tenantId, '\",\"value\":\"', toLower(tenant.tenantId), '\"}')) )]",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "esPlatformSubId",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Platform Azure Subscription (required)",
+                        "toolTip": "",
+                        "multiselect": false,
+                        "selectAll": true,
+                        "filter": true,
+                        "filterPlaceholder": "Filter items ...",
+                        "multiLine": true,
+                        "visible": true,
+                        "constraints": {
+                            "allowedValues": "[map(steps('esPlatformManagement').subApi.value, (sub) => parse(concat('{\"label\":\"', sub.displayName, '\",\"description\":\"', sub.subscriptionId, '\",\"value\":\"', toLower(sub.subscriptionId), '\"}')) )]",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "esLogAnalytics",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy the Log Analytics workspace.",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, a Log Analytics workspace will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "esLogRetention",
+                        "type": "Microsoft.Common.Slider",
+                        "min": 30,
+                        "max": 730,
+                        "label": "Log Analytics Data Retention (days)",
+                        "subLabel": "Days",
+                        "defaultValue": 30,
+                        "showStepMarkers": false,
+                        "toolTip": "Select retention days for Azure logs. Default is 30 days.",
+                        "constraints": {
+                            "required": false
+                        },
+                        "visible": "[equals(steps('esPlatformManagement').esLogAnalytics, 'Yes')]"
+                    },
+                    {
+                        "name": "textBlock1",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": "[equals(steps('esPlatformManagement').esLogAnalytics, 'Yes')]",
+                        "options": {
+                            "text": "Select which Azure Monitor solutions to enable for the Log Analytics workspace",
+                            "link": {
+                                "label": "Learn more",
+                                "uri": "https://docs.microsoft.com/azure/azure-monitor/insights/solutions"
+                            }
+                        }
+                    },
+                    {
+                        "name": "esAgentSolution",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Agent Health solution",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformManagement').esLogAnalytics, 'Yes')]"
+                    },
+                    {
+                        "name": "esChangeTracking",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Change Tracking solution",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformManagement').esLogAnalytics, 'Yes')]"
+                    },
+                    {
+                        "name": "esUpdateMgmt",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Update Management solution",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformManagement').esLogAnalytics, 'Yes')]"
+                    },
+                    {
+                        "name": "esActivityLog",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Activity Log solution",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformManagement').esLogAnalytics, 'Yes')]"
+                    },
+                    {
+                        "name": "esVmInsights",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy VM Insights solution",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformManagement').esLogAnalytics, 'Yes')]"
+                    },
+                    {
+                        "name": "esAntiMalware",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Antimalware solution",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformManagement').esLogAnalytics, 'Yes')]"
+                    },
+                    {
+                        "name": "esServiceMap",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Service Map solution",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformManagement').esLogAnalytics, 'Yes')]"
+                    },
+                    {
+                        "name": "esSqlAssessment",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy SQL Assessment solution",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformManagement').esLogAnalytics, 'Yes')]"
+                    },
+                    {
+                        "name": "textBlock2",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": "[equals(steps('esPlatformManagement').esLogAnalytics, 'Yes')]",
+                        "options": {
+                            "text": "Select which Azure Security solutions you will enable.",
+                            "link": {
+                                "label": "Learn more",
+                                "uri": "https://docs.microsoft.com/azure/security/fundamentals/overview"
+                            }
+                        }
+                    },
+                    {
+                        "name": "esAsc",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure Security Center and enable security monitoring for your platform and resources",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformManagement').esLogAnalytics, 'Yes')]"
+                    },
+                    {
+                        "name": "esAscVms",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Azure Defender for servers",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Defender will be enabled for all servers.",
+                        "visible": "[equals(steps('esPlatformManagement').esAsc, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "No, Azure Defender Off",
+                                    "value": "Free"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAscApps",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Azure Defender for AppServices",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Defender will be enabled for AppServices.",
+                        "visible": "[equals(steps('esPlatformManagement').esAsc, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "No, Azure Defender Off",
+                                    "value": "Free"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAscStorage",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Azure Defender for Storage",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Defender will be enabled for Storage.",
+                        "visible": "[equals(steps('esPlatformManagement').esAsc, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "No, Azure Defender Off",
+                                    "value": "Free"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAscSql",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Azure Defender for SQL",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Defender will be enabled for SQL.",
+                        "visible": "[equals(steps('esPlatformManagement').esAsc, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "No, Azure Defender Off",
+                                    "value": "Free"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAscKeyVault",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Azure Defender for Key Vault",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Defender will be enabled for Key Vault.",
+                        "visible": "[equals(steps('esPlatformManagement').esAsc, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "No, Azure Defender Off",
+                                    "value": "Free"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAscArm",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Azure Defender for Azure Resource Manager",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Defender will be enabled for Resource Manager.",
+                        "visible": "[equals(steps('esPlatformManagement').esAsc, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "No, Azure Defender Off",
+                                    "value": "Free"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAscDns",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Azure Defender for DNS",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Defender will be enabled for DNS.",
+                        "visible": "[equals(steps('esPlatformManagement').esAsc, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "No, Azure Defender Off",
+                                    "value": "Free"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAscKubernetes",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Azure Defender for Kubernetes",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Defender will be enabled for Kubernetes.",
+                        "visible": "[equals(steps('esPlatformManagement').esAsc, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "No, Azure Defender Off",
+                                    "value": "Free"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAscRegistries",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Azure Defender for Container registries",
+                        "defaultValue": "Yes (recommended)",
+                        "toolTip": "If 'Yes' is selected, Azure Defender will be enabled for Container registries.",
+                        "visible": "[equals(steps('esPlatformManagement').esAsc, 'Yes')]",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes (recommended)",
+                                    "value": "Standard"
+                                },
+                                {
+                                    "label": "No, Azure Defender Off",
+                                    "value": "Free"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAzSentinel",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure Sentinel",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected when also adding a subscription for management, ARM will deploy resources and enable them for continous compliance",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformManagement').esLogAnalytics, 'Yes')]"
+                    },
+                    {
+                        "name": "esAkv",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure Key Vault.",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, an Azure Key Vault will be deployed",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "esOnPremisesIP",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "On-premises Public IP",
+                        "toolTip": "Provide the public IP on-premises that will be used to access PaaS services",
+                        "defaultValue": "106.68.11.192",
+                        "visible": "[or(equals(steps('esPlatformManagement').esSta, 'Yes'), equals(steps('esPlatformManagement').esAkv, 'Yes'))]",
+                        "constraints": {
+                            "required": true,
+                            "validationMessage": "This needs to be a public IP address"
+                        }
+                    },
+                    {
+                        "name": "esSta",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy a Storage account for diagnostics.",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, a Storage account will be deployed",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "esActivityLogSta",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable Long Term retention of Logs to Azure Storage.",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, Long term retention of Azure Activity Logs to Azure Storage will be enabled",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformManagement').esSta, 'Yes')]"
+                    },
+                    {
+                        "name": "esRsv",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy a Recovery Services Vault.",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, a Recovery Services Vault will be deployed",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    }
+                ]
+            },
+            {
+                "name": "esPlatformConnectivity",
+                "label": "Network Connectivity (Hub)",
+                "subLabel": {
+                    "preValidation": "Select 'Yes' if goal state should be enforced during deployment. Select 'No' if you want to do it post deployment using Azure Policy.",
+                    "postValidation": "Done"
+                },
+                "bladeTitle": "Connectivity",
+                "elements": [
+                    {
+                        "name": "esHub",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy a Virtual Network",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, a Virtual Network will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "esAddress",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Virtual network CIDR Address Range",
+                        "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/16)",
+                        "defaultValue": "10.49.0.0/18",
+                        "visible": "[equals(steps('esPlatformConnectivity').esHub, 'Yes')]",
+                        "constraints": {
+                            "required": true,
+                            "validationMessage": "Virtual network's address space, specified as a CIDR notation (e.g. 192.168.1.0/24)"
+                        }
+                    },
+                    {
+                        "name": "esLocationsApi",
+                        "type": "Microsoft.Solutions.ArmApiControl",
+                        "request": {
+                            "method": "GET",
+                            "path": "locations?api-version=2019-11-01"
+                        }
+                    },
+                    {
+                        "name": "esNwLocation",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Azure Region for the Virtual Network Hub.",
+                        "visible": "[equals(steps('esPlatformConnectivity').esHub, 'Yes')]",
+                        "toolTip": "Select the target Azure region for the deployment.",
+                        "constraints": {
+                            "allowedValues": "[map(steps('esPlatformConnectivity').esLocationsApi.value, (item) => parse(concat('{\"label\":\"', item.displayName, '\",\"value\":\"', item.name, '\"}')))]",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "esEnablePrivateDnsZones",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure Private DNS Zones.",
+                        "defaultValue": "No",
+                        "toolTip": "If 'Yes' is selected, Azure Private DNS Zones will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "esEnablePrivateDnsZoneBlob",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Private DNS Zone - Blob Storage",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected then the Azure Private DNS Zone will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformConnectivity').esEnablePrivateDnsZones, 'Yes')]"
+                    },
+                    {
+                        "name": "esEnablePrivateDnsZoneAkv",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Private DNS Zone - Azure Key Vault",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected then the Azure Private DNS Zone will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformConnectivity').esEnablePrivateDnsZones, 'Yes')]"
+                    },
+                    {
+                        "name": "esEnablePrivateDnsZoneFiles",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Private DNS Zone - Azure Files",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected then the Azure Private DNS Zone will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformConnectivity').esEnablePrivateDnsZones, 'Yes')]"
+                    },
+                    {
+                        "name": "esEnablePrivateDnsZoneQueue",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Private DNS Zone - Queue Storage",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected then the Azure Private DNS Zone will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformConnectivity').esEnablePrivateDnsZones, 'Yes')]"
+                    },
+                    {
+                        "name": "esEnablePrivateDnsZoneTable",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Private DNS Zone - Table Storage",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected then the Azure Private DNS Zone will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esPlatformConnectivity').esEnablePrivateDnsZones, 'Yes')]"
+                    },
+                    {
+                        "name": "esVpnGw",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy VPN Gateway",
+                        "defaultValue": "No",
+                        "visible": "[equals(steps('esPlatformConnectivity').esHub, 'Yes')]",
+                        "toolTip": "If 'Yes' is selected, ARM will deploy VPN gateway",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esVpnGwType",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Select VPN type",
+                        "defaultValue": "Route Based",
+                        "visible": "[equals(steps('esPlatformConnectivity').esVpnGw, 'Yes')]",
+                        "toolTip": "If 'Yes' is selected, ARM will deploy VPN gateway. Select whether it should be policy or route based.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Policy Based",
+                                    "value": "PolicyBased"
+                                },
+                                {
+                                    "label": "Route Based",
+                                    "value": "RouteBased"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAddressVpnOrEr",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Subnet for VPN/ExpressRoute Gateway",
+                        "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.1.0/24)",
+                        "defaultValue": "10.49.63.0/27",
+                        "visible": "[or(equals(steps('esPlatformConnectivity').esErGw, 'Yes'), equals(steps('esPlatformConnectivity').esVpnGw, 'Yes'))]",
+                        "constraints": {
+                            "required": true,
+                            "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
+                        }
+                    },
+                    {
+                        "name": "esErGw",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy ExpressRoute Gateway",
+                        "defaultValue": "Yes",
+                        "visible": "[equals(steps('esPlatformConnectivity').esHub, 'Yes')]",
+                        "toolTip": "If 'Yes' is selected, ARM will deploy an ExpressRoute gateway",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAzFw",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure Firewall",
+                        "defaultValue": "Yes",
+                        "visible": "[equals(steps('esPlatformConnectivity').esHub, 'Yes')]",
+                        "toolTip": "If 'Yes' is selected, an Azure Firewall will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAddressFw",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Subnet for Azure Firewall",
+                        "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
+                        "defaultValue": "10.49.61.0/24",
+                        "visible": "[equals(steps('esPlatformConnectivity').esAzFw, 'Yes')]",
+                        "constraints": {
+                            "required": true,
+                            "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
+                        }
+                    },
+                    {
+                        "name": "esAppGw",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure App Gateway Subnet",
+                        "defaultValue": "Yes",
+                        "visible": "[equals(steps('esPlatformConnectivity').esHub, 'Yes')]",
+                        "toolTip": "If 'Yes' is selected, a subnet for App Gateways will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAddressAppGw",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Subnet for Azure App gateways",
+                        "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
+                        "defaultValue": "10.49.62.0/24",
+                        "visible": "[equals(steps('esPlatformConnectivity').esAppGw, 'Yes')]",
+                        "constraints": {
+                            "required": true,
+                            "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
+                        }
+                    },
+                    {
+                        "name": "esMgmt",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure Management Subnet",
+                        "defaultValue": "Yes",
+                        "visible": "[equals(steps('esPlatformConnectivity').esHub, 'Yes')]",
+                        "toolTip": "If 'Yes' is selected, a subnet for Management Services will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAddressMgmt",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Subnet for Management services",
+                        "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
+                        "defaultValue": "10.49.0.0/24",
+                        "visible": "[equals(steps('esPlatformConnectivity').esMgmt, 'Yes')]",
+                        "constraints": {
+                            "required": true,
+                            "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
+                        }
+                    },
+                    {
+                        "name": "esIdentity",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Azure Identity Subnet",
+                        "defaultValue": "Yes",
+                        "visible": "[equals(steps('esPlatformConnectivity').esHub, 'Yes')]",
+                        "toolTip": "If 'Yes' is selected, a subnet for Active Directory Domain Services will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "esAddressIdentity",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Subnet for Identity services",
+                        "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/24)",
+                        "defaultValue": "10.49.1.0/24",
+                        "visible": "[equals(steps('esPlatformConnectivity').esIdentity, 'Yes')]",
+                        "constraints": {
+                            "required": true,
+                            "validationMessage": "The subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "esApplicationLz",
+                "label": "Application Landing Zone Configuration",
+                "subLabel": {
+                    "preValidation": "",
+                    "postValidation": ""
+                },
+                "bladeTitle": "AppLZ",
+                "elements": [
+                    {
+                        "name": "esAppLz",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Deploy Application Landing Zone Policies",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, an Application Landing Zone will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "esPublicendpoints",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Azure Policy: Deny Public Endpoints on PaaS",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]"
+                    },
+                    {
+                        "name": "esPublicIP",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Azure Policy: Deny Public IP Addresses",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]"
+                    },
+                    {
+                        "name": "esSubnetNSG",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Azure Policy: Deny Subnets without NSGs",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]"
+                    },
+                    {
+                        "name": "esIpForwarding",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Azure Policy: Deny IP Forwarding",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]"
+                    },
+                    {
+                        "name": "esRdpInternet",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Azure Policy: Deny RDP Internet",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]"
+                    },
+                    {
+                        "name": "esSshInternet",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Azure Policy: Deny SSH Internet",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]"
+                    },
+                    {
+                        "name": "esVnetPeering",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Azure Policy: Deny ER Peering",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]"
+                    },
+                    {
+                        "name": "esPrivateDnsZones",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Azure Policy: Deny Private DNS Zones",
+                        "defaultValue": "Yes",
+                        "toolTip": "If 'Yes' is selected, the Azure Policy will be deployed.",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('esApplicationLz').esAppLz, 'Yes')]"
+                    }
+                ]
+            }
+        ],
+        "outputs": {
+            "companyPrefix": "[steps('esNaming').esComIdentifier]",
+            "environmentPrefix": "[steps('esNaming').esSubIdentifier]",
+            "locationPrefix": "[steps('esNaming').esLocIdentifier]",
+            "argPrefix": "[steps('esNaming').esArgIdentifier]",
+            "omsPrefix": "[steps('esNaming').esOmsIdentifier]",
+            "vngPrefix": "[steps('esNaming').esVngIdentifier]",
+            "vntPrefix": "[steps('esNaming').esVntIdentifier]",
+            "pipPrefix": "[steps('esNaming').esPipIdentifier]",
+            "azFwPrefix": "[steps('esNaming').esAfwIdentifier]",
+            "aaaPrefix": "[steps('esNaming').esAaaIdentifier]",
+            "staPrefix": "[steps('esNaming').esStaIdentifier]",
+            "udrPrefix": "[steps('esNaming').esUdrIdentifier]",
+            "nsgPrefix": "[steps('esNaming').esNsgIdentifier]",
+            "akvPrefix": "[steps('esNaming').esAkvIdentifier]",
+            "rsvPrefix": "[steps('esNaming').esRsvIdentifier]",
+            "subscriptionTag": "[steps('esNaming').esSubscriptionTag]",
+            "ownerTag": "[steps('esNaming').esOwnerTag]",
+            "enablePrivateDnsZones": "[steps('esPlatformConnectivity').esPrivateDnsZones]",
+            "enablePrivateDnsZonesTable": "[steps('esPlatformConnectivity').esEnablePrivateDnsZoneTable]",
+            "enablePrivateDnsZonesQueue": "[steps('esPlatformConnectivity').esEnablePrivateDnsZoneQueue]",
+            "enablePrivateDnsZonesFiles": "[steps('esPlatformConnectivity').esEnablePrivateDnsZoneFiles]",
+            "enablePrivateDnsZonesBlob": "[steps('esPlatformConnectivity').esEnablePrivateDnsZoneBlob]",
+            "enablePrivateDnsZonesAkv": "[steps('esPlatformConnectivity').esEnablePrivateDnsZoneAkv]",
+            "vpnGwType": "[steps('esPlatformConnectivity').esVpnGwType]",
+            "subnetMaskForGw": "[steps('esPlatformConnectivity').esAddressVpnOrEr]",
+            "subnetMaskForAzFw": "[steps('esPlatformConnectivity').esAddressFw]",
+            "subnetMaskForAppGw": "[steps('esPlatformConnectivity').esAddressAppGw]",
+            "subnetMaskForMgmt": "[steps('esPlatformConnectivity').esAddressMgmt]",
+            "subnetMaskForIdentity": "[steps('esPlatformConnectivity').esAddressIdentity]",
+            "enableErGw": "[steps('esPlatformConnectivity').esErGw]",
+            "enableVpnGw": "[steps('esPlatformConnectivity').esVpnGw]",
+            "enableHub": "[steps('esPlatformConnectivity').esHub]",
+            "enableAzFw": "[steps('esPlatformConnectivity').esAzFw]",
+            "enableAppGw": "[steps('esPlatformConnectivity').esAppGw]",
+            "enableMgmt": "[steps('esPlatformConnectivity').esMgmt]",
+            "enableIdentity": "[steps('esPlatformConnectivity').esIdentity]",
+            "addressPrefix": "[steps('esPlatformConnectivity').esAddress]",
+            "location": "[steps('esPlatformConnectivity').esNwLocation]",
+            "tenantId": "[steps('esPlatformManagement').esAzureAdTenant]",
+            "subscriptionId": "[steps('esPlatformManagement').esPlatformSubId]",
+            "enableLogAnalytics": "[steps('esPlatformManagement').esLogAnalytics]",
+            "enableAsc": "[steps('esPlatformManagement').esAsc]",
+            "enableAzSentinel": "[steps('esPlatformManagement').esAzSentinel]",
+            "enableSecuritySolution": "[steps('esPlatformManagement').esSecuritySolution]",
+            "enableAgentHealth": "[steps('esPlatformManagement').esAgentSolution]",
+            "enableChangeTracking": "[steps('esPlatformManagement').esChangeTracking]",
+            "enableUpdateMgmt": "[steps('esPlatformManagement').esUpdateMgmt]",
+            "enableActivityLog": "[steps('esPlatformManagement').esActivityLog]",
+            "enableVmInsights": "[steps('esPlatformManagement').esVmInsights]",
+            "enableAntiMalware": "[steps('esPlatformManagement').esAntiMalware]",
+            "enableServiceMap": "[steps('esPlatformManagement').esServiceMap]",
+            "enableSqlAssessment": "[steps('esPlatformManagement').esSqlAssessment]",
+            "enableAkv": "[steps('esPlatformManagement').esAkv]",
+            "enableStorage": "[steps('esPlatformManagement').esSta]",
+            "onPremisesIP": "[steps('esPlatformManagement').esOnPremisesIP]",
+            "enableLtrStorage": "[steps('esPlatformManagement').esActivityLogSta]",
+            "enableRsv": "[steps('esPlatformManagement').esRsv]",
+            "enableAscForServers": "[steps('esPlatformManagement').esAscVms]",
+            "enableAscForAppServices": "[steps('esPlatformManagement').esAscApps]",
+            "enableAscForStorage": "[steps('esPlatformManagement').esAscStorage]",
+            "enableAscForSql": "[steps('esPlatformManagement').esAscSql]",
+            "enableAscForKeyVault": "[steps('esPlatformManagement').esAscKeyVault]",
+            "enableAscForArm": "[steps('esPlatformManagement').esAscArm]",
+            "enableAscForDns": "[steps('esPlatformManagement').esAscDns]",
+            "enableAscForKubernetes": "[steps('esPlatformManagement').esAscKubernetes]",
+            "enableAscForRegistries": "[steps('esPlatformManagement').esAscRegistries]",
+            "enableAppLz": "[steps('esAppLZ').esAppLz]",
+            "denyPublicendpoints": "[steps('esAppLZ').esPublicendpoints]",
+            "denyPublicIP": "[steps('esAppLZ').esPublicIP]",
+            "denySubnetWithoutNsg": "[steps('esAppLZ').esSubnetNSG]",
+            "auditIpForwarding": "[steps('esAppLZ').esIpForwarding]",
+            "denyRdpInternet": "[steps('esAppLZ').esRdpInternet]",
+            "denySshInternet": "[steps('esAppLZ').esSshInternet]",
+            "denyVnetPeering": "[steps('esAppLZ').esVnetPeering]",
+            "denyPrivateDnsZones": "[steps('esAppLZ').esPrivateDnsZones]"
+        }
+    }
+}
